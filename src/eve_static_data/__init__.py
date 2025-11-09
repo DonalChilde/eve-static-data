@@ -1,2 +1,18 @@
-def main() -> None:
-    print("Hello from eve-static-data!")
+"""Eve Static Data Package."""
+
+from pathlib import Path
+
+from typer import get_app_dir
+
+__author__ = "Chad Lowe"
+__author_email__ = "pfmsoft.dev@gmail.com"
+__app_name__ = "Eve Static Data"
+__version__ = "0.1.0"
+__license__ = "MIT"
+__url__ = "https://github.com/DonalChilde/eve-static-data"
+__description__ = "A terminal interface for Eve Online Static Data downloading and use."
+
+NAMESPACE = "pfmsoft"
+APPLICATION_NAME = "esi-static-data"
+DEFAULT_APP_DIR = Path(get_app_dir(f"{NAMESPACE}-{APPLICATION_NAME}"))
+USER_AGENT = f"{__app_name__}/{__version__} (+{__url__})"
