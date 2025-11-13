@@ -10,7 +10,7 @@ from rich.console import Console
 
 from eve_static_data.cli.sde_dev import app as sde_dev_app
 from eve_static_data.helpers.simple_download_async import download_file, download_json
-from eve_static_data.raw_jsonl_access import RawJsonAccess, SdeFileNames
+from eve_static_data.raw_jsonl_access import RawJsonFileAccess, SdeFileNames
 from eve_static_data.settings import get_settings
 
 app = typer.Typer(no_args_is_help=True)
@@ -134,7 +134,7 @@ def print_sde(
     # -l line number (repeatable) -s start range -e end range?
     console = Console()
     console.print("[bold green]Printing SDE Data...[/bold green]")
-    access = RawJsonAccess(sde_directory=sde_directory)
+    access = RawJsonFileAccess(sde_directory=sde_directory)
     try:
         file_name_enum = SdeFileNames[name.upper()]
     except KeyError as e:

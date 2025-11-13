@@ -15,7 +15,7 @@ from eve_static_data.helpers.sde_typed_dicts_to_file import (
     make_typed_dict,
     sde_typed_dicts_to_file,
 )
-from eve_static_data.raw_jsonl_access import RawJsonAccess, SdeFileNames
+from eve_static_data.raw_jsonl_access import RawJsonFileAccess, SdeFileNames
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -49,7 +49,7 @@ def dict_sig(
     files = (
         [SdeFileNames[sde_file.upper()]] if sde_file != "ALL" else list(SdeFileNames)
     )
-    access = RawJsonAccess(sde_directory=sde_directory)
+    access = RawJsonFileAccess(sde_directory=sde_directory)
     if output_file:
         console.print(f"[bold green]Output file: {output_file}[/bold green]")
         try:
@@ -114,7 +114,7 @@ def generate_typed_dicts(
     files = (
         [SdeFileNames[sde_file.upper()]] if sde_file != "ALL" else list(SdeFileNames)
     )
-    access = RawJsonAccess(sde_directory=sde_directory)
+    access = RawJsonFileAccess(sde_directory=sde_directory)
     for file_name_enum in files:
         data_iter = access.jsonl_iter(file_name_enum)
         source_info = f"SDE file: {file_name_enum}, build: {build_number}"
