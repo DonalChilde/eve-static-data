@@ -1478,7 +1478,7 @@ class MapRegionsDict(TypedDict):
     """
 
     _key: int
-    constellationIDs: list
+    constellationIDs: list[int]
     description: NotRequired[LocalizedStringDict]
     factionID: NotRequired[int]
     name: LocalizedStringDict
