@@ -1,5 +1,6 @@
 """CLI commands for SDE development tasks."""
 
+import json
 from pathlib import Path
 from pprint import pformat
 from typing import Annotated
@@ -16,10 +17,48 @@ from eve_static_data.helpers.sde_typed_dicts_to_file import (
     sde_typed_dicts_to_file,
 )
 from eve_static_data.raw_jsonl_access import RawJsonFileAccess, SdeFileNames
+from eve_static_data.type_explorer.sde_types import sde_type_info
 
 app = typer.Typer(no_args_is_help=True)
 
 # eve-static-data sde dev dict-sig ~/projects/tmp/sde-download-test/sde-3081406-jsonl -f ~/projects/tmp/sde-download-test/sde-3081406-dict-sig.json -b 3081406
+
+
+@app.command()
+def sde_type_sig(
+    sde_directory: Annotated[
+        Path, typer.Argument(help="The directory containing the SDE data.")
+    ],
+    build_number: Annotated[
+        str,
+        typer.Option("-b", help="The SDE build number of the dataset."),
+    ] = "UNDEFINED",
+    output_file: Annotated[
+        Path | None,
+        typer.Option("-f", help="The file to write the generated SDE type sigs to."),
+    ] = None,
+):
+    """Generate SDE type signatures from all the jsonl files in a directory.
+
+    Output defaults to console if no output file is specified.
+    """
+    pass
+    console = Console()
+    console.print(
+        f"[bold green]Generating SDE type signatures for build: {build_number} at: {sde_directory}[/bold green]"
+    )
+    sde_sig = sde_type_info(dir_path=sde_directory, build_number=build_number)
+    if output_file:
+        console.print(f"[bold green]Output file: {output_file}[/bold green]")
+        try:
+            with output_file.open("w", encoding="utf-8") as f:
+                f.write(json.dumps(sde_sig, indent=2, sort_keys=True))
+        except Exception as e:
+            console.print(f"[bold red]Error: {e}[/bold red]")
+            raise typer.Exit(code=1) from e
+    else:
+        console.print(pformat(sde_sig))
+        return
 
 
 @app.command()
