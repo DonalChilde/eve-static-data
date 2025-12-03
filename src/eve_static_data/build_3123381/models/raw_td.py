@@ -1,6 +1,6 @@
 """Typed definitions for raw_td models."""
 
-from typing import NotRequired, TypedDict
+from typing import Any, NotRequired, TypedDict
 
 # ------------------------------------------------------------------------------
 # Sub-level Typed definitions.
@@ -333,7 +333,7 @@ class Factions(TypedDict):
     uniqueName: bool
 
 
-class FreelanceJobSchemas(TypedDict): ...
+type FreelanceJobSchemas = dict[str, Any]
 
 
 class Graphics(TypedDict):

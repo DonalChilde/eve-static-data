@@ -2,7 +2,6 @@
 
 from collections.abc import Iterable
 from pathlib import Path
-from typing import Any
 
 from eve_static_data.helpers.jsonl_reader import read_jsonl_dicts
 
@@ -91,7 +90,7 @@ class RawJsonFileAccess(RawJsonTDProtocol):
         file_path = self.dir_path / SdeFileNames.FACTIONS
         return read_jsonl_dicts(file_path)  # type: ignore
 
-    def freelance_job_schemas(self) -> dict[str, Any]:
+    def freelance_job_schemas(self) -> RTD.FreelanceJobSchemas:
         file_path = self.dir_path / SdeFileNames.FREELANCE_JOB_SCHEMAS
         return next(iter(read_jsonl_dicts(file_path)))
 
