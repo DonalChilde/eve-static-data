@@ -40,8 +40,6 @@ class Color(TypedDict):
 
 
 class Position(TypedDict):
-    """Type definition for Position."""
-
     x: float
     y: float
     z: float

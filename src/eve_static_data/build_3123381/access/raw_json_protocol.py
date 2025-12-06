@@ -1,6 +1,8 @@
 from collections.abc import Iterable
 from typing import Any, Protocol
 
+# ruff: noqa: D102
+
 
 class RawJsonProtocol(Protocol):
     """Protocol for raw json data access.
@@ -19,6 +21,7 @@ class RawJsonProtocol(Protocol):
 
     Most functions return an Iterable of dictionaries, except for the following:
     - sde_info(): Returns a dictionary with string or integer values representing SDE metadata.
+    - freelance_job_schemas(): Returns a dictionary representing freelance job schemas.
 
 
 

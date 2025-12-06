@@ -1,7 +1,9 @@
 from collections.abc import Iterable
-from typing import Any, Protocol
+from typing import Protocol
 
 from ..models import raw_td as RTD
+
+# ruff: noqa: D102
 
 
 class RawJsonTDProtocol(Protocol):
@@ -19,14 +21,17 @@ class RawJsonTDProtocol(Protocol):
     to snake_case and removing the ".jsonl" extension. Except that `types.jsonl`
     becomes `eve_types()` to avoid conflict and confusion with the built-in `type` function.
 
-    Most functions return an Iterable of dictionaries, except for the following:
-    - sde_info(): Returns a dictionary with string or integer values representing SDE metadata.
+    functions return an iterable of TypedDicts, except for the following:
+    - freelance_job_schemas(): Returns a TypedDict representing freelance job schemas.
+    - sde_info(): Returns a TypedDict with string or integer values representing SDE metadata.
 
 
 
     """
 
-    def agents_in_space(self) -> Iterable[RTD.AgentsInSpace]: ...
+    def agents_in_space(
+        self, validate: bool = False
+    ) -> Iterable[RTD.AgentsInSpace]: ...
     def agent_types(self) -> Iterable[RTD.AgentTypes]: ...
     def ancestries(self) -> Iterable[RTD.Ancestries]: ...
     def bloodlines(self) -> Iterable[RTD.Bloodlines]: ...
