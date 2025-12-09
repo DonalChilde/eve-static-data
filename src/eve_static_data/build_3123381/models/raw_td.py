@@ -871,7 +871,8 @@ class TypeMaterials_RandomizedMaterial(TypedDict):
 
 class TypeMaterials(TypedDict):
     _key: int
-    materials: list[TypeMaterials_Material | TypeMaterials_RandomizedMaterial]
+    materials: list[TypeMaterials_Material]
+    randomizedMaterials: list[TypeMaterials_RandomizedMaterial]
 
 
 class EveTypes(TypedDict):
