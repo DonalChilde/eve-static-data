@@ -18,11 +18,8 @@ Sub-models are named with an underscore, e.g., Blueprint_Activities.
 """
 
 # TODO Moving this code from eve-argus:
-# NOTE: Consider moving this to the build specific package, since it may depend on changeable SDE structure.
-# 1. Change sde type dict references to local imports
 # 2. Review documentation and edit to reflect new location and function
 
-# 3. Change from_ap methods to use an iterator parameter rather than RawJsonTDProtocol directly
 # 4. make a lazy_loading container using these models that represents the SDE.
 # 5. As able, complete this set of models to cover all SDE files.
 
@@ -34,7 +31,6 @@ from pydantic import BaseModel
 
 from eve_static_data.helpers.pydantic.save_to_disk import BaseModelToDisk
 
-from ..access.raw_json_td_protocol import RawJsonTDProtocol as AccessProtocol
 from . import raw_td as SDTD
 
 logger = logging.getLogger(__name__)
@@ -454,7 +450,7 @@ class TypeMaterials_RandomizedMaterial(BaseModel):
     quantityMin: int
 
     @classmethod
-    def from_td(cls, td: dict[str, int]) -> Self:
+    def from_td(cls, td: SDTD.TypeMaterials_RandomizedMaterial) -> Self:
         """Create a RandomMaterials model from a SDTD.MaterialsRandomMaterials TypedDict."""
         return cls(
             materialTypeID=td["materialTypeID"],
@@ -463,7 +459,7 @@ class TypeMaterials_RandomizedMaterial(BaseModel):
         )
 
 
-class TypeMaterial(BaseModel):
+class TypeMaterialDetail(BaseModel):
     """Model for file typeMaterials.jsonl, as represented in SDTD.TypeMaterials."""
 
     key: int
@@ -471,40 +467,30 @@ class TypeMaterial(BaseModel):
     randomized_materials: list[TypeMaterials_RandomizedMaterial] | None = None
 
     @classmethod
-    def from_td(cls, td: SDTD.TypeMaterials) -> "TypeMaterial":
-        """Create a TypeMaterials model from a SDTD.TypeMaterials TypedDict."""
+    def from_td(cls, td: SDTD.TypeMaterials) -> "TypeMaterialDetail":
+        """Create a TypeMaterialDetail model from a SDTD.TypeMaterials TypedDict."""
         materials_td = td.get("materials")
         randomized_materials_td = td.get("randomizedMaterials")
-        if materials_td and randomized_materials_td:
-            return cls(
-                key=td["_key"],
-                materials=[TypeMaterials_Materials.from_td(m) for m in materials_td],
-                randomized_materials=[
-                    TypeMaterials_RandomizedMaterials.from_td(m)
-                    for m in randomized_materials_td
-                ],
-            )
+        materials: list[TypeMaterials_Material] | None = None
+        randomized_materials: list[TypeMaterials_RandomizedMaterial] | None = None
         if materials_td:
-            return cls(
-                key=td["_key"],
-                materials=[TypeMaterials_Materials.from_td(m) for m in materials_td],
-            )
+            materials = [TypeMaterials_Material.from_td(m) for m in materials_td]
+
         if randomized_materials_td:
-            return cls(
-                key=td["_key"],
-                randomized_materials=[
-                    TypeMaterials_RandomizedMaterials.from_td(m)
-                    for m in randomized_materials_td
-                ],
-            )
-        raise ValueError(
-            f"TypeMaterial with _key {td['_key']} has neither materials nor randomizedMaterials."
+            randomized_materials = [
+                TypeMaterials_RandomizedMaterial.from_td(m)
+                for m in randomized_materials_td
+            ]
+        return cls(
+            key=td["_key"],
+            materials=materials,
+            randomized_materials=randomized_materials,
         )
 
 
 class TypeMaterials(BaseModelToDisk):
     info: SdeInfo
-    data: dict[int, TypeMaterial]
+    data: dict[int, TypeMaterialDetail]
 
     @classmethod
     def from_static_data(
@@ -515,7 +501,7 @@ class TypeMaterials(BaseModelToDisk):
         """Create a TypeMaterials model from an iterable of TypeMaterial models."""
         result = cls(data={}, info=sde_info)
         for tm in static_data:
-            result.data[tm["_key"]] = TypeMaterial.from_td(tm)
+            result.data[tm["_key"]] = TypeMaterialDetail.from_td(tm)
         return result
 
 
@@ -651,7 +637,7 @@ class ArgusStaticData(BaseModelToDisk):
     groups: dict[int, Group]
     market_groups: dict[int, MarketGroup]
     meta_groups: dict[int, MetaGroup]
-    type_materials: dict[int, TypeMaterial]
+    type_materials: dict[int, TypeMaterials]
     eve_types: dict[int, EveType]
 
 
