@@ -3,6 +3,7 @@
 
 from collections.abc import Iterable
 from pathlib import Path
+from typing import Any, cast
 
 from pydantic import TypeAdapter
 
@@ -17,633 +18,908 @@ class RawJsonFileAccess(RawJsonTDProtocol):
     def __init__(self, dir_path: Path) -> None:
         self.dir_path = dir_path
 
-    def agents_in_space(self, validate: bool = False) -> Iterable[RTD.AgentsInSpace]:
+    def agents_in_space(self, **kwargs: dict[str, Any]) -> Iterable[RTD.AgentsInSpace]:
         file_path = self.dir_path / SdeFileNames.AGENTS_IN_SPACE
-        if validate:
-            adapter = TypeAdapter(RTD.AgentsInSpace)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.AgentsInSpace, item)
 
-    def agent_types(self, validate: bool = False) -> Iterable[RTD.AgentTypes]:
+    def agent_types(self, **kwargs: dict[str, Any]) -> Iterable[RTD.AgentTypes]:
         file_path = self.dir_path / SdeFileNames.AGENT_TYPES
-        if validate:
-            adapter = TypeAdapter(RTD.AgentTypes)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.AgentTypes, item)
 
-    def ancestries(self, validate: bool = False) -> Iterable[RTD.Ancestries]:
+    def ancestries(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Ancestries]:
         file_path = self.dir_path / SdeFileNames.ANCESTRIES
-        if validate:
-            adapter = TypeAdapter(RTD.Ancestries)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.Ancestries, item)
 
-    def bloodlines(self, validate: bool = False) -> Iterable[RTD.Bloodlines]:
+    def bloodlines(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Bloodlines]:
         file_path = self.dir_path / SdeFileNames.BLOODLINES
-        if validate:
-            adapter = TypeAdapter(RTD.Bloodlines)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.Bloodlines, item)
 
-    def blueprints(self, validate: bool = False) -> Iterable[RTD.Blueprints]:
+    def blueprints(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Blueprints]:
         file_path = self.dir_path / SdeFileNames.BLUEPRINTS
-        if validate:
-            adapter = TypeAdapter(RTD.Blueprints)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.Blueprints, item)
 
-    def categories(self, validate: bool = False) -> Iterable[RTD.Categories]:
+    def categories(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Categories]:
         file_path = self.dir_path / SdeFileNames.CATEGORIES
-        if validate:
-            adapter = TypeAdapter(RTD.Categories)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.Categories, item)
 
-    def certificates(self, validate: bool = False) -> Iterable[RTD.Certificates]:
+    def certificates(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Certificates]:
         file_path = self.dir_path / SdeFileNames.CERTIFICATES
-        if validate:
-            adapter = TypeAdapter(RTD.Certificates)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.Certificates, item)
 
     def character_attributes(
-        self, validate: bool = False
+        self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.CharacterAttributes]:
         file_path = self.dir_path / SdeFileNames.CHARACTER_ATTRIBUTES
-        if validate:
-            adapter = TypeAdapter(RTD.CharacterAttributes)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.CharacterAttributes, item)
 
     def compressible_types(
-        self, validate: bool = False
+        self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.CompressibleTypes]:
         file_path = self.dir_path / SdeFileNames.COMPRESSIBLE_TYPES
-        if validate:
-            adapter = TypeAdapter(RTD.CompressibleTypes)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.CompressibleTypes, item)
 
-    def contraband_types(self, validate: bool = False) -> Iterable[RTD.ContrabandTypes]:
+    def contraband_types(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.ContrabandTypes]:
         file_path = self.dir_path / SdeFileNames.CONTRABAND_TYPES
-        if validate:
-            adapter = TypeAdapter(RTD.ContrabandTypes)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.ContrabandTypes, item)
 
     def control_tower_resources(
-        self, validate: bool = False
+        self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.ControlTowerResources]:
         file_path = self.dir_path / SdeFileNames.CONTROL_TOWER_RESOURCES
-        if validate:
-            adapter = TypeAdapter(RTD.ControlTowerResources)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.ControlTowerResources, item)
 
     def corporation_activities(
-        self, validate: bool = False
+        self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.CorporationActivities]:
         file_path = self.dir_path / SdeFileNames.CORPORATION_ACTIVITIES
-        if validate:
-            adapter = TypeAdapter(RTD.CorporationActivities)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.CorporationActivities, item)
 
     def debuff_collections(
-        self, validate: bool = False
+        self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.DebuffCollections]:
         file_path = self.dir_path / SdeFileNames.DEBUFF_COLLECTIONS
-        if validate:
-            adapter = TypeAdapter(RTD.DebuffCollections)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.DebuffCollections, item)
 
     def dogma_attribute_categories(
-        self, validate: bool = False
+        self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.DogmaAttributeCategories]:
         file_path = self.dir_path / SdeFileNames.DOGMA_ATTRIBUTE_CATEGORIES
-        if validate:
-            adapter = TypeAdapter(RTD.DogmaAttributeCategories)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.DogmaAttributeCategories, item)
 
-    def dogma_attributes(self, validate: bool = False) -> Iterable[RTD.DogmaAttributes]:
+    def dogma_attributes(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.DogmaAttributes]:
         file_path = self.dir_path / SdeFileNames.DOGMA_ATTRIBUTES
-        if validate:
-            adapter = TypeAdapter(RTD.DogmaAttributes)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.DogmaAttributes, item)
 
-    def dogma_effects(self, validate: bool = False) -> Iterable[RTD.DogmaEffects]:
+    def dogma_effects(self, **kwargs: dict[str, Any]) -> Iterable[RTD.DogmaEffects]:
         file_path = self.dir_path / SdeFileNames.DOGMA_EFFECTS
-        if validate:
-            adapter = TypeAdapter(RTD.DogmaEffects)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.DogmaEffects, item)
 
-    def dogma_units(self, validate: bool = False) -> Iterable[RTD.DogmaUnits]:
+    def dogma_units(self, **kwargs: dict[str, Any]) -> Iterable[RTD.DogmaUnits]:
         file_path = self.dir_path / SdeFileNames.DOGMA_UNITS
-        if validate:
-            adapter = TypeAdapter(RTD.DogmaUnits)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.DogmaUnits, item)
 
     def dynamic_item_attributes(
-        self, validate: bool = False
+        self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.DynamicItemAttributes]:
         file_path = self.dir_path / SdeFileNames.DYNAMIC_ITEM_ATTRIBUTES
-        if validate:
-            adapter = TypeAdapter(RTD.DynamicItemAttributes)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.DynamicItemAttributes, item)
 
-    def factions(self, validate: bool = False) -> Iterable[RTD.Factions]:
+    def factions(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Factions]:
         file_path = self.dir_path / SdeFileNames.FACTIONS
-        if validate:
-            adapter = TypeAdapter(RTD.Factions)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.Factions, item)
 
-    def freelance_job_schemas(self, validate: bool = False) -> RTD.FreelanceJobSchemas:
+    def freelance_job_schemas(
+        self, **kwargs: dict[str, Any]
+    ) -> RTD.FreelanceJobSchemas:
         file_path = self.dir_path / SdeFileNames.FREELANCE_JOB_SCHEMAS
         return next(iter(read_jsonl_dicts(file_path)))
 
-    def graphics(self, validate: bool = False) -> Iterable[RTD.Graphics]:
+    def graphics(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Graphics]:
         file_path = self.dir_path / SdeFileNames.GRAPHICS
-        if validate:
-            adapter = TypeAdapter(RTD.Graphics)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.Graphics, item)
 
-    def groups(self, validate: bool = False) -> Iterable[RTD.Groups]:
+    def groups(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Groups]:
         file_path = self.dir_path / SdeFileNames.GROUPS
-        if validate:
-            adapter = TypeAdapter(RTD.Groups)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.Groups, item)
 
-    def icons(self, validate: bool = False) -> Iterable[RTD.Icons]:
+    def icons(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Icons]:
         file_path = self.dir_path / SdeFileNames.ICONS
-        if validate:
-            adapter = TypeAdapter(RTD.Icons)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.Icons, item)
 
-    def landmarks(self, validate: bool = False) -> Iterable[RTD.Landmarks]:
+    def landmarks(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Landmarks]:
         file_path = self.dir_path / SdeFileNames.LANDMARKS
-        if validate:
-            adapter = TypeAdapter(RTD.Landmarks)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.Landmarks, item)
 
     def map_asteroid_belts(
-        self, validate: bool = False
+        self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.MapAsteroidBelts]:
         file_path = self.dir_path / SdeFileNames.MAP_ASTEROID_BELTS
-        if validate:
-            adapter = TypeAdapter(RTD.MapAsteroidBelts)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.MapAsteroidBelts, item)
 
     def map_constellations(
-        self, validate: bool = False
+        self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.MapConstellations]:
         file_path = self.dir_path / SdeFileNames.MAP_CONSTELLATIONS
-        if validate:
-            adapter = TypeAdapter(RTD.MapConstellations)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.MapConstellations, item)
 
-    def map_moons(self, validate: bool = False) -> Iterable[RTD.MapMoons]:
+    def map_moons(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MapMoons]:
         file_path = self.dir_path / SdeFileNames.MAP_MOONS
-        if validate:
-            adapter = TypeAdapter(RTD.MapMoons)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.MapMoons, item)
 
-    def map_planets(self, validate: bool = False) -> Iterable[RTD.MapPlanets]:
+    def map_planets(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MapPlanets]:
         file_path = self.dir_path / SdeFileNames.MAP_PLANETS
-        if validate:
-            adapter = TypeAdapter(RTD.MapPlanets)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.MapPlanets, item)
 
-    def map_regions(self, validate: bool = False) -> Iterable[RTD.MapRegions]:
+    def map_regions(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MapRegions]:
         file_path = self.dir_path / SdeFileNames.MAP_REGIONS
-        if validate:
-            adapter = TypeAdapter(RTD.MapRegions)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.MapRegions, item)
 
     def map_solar_systems(
-        self, validate: bool = False
+        self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.MapSolarSystems]:
         file_path = self.dir_path / SdeFileNames.MAP_SOLAR_SYSTEMS
-        if validate:
-            adapter = TypeAdapter(RTD.MapSolarSystems)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.MapSolarSystems, item)
 
-    def map_stargates(self, validate: bool = False) -> Iterable[RTD.MapStargates]:
+    def map_stargates(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MapStargates]:
         file_path = self.dir_path / SdeFileNames.MAP_STARGATES
-        if validate:
-            adapter = TypeAdapter(RTD.MapStargates)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.MapStargates, item)
 
-    def map_stars(self, validate: bool = False) -> Iterable[RTD.MapStars]:
+    def map_stars(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MapStars]:
         file_path = self.dir_path / SdeFileNames.MAP_STARS
-        if validate:
-            adapter = TypeAdapter(RTD.MapStars)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.MapStars, item)
 
-    def market_groups(self, validate: bool = False) -> Iterable[RTD.MarketGroups]:
+    def market_groups(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MarketGroups]:
         file_path = self.dir_path / SdeFileNames.MARKET_GROUPS
-        if validate:
-            adapter = TypeAdapter(RTD.MarketGroups)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.MarketGroups, item)
 
-    def masteries(self, validate: bool = False) -> Iterable[RTD.Masteries]:
+    def masteries(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Masteries]:
         file_path = self.dir_path / SdeFileNames.MASTERIES
-        if validate:
-            adapter = TypeAdapter(RTD.Masteries)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.Masteries, item)
 
-    def meta_groups(self, validate: bool = False) -> Iterable[RTD.MetaGroups]:
+    def meta_groups(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MetaGroups]:
         file_path = self.dir_path / SdeFileNames.META_GROUPS
-        if validate:
-            adapter = TypeAdapter(RTD.MetaGroups)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.MetaGroups, item)
 
-    def npc_characters(self, validate: bool = False) -> Iterable[RTD.NpcCharacters]:
+    def npc_characters(self, **kwargs: dict[str, Any]) -> Iterable[RTD.NpcCharacters]:
         file_path = self.dir_path / SdeFileNames.NPC_CHARACTERS
-        if validate:
-            adapter = TypeAdapter(RTD.NpcCharacters)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.NpcCharacters, item)
 
     def npc_corporation_divisions(
-        self, validate: bool = False
+        self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.NpcCorporationDivisions]:
         file_path = self.dir_path / SdeFileNames.NPC_CORPORATION_DIVISIONS
-        if validate:
-            adapter = TypeAdapter(RTD.NpcCorporationDivisions)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.NpcCorporationDivisions, item)
 
-    def npc_corporations(self, validate: bool = False) -> Iterable[RTD.NpcCorporations]:
+    def npc_corporations(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.NpcCorporations]:
         file_path = self.dir_path / SdeFileNames.NPC_CORPORATIONS
-        if validate:
-            adapter = TypeAdapter(RTD.NpcCorporations)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.NpcCorporations, item)
 
-    def npc_stations(self, validate: bool = False) -> Iterable[RTD.NpcStations]:
+    def npc_stations(self, **kwargs: dict[str, Any]) -> Iterable[RTD.NpcStations]:
         file_path = self.dir_path / SdeFileNames.NPC_STATIONS
-        if validate:
-            adapter = TypeAdapter(RTD.NpcStations)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.NpcStations, item)
 
-    def planet_resources(self, validate: bool = False) -> Iterable[RTD.PlanetResources]:
+    def planet_resources(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.PlanetResources]:
         file_path = self.dir_path / SdeFileNames.PLANET_RESOURCES
-        if validate:
-            adapter = TypeAdapter(RTD.PlanetResources)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.PlanetResources, item)
 
     def planet_schematics(
-        self, validate: bool = False
+        self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.PlanetSchematics]:
         file_path = self.dir_path / SdeFileNames.PLANET_SCHEMATICS
-        if validate:
-            adapter = TypeAdapter(RTD.PlanetSchematics)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.PlanetSchematics, item)
 
-    def races(self, validate: bool = False) -> Iterable[RTD.Races]:
+    def races(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Races]:
         file_path = self.dir_path / SdeFileNames.RACES
-        if validate:
-            adapter = TypeAdapter(RTD.Races)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.Races, item)
 
-    def sde_info(self, validate: bool = False) -> RTD.SdeInfo:
+    def sde_info(self, **kwargs: dict[str, Any]) -> RTD.SdeInfo:
         file_path = self.dir_path / SdeFileNames.SDE_INFO
         reader = read_jsonl_dicts(file_path)
         sde_info = next(iter(reader), None)
-        if validate:
-            adapter = TypeAdapter(RTD.SdeInfo)
-            sde_info = adapter.validate_python(sde_info, extra="forbid")
-            return sde_info
         if sde_info is None:
             raise ValueError("SDE info file is empty.")
-        if not "buildNumber" in sde_info:
+        if "buildNumber" not in sde_info:
             raise ValueError("SDE info file is missing 'buildNumber' key.")
-        return sde_info  # type: ignore
+        return cast(RTD.SdeInfo, sde_info)
 
-    def skin_licenses(self, validate: bool = False) -> Iterable[RTD.SkinLicenses]:
+    def skin_licenses(self, **kwargs: dict[str, Any]) -> Iterable[RTD.SkinLicenses]:
         file_path = self.dir_path / SdeFileNames.SKIN_LICENSES
-        if validate:
-            adapter = TypeAdapter(RTD.SkinLicenses)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.SkinLicenses, item)
 
-    def skin_materials(self, validate: bool = False) -> Iterable[RTD.SkinMaterials]:
+    def skin_materials(self, **kwargs: dict[str, Any]) -> Iterable[RTD.SkinMaterials]:
         file_path = self.dir_path / SdeFileNames.SKIN_MATERIALS
-        if validate:
-            adapter = TypeAdapter(RTD.SkinMaterials)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.SkinMaterials, item)
 
-    def skins(self, validate: bool = False) -> Iterable[RTD.Skins]:
+    def skins(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Skins]:
         file_path = self.dir_path / SdeFileNames.SKINS
-        if validate:
-            adapter = TypeAdapter(RTD.Skins)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.Skins, item)
 
     def sovereignty_upgrades(
-        self, validate: bool = False
+        self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.SovereigntyUpgrades]:
         file_path = self.dir_path / SdeFileNames.SOVEREIGNTY_UPGRADES
-        if validate:
-            adapter = TypeAdapter(RTD.SovereigntyUpgrades)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.SovereigntyUpgrades, item)
 
     def station_operations(
-        self, validate: bool = False
+        self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.StationOperations]:
         file_path = self.dir_path / SdeFileNames.STATION_OPERATIONS
-        if validate:
-            adapter = TypeAdapter(RTD.StationOperations)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.StationOperations, item)
 
-    def station_services(self, validate: bool = False) -> Iterable[RTD.StationServices]:
+    def station_services(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.StationServices]:
         file_path = self.dir_path / SdeFileNames.STATION_SERVICES
-        if validate:
-            adapter = TypeAdapter(RTD.StationServices)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.StationServices, item)
 
     def translation_languages(
-        self, validate: bool = False
+        self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.TranslationLanguages]:
         file_path = self.dir_path / SdeFileNames.TRANSLATION_LANGUAGES
-        if validate:
-            adapter = TypeAdapter(RTD.TranslationLanguages)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.TranslationLanguages, item)
 
-    def type_bonus(self, validate: bool = False) -> Iterable[RTD.TypeBonus]:
+    def type_bonus(self, **kwargs: dict[str, Any]) -> Iterable[RTD.TypeBonus]:
         file_path = self.dir_path / SdeFileNames.TYPE_BONUS
-        if validate:
-            adapter = TypeAdapter(RTD.TypeBonus)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.TypeBonus, item)
 
-    def type_dogma(self, validate: bool = False) -> Iterable[RTD.TypeDogma]:
+    def type_dogma(self, **kwargs: dict[str, Any]) -> Iterable[RTD.TypeDogma]:
         file_path = self.dir_path / SdeFileNames.TYPE_DOGMA
-        if validate:
-            adapter = TypeAdapter(RTD.TypeDogma)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.TypeDogma, item)
 
-    def type_materials(self, validate: bool = False) -> Iterable[RTD.TypeMaterials]:
+    def type_materials(self, **kwargs: dict[str, Any]) -> Iterable[RTD.TypeMaterials]:
         file_path = self.dir_path / SdeFileNames.TYPE_MATERIALS
-        if validate:
-            adapter = TypeAdapter(RTD.TypeMaterials)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.TypeMaterials, item)
 
-    def eve_types(self, validate: bool = False) -> Iterable[RTD.EveTypes]:
+    def eve_types(self, **kwargs: dict[str, Any]) -> Iterable[RTD.EveTypes]:
         file_path = self.dir_path / SdeFileNames.TYPES
-        if validate:
-            adapter = TypeAdapter(RTD.EveTypes)
-            for item in read_jsonl_dicts(file_path):
-                yield adapter.validate_python(item, extra="forbid")
-            return
-        return read_jsonl_dicts(file_path)  # type: ignore
+        for item in read_jsonl_dicts(file_path):
+            yield cast(RTD.EveTypes, item)
+
+
+class RawJsonFileAccessValidator(RawJsonTDProtocol):
+    def __init__(self, dir_path: Path) -> None:
+        self.dir_path = dir_path
+
+    def agents_in_space(self, **kwargs: dict[str, Any]) -> Iterable[RTD.AgentsInSpace]:
+        file_path = self.dir_path / SdeFileNames.AGENTS_IN_SPACE
+        adapter = TypeAdapter(RTD.AgentsInSpace)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def agent_types(self, **kwargs: dict[str, Any]) -> Iterable[RTD.AgentTypes]:
+        file_path = self.dir_path / SdeFileNames.AGENT_TYPES
+
+        adapter = TypeAdapter(RTD.AgentTypes)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def ancestries(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Ancestries]:
+        file_path = self.dir_path / SdeFileNames.ANCESTRIES
+
+        adapter = TypeAdapter(RTD.Ancestries)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def bloodlines(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Bloodlines]:
+        file_path = self.dir_path / SdeFileNames.BLOODLINES
+
+        adapter = TypeAdapter(RTD.Bloodlines)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def blueprints(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Blueprints]:
+        file_path = self.dir_path / SdeFileNames.BLUEPRINTS
+
+        adapter = TypeAdapter(RTD.Blueprints)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def categories(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Categories]:
+        file_path = self.dir_path / SdeFileNames.CATEGORIES
+
+        adapter = TypeAdapter(RTD.Categories)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def certificates(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Certificates]:
+        file_path = self.dir_path / SdeFileNames.CERTIFICATES
+
+        adapter = TypeAdapter(RTD.Certificates)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def character_attributes(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.CharacterAttributes]:
+        file_path = self.dir_path / SdeFileNames.CHARACTER_ATTRIBUTES
+
+        adapter = TypeAdapter(RTD.CharacterAttributes)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def compressible_types(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.CompressibleTypes]:
+        file_path = self.dir_path / SdeFileNames.COMPRESSIBLE_TYPES
+
+        adapter = TypeAdapter(RTD.CompressibleTypes)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def contraband_types(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.ContrabandTypes]:
+        file_path = self.dir_path / SdeFileNames.CONTRABAND_TYPES
+
+        adapter = TypeAdapter(RTD.ContrabandTypes)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def control_tower_resources(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.ControlTowerResources]:
+        file_path = self.dir_path / SdeFileNames.CONTROL_TOWER_RESOURCES
+
+        adapter = TypeAdapter(RTD.ControlTowerResources)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def corporation_activities(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.CorporationActivities]:
+        file_path = self.dir_path / SdeFileNames.CORPORATION_ACTIVITIES
+
+        adapter = TypeAdapter(RTD.CorporationActivities)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def debuff_collections(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.DebuffCollections]:
+        file_path = self.dir_path / SdeFileNames.DEBUFF_COLLECTIONS
+
+        adapter = TypeAdapter(RTD.DebuffCollections)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def dogma_attribute_categories(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.DogmaAttributeCategories]:
+        file_path = self.dir_path / SdeFileNames.DOGMA_ATTRIBUTE_CATEGORIES
+
+        adapter = TypeAdapter(RTD.DogmaAttributeCategories)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def dogma_attributes(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.DogmaAttributes]:
+        file_path = self.dir_path / SdeFileNames.DOGMA_ATTRIBUTES
+
+        adapter = TypeAdapter(RTD.DogmaAttributes)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def dogma_effects(self, **kwargs: dict[str, Any]) -> Iterable[RTD.DogmaEffects]:
+        file_path = self.dir_path / SdeFileNames.DOGMA_EFFECTS
+
+        adapter = TypeAdapter(RTD.DogmaEffects)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def dogma_units(self, **kwargs: dict[str, Any]) -> Iterable[RTD.DogmaUnits]:
+        file_path = self.dir_path / SdeFileNames.DOGMA_UNITS
+
+        adapter = TypeAdapter(RTD.DogmaUnits)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def dynamic_item_attributes(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.DynamicItemAttributes]:
+        file_path = self.dir_path / SdeFileNames.DYNAMIC_ITEM_ATTRIBUTES
+
+        adapter = TypeAdapter(RTD.DynamicItemAttributes)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def factions(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Factions]:
+        file_path = self.dir_path / SdeFileNames.FACTIONS
+
+        adapter = TypeAdapter(RTD.Factions)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def freelance_job_schemas(
+        self, **kwargs: dict[str, Any]
+    ) -> RTD.FreelanceJobSchemas:
+        file_path = self.dir_path / SdeFileNames.FREELANCE_JOB_SCHEMAS
+        return next(iter(read_jsonl_dicts(file_path)))
+
+    def graphics(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Graphics]:
+        file_path = self.dir_path / SdeFileNames.GRAPHICS
+
+        adapter = TypeAdapter(RTD.Graphics)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def groups(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Groups]:
+        file_path = self.dir_path / SdeFileNames.GROUPS
+
+        adapter = TypeAdapter(RTD.Groups)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def icons(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Icons]:
+        file_path = self.dir_path / SdeFileNames.ICONS
+
+        adapter = TypeAdapter(RTD.Icons)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def landmarks(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Landmarks]:
+        file_path = self.dir_path / SdeFileNames.LANDMARKS
+
+        adapter = TypeAdapter(RTD.Landmarks)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def map_asteroid_belts(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.MapAsteroidBelts]:
+        file_path = self.dir_path / SdeFileNames.MAP_ASTEROID_BELTS
+
+        adapter = TypeAdapter(RTD.MapAsteroidBelts)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def map_constellations(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.MapConstellations]:
+        file_path = self.dir_path / SdeFileNames.MAP_CONSTELLATIONS
+
+        adapter = TypeAdapter(RTD.MapConstellations)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def map_moons(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MapMoons]:
+        file_path = self.dir_path / SdeFileNames.MAP_MOONS
+
+        adapter = TypeAdapter(RTD.MapMoons)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def map_planets(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MapPlanets]:
+        file_path = self.dir_path / SdeFileNames.MAP_PLANETS
+
+        adapter = TypeAdapter(RTD.MapPlanets)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def map_regions(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MapRegions]:
+        file_path = self.dir_path / SdeFileNames.MAP_REGIONS
+
+        adapter = TypeAdapter(RTD.MapRegions)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def map_solar_systems(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.MapSolarSystems]:
+        file_path = self.dir_path / SdeFileNames.MAP_SOLAR_SYSTEMS
+
+        adapter = TypeAdapter(RTD.MapSolarSystems)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def map_stargates(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MapStargates]:
+        file_path = self.dir_path / SdeFileNames.MAP_STARGATES
+
+        adapter = TypeAdapter(RTD.MapStargates)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def map_stars(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MapStars]:
+        file_path = self.dir_path / SdeFileNames.MAP_STARS
+
+        adapter = TypeAdapter(RTD.MapStars)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def market_groups(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MarketGroups]:
+        file_path = self.dir_path / SdeFileNames.MARKET_GROUPS
+
+        adapter = TypeAdapter(RTD.MarketGroups)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def masteries(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Masteries]:
+        file_path = self.dir_path / SdeFileNames.MASTERIES
+
+        adapter = TypeAdapter(RTD.Masteries)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def meta_groups(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MetaGroups]:
+        file_path = self.dir_path / SdeFileNames.META_GROUPS
+
+        adapter = TypeAdapter(RTD.MetaGroups)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def npc_characters(self, **kwargs: dict[str, Any]) -> Iterable[RTD.NpcCharacters]:
+        file_path = self.dir_path / SdeFileNames.NPC_CHARACTERS
+
+        adapter = TypeAdapter(RTD.NpcCharacters)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def npc_corporation_divisions(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.NpcCorporationDivisions]:
+        file_path = self.dir_path / SdeFileNames.NPC_CORPORATION_DIVISIONS
+
+        adapter = TypeAdapter(RTD.NpcCorporationDivisions)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def npc_corporations(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.NpcCorporations]:
+        file_path = self.dir_path / SdeFileNames.NPC_CORPORATIONS
+
+        adapter = TypeAdapter(RTD.NpcCorporations)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def npc_stations(self, **kwargs: dict[str, Any]) -> Iterable[RTD.NpcStations]:
+        file_path = self.dir_path / SdeFileNames.NPC_STATIONS
+
+        adapter = TypeAdapter(RTD.NpcStations)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def planet_resources(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.PlanetResources]:
+        file_path = self.dir_path / SdeFileNames.PLANET_RESOURCES
+
+        adapter = TypeAdapter(RTD.PlanetResources)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def planet_schematics(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.PlanetSchematics]:
+        file_path = self.dir_path / SdeFileNames.PLANET_SCHEMATICS
+
+        adapter = TypeAdapter(RTD.PlanetSchematics)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def races(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Races]:
+        file_path = self.dir_path / SdeFileNames.RACES
+
+        adapter = TypeAdapter(RTD.Races)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def sde_info(self, **kwargs: dict[str, Any]) -> RTD.SdeInfo:
+        file_path = self.dir_path / SdeFileNames.SDE_INFO
+        reader = read_jsonl_dicts(file_path)
+        sde_info = next(iter(reader), None)
+
+        adapter = TypeAdapter(RTD.SdeInfo)
+        sde_info = adapter.validate_python(sde_info, extra="forbid")
+        return sde_info
+
+    def skin_licenses(self, **kwargs: dict[str, Any]) -> Iterable[RTD.SkinLicenses]:
+        file_path = self.dir_path / SdeFileNames.SKIN_LICENSES
+
+        adapter = TypeAdapter(RTD.SkinLicenses)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def skin_materials(self, **kwargs: dict[str, Any]) -> Iterable[RTD.SkinMaterials]:
+        file_path = self.dir_path / SdeFileNames.SKIN_MATERIALS
+
+        adapter = TypeAdapter(RTD.SkinMaterials)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def skins(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Skins]:
+        file_path = self.dir_path / SdeFileNames.SKINS
+
+        adapter = TypeAdapter(RTD.Skins)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def sovereignty_upgrades(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.SovereigntyUpgrades]:
+        file_path = self.dir_path / SdeFileNames.SOVEREIGNTY_UPGRADES
+
+        adapter = TypeAdapter(RTD.SovereigntyUpgrades)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def station_operations(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.StationOperations]:
+        file_path = self.dir_path / SdeFileNames.STATION_OPERATIONS
+
+        adapter = TypeAdapter(RTD.StationOperations)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def station_services(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.StationServices]:
+        file_path = self.dir_path / SdeFileNames.STATION_SERVICES
+
+        adapter = TypeAdapter(RTD.StationServices)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def translation_languages(
+        self, **kwargs: dict[str, Any]
+    ) -> Iterable[RTD.TranslationLanguages]:
+        file_path = self.dir_path / SdeFileNames.TRANSLATION_LANGUAGES
+
+        adapter = TypeAdapter(RTD.TranslationLanguages)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def type_bonus(self, **kwargs: dict[str, Any]) -> Iterable[RTD.TypeBonus]:
+        file_path = self.dir_path / SdeFileNames.TYPE_BONUS
+
+        adapter = TypeAdapter(RTD.TypeBonus)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def type_dogma(self, **kwargs: dict[str, Any]) -> Iterable[RTD.TypeDogma]:
+        file_path = self.dir_path / SdeFileNames.TYPE_DOGMA
+
+        adapter = TypeAdapter(RTD.TypeDogma)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def type_materials(self, **kwargs: dict[str, Any]) -> Iterable[RTD.TypeMaterials]:
+        file_path = self.dir_path / SdeFileNames.TYPE_MATERIALS
+
+        adapter = TypeAdapter(RTD.TypeMaterials)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
+
+    def eve_types(self, **kwargs: dict[str, Any]) -> Iterable[RTD.EveTypes]:
+        file_path = self.dir_path / SdeFileNames.TYPES
+
+        adapter = TypeAdapter(RTD.EveTypes)
+        for item in read_jsonl_dicts(file_path):
+            yield adapter.validate_python(item, extra="forbid")
+        return
 
     def validate(self, file_name: SdeFileNames) -> None:
         """Validate a specific SDE file."""
         match file_name:
             case SdeFileNames.AGENTS_IN_SPACE:
-                _ = list(self.agents_in_space(validate=True))
+                _ = list(self.agents_in_space())
             case SdeFileNames.AGENT_TYPES:
-                _ = list(self.agent_types(validate=True))
+                _ = list(self.agent_types())
             case SdeFileNames.ANCESTRIES:
-                _ = list(self.ancestries(validate=True))
+                _ = list(self.ancestries())
             case SdeFileNames.BLOODLINES:
-                _ = list(self.bloodlines(validate=True))
+                _ = list(self.bloodlines())
             case SdeFileNames.BLUEPRINTS:
-                _ = list(self.blueprints(validate=True))
+                _ = list(self.blueprints())
             case SdeFileNames.CATEGORIES:
-                _ = list(self.categories(validate=True))
+                _ = list(self.categories())
             case SdeFileNames.CERTIFICATES:
-                _ = list(self.certificates(validate=True))
+                _ = list(self.certificates())
             case SdeFileNames.CHARACTER_ATTRIBUTES:
-                _ = list(self.character_attributes(validate=True))
+                _ = list(self.character_attributes())
             case SdeFileNames.COMPRESSIBLE_TYPES:
-                _ = list(self.compressible_types(validate=True))
+                _ = list(self.compressible_types())
             case SdeFileNames.CONTRABAND_TYPES:
-                _ = list(self.contraband_types(validate=True))
+                _ = list(self.contraband_types())
             case SdeFileNames.CONTROL_TOWER_RESOURCES:
-                _ = list(self.control_tower_resources(validate=True))
+                _ = list(self.control_tower_resources())
             case SdeFileNames.CORPORATION_ACTIVITIES:
-                _ = list(self.corporation_activities(validate=True))
+                _ = list(self.corporation_activities())
             case SdeFileNames.DEBUFF_COLLECTIONS:
-                _ = list(self.debuff_collections(validate=True))
+                _ = list(self.debuff_collections())
             case SdeFileNames.DOGMA_ATTRIBUTE_CATEGORIES:
-                _ = list(self.dogma_attribute_categories(validate=True))
+                _ = list(self.dogma_attribute_categories())
             case SdeFileNames.DOGMA_ATTRIBUTES:
-                _ = list(self.dogma_attributes(validate=True))
+                _ = list(self.dogma_attributes())
             case SdeFileNames.DOGMA_EFFECTS:
-                _ = list(self.dogma_effects(validate=True))
+                _ = list(self.dogma_effects())
             case SdeFileNames.DOGMA_UNITS:
-                _ = list(self.dogma_units(validate=True))
+                _ = list(self.dogma_units())
             case SdeFileNames.DYNAMIC_ITEM_ATTRIBUTES:
-                _ = list(self.dynamic_item_attributes(validate=True))
+                _ = list(self.dynamic_item_attributes())
             case SdeFileNames.FACTIONS:
-                _ = list(self.factions(validate=True))
+                _ = list(self.factions())
             case SdeFileNames.FREELANCE_JOB_SCHEMAS:
-                _ = self.freelance_job_schemas(validate=True)
+                _ = self.freelance_job_schemas()
             case SdeFileNames.GRAPHICS:
-                _ = list(self.graphics(validate=True))
+                _ = list(self.graphics())
             case SdeFileNames.GROUPS:
-                _ = list(self.groups(validate=True))
+                _ = list(self.groups())
             case SdeFileNames.ICONS:
-                _ = list(self.icons(validate=True))
+                _ = list(self.icons())
             case SdeFileNames.LANDMARKS:
-                _ = list(self.landmarks(validate=True))
+                _ = list(self.landmarks())
             case SdeFileNames.MAP_ASTEROID_BELTS:
-                _ = list(self.map_asteroid_belts(validate=True))
+                _ = list(self.map_asteroid_belts())
             case SdeFileNames.MAP_CONSTELLATIONS:
-                _ = list(self.map_constellations(validate=True))
+                _ = list(self.map_constellations())
             case SdeFileNames.MAP_MOONS:
-                _ = list(self.map_moons(validate=True))
+                _ = list(self.map_moons())
             case SdeFileNames.MAP_PLANETS:
-                _ = list(self.map_planets(validate=True))
+                _ = list(self.map_planets())
             case SdeFileNames.MAP_REGIONS:
-                _ = list(self.map_regions(validate=True))
+                _ = list(self.map_regions())
             case SdeFileNames.MAP_SOLAR_SYSTEMS:
-                _ = list(self.map_solar_systems(validate=True))
+                _ = list(self.map_solar_systems())
             case SdeFileNames.MAP_STARGATES:
-                _ = list(self.map_stargates(validate=True))
+                _ = list(self.map_stargates())
             case SdeFileNames.MAP_STARS:
-                _ = list(self.map_stars(validate=True))
+                _ = list(self.map_stars())
             case SdeFileNames.MARKET_GROUPS:
-                _ = list(self.market_groups(validate=True))
+                _ = list(self.market_groups())
             case SdeFileNames.MASTERIES:
-                _ = list(self.masteries(validate=True))
+                _ = list(self.masteries())
             case SdeFileNames.META_GROUPS:
-                _ = list(self.meta_groups(validate=True))
+                _ = list(self.meta_groups())
             case SdeFileNames.NPC_CHARACTERS:
-                _ = list(self.npc_characters(validate=True))
+                _ = list(self.npc_characters())
             case SdeFileNames.NPC_CORPORATION_DIVISIONS:
-                _ = list(self.npc_corporation_divisions(validate=True))
+                _ = list(self.npc_corporation_divisions())
             case SdeFileNames.NPC_CORPORATIONS:
-                _ = list(self.npc_corporations(validate=True))
+                _ = list(self.npc_corporations())
             case SdeFileNames.NPC_STATIONS:
-                _ = list(self.npc_stations(validate=True))
+                _ = list(self.npc_stations())
             case SdeFileNames.PLANET_RESOURCES:
-                _ = list(self.planet_resources(validate=True))
+                _ = list(self.planet_resources())
             case SdeFileNames.PLANET_SCHEMATICS:
-                _ = list(self.planet_schematics(validate=True))
+                _ = list(self.planet_schematics())
             case SdeFileNames.RACES:
-                _ = list(self.races(validate=True))
+                _ = list(self.races())
             case SdeFileNames.SDE_INFO:
-                _ = self.sde_info(validate=True)
+                _ = self.sde_info()
             case SdeFileNames.SKIN_LICENSES:
-                _ = list(self.skin_licenses(validate=True))
+                _ = list(self.skin_licenses())
             case SdeFileNames.SKIN_MATERIALS:
-                _ = list(self.skin_materials(validate=True))
+                _ = list(self.skin_materials())
             case SdeFileNames.SKINS:
-                _ = list(self.skins(validate=True))
+                _ = list(self.skins())
             case SdeFileNames.SOVEREIGNTY_UPGRADES:
-                _ = list(self.sovereignty_upgrades(validate=True))
+                _ = list(self.sovereignty_upgrades())
             case SdeFileNames.STATION_OPERATIONS:
-                _ = list(self.station_operations(validate=True))
+                _ = list(self.station_operations())
             case SdeFileNames.STATION_SERVICES:
-                _ = list(self.station_services(validate=True))
+                _ = list(self.station_services())
             case SdeFileNames.TRANSLATION_LANGUAGES:
-                _ = list(self.translation_languages(validate=True))
+                _ = list(self.translation_languages())
             case SdeFileNames.TYPE_BONUS:
-                _ = list(self.type_bonus(validate=True))
+                _ = list(self.type_bonus())
             case SdeFileNames.TYPE_DOGMA:
-                _ = list(self.type_dogma(validate=True))
+                _ = list(self.type_dogma())
             case SdeFileNames.TYPE_MATERIALS:
-                _ = list(self.type_materials(validate=True))
+                _ = list(self.type_materials())
             case SdeFileNames.TYPES:
-                _ = list(self.eve_types(validate=True))
+                _ = list(self.eve_types())
             case _:
                 raise ValueError(f"Unknown SDE file name: {file_name}")
 

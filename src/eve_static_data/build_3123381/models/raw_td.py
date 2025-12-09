@@ -863,9 +863,15 @@ class TypeMaterials_Material(TypedDict):
     quantity: int
 
 
+class TypeMaterials_RandomizedMaterial(TypedDict):
+    materialTypeID: int
+    quantityMax: int
+    quantityMin: int
+
+
 class TypeMaterials(TypedDict):
     _key: int
-    materials: list[TypeMaterials_Material]
+    materials: list[TypeMaterials_Material | TypeMaterials_RandomizedMaterial]
 
 
 class EveTypes(TypedDict):
