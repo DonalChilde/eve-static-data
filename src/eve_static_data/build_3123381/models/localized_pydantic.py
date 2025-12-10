@@ -509,7 +509,7 @@ class EveType(BaseModel):
     """Model for file types.jsonl, as represented in SDTD.Types."""
 
     key: int
-    groupID: int
+    groupID: int | None
     mass: float | None
     name: str
     portionSize: int
