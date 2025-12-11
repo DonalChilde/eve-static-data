@@ -38,7 +38,7 @@ def get_normalized_eve_types(
     market_groups = access.market_groups
     meta_groups = access.meta_groups
 
-    for typeID, eve_type in eve_types.data.items():
+    for eve_type in eve_types.data.values():
         group = groups.data.get(eve_type.groupID) if eve_type.groupID else None
         category = categories.data.get(group.categoryID) if group else None
         market_group = (
