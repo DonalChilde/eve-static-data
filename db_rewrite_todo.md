@@ -22,3 +22,5 @@ Rewrite sde access to focus on importing to and using a sqlite db for sde access
 - Make a dev doc with complete instructions on how to update for release of new schema sde data.
 - make a script to generate a test data set from sde data. Generated data should be repeatable when using same sde.
 This data can be used for pytest validation of the pydantic models.
+- Update usage docs.
+- Docs to include detailed sde format information and explainations, links to sde webpages, etc.
