@@ -23,7 +23,7 @@ type SimpleJSON = tuple[Any, ExpandedHeaders]
 async def download_file(
     url: str,
     *,
-    headers: dict[str, str],
+    headers: dict[str, str] | None = None,
     file_path: Path,
     overwrite: bool = False,
 ) -> ExpandedHeaders:
@@ -32,7 +32,6 @@ async def download_file(
     Args:
         url: The URL to download the file from.
         headers: The headers to include in the request.
-        session: An optional aiohttp ClientSession to use for the request.
         file_path: The path to save the downloaded file to.
         overwrite: Whether to overwrite the file if it already exists.
 
@@ -93,7 +92,9 @@ async def download_file(
     return expanded_headers
 
 
-async def download_text(url: str, *, headers: dict[str, str]) -> SimpleText:
+async def download_text(
+    url: str, *, headers: dict[str, str] | None = None
+) -> SimpleText:
     """Download a text file from a URL and return its content as a string.
 
     Args:
@@ -124,7 +125,9 @@ async def download_text(url: str, *, headers: dict[str, str]) -> SimpleText:
     return (text, result_headers)
 
 
-async def download_json(url: str, *, headers: dict[str, str]) -> SimpleJSON:
+async def download_json(
+    url: str, *, headers: dict[str, str] | None = None
+) -> SimpleJSON:
     """Download JSON data from a URL.
 
     Args:
