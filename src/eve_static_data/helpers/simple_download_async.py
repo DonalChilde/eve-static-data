@@ -94,7 +94,15 @@ async def download_file(
 
 
 async def download_text(url: str, *, headers: dict[str, str]) -> SimpleText:
-    """Download a text file from a URL and return its content as a string."""
+    """Download a text file from a URL and return its content as a string.
+
+    Args:
+        url: The URL to download the text from.
+        headers: The headers to include in the request.
+
+    Returns:
+        A tuple containing the downloaded text and the expanded headers.
+    """
     logger.info(f"Downloading text from {url}")
     start = perf_counter()
     async with aiohttp.ClientSession() as session:
@@ -117,7 +125,15 @@ async def download_text(url: str, *, headers: dict[str, str]) -> SimpleText:
 
 
 async def download_json(url: str, *, headers: dict[str, str]) -> SimpleJSON:
-    """Download JSON data from a URL."""
+    """Download JSON data from a URL.
+
+    Args:
+        url: The URL to download the JSON from.
+        headers: The headers to include in the request.
+
+    Returns:
+        A tuple containing the downloaded JSON data and the expanded headers.
+    """
     logger.info(f"Downloading JSON from {url}")
     start = perf_counter()
     async with aiohttp.ClientSession() as session:
