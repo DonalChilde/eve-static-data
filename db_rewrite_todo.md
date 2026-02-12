@@ -24,3 +24,21 @@ Rewrite sde access to focus on importing to and using a sqlite db for sde access
 This data can be used for pytest validation of the pydantic models.
 - Update usage docs.
 - Docs to include detailed sde format information and explainations, links to sde webpages, etc.
+
+
+## Current Tasks
+
+- Test cli download of latest, and previous SDE data.
+- Refactor code to reflect one release = one build version.
+  - add metadata to reflect supported build version.
+  - add check and warning if changelog shows unsupported build version. - Automatic each start? cached? once per day.
+  - update to reflect latest version, note where changes are required for future doc references.
+ 
+
+## Completed Tasks
+
+- Ensure CLI support for online SDE.
+  - Check for latest available sde version. 
+  - Check online version against current version.
+  - Download and display changelog.
+  - Download sde.
