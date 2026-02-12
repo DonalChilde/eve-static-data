@@ -1,5 +1,7 @@
 """Settings module for Eve Argus."""
 
+from string import Template
+
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -55,6 +57,22 @@ class EveStaticDataSettings(BaseSettings):
         default="https://developers.eveonline.com/static-data/tranquility/schema-changelog.yaml",
         description="The URL to get the SDE schema changelog.",
     )
+
+    def resolve_sde_download_url(self, build_number: str, variant: str) -> str:
+        """Resolve the SDE download URL for a specific build number and variant."""
+        url_template = Template(self.sde_file_template)
+        url = f"{self.sde_base_url}{url_template.substitute(variant=variant, build_number=build_number)}"
+        return url
+
+    def resolve_sde_latest_info_url(self) -> str:
+        """Resolve the URL to get the latest SDE information."""
+        url = f"{self.sde_base_url}{self.sde_latest_info}"
+        return url
+
+    def resolve_sde_changelog_url(self) -> str:
+        """Resolve the URL to get the SDE schema changelog."""
+        url = f"{self.sde_base_url}{self.sde_schema_changelog_url}"
+        return url
 
 
 def get_settings() -> EveStaticDataSettings:
