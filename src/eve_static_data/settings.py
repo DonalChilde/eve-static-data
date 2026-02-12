@@ -54,11 +54,11 @@ class EveStaticDataSettings(BaseSettings):
         description="The URL template to download the SDE data file. build-number can be any valid build number or latest. variant can be jsonl or yaml",
     )
     sde_schema_changelog_url: str = Field(
-        default="https://developers.eveonline.com/static-data/tranquility/schema-changelog.yaml",
+        default="/tranquility/schema-changelog.yaml",
         description="The URL to get the SDE schema changelog.",
     )
 
-    def resolve_sde_download_url(self, build_number: str, variant: str) -> str:
+    def resolve_sde_download_url(self, build_number: int, variant: str) -> str:
         """Resolve the SDE download URL for a specific build number and variant."""
         url_template = Template(self.sde_file_template)
         url = f"{self.sde_base_url}{url_template.substitute(variant=variant, build_number=build_number)}"
