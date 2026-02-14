@@ -1,10 +1,15 @@
 """CLI commands for working with the SDE database."""
 
+from pathlib import Path
+from typing import Annotated
+
 import typer
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+import eve_static_data.helpers.db_import as DBI
 import eve_static_data.models.db as DBM
+from eve_static_data.access.raw_json_td import RawJsonFileAccessValidator
 from eve_static_data.helpers.db import create_db, db_exists, engine_factory
 from eve_static_data.settings import get_settings
 
@@ -12,11 +17,13 @@ app = typer.Typer(no_args_is_help=True)
 
 
 @app.command(name="import")
-def import_db():
+def import_db(
+    sde_path: Annotated[Path, typer.Argument(help="The path to the SDE jsonl files.")],
+):
     """Import the SDE database."""
     settings = get_settings()
     if settings.db_path().exists():
-        typer.echo("The SDE database already exists.")
+        typer.echo("The SDE database file already exists.")
         backup_prompt = typer.prompt(
             "Do you want to backup the existing database? [y/N]", default="N"
         )
@@ -29,11 +36,7 @@ def import_db():
         if overwrite_prompt.lower() != "y":
             raise typer.Exit(code=1)
         settings.db_path().unlink()
-    engine = engine_factory(str(settings.db_path()))
-    typer.echo("Creating the SDE database...")
-    create_db(engine)
-    typer.echo("Importing the SDE database...")
-    # TODO: Add the actual import logic here
+    import_data(sde_path)
 
 
 @app.command()
@@ -71,4 +74,32 @@ def backup():
     typer.echo("Backing up the SDE database...")
     raise NotImplementedError(
         "SDE database backup functionality is not implemented yet."
+    )
+
+
+def import_data(sde_path: Path):
+    """Import the SDE data into the database."""
+    settings = get_settings()
+    engine = engine_factory(str(settings.db_path()))
+    typer.echo("Creating the SDE database...")
+    create_db(engine)
+    typer.echo("Importing the SDE database...")
+    validator = RawJsonFileAccessValidator(sde_path)
+
+    # Import each file one by one, and log the time taken for each file. This will help identify any bottlenecks in the import process.
+    result = DBI.sde_info(engine, validator)
+    typer.echo(
+        f"Imported {result.count} sde_info records in {result.duration:.2f} seconds."
+    )
+    result = DBI.agents_in_space(engine, validator)
+    typer.echo(
+        f"Imported {result.count} agents_in_space records in {result.duration:.2f} seconds."
+    )
+    result = DBI.agent_types(engine, validator)
+    typer.echo(
+        f"Imported {result.count} agent_types records in {result.duration:.2f} seconds."
+    )
+    result = DBI.ancestries(engine, validator)
+    typer.echo(
+        f"Imported {result.count} ancestries records in {result.duration:.2f} seconds."
     )
