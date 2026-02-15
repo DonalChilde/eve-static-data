@@ -8,6 +8,7 @@ from typing import Annotated
 import typer
 from rich.console import Console
 
+from eve_static_data.access.raw_json_td import RawJsonFileAccessValidator
 from eve_static_data.helpers.dict_diagnostics import (
     collect_dict_keys_and_types_recursive,
 )
@@ -22,6 +23,28 @@ from eve_static_data.type_explorer.sde_types import sde_type_info
 app = typer.Typer(no_args_is_help=True)
 
 # eve-static-data sde dev dict-sig ~/projects/tmp/sde-download-test/sde-3081406-jsonl -f ~/projects/tmp/sde-download-test/sde-3081406-dict-sig.json -b 3081406
+
+
+@app.command()
+def validate_jsonl(
+    sde_directory: Annotated[
+        Path, typer.Argument(help="The directory containing the SDE data.")
+    ],
+):
+    """Validate the jsonl files in a directory against the TypedDict models."""
+    console = Console()
+    console.print(
+        f"[bold green]Validating jsonl files in directory: {sde_directory}[/bold green]"
+    )
+    validator = RawJsonFileAccessValidator(dir_path=sde_directory)
+    validator.validate_all()
+    if validator.validation_errors:
+        console.print(
+            f"[bold red]Validation completed with {len(validator.validation_errors)} errors:[/bold red]"
+        )
+        console.print(f"[bold red]See logs for more details.[/bold red]")
+        for error in validator.validation_errors:
+            console.print(f"[bold red]{error.source} {error.error}[/bold red]")
 
 
 @app.command()

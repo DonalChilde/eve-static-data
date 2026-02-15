@@ -103,3 +103,11 @@ def import_data(sde_path: Path):
     typer.echo(
         f"Imported {result.count} ancestries records in {result.duration:.2f} seconds."
     )
+    result = DBI.bloodlines(engine, validator)
+    typer.echo(
+        f"Imported {result.count} bloodlines records in {result.duration:.2f} seconds."
+    )
+    result = DBI.blueprints(engine, validator)
+    typer.echo(
+        f"Imported {result.count} blueprints records in {result.duration:.2f} seconds."
+    )
