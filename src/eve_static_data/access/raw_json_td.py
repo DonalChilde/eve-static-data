@@ -10,7 +10,7 @@ from typing import Any, cast
 
 from pydantic import TypeAdapter, ValidationError
 
-from eve_static_data.helpers.jsonl_reader import read_jsonl_dicts
+from eve_static_data.access.raw_json import RawJsonFileAccess
 from eve_static_data.models import raw_td as RTD
 
 from .raw_json_td_protocol import RawJsonTDProtocol
@@ -19,324 +19,265 @@ from .sde_file_names import SdeFileNames
 logger = logging.getLogger(__name__)
 
 
-class RawJsonFileAccess(RawJsonTDProtocol):
+class RawJsonTDFileAccess(RawJsonTDProtocol):
     def __init__(self, sde_dir: Path) -> None:
         self.sde_dir = sde_dir
+        self.access = RawJsonFileAccess(sde_dir)
 
     def agents_in_space(self, **kwargs: dict[str, Any]) -> Iterable[RTD.AgentsInSpace]:
-        file_path = self.sde_dir / SdeFileNames.AGENTS_IN_SPACE
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.agents_in_space():
             yield cast(RTD.AgentsInSpace, item)
 
     def agent_types(self, **kwargs: dict[str, Any]) -> Iterable[RTD.AgentTypes]:
-        file_path = self.sde_dir / SdeFileNames.AGENT_TYPES
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.agent_types():
             yield cast(RTD.AgentTypes, item)
 
     def ancestries(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Ancestries]:
-        file_path = self.sde_dir / SdeFileNames.ANCESTRIES
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.ancestries():
             yield cast(RTD.Ancestries, item)
 
     def bloodlines(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Bloodlines]:
-        file_path = self.sde_dir / SdeFileNames.BLOODLINES
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.bloodlines():
             yield cast(RTD.Bloodlines, item)
 
     def blueprints(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Blueprints]:
-        file_path = self.sde_dir / SdeFileNames.BLUEPRINTS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.blueprints():
             yield cast(RTD.Blueprints, item)
 
     def categories(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Categories]:
-        file_path = self.sde_dir / SdeFileNames.CATEGORIES
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.categories():
             yield cast(RTD.Categories, item)
 
     def certificates(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Certificates]:
-        file_path = self.sde_dir / SdeFileNames.CERTIFICATES
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.certificates():
             yield cast(RTD.Certificates, item)
 
     def character_attributes(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.CharacterAttributes]:
-        file_path = self.sde_dir / SdeFileNames.CHARACTER_ATTRIBUTES
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.character_attributes():
             yield cast(RTD.CharacterAttributes, item)
 
     def compressible_types(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.CompressibleTypes]:
-        file_path = self.sde_dir / SdeFileNames.COMPRESSIBLE_TYPES
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.compressible_types():
             yield cast(RTD.CompressibleTypes, item)
 
     def contraband_types(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.ContrabandTypes]:
-        file_path = self.sde_dir / SdeFileNames.CONTRABAND_TYPES
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.contraband_types():
             yield cast(RTD.ContrabandTypes, item)
 
     def control_tower_resources(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.ControlTowerResources]:
-        file_path = self.sde_dir / SdeFileNames.CONTROL_TOWER_RESOURCES
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.control_tower_resources():
             yield cast(RTD.ControlTowerResources, item)
 
     def corporation_activities(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.CorporationActivities]:
-        file_path = self.sde_dir / SdeFileNames.CORPORATION_ACTIVITIES
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.corporation_activities():
             yield cast(RTD.CorporationActivities, item)
 
     def debuff_collections(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.DebuffCollections]:
-        file_path = self.sde_dir / SdeFileNames.DEBUFF_COLLECTIONS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.debuff_collections():
             yield cast(RTD.DebuffCollections, item)
 
     def dogma_attribute_categories(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.DogmaAttributeCategories]:
-        file_path = self.sde_dir / SdeFileNames.DOGMA_ATTRIBUTE_CATEGORIES
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.dogma_attribute_categories():
             yield cast(RTD.DogmaAttributeCategories, item)
 
     def dogma_attributes(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.DogmaAttributes]:
-        file_path = self.sde_dir / SdeFileNames.DOGMA_ATTRIBUTES
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.dogma_attributes():
             yield cast(RTD.DogmaAttributes, item)
 
     def dogma_effects(self, **kwargs: dict[str, Any]) -> Iterable[RTD.DogmaEffects]:
-        file_path = self.sde_dir / SdeFileNames.DOGMA_EFFECTS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.dogma_effects():
             yield cast(RTD.DogmaEffects, item)
 
     def dogma_units(self, **kwargs: dict[str, Any]) -> Iterable[RTD.DogmaUnits]:
-        file_path = self.sde_dir / SdeFileNames.DOGMA_UNITS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.dogma_units():
             yield cast(RTD.DogmaUnits, item)
 
     def dynamic_item_attributes(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.DynamicItemAttributes]:
-        file_path = self.sde_dir / SdeFileNames.DYNAMIC_ITEM_ATTRIBUTES
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.dynamic_item_attributes():
             yield cast(RTD.DynamicItemAttributes, item)
 
     def factions(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Factions]:
-        file_path = self.sde_dir / SdeFileNames.FACTIONS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.factions():
             yield cast(RTD.Factions, item)
 
     def freelance_job_schemas(
         self, **kwargs: dict[str, Any]
     ) -> RTD.FreelanceJobSchemas:
-        file_path = self.sde_dir / SdeFileNames.FREELANCE_JOB_SCHEMAS
-        return next(iter(read_jsonl_dicts(file_path)))
+        return self.access.freelance_job_schemas()
 
     def graphics(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Graphics]:
-        file_path = self.sde_dir / SdeFileNames.GRAPHICS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.graphics():
             yield cast(RTD.Graphics, item)
 
     def groups(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Groups]:
-        file_path = self.sde_dir / SdeFileNames.GROUPS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.groups():
             yield cast(RTD.Groups, item)
 
     def icons(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Icons]:
-        file_path = self.sde_dir / SdeFileNames.ICONS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.icons():
             yield cast(RTD.Icons, item)
 
     def landmarks(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Landmarks]:
-        file_path = self.sde_dir / SdeFileNames.LANDMARKS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.landmarks():
             yield cast(RTD.Landmarks, item)
 
     def map_asteroid_belts(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.MapAsteroidBelts]:
-        file_path = self.sde_dir / SdeFileNames.MAP_ASTEROID_BELTS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.map_asteroid_belts():
             yield cast(RTD.MapAsteroidBelts, item)
 
     def map_constellations(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.MapConstellations]:
-        file_path = self.sde_dir / SdeFileNames.MAP_CONSTELLATIONS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.map_constellations():
             yield cast(RTD.MapConstellations, item)
 
     def map_moons(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MapMoons]:
-        file_path = self.sde_dir / SdeFileNames.MAP_MOONS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.map_moons():
             yield cast(RTD.MapMoons, item)
 
     def map_planets(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MapPlanets]:
-        file_path = self.sde_dir / SdeFileNames.MAP_PLANETS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.map_planets():
             yield cast(RTD.MapPlanets, item)
 
     def map_regions(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MapRegions]:
-        file_path = self.sde_dir / SdeFileNames.MAP_REGIONS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.map_regions():
             yield cast(RTD.MapRegions, item)
 
     def map_solar_systems(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.MapSolarSystems]:
-        file_path = self.sde_dir / SdeFileNames.MAP_SOLAR_SYSTEMS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.map_solar_systems():
             yield cast(RTD.MapSolarSystems, item)
 
     def map_stargates(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MapStargates]:
-        file_path = self.sde_dir / SdeFileNames.MAP_STARGATES
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.map_stargates():
             yield cast(RTD.MapStargates, item)
 
     def map_stars(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MapStars]:
-        file_path = self.sde_dir / SdeFileNames.MAP_STARS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.map_stars():
             yield cast(RTD.MapStars, item)
 
     def market_groups(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MarketGroups]:
-        file_path = self.sde_dir / SdeFileNames.MARKET_GROUPS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.market_groups():
             yield cast(RTD.MarketGroups, item)
 
     def masteries(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Masteries]:
-        file_path = self.sde_dir / SdeFileNames.MASTERIES
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.masteries():
             yield cast(RTD.Masteries, item)
 
     def meta_groups(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MetaGroups]:
-        file_path = self.sde_dir / SdeFileNames.META_GROUPS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.meta_groups():
             yield cast(RTD.MetaGroups, item)
 
     def npc_characters(self, **kwargs: dict[str, Any]) -> Iterable[RTD.NpcCharacters]:
-        file_path = self.sde_dir / SdeFileNames.NPC_CHARACTERS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.npc_characters():
             yield cast(RTD.NpcCharacters, item)
 
     def npc_corporation_divisions(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.NpcCorporationDivisions]:
-        file_path = self.sde_dir / SdeFileNames.NPC_CORPORATION_DIVISIONS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.npc_corporation_divisions():
             yield cast(RTD.NpcCorporationDivisions, item)
 
     def npc_corporations(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.NpcCorporations]:
-        file_path = self.sde_dir / SdeFileNames.NPC_CORPORATIONS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.npc_corporations():
             yield cast(RTD.NpcCorporations, item)
 
     def npc_stations(self, **kwargs: dict[str, Any]) -> Iterable[RTD.NpcStations]:
-        file_path = self.sde_dir / SdeFileNames.NPC_STATIONS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.npc_stations():
             yield cast(RTD.NpcStations, item)
 
     def planet_resources(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.PlanetResources]:
-        file_path = self.sde_dir / SdeFileNames.PLANET_RESOURCES
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.planet_resources():
             yield cast(RTD.PlanetResources, item)
 
     def planet_schematics(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.PlanetSchematics]:
-        file_path = self.sde_dir / SdeFileNames.PLANET_SCHEMATICS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.planet_schematics():
             yield cast(RTD.PlanetSchematics, item)
 
     def races(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Races]:
-        file_path = self.sde_dir / SdeFileNames.RACES
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.races():
             yield cast(RTD.Races, item)
 
     def sde_info(self, **kwargs: dict[str, Any]) -> RTD.SdeInfo:
-        file_path = self.sde_dir / SdeFileNames.SDE_INFO
-        reader = read_jsonl_dicts(file_path)
-        sde_info = next(iter(reader), None)
-        if sde_info is None:
-            raise ValueError("SDE info file is empty.")
-        if "buildNumber" not in sde_info:
-            raise ValueError("SDE info file is missing 'buildNumber' key.")
-        return cast(RTD.SdeInfo, sde_info)
+        return cast(RTD.SdeInfo, self.access.sde_info())
 
     def skin_licenses(self, **kwargs: dict[str, Any]) -> Iterable[RTD.SkinLicenses]:
-        file_path = self.sde_dir / SdeFileNames.SKIN_LICENSES
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.skin_licenses():
             yield cast(RTD.SkinLicenses, item)
 
     def skin_materials(self, **kwargs: dict[str, Any]) -> Iterable[RTD.SkinMaterials]:
-        file_path = self.sde_dir / SdeFileNames.SKIN_MATERIALS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.skin_materials():
             yield cast(RTD.SkinMaterials, item)
 
     def skins(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Skins]:
-        file_path = self.sde_dir / SdeFileNames.SKINS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.skins():
             yield cast(RTD.Skins, item)
 
     def sovereignty_upgrades(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.SovereigntyUpgrades]:
-        file_path = self.sde_dir / SdeFileNames.SOVEREIGNTY_UPGRADES
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.sovereignty_upgrades():
             yield cast(RTD.SovereigntyUpgrades, item)
 
     def station_operations(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.StationOperations]:
-        file_path = self.sde_dir / SdeFileNames.STATION_OPERATIONS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.station_operations():
             yield cast(RTD.StationOperations, item)
 
     def station_services(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.StationServices]:
-        file_path = self.sde_dir / SdeFileNames.STATION_SERVICES
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.station_services():
             yield cast(RTD.StationServices, item)
 
     def translation_languages(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.TranslationLanguages]:
-        file_path = self.sde_dir / SdeFileNames.TRANSLATION_LANGUAGES
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.translation_languages():
             yield cast(RTD.TranslationLanguages, item)
 
     def type_bonus(self, **kwargs: dict[str, Any]) -> Iterable[RTD.TypeBonus]:
-        file_path = self.sde_dir / SdeFileNames.TYPE_BONUS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.type_bonus():
             yield cast(RTD.TypeBonus, item)
 
     def type_dogma(self, **kwargs: dict[str, Any]) -> Iterable[RTD.TypeDogma]:
-        file_path = self.sde_dir / SdeFileNames.TYPE_DOGMA
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.type_dogma():
             yield cast(RTD.TypeDogma, item)
 
     def type_materials(self, **kwargs: dict[str, Any]) -> Iterable[RTD.TypeMaterials]:
-        file_path = self.sde_dir / SdeFileNames.TYPE_MATERIALS
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.type_materials():
             yield cast(RTD.TypeMaterials, item)
 
     def eve_types(self, **kwargs: dict[str, Any]) -> Iterable[RTD.EveTypes]:
-        file_path = self.sde_dir / SdeFileNames.TYPES
-        for item in read_jsonl_dicts(file_path):
+        for item in self.access.eve_types():
             yield cast(RTD.EveTypes, item)
 
 
@@ -361,7 +302,7 @@ class RawJsonFileAccessValidator(RawJsonTDProtocol):
         but rather as a development tool to identify and fix issues with the raw data.
         """
         self.dir_path = dir_path
-        self.access = RawJsonFileAccess(dir_path)
+        self.access = RawJsonTDFileAccess(dir_path)
         self.validation_errors: list[ValidationResult] = []
 
     def agents_in_space(self, **kwargs: dict[str, Any]) -> Iterable[RTD.AgentsInSpace]:
