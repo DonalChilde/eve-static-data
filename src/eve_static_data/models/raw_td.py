@@ -1,9 +1,9 @@
-"""Typed definitions for raw_td models."""
+"""TypedDict definitions for EVE SDE Datasets."""
 
 from typing import Any, NotRequired, TypedDict
 
 # ------------------------------------------------------------------------------
-# Sub-level Typed definitions.
+# Common TypedDict definitions.
 # ------------------------------------------------------------------------------
 
 
@@ -51,7 +51,7 @@ class Position2D(TypedDict):
 
 
 # ------------------------------------------------------------------------------
-# File level Typed definitions.
+# File level TypedDict definitions.
 # ------------------------------------------------------------------------------
 
 

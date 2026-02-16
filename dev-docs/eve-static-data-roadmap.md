@@ -8,14 +8,18 @@ EVE Static Data is a cli program used to download, validate, and export the EVE 
  - [x] Download and display the SDE schema changelog.
  - [x] Download the SDE and save to file.
  - [x] Generate and save a summary of the available fields in the datasets, used in TypedDict schema generation.
- - [] Validate the SDE against a TypedDict schema.
-   - [] Create a TypedDict representaion of the SDE dataset.
+ - [] Offer a pydantic schema for the SDE.
+ - [] Offer a TypedDict schema for the SDE.
+ - [] Validate the SDE against a Pydantic schema.
+   - [] Create a Pydantic representaion of the SDE dataset.
      - [] Note that some datasets can be marked as non validating, due to the complexity of the data.
    - [] collect data on the validation status of the SDE
      - [] display data in the terminal.
      - [] Save validation data to a json file.
      - [] Generate and save a text vlidation report.
  - [x] Provide an api to iterate over the jsonl records, loaded as TypedDicts.
+ - [] Provide an api to iterate over the jsonl records, loaded as Pydantic models.
+ - [] Offer export of json data from pydantic models.
  - [] Offer an export of localized SDE data as a pydantic backed set of JSON files.
    - [] Offer lazy loading dataset access api.
    - [] Include some derived datasets for convenience, 
