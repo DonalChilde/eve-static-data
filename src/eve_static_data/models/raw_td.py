@@ -159,17 +159,17 @@ class CharacterAttributes(TypedDict):
     shortDescription: str
 
 
+class CompressibleTypes(TypedDict):
+    _key: int
+    compressedTypeID: int
+
+
 class ContrabandTypes_Faction(TypedDict):
     _key: int
     attackMinSec: float
     confiscateMinSec: float
     fineByValue: float
     standingLoss: float
-
-
-class CompressibleTypes(TypedDict):
-    _key: int
-    compressedTypeID: int
 
 
 class ContrabandTypes(TypedDict):
