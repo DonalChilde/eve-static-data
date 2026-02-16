@@ -23,7 +23,7 @@ type SimpleJSON = tuple[Any, ExpandedHeaders]
 async def download_file(
     url: str,
     *,
-    headers: dict[str, str],
+    headers: dict[str, str] | None = None,
     file_path: Path,
     overwrite: bool = False,
 ) -> ExpandedHeaders:
@@ -32,7 +32,6 @@ async def download_file(
     Args:
         url: The URL to download the file from.
         headers: The headers to include in the request.
-        session: An optional aiohttp ClientSession to use for the request.
         file_path: The path to save the downloaded file to.
         overwrite: Whether to overwrite the file if it already exists.
 
@@ -93,8 +92,18 @@ async def download_file(
     return expanded_headers
 
 
-async def download_text(url: str, *, headers: dict[str, str]) -> SimpleText:
-    """Download a text file from a URL and return its content as a string."""
+async def download_text(
+    url: str, *, headers: dict[str, str] | None = None
+) -> SimpleText:
+    """Download a text file from a URL and return its content as a string.
+
+    Args:
+        url: The URL to download the text from.
+        headers: The headers to include in the request.
+
+    Returns:
+        A tuple containing the downloaded text and the expanded headers.
+    """
     logger.info(f"Downloading text from {url}")
     start = perf_counter()
     async with aiohttp.ClientSession() as session:
@@ -116,8 +125,18 @@ async def download_text(url: str, *, headers: dict[str, str]) -> SimpleText:
     return (text, result_headers)
 
 
-async def download_json(url: str, *, headers: dict[str, str]) -> SimpleJSON:
-    """Download JSON data from a URL."""
+async def download_json(
+    url: str, *, headers: dict[str, str] | None = None
+) -> SimpleJSON:
+    """Download JSON data from a URL.
+
+    Args:
+        url: The URL to download the JSON from.
+        headers: The headers to include in the request.
+
+    Returns:
+        A tuple containing the downloaded JSON data and the expanded headers.
+    """
     logger.info(f"Downloading JSON from {url}")
     start = perf_counter()
     async with aiohttp.ClientSession() as session:

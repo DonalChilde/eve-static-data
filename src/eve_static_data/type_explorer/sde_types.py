@@ -9,7 +9,9 @@ from eve_static_data.helpers.jsonl_reader import read_jsonl_dicts
 
 def sde_type_info(dir_path: Path, build_number: str) -> dict[str, RecursiveKeyInfo]:
     """Load and return the SDE info as a dictionary."""
-    jsonl_files = dir_path.glob("*.jsonl")
+    # TODO this can be made more generic, and added to the general dict_diagnostics module
+    # as a utility function for loading and analyzing dicts from jsonl files in a directory.
+    jsonl_files = sorted(list(dir_path.glob("*.jsonl")))
     sde_type_info: dict[str, RecursiveKeyInfo] = {}
     for jsonl_file in jsonl_files:
         dicts = read_jsonl_dicts(jsonl_file)

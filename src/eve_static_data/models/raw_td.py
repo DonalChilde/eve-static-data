@@ -45,6 +45,11 @@ class Position(TypedDict):
     z: float
 
 
+class Position2D(TypedDict):
+    x: float
+    y: float
+
+
 # ------------------------------------------------------------------------------
 # File level Typed definitions.
 # ------------------------------------------------------------------------------
@@ -98,8 +103,8 @@ class Blueprints_Products(TypedDict):
 
 
 class Blueprints_Activity(TypedDict):
-    materials: list[Materials]
-    skills: list[Skills]
+    materials: NotRequired[list[Materials]]
+    skills: NotRequired[list[Skills]]
     time: int
     products: NotRequired[list[Blueprints_Products]]
 
@@ -212,7 +217,7 @@ class DebuffCollections(TypedDict):
     _key: int
     aggregateMode: str
     developerDescription: str
-    itemModifiers: list[DebuffCollections_ItemModifier]
+    itemModifiers: NotRequired[list[DebuffCollections_ItemModifier]]
     locationGroupModifiers: NotRequired[list[DebuffCollections_LocationGroupModifier]]
     locationModifiers: NotRequired[list[DebuffCollections_LocationModifier]]
     locationRequiredSkillModifiers: NotRequired[
@@ -255,9 +260,9 @@ class DogmaEffects_ModifierInfo(TypedDict):
     effectID: NotRequired[int]
     func: str
     groupID: NotRequired[int]
-    modifiedAttributeID: int
-    modifyingAttributeID: int
-    operation: int
+    modifiedAttributeID: NotRequired[int]
+    modifyingAttributeID: NotRequired[int]
+    operation: NotRequired[int]
     skillTypeID: NotRequired[int]
 
 
@@ -377,9 +382,10 @@ class MapAsteroidBelts_Statistics(TypedDict):
     escapeVelocity: float
     locked: bool
     massDust: float
-    massGas: float
+    massGas: NotRequired[float]
     orbitPeriod: float
     orbitRadius: float
+    rotationRate: float
     spectralClass: str
     surfaceGravity: float
     temperature: float
@@ -420,7 +426,7 @@ class MapMoons_Statistics(TypedDict):
     escapeVelocity: float
     locked: bool
     massDust: float
-    massGas: float
+    massGas: NotRequired[float]
     orbitPeriod: float
     orbitRadius: float
     pressure: float
@@ -458,13 +464,13 @@ class MapPlanets_Statistics(TypedDict):
     escapeVelocity: float
     locked: bool
     massDust: float
-    massGas: float
-    orbitPeriod: float
-    orbitRadius: float
+    massGas: NotRequired[float]
+    orbitPeriod: NotRequired[float]
+    orbitRadius: NotRequired[float]
     pressure: float
     rotationRate: float
     spectralClass: str
-    surfaceGravity: float
+    surfaceGravity: NotRequired[float]
     temperature: float
 
 
@@ -499,12 +505,18 @@ class MapSolarSystems(TypedDict):
     _key: int
     border: NotRequired[bool]
     constellationID: int
+    corridor: NotRequired[bool]
+    disallowedAnchorCategories: NotRequired[list[int]]
+    disallowedAnchorGroups: NotRequired[list[int]]
+    factionID: NotRequired[int]
+    fringe: NotRequired[bool]
     hub: NotRequired[bool]
     international: NotRequired[bool]
     luminosity: NotRequired[float]
     name: LocalizedString
     planetIDs: NotRequired[list[int]]
     position: Position
+    position2D: NotRequired[Position2D]
     radius: float
     regionID: int
     regional: NotRequired[bool]
@@ -512,13 +524,8 @@ class MapSolarSystems(TypedDict):
     securityStatus: float
     starID: NotRequired[int]
     stargateIDs: NotRequired[list[int]]
-    corridor: NotRequired[bool]
-    fringe: NotRequired[bool]
-    wormholeClassID: NotRequired[int]
     visualEffect: NotRequired[str]
-    disallowedAnchorCategories: NotRequired[list[int]]
-    disallowedAnchorGroups: NotRequired[list[int]]
-    factionID: NotRequired[int]
+    wormholeClassID: NotRequired[int]
 
 
 class MapStargates_Destination(TypedDict):
@@ -660,13 +667,13 @@ class NpcCorporations(TypedDict):
     tickerName: str
     uniqueName: bool
     allowedMemberRaces: NotRequired[list[int]]
-    corporationTrades: list[NpcCorporations_Trade]
-    divisions: list[NpcCorporations_Divisions]
+    corporationTrades: NotRequired[list[NpcCorporations_Trade]]
+    divisions: NotRequired[list[NpcCorporations_Divisions]]
     enemyID: NotRequired[int]
     factionID: NotRequired[int]
     friendID: NotRequired[int]
     iconID: NotRequired[int]
-    investors: list[NpcCorporations_Investors]
+    investors: NotRequired[list[NpcCorporations_Investors]]
     lpOfferTables: NotRequired[list[int]]
     mainActivityID: NotRequired[int]
     raceID: NotRequired[int]
