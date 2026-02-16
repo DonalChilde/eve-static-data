@@ -9,6 +9,8 @@ from eve_static_data.helpers.jsonl_reader import read_jsonl_dicts
 from .raw_json_protocol import RawJsonProtocol
 from .sde_file_names import SdeFileNames
 
+# TODO rethink naming, do something that doesnt suck.
+
 
 class RawJsonFileAccess(RawJsonProtocol):
     def __init__(self, dir_path: Path) -> None:

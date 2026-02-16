@@ -208,3 +208,162 @@ class ContrabandTypes(BaseModel):
 
     key: int = Field(..., alias="_key")
     factions: list[ContrabandTypes_Faction]
+
+
+class ControlTowerResources_Resource(BaseModel):
+    factionID: int | None = None
+    minSecurityLevel: float | None = None
+    purpose: int
+    quantity: int
+    resourceTypeID: int
+
+
+class ControlTowerResources(BaseModel):
+    """Model for the controlTowerResources.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    resources: list[ControlTowerResources_Resource]
+
+
+class CorporationActivities(BaseModel):
+    """Model for the corporationActivities.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    name: LocalizedString
+
+
+class DebuffCollections_LocationGroupModifier(BaseModel):
+    dogmaAttributeID: int
+    groupID: int
+
+
+class DebuffCollections_LocationModifier(BaseModel):
+    dogmaAttributeID: int
+
+
+class DebuffCollections_LocationRequiredSkillModifier(BaseModel):
+    dogmaAttributeID: int
+    skillID: int
+
+
+class DebuffCollections_ItemModifier(BaseModel):
+    dogmaAttributeID: int
+
+
+class DebuffCollections(BaseModel):
+    """Model for the debuffCollections.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    aggregateMode: str
+    developerDescription: str
+    itemModifiers: list[DebuffCollections_ItemModifier] | None = None
+    locationGroupModifiers: list[DebuffCollections_LocationGroupModifier] | None = None
+    locationModifiers: list[DebuffCollections_LocationModifier] | None = None
+    locationRequiredSkillModifiers: (
+        list[DebuffCollections_LocationRequiredSkillModifier] | None
+    ) = None
+    operationName: str
+    showOutputValueInUI: str
+    displayName: LocalizedString | None = None
+
+
+class DogmaAttributeCategories(BaseModel):
+    """Model for the dogmaAttributeCategories.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    description: str | None = None
+    name: str
+
+
+class DogmaAttributes(BaseModel):
+    """Model for the dogmaAttributes.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    attributeCategoryID: int | None = None
+    dataType: int
+    defaultValue: float
+    description: str | None = None
+    displayWhenZero: bool
+    highIsGood: bool
+    name: str
+    published: bool
+    stackable: bool
+    displayName: LocalizedString | None = None
+    iconID: int | None = None
+    tooltipDescription: LocalizedString | None = None
+    tooltipTitle: LocalizedString | None = None
+    unitID: int | None = None
+    chargeRechargeTimeID: int | None = None
+    maxAttributeID: int | None = None
+    minAttributeID: int | None = None
+
+
+class DogmaEffects_ModifierInfo(BaseModel):
+    domain: str
+    effectID: int | None = None
+    func: str
+    groupID: int | None = None
+    modifiedAttributeID: int | None = None
+    modifyingAttributeID: int | None = None
+    operation: int | None = None
+    skillTypeID: int | None = None
+
+
+class DogmaEffects(BaseModel):
+    """Model for the dogmaEffects.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    disallowAutoRepeat: bool
+    dischargeAttributeID: int | None = None
+    durationAttributeID: int | None = None
+    effectCategoryID: int
+    electronicChance: bool
+    guid: str | None = None
+    isAssistance: bool
+    isOffensive: bool
+    isWarpSafe: bool
+    name: str
+    propulsionChance: bool
+    published: bool
+    rangeChance: bool
+    distribution: int | None = None
+    falloffAttributeID: int | None = None
+    rangeAttributeID: int | None = None
+    trackingSpeedAttributeID: int | None = None
+    description: LocalizedString | None = None
+    displayName: LocalizedString | None = None
+    iconID: int | None = None
+    modifierInfo: list[DogmaEffects_ModifierInfo] | None = None
+    npcUsageChanceAttributeID: int | None = None
+    npcActivationChanceAttributeID: int | None = None
+    fittingUsageChanceAttributeID: int | None = None
+    resistanceAttributeID: int | None = None
+
+
+class DogmaUnits(BaseModel):
+    """Model for the dogmaUnits.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    description: LocalizedString | None = None
+    displayName: LocalizedString | None = None
+    name: str
+
+
+class DynamicItemAttributes_AttributeID(BaseModel):
+    key: int = Field(..., alias="_key")
+    highIsGood: bool | None = None
+    max: float
+    min: float
+
+
+class DynamicItemAttributes_InputOutputMapping(BaseModel):
+    applicableTypes: list[int]
+    resultingType: int
+
+
+class DynamicItemAttributes(BaseModel):
+    """Model for the dynamicItemAttributes.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    attributeIDs: list[DynamicItemAttributes_AttributeID]
+    inputOutputMapping: list[DynamicItemAttributes_InputOutputMapping]

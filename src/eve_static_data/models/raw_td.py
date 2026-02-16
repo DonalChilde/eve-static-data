@@ -336,7 +336,9 @@ class Factions(TypedDict):
     uniqueName: bool
 
 
-type FreelanceJobSchemas = dict[str, Any]
+class FreelanceJobSchemas(TypedDict):
+    _key: int
+    _value: dict[str, Any]
 
 
 class Graphics(TypedDict):

@@ -6,8 +6,6 @@ This allows for easier mapping between the SDE data and the database models.
 The `_key` field in the SDE jsonl data is renamed to `key` due to issues with pydantic.
 """
 
-from typing import Optional
-
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 

@@ -1,12 +1,12 @@
 """Code for validating SDE datasets against the TypedDict schema."""
 
-from pathlib import Path
 from typing import Any
 
 from pydantic import BaseModel, ValidationError
 
-import eve_static_data.models.raw_pydantic as PM
-from eve_static_data.access.raw_json_protocol import RawJsonProtocol
+from eve_static_data.access.sde_reader import SdeReader
+from eve_static_data.models.sde_datasets import SdeDatasets
+from eve_static_data.models.sde_datasets_models import dataset_pydantic_model_lookup
 
 
 class DatasetValidationRecord(BaseModel):
@@ -44,19 +44,20 @@ class DatasetValidator:
         )
 
 
-def agents_in_space(access: RawJsonProtocol) -> DatasetStats:
-    """Validate the agentsInSpace dataset."""
+def validate_dataset(access: SdeReader, dataset: SdeDatasets) -> DatasetStats:
+    """Validate a dataset against its pydantic model."""
     stats = DatasetStats(
-        dataset_name="agentsInSpace",
+        dataset_name=dataset.value,
         total_records=0,
         invalid_records=0,
         validation_errors=[],
     )
-    for record_number, record in enumerate(access.agents_in_space(), start=1):
+    model = dataset_pydantic_model_lookup(dataset)
+    for record_number, record in enumerate(access.records(dataset), start=1):
         stats.total_records += 1
         try:
             # Validate the record against the pydantic model.
-            _ = PM.AgentsInSpace.model_validate(record, extra="forbid")
+            _ = model.model_validate(record, extra="forbid")
         except ValidationError as e:
             stats.invalid_records += 1
             stats.validation_errors.append(
@@ -67,9 +68,3 @@ def agents_in_space(access: RawJsonProtocol) -> DatasetStats:
                 )
             )
     return stats
-
-
-# TODO test this validation code and add validation methods for the other datasets.
-# Check if _key vs key is an issue in the pydantic models, and if so,
-# add a pre-processing step to rename _key to key before validation. or
-# update the pydantic models to accept both _key and key.
