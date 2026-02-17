@@ -4,7 +4,11 @@ from typing import Annotated, Any
 import typer
 
 from eve_static_data.access.sde_reader import SdeReader
-from eve_static_data.access.validation import SDEValidationResult, validate_dataset
+from eve_static_data.access.validation import (
+    SDEValidationResult,
+    validate_dataset_pydantic,
+    validate_dataset_typeddict,
+)
 from eve_static_data.models.sde_datasets import SdeDatasets
 
 app = typer.Typer()
@@ -20,15 +24,29 @@ def validate(
     sde_info: dict[str, Any] = next(
         iter(access.records(SdeDatasets.SDE_INFO))
     )  # Get the first (and only) record from _sde.jsonl
-    validator = SDEValidationResult(
+    validator_pydantic = SDEValidationResult(
+        build_number=sde_info["buildNumber"],
+        release_date=sde_info["releaseDate"],
+        dataset_stats={},
+    )
+    typer.echo("\n\nValidating with pydantic models...\n\n")
+    dataset = SdeDatasets.AGENTS_IN_SPACE
+    validator_pydantic.dataset_stats[dataset.value] = validate_dataset_pydantic(
+        access, dataset
+    )
+    print(validator_pydantic.model_dump_json(indent=2))
+
+    typer.echo("\n\nNow validating with TypedDict models...\n\n")
+    validator_typeddict = SDEValidationResult(
         build_number=sde_info["buildNumber"],
         release_date=sde_info["releaseDate"],
         dataset_stats={},
     )
     dataset = SdeDatasets.AGENTS_IN_SPACE
-    validator.dataset_stats[dataset.value] = validate_dataset(access, dataset)
-
-    print(validator.model_dump_json(indent=2))
+    validator_typeddict.dataset_stats[dataset.value] = validate_dataset_typeddict(
+        access, dataset
+    )
+    print(validator_typeddict.model_dump_json(indent=2))
 
 
 if __name__ == "__main__":

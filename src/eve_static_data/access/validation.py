@@ -2,11 +2,14 @@
 
 from typing import Any
 
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel, TypeAdapter, ValidationError
 
 from eve_static_data.access.sde_reader import SdeReader
 from eve_static_data.models.sde_datasets import SdeDatasets
-from eve_static_data.models.sde_datasets_models import dataset_pydantic_model_lookup
+from eve_static_data.models.sde_datasets_models import (
+    dataset_pydantic_model_lookup,
+    dataset_td_model_lookup,
+)
 
 
 class DatasetValidationRecord(BaseModel):
@@ -44,7 +47,7 @@ class DatasetValidator:
         )
 
 
-def validate_dataset(access: SdeReader, dataset: SdeDatasets) -> DatasetStats:
+def validate_dataset_pydantic(access: SdeReader, dataset: SdeDatasets) -> DatasetStats:
     """Validate a dataset against its pydantic model."""
     stats = DatasetStats(
         dataset_name=dataset.value,
@@ -58,6 +61,32 @@ def validate_dataset(access: SdeReader, dataset: SdeDatasets) -> DatasetStats:
         try:
             # Validate the record against the pydantic model.
             _ = model.model_validate(record, extra="forbid")
+        except ValidationError as e:
+            stats.invalid_records += 1
+            stats.validation_errors.append(
+                DatasetValidationRecord(
+                    record_number=record_number,
+                    data=record,
+                    error_message=str(e),
+                )
+            )
+    return stats
+
+
+def validate_dataset_typeddict(access: SdeReader, dataset: SdeDatasets) -> DatasetStats:
+    """Validate a dataset against its TypedDict model."""
+    stats = DatasetStats(
+        dataset_name=dataset.value,
+        total_records=0,
+        invalid_records=0,
+        validation_errors=[],
+    )
+    model = TypeAdapter(dataset_td_model_lookup(dataset))
+    for record_number, record in enumerate(access.records(dataset), start=1):
+        stats.total_records += 1
+        try:
+            # Validate the record against the TypedDict model.
+            _ = model.validate_python(record, extra="forbid")
         except ValidationError as e:
             stats.invalid_records += 1
             stats.validation_errors.append(
