@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Any, cast
 
 from eve_static_data.access.sde_reader import SdeReader
-from eve_static_data.models import raw_td as RTD
+from eve_static_data.models import sde_typeddict as RTD
 from eve_static_data.models.sde_dataset_files import SdeDatasetFiles
 
 from .raw_json_td_protocol import RawJsonTDProtocol

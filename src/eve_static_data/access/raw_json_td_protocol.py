@@ -1,7 +1,7 @@
 from collections.abc import Iterable
 from typing import Any, Protocol
 
-from ..models import raw_td as RTD
+from ..models import sde_typeddict as RTD
 
 # ruff: noqa: D102
 
