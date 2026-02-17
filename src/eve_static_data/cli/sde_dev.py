@@ -8,6 +8,8 @@ from typing import Annotated
 import typer
 from rich.console import Console
 
+from eve_static_data.access.sde_reader import SdeReader
+
 # from eve_static_data.access.raw_json_td import RawJsonFileAccessValidator
 from eve_static_data.helpers.dict_diagnostics import (
     collect_dict_keys_and_types_recursive,
@@ -17,7 +19,7 @@ from eve_static_data.helpers.sde_typed_dicts_to_file import (
     make_typed_dict,
     sde_typed_dicts_to_file,
 )
-from eve_static_data.raw_jsonl_access import RawJsonFileAccess, SdeFileNames
+from eve_static_data.models.sde_dataset_files import SdeDatasetFiles
 from eve_static_data.type_explorer.sde_types import sde_type_info
 
 app = typer.Typer(no_args_is_help=True)
@@ -109,9 +111,11 @@ def dict_sig(
         f"[bold green]Generating TypedDict definitions for file: {sde_file} build: {build_number} at: {sde_directory}[/bold green]"
     )
     files = (
-        [SdeFileNames[sde_file.upper()]] if sde_file != "ALL" else list(SdeFileNames)
+        [SdeDatasetFiles[sde_file.upper()]]
+        if sde_file != "ALL"
+        else list(SdeDatasetFiles)
     )
-    access = RawJsonFileAccess(sde_directory=sde_directory)
+    access = SdeReader(sde_path=sde_directory)
     if output_file:
         console.print(f"[bold green]Output file: {output_file}[/bold green]")
         try:
@@ -125,7 +129,7 @@ def dict_sig(
             raise typer.Exit(code=1) from e
         return
     for file_name_enum in files:
-        data_iter = access.jsonl_iter(file_name_enum)
+        data_iter = access.records(file_name_enum)
         source_info = f"SDE file: {file_name_enum}, build: {build_number}"
         key_info = collect_dict_keys_and_types_recursive(data_iter, source_info)
         console.print(f"[bold blue]Dicionary Sig for {file_name_enum}:[/bold blue]")
@@ -174,11 +178,13 @@ def generate_typed_dicts(
             raise error from e
         return
     files = (
-        [SdeFileNames[sde_file.upper()]] if sde_file != "ALL" else list(SdeFileNames)
+        [SdeDatasetFiles[sde_file.upper()]]
+        if sde_file != "ALL"
+        else list(SdeDatasetFiles)
     )
-    access = RawJsonFileAccess(sde_directory=sde_directory)
+    access = SdeReader(sde_path=sde_directory)
     for file_name_enum in files:
-        data_iter = access.jsonl_iter(file_name_enum)
+        data_iter = access.records(file_name_enum)
         source_info = f"SDE file: {file_name_enum}, build: {build_number}"
         key_info = collect_dict_keys_and_types_recursive(data_iter, source_info)
         typed_dict = make_typed_dict(
