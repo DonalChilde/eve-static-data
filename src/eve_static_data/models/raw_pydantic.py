@@ -39,28 +39,38 @@ class LocalizedString(BaseModel):
 
 
 class Materials(BaseModel):
+    """Model used in multiple datasets for materials, e.g. in blueprints and typeMaterials."""
+
     typeID: int
     quantity: int
 
 
 class Skills(BaseModel):
+    """Model used in multiple datasets for skills, e.g. in blueprints and npcCharacters."""
+
     typeID: int
     level: int
 
 
 class Color(BaseModel):
+    """Model used in multiple datasets for color, e.g. in metaGroups."""
+
     b: float
     g: float
     r: float
 
 
 class Position(BaseModel):
+    """Model used in multiple datasets for position, e.g. in celestialObjects and npcCharacters."""
+
     x: float
     y: float
     z: float
 
 
 class Position2D(BaseModel):
+    """Model used in multiple datasets for 2D position, e.g. in mapSolarSystems."""
+
     x: float
     y: float
 
@@ -120,12 +130,16 @@ class Bloodlines(BaseModel):
 
 
 class Blueprints_Products(BaseModel):
+    """Nested model for the blueprints.jsonl SDE file."""
+
     typeID: int
     quantity: int
     probability: float | None = None
 
 
 class Blueprints_Activity(BaseModel):
+    """Nested model for the blueprints.jsonl SDE file."""
+
     materials: list[Materials] | None = None
     skills: list[Skills] | None = None
     time: int
@@ -133,6 +147,8 @@ class Blueprints_Activity(BaseModel):
 
 
 class Blueprints_Activities(BaseModel):
+    """Nested model for the blueprints.jsonl SDE file."""
+
     copying: Blueprints_Activity | None = None
     invention: Blueprints_Activity | None = None
     manufacturing: Blueprints_Activity | None = None
@@ -160,6 +176,8 @@ class Categories(BaseModel):
 
 
 class Certificates_SkillType(BaseModel):
+    """Nested model for the certificates.jsonl SDE file."""
+
     key: int = Field(..., alias="_key")
     basic: int
     standard: int
@@ -213,6 +231,8 @@ class ContrabandTypes(BaseModel):
 
 
 class ControlTowerResources_Resource(BaseModel):
+    """Nested model for the controlTowerResources.jsonl SDE file."""
+
     factionID: int | None = None
     minSecurityLevel: float | None = None
     purpose: int
@@ -235,20 +255,28 @@ class CorporationActivities(BaseModel):
 
 
 class DebuffCollections_LocationGroupModifier(BaseModel):
+    """Nested model for the debuffCollections.jsonl SDE file."""
+
     dogmaAttributeID: int
     groupID: int
 
 
 class DebuffCollections_LocationModifier(BaseModel):
+    """Nested model for the debuffCollections.jsonl SDE file."""
+
     dogmaAttributeID: int
 
 
 class DebuffCollections_LocationRequiredSkillModifier(BaseModel):
+    """Nested model for the debuffCollections.jsonl SDE file."""
+
     dogmaAttributeID: int
     skillID: int
 
 
 class DebuffCollections_ItemModifier(BaseModel):
+    """Nested model for the debuffCollections.jsonl SDE file."""
+
     dogmaAttributeID: int
 
 
@@ -301,6 +329,8 @@ class DogmaAttributes(BaseModel):
 
 
 class DogmaEffects_ModifierInfo(BaseModel):
+    """Nested model for the dogmaEffects.jsonl SDE file."""
+
     domain: str
     effectID: int | None = None
     func: str
@@ -352,6 +382,8 @@ class DogmaUnits(BaseModel):
 
 
 class DynamicItemAttributes_AttributeID(BaseModel):
+    """Nested model for the dynamicItemAttributes.jsonl SDE file."""
+
     key: int = Field(..., alias="_key")
     highIsGood: bool | None = None
     max: float
@@ -359,6 +391,8 @@ class DynamicItemAttributes_AttributeID(BaseModel):
 
 
 class DynamicItemAttributes_InputOutputMapping(BaseModel):
+    """Nested model for the dynamicItemAttributes.jsonl SDE file."""
+
     applicableTypes: list[int]
     resultingType: int
 
@@ -423,34 +457,33 @@ class Groups(BaseModel):
     iconID: int | None = None
 
 
-# TODO The below classes need the following refactors, using the previous classes as an example:
-# - Change the inherited model from TypedDict to BaseModel.
-# - Rename _key to key and add alias in the pydantic model definition.
-# - Add optional fields with default value of None for any fields that are not always present in the SDE data.
-# - Add a class docstring for each class, describing the source SDE file
+class Icons(BaseModel):
+    """Model for the icons.jsonl SDE file."""
 
-
-class Icons(TypedDict):
-    _key: int
+    key: int = Field(..., alias="_key")
     iconFile: str
 
 
-class Landmarks(TypedDict):
-    _key: int
+class Landmarks(BaseModel):
+    """Model for the landmarks.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
     description: LocalizedString
     name: LocalizedString
     position: Position
-    iconID: NotRequired[int]
-    locationID: NotRequired[int]
+    iconID: int | None = None
+    locationID: int | None = None
 
 
-class MapAsteroidBelts_Statistics(TypedDict):
+class MapAsteroidBelts_Statistics(BaseModel):
+    """Nested model for the mapAsteroidBelts.jsonl SDE file."""
+
     density: float
     eccentricity: float
     escapeVelocity: float
     locked: bool
     massDust: float
-    massGas: NotRequired[float]
+    massGas: float | None = None
     orbitPeriod: float
     orbitRadius: float
     rotationRate: float
@@ -459,42 +492,50 @@ class MapAsteroidBelts_Statistics(TypedDict):
     temperature: float
 
 
-class MapAsteroidBelts(TypedDict):
-    _key: int
+class MapAsteroidBelts(BaseModel):
+    """Model for the mapAsteroidBelts.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
     celestialIndex: int
     orbitID: int
     orbitIndex: int
     position: Position
-    radius: NotRequired[float]
+    radius: float | None = None
     solarSystemID: int
-    statistics: NotRequired[MapAsteroidBelts_Statistics]
+    statistics: MapAsteroidBelts_Statistics | None = None
     typeID: int
-    uniqueName: NotRequired[LocalizedString]
+    uniqueName: LocalizedString | None = None
 
 
-class MapConstellations(TypedDict):
-    _key: int
-    factionID: NotRequired[int]
+class MapConstellations(BaseModel):
+    """Model for the mapConstellations.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    factionID: int | None = None
     name: LocalizedString
     position: Position
     regionID: int
     solarSystemIDs: list[int]
-    wormholeClassID: NotRequired[int]
+    wormholeClassID: int | None = None
 
 
-class MapMoons_Attributes(TypedDict):
+class MapMoons_Attributes(BaseModel):
+    """Nested model for the mapMoons.jsonl SDE file."""
+
     heightMap1: int
     heightMap2: int
     shaderPreset: int
 
 
-class MapMoons_Statistics(TypedDict):
+class MapMoons_Statistics(BaseModel):
+    """Nested model for the mapMoons.jsonl SDE file."""
+
     density: float
     eccentricity: float
     escapeVelocity: float
     locked: bool
     massDust: float
-    massGas: NotRequired[float]
+    massGas: float | None = None
     orbitPeriod: float
     orbitRadius: float
     pressure: float
@@ -504,8 +545,10 @@ class MapMoons_Statistics(TypedDict):
     temperature: float
 
 
-class MapMoons(TypedDict):
-    _key: int
+class MapMoons(BaseModel):
+    """Model for the mapMoons.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
     attributes: MapMoons_Attributes
     celestialIndex: int
     orbitID: int
@@ -513,103 +556,119 @@ class MapMoons(TypedDict):
     position: Position
     radius: float
     solarSystemID: int
-    statistics: NotRequired[MapMoons_Statistics]
+    statistics: MapMoons_Statistics | None = None
     typeID: int
-    npcStationIDs: NotRequired[list[int]]
-    uniqueName: NotRequired[LocalizedString]
+    npcStationIDs: list[int] | None = None
+    uniqueName: LocalizedString | None = None
 
 
-class MapPlanets_Attributes(TypedDict):
+class MapPlanets_Attributes(BaseModel):
+    """Nested model for the mapPlanets.jsonl SDE file."""
+
     heightMap1: int
     heightMap2: int
     population: bool
     shaderPreset: int
 
 
-class MapPlanets_Statistics(TypedDict):
+class MapPlanets_Statistics(BaseModel):
+    """Nested model for the mapPlanets.jsonl SDE file."""
+
     density: float
     eccentricity: float
     escapeVelocity: float
     locked: bool
     massDust: float
-    massGas: NotRequired[float]
-    orbitPeriod: NotRequired[float]
-    orbitRadius: NotRequired[float]
+    massGas: float | None = None
+    orbitPeriod: float | None = None
+    orbitRadius: float | None = None
     pressure: float
     rotationRate: float
     spectralClass: str
-    surfaceGravity: NotRequired[float]
+    surfaceGravity: float | None = None
     temperature: float
 
 
-class MapPlanets(TypedDict):
-    _key: int
-    asteroidBeltIDs: NotRequired[list[int]]
+class MapPlanets(BaseModel):
+    """Model for the mapPlanets.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    asteroidBeltIDs: list[int] | None = None
     attributes: MapPlanets_Attributes
     celestialIndex: int
-    moonIDs: NotRequired[list[int]]
+    moonIDs: list[int] | None = None
     orbitID: int
     position: Position
     radius: int
     solarSystemID: int
-    statistics: NotRequired[MapPlanets_Statistics]
+    statistics: MapPlanets_Statistics | None = None
     typeID: int
-    npcStationIDs: NotRequired[list[int]]
-    uniqueName: NotRequired[LocalizedString]
+    npcStationIDs: list[int] | None = None
+    uniqueName: LocalizedString | None = None
 
 
-class MapRegions(TypedDict):
-    _key: int
+class MapRegions(BaseModel):
+    """Model for the mapRegions.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
     constellationIDs: list[int]
-    description: NotRequired[LocalizedString]
-    factionID: NotRequired[int]
+    description: LocalizedString | None = None
+    factionID: int | None = None
     name: LocalizedString
     nebulaID: int
     position: Position
-    wormholeClassID: NotRequired[int]
+    wormholeClassID: int | None = None
 
 
-class MapSolarSystems(TypedDict):
-    _key: int
-    border: NotRequired[bool]
+class MapSolarSystems(BaseModel):
+    """Model for the mapSolarSystems.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    border: bool | None = None
     constellationID: int
-    corridor: NotRequired[bool]
-    disallowedAnchorCategories: NotRequired[list[int]]
-    disallowedAnchorGroups: NotRequired[list[int]]
-    factionID: NotRequired[int]
-    fringe: NotRequired[bool]
-    hub: NotRequired[bool]
-    international: NotRequired[bool]
-    luminosity: NotRequired[float]
+    corridor: bool | None = None
+    disallowedAnchorCategories: list[int] | None = None
+    disallowedAnchorGroups: list[int] | None = None
+    factionID: int | None = None
+    fringe: bool | None = None
+    hub: bool | None = None
+    international: bool | None = None
+    luminosity: float | None = None
     name: LocalizedString
-    planetIDs: NotRequired[list[int]]
+    planetIDs: list[int] | None = None
     position: Position
-    position2D: NotRequired[Position2D]
+    position2D: Position2D | None = None
     radius: float
     regionID: int
-    regional: NotRequired[bool]
-    securityClass: NotRequired[str]
+    regional: bool | None = None
+    securityClass: str | None = None
     securityStatus: float
-    starID: NotRequired[int]
-    stargateIDs: NotRequired[list[int]]
-    visualEffect: NotRequired[str]
-    wormholeClassID: NotRequired[int]
+    starID: int | None = None
+    stargateIDs: list[int] | None = None
+    visualEffect: str | None = None
+    wormholeClassID: int | None = None
 
 
-class MapStargates_Destination(TypedDict):
+class MapStargates_Destination(BaseModel):
+    """Nested model for the mapStargates.jsonl SDE file."""
+
     solarSystemID: int
     stargateID: int
 
 
-class MapStargates(TypedDict):
-    _key: int
+class MapStargates(BaseModel):
+    """Model for the mapStargates.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
     destination: MapStargates_Destination
     position: Position
     solarSystemID: int
     typeID: int
 
 
-class MapStars_Statistics(TypedDict):
+class MapStars_Statistics(BaseModel):
+    """Nested model for the mapStars.jsonl SDE file."""
+
     age: float
     life: float
     luminosity: float
@@ -617,109 +676,137 @@ class MapStars_Statistics(TypedDict):
     temperature: float
 
 
-class MapStars(TypedDict):
-    _key: int
+class MapStars(BaseModel):
+    """Model for the mapStars.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
     radius: int
     solarSystemID: int
     statistics: MapStars_Statistics
     typeID: int
 
 
-class MarketGroups(TypedDict):
-    _key: int
-    description: NotRequired[LocalizedString]
+class MarketGroups(BaseModel):
+    """Model for the marketGroups.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    description: LocalizedString | None = None
     hasTypes: bool
-    iconID: NotRequired[int]
+    iconID: int | None = None
     name: LocalizedString
-    parentGroupID: NotRequired[int]
+    parentGroupID: int | None = None
 
 
-class Masteries_Value(TypedDict):
-    _key: int
-    _value: list[int]
+class Masteries_Value(BaseModel):
+    """Nested model for the masteries.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    value: list[int] = Field(..., alias="_value")
 
 
-class Masteries(TypedDict):
-    _key: int
-    _value: list[Masteries_Value]
+class Masteries(BaseModel):
+    """Model for the masteries.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    value: list[Masteries_Value] = Field(..., alias="_value")
 
 
-class MetaGroups(TypedDict):
-    _key: int
-    color: NotRequired[Color]
+class MetaGroups(BaseModel):
+    """Model for the metaGroups.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    color: Color | None = None
     name: LocalizedString
-    iconID: NotRequired[int]
-    iconSuffix: NotRequired[str]
-    description: NotRequired[LocalizedString]
+    iconID: int | None = None
+    iconSuffix: str | None = None
+    description: LocalizedString | None = None
 
 
-class NpcCharacters_Skill(TypedDict):
+class NpcCharacters_Skill(BaseModel):
+    """Nested model for the npcCharacters.jsonl SDE file."""
+
     typeID: int
 
 
-class NpcCharacters_Agent(TypedDict):
+class NpcCharacters_Agent(BaseModel):
+    """Nested model for the npcCharacters.jsonl SDE file."""
+
     agentTypeID: int
     divisionID: int
     isLocator: bool
     level: int
 
 
-class NpcCharacters(TypedDict):
-    _key: int
+class NpcCharacters(BaseModel):
+    """Model for the npcCharacters.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
     bloodlineID: int
     ceo: bool
     corporationID: int
     gender: bool
-    locationID: NotRequired[int]
+    locationID: int | None = None
     name: LocalizedString
     raceID: int
-    startDate: NotRequired[str]
+    startDate: str | None = None
     uniqueName: bool
-    skills: NotRequired[list[NpcCharacters_Skill]]
-    ancestryID: NotRequired[int]
-    careerID: NotRequired[int]
-    schoolID: NotRequired[int]
-    specialityID: NotRequired[int]
-    agent: NotRequired[NpcCharacters_Agent]
-    description: NotRequired[str]
+    skills: list[NpcCharacters_Skill] | None = None
+    ancestryID: int | None = None
+    careerID: int | None = None
+    schoolID: int | None = None
+    specialityID: int | None = None
+    agent: NpcCharacters_Agent | None = None
+    description: str | None = None
 
 
-class NpcCorporationDivisions(TypedDict):
-    _key: int
-    displayName: NotRequired[str]
+class NpcCorporationDivisions(BaseModel):
+    """Model for the npcCorporationDivisions.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    displayName: str | None = None
     internalName: str
     leaderTypeName: LocalizedString
     name: LocalizedString
-    description: NotRequired[LocalizedString]
+    description: LocalizedString | None = None
 
 
-class NpcCorporations_Trade(TypedDict):
-    _key: int
-    _value: float
+class NpcCorporations_Trade(BaseModel):
+    """Nested model for the npcCorporations.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    value: float = Field(..., alias="_value")
 
 
-class NpcCorporations_Divisions(TypedDict):
-    _key: int
+class NpcCorporations_Divisions(BaseModel):
+    """Nested model for the npcCorporations.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
     divisionNumber: int
     leaderID: int
     size: int
 
 
-class NpcCorporations_Investors(TypedDict):
-    _key: int
-    _value: int
+class NpcCorporations_Investors(BaseModel):
+    """Nested model for the npcCorporations.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    value: int = Field(..., alias="_value")
 
 
-class NpcCorporations_ExchangeRates(TypedDict):
-    _key: int
-    _value: float
+class NpcCorporations_ExchangeRates(BaseModel):
+    """Nested model for the npcCorporations.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    value: float = Field(..., alias="_value")
 
 
-class NpcCorporations(TypedDict):
-    _key: int
-    ceoID: NotRequired[int]
+class NpcCorporations(BaseModel):
+    """Model for the npcCorporations.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    ceoID: int | None = None
     deleted: bool
-    description: NotRequired[LocalizedString]
+    description: LocalizedString | None = None
     extent: str
     hasPlayerPersonnelManager: bool
     initialPrice: int
@@ -730,33 +817,35 @@ class NpcCorporations(TypedDict):
     sendCharTerminationMessage: bool
     shares: int
     size: str
-    stationID: NotRequired[int]
+    stationID: int | None = None
     taxRate: float
     tickerName: str
     uniqueName: bool
-    allowedMemberRaces: NotRequired[list[int]]
-    corporationTrades: NotRequired[list[NpcCorporations_Trade]]
-    divisions: NotRequired[list[NpcCorporations_Divisions]]
-    enemyID: NotRequired[int]
-    factionID: NotRequired[int]
-    friendID: NotRequired[int]
-    iconID: NotRequired[int]
-    investors: NotRequired[list[NpcCorporations_Investors]]
-    lpOfferTables: NotRequired[list[int]]
-    mainActivityID: NotRequired[int]
-    raceID: NotRequired[int]
-    sizeFactor: NotRequired[float]
-    solarSystemID: NotRequired[int]
-    secondaryActivityID: NotRequired[int]
-    exchangeRates: NotRequired[list[NpcCorporations_ExchangeRates]]
+    allowedMemberRaces: list[int] | None = None
+    corporationTrades: list[NpcCorporations_Trade] | None = None
+    divisions: list[NpcCorporations_Divisions] | None = None
+    enemyID: int | None = None
+    factionID: int | None = None
+    friendID: int | None = None
+    iconID: int | None = None
+    investors: list[NpcCorporations_Investors] | None = None
+    lpOfferTables: list[int] | None = None
+    mainActivityID: int | None = None
+    raceID: int | None = None
+    sizeFactor: float | None = None
+    solarSystemID: int | None = None
+    secondaryActivityID: int | None = None
+    exchangeRates: list[NpcCorporations_ExchangeRates] | None = None
 
 
-class NpcStations(TypedDict):
-    _key: int
-    celestialIndex: NotRequired[int]
+class NpcStations(BaseModel):
+    """Model for the npcStations.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    celestialIndex: int | None = None
     operationID: int
     orbitID: int
-    orbitIndex: NotRequired[int]
+    orbitIndex: int | None = None
     ownerID: int
     position: Position
     reprocessingEfficiency: float
@@ -767,100 +856,124 @@ class NpcStations(TypedDict):
     useOperationName: bool
 
 
-class PlanetResources(TypedDict):
-    _key: int
-    power: NotRequired[int]
-    workforce: NotRequired[int]
-    cycle_minutes: NotRequired[int]
-    harvest_silo_max: NotRequired[int]
-    maturation_cycle_minutes: NotRequired[int]
-    maturation_percent: NotRequired[int]
-    mature_silo_max: NotRequired[int]
-    reagent_harvest_amount: NotRequired[int]
-    reagent_type_id: NotRequired[int]
+class PlanetResources(BaseModel):
+    """Model for the planetResources.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    power: int | None = None
+    workforce: int | None = None
+    cycle_minutes: int | None = None
+    harvest_silo_max: int | None = None
+    maturation_cycle_minutes: int | None = None
+    maturation_percent: int | None = None
+    mature_silo_max: int | None = None
+    reagent_harvest_amount: int | None = None
+    reagent_type_id: int | None = None
 
 
-class PlanetSchematics_Types(TypedDict):
-    _key: int
+class PlanetSchematics_Types(BaseModel):
+    """Nested model for the planetSchematics.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
     isInput: bool
     quantity: int
 
 
-class PlanetSchematics(TypedDict):
-    _key: int
+class PlanetSchematics(BaseModel):
+    """Model for the planetSchematics.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
     cycleTime: int
     name: LocalizedString
     pins: list[int]
     types: list[PlanetSchematics_Types]
 
 
-class Races_Skill(TypedDict):
-    _key: int
-    _value: int
+class Races_Skill(BaseModel):
+    """Nested model for the races.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    value: int = Field(..., alias="_value")
 
 
-class Races(TypedDict):
-    _key: int
-    description: NotRequired[LocalizedString]
-    iconID: NotRequired[int]
+class Races(BaseModel):
+    """Model for the races.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    description: LocalizedString | None = None
+    iconID: int | None = None
     name: LocalizedString
-    shipTypeID: NotRequired[int]
+    shipTypeID: int | None = None
     skills: list[Races_Skill]
 
 
-class SdeInfo(TypedDict):
-    _key: str
+class SdeInfo(BaseModel):
+    """Model for the sdeInfo.jsonl SDE file."""
+
+    key: str = Field(..., alias="_key")
     buildNumber: int
     releaseDate: str
 
 
-class SkinLicenses(TypedDict):
-    _key: int
+class SkinLicenses(BaseModel):
+    """Model for the skinLicenses.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
     duration: int
     licenseTypeID: int
     skinID: int
-    isSingleUse: NotRequired[bool]
+    isSingleUse: bool | None = None
 
 
-class SkinMaterials(TypedDict):
-    _key: int
-    displayName: NotRequired[LocalizedString]
+class SkinMaterials(BaseModel):
+    """Model for the skinMaterials.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    displayName: LocalizedString | None = None
     materialSetID: int
 
 
-class Skins(TypedDict):
-    _key: int
+class Skins(BaseModel):
+    """Model for the skins.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
     allowCCPDevs: bool
     internalName: str
     skinMaterialID: int
     types: list[int]
     visibleSerenity: bool
     visibleTranquility: bool
-    isStructureSkin: NotRequired[bool]
-    skinDescription: NotRequired[LocalizedString]
+    isStructureSkin: bool | None = None
+    skinDescription: LocalizedString | None = None
 
 
-class SovereigntyUpgrades(TypedDict):
-    _key: int
-    fuel_hourly_upkeep: NotRequired[int]
-    fuel_startup_cost: NotRequired[int]
-    fuel_type_id: NotRequired[int]
+class SovereigntyUpgrades(BaseModel):
+    """Model for the sovereigntyUpgrades.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    fuel_hourly_upkeep: int | None = None
+    fuel_startup_cost: int | None = None
+    fuel_type_id: int | None = None
     mutually_exclusive_group: str
     power_allocation: int
     workforce_allocation: int
 
 
-class StationOperations_StationType(TypedDict):
-    _key: int
-    _value: int
+class StationOperations_StationType(BaseModel):
+    """Nested model for the stationOperations.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    value: int = Field(..., alias="_value")
 
 
-class StationOperations(TypedDict):
-    _key: int
+class StationOperations(BaseModel):
+    """Model for the stationOperations.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
     activityID: int
     border: float
     corridor: float
-    description: NotRequired[LocalizedString]
+    description: LocalizedString | None = None
     fringe: float
     hub: float
     manufacturingFactor: float
@@ -871,102 +984,130 @@ class StationOperations(TypedDict):
     stationTypes: list[StationOperations_StationType]
 
 
-class StationServices(TypedDict):
-    _key: int
+class StationServices(BaseModel):
+    """Model for the stationServices.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
     serviceName: LocalizedString
-    description: NotRequired[LocalizedString]
+    description: LocalizedString | None = None
 
 
-class TranslationLanguages(TypedDict):
-    _key: str
+class TranslationLanguages(BaseModel):
+    """Model for the translationLanguages.jsonl SDE file."""
+
+    key: str = Field(..., alias="_key")
     name: str
 
 
-class TypeBonus_RoleBonus(TypedDict):
-    bonus: NotRequired[int | float]
+class TypeBonus_RoleBonus(BaseModel):
+    """Nested model for the typeBonus.jsonl SDE file."""
+
+    bonus: int | float | None = None
     bonusText: LocalizedString
     importance: int
-    unitID: NotRequired[int]
+    unitID: int | None = None
 
 
-class TypeBonus_Types_Bonus(TypedDict):
-    bonus: NotRequired[int | float]
+class TypeBonus_Types_Bonus(BaseModel):
+    """Nested model for the typeBonus.jsonl SDE file."""
+
+    bonus: int | float | None = None
     bonusText: LocalizedString
     importance: int
-    unitID: NotRequired[int]
+    unitID: int | None = None
 
 
-class TypeBonus_Types(TypedDict):
-    _key: int
-    _value: list[TypeBonus_Types_Bonus]
+class TypeBonus_Types(BaseModel):
+    """Nested model for the typeBonus.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    value: list[TypeBonus_Types_Bonus] = Field(..., alias="_value")
 
 
-class TypeBonus_MiscBonus(TypedDict):
-    bonus: NotRequired[int | float]
+class TypeBonus_MiscBonus(BaseModel):
+    """Nested model for the typeBonus.jsonl SDE file."""
+
+    bonus: int | float | None = None
     bonusText: LocalizedString
     importance: int
-    isPositive: NotRequired[bool]
-    unitID: NotRequired[int]
+    isPositive: bool | None = None
+    unitID: int | None = None
 
 
-class TypeBonus(TypedDict):
-    _key: int
+class TypeBonus(BaseModel):
+    """Model for the typeBonus.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
     roleBonuses: list[TypeBonus_RoleBonus]
     types: list[TypeBonus_Types]
-    iconID: NotRequired[int]
-    miscBonuses: NotRequired[list[TypeBonus_MiscBonus]]
+    iconID: int | None = None
+    miscBonuses: list[TypeBonus_MiscBonus] | None = None
 
 
-class TypeDogma_Attributes(TypedDict):
+class TypeDogma_Attributes(BaseModel):
+    """Nested model for the typeDogma.jsonl SDE file."""
+
     attributeID: int
     value: float
 
 
-class TypeDogma_Effects(TypedDict):
+class TypeDogma_Effects(BaseModel):
+    """Nested model for the typeDogma.jsonl SDE file."""
+
     effectID: int
     isDefault: bool
 
 
-class TypeDogma(TypedDict):
-    _key: int
+class TypeDogma(BaseModel):
+    """Model for the typeDogma.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
     dogmaAttributes: list[TypeDogma_Attributes]
     dogmaEffects: list[TypeDogma_Effects]
 
 
-class TypeMaterials_Material(TypedDict):
+class TypeMaterials_Material(BaseModel):
+    """Nested model for the typeMaterials.jsonl SDE file."""
+
     materialTypeID: int
     quantity: int
 
 
-class TypeMaterials_RandomizedMaterial(TypedDict):
+class TypeMaterials_RandomizedMaterial(BaseModel):
+    """Nested model for the typeMaterials.jsonl SDE file."""
+
     materialTypeID: int
     quantityMax: int
     quantityMin: int
 
 
-class TypeMaterials(TypedDict):
-    _key: int
+class TypeMaterials(BaseModel):
+    """Model for the typeMaterials.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
     materials: list[TypeMaterials_Material]
     randomizedMaterials: list[TypeMaterials_RandomizedMaterial]
 
 
-class EveTypes(TypedDict):
-    _key: int
+class EveTypes(BaseModel):
+    """Model for the types.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
     groupID: int
-    mass: NotRequired[float]
+    mass: float | None = None
     name: LocalizedString
     portionSize: int
     published: bool
-    volume: NotRequired[float]
-    radius: NotRequired[float]
-    description: NotRequired[LocalizedString]
-    graphicID: NotRequired[int]
-    soundID: NotRequired[int]
-    iconID: NotRequired[int]
-    raceID: NotRequired[int]
-    basePrice: NotRequired[float]
-    marketGroupID: NotRequired[int]
-    capacity: NotRequired[float]
-    metaGroupID: NotRequired[int]
-    variationParentTypeID: NotRequired[int]
-    factionID: NotRequired[int]
+    volume: float | None = None
+    radius: float | None = None
+    description: LocalizedString | None = None
+    graphicID: int | None = None
+    soundID: int | None = None
+    iconID: int | None = None
+    raceID: int | None = None
+    basePrice: float | None = None
+    marketGroupID: int | None = None
+    capacity: float | None = None
+    metaGroupID: int | None = None
+    variationParentTypeID: int | None = None
+    factionID: int | None = None
