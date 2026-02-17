@@ -13,8 +13,6 @@ from eve_static_data.access.sde_reader import SdeReader
 from eve_static_data.access.validation import (
     SDEValidationResult,
     check_for_dataset_files,
-    validate_dataset_pydantic,
-    validate_dataset_typeddict,
     validate_sde_pydantic,
     validate_sde_typeddict,
 )
