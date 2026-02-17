@@ -109,7 +109,7 @@ class Ancestries(BaseModel):
     memory: int
     name: LocalizedString
     perception: int
-    shortDescription: int | None = None
+    shortDescription: str | None = None
     willpower: int
 
 
@@ -437,7 +437,7 @@ class FreelanceJobSchemas(BaseModel):
     """Model for the freelanceJobSchemas.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
-    value: dict[str, Any] = Field(..., alias="_value")
+    value: list[dict[str, Any]] = Field(..., alias="_value")
 
 
 class Graphics(BaseModel):
@@ -866,19 +866,23 @@ class NpcStations(BaseModel):
     useOperationName: bool
 
 
+class PlanetResources_Reagent(BaseModel):
+    """Nested model for the planetResources.jsonl SDE file."""
+
+    amount_per_cycle: int
+    cycle_period: int
+    secured_capacity: int
+    type_id: int
+    unsecured_capacity: int
+
+
 class PlanetResources(BaseModel):
     """Model for the planetResources.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     power: int | None = None
     workforce: int | None = None
-    cycle_minutes: int | None = None
-    harvest_silo_max: int | None = None
-    maturation_cycle_minutes: int | None = None
-    maturation_percent: int | None = None
-    mature_silo_max: int | None = None
-    reagent_harvest_amount: int | None = None
-    reagent_type_id: int | None = None
+    reagent: PlanetResources_Reagent | None = None
 
 
 class PlanetSchematics_Types(BaseModel):
@@ -914,7 +918,7 @@ class Races(BaseModel):
     iconID: int | None = None
     name: LocalizedString
     shipTypeID: int | None = None
-    skills: list[Races_Skill]
+    skills: list[Races_Skill] | None = None
 
 
 class SdeInfo(BaseModel):
@@ -957,16 +961,24 @@ class Skins(BaseModel):
     skinDescription: LocalizedString | None = None
 
 
+class SovereigntyUpgrades_Fuel(BaseModel):
+    """Nested model for the sovereigntyUpgrades.jsonl SDE file."""
+
+    hourly_upkeep: int
+    startup_cost: int
+    type_id: int
+
+
 class SovereigntyUpgrades(BaseModel):
     """Model for the sovereigntyUpgrades.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
-    fuel_hourly_upkeep: int | None = None
-    fuel_startup_cost: int | None = None
-    fuel_type_id: int | None = None
+    fuel: SovereigntyUpgrades_Fuel | None = None
     mutually_exclusive_group: str
-    power_allocation: int
-    workforce_allocation: int
+    power_allocation: int | None = None
+    power_production: int | None = None
+    workforce_allocation: int | None = None
+    workforce_production: int | None = None
 
 
 class StationOperations_StationType(BaseModel):
@@ -991,7 +1003,7 @@ class StationOperations(BaseModel):
     ratio: float
     researchFactor: float
     services: list[int]
-    stationTypes: list[StationOperations_StationType]
+    stationTypes: list[StationOperations_StationType] | None = None
 
 
 class StationServices(BaseModel):
@@ -1048,8 +1060,8 @@ class TypeBonus(BaseModel):
     """Model for the typeBonus.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
-    roleBonuses: list[TypeBonus_RoleBonus]
-    types: list[TypeBonus_Types]
+    roleBonuses: list[TypeBonus_RoleBonus] | None = None
+    types: list[TypeBonus_Types] | None = None
     iconID: int | None = None
     miscBonuses: list[TypeBonus_MiscBonus] | None = None
 
@@ -1073,7 +1085,7 @@ class TypeDogma(BaseModel):
 
     key: int = Field(..., alias="_key")
     dogmaAttributes: list[TypeDogma_Attributes]
-    dogmaEffects: list[TypeDogma_Effects]
+    dogmaEffects: list[TypeDogma_Effects] | None = None
 
 
 class TypeMaterials_Material(BaseModel):
@@ -1095,8 +1107,8 @@ class TypeMaterials(BaseModel):
     """Model for the typeMaterials.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
-    materials: list[TypeMaterials_Material]
-    randomizedMaterials: list[TypeMaterials_RandomizedMaterial]
+    materials: list[TypeMaterials_Material] | None = None
+    randomizedMaterials: list[TypeMaterials_RandomizedMaterial] | None = None
 
 
 class EveTypes(BaseModel):

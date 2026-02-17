@@ -357,7 +357,7 @@ class Factions(TypedDict):
 
 class FreelanceJobSchemas(TypedDict):
     _key: int
-    _value: dict[str, Any]
+    _value: list[dict[str, Any]]
 
 
 class Graphics(TypedDict):
@@ -720,17 +720,23 @@ class NpcStations(TypedDict):
     useOperationName: bool
 
 
+class PlanetResources_Reagent(TypedDict):
+    """Nested model for the planetResources.jsonl SDE file."""
+
+    amount_per_cycle: int
+    cycle_period: int
+    secured_capacity: int
+    type_id: int
+    unsecured_capacity: int
+
+
 class PlanetResources(TypedDict):
+    """Model for the planetResources.jsonl SDE file."""
+
     _key: int
     power: NotRequired[int]
     workforce: NotRequired[int]
-    cycle_minutes: NotRequired[int]
-    harvest_silo_max: NotRequired[int]
-    maturation_cycle_minutes: NotRequired[int]
-    maturation_percent: NotRequired[int]
-    mature_silo_max: NotRequired[int]
-    reagent_harvest_amount: NotRequired[int]
-    reagent_type_id: NotRequired[int]
+    reagent: NotRequired[PlanetResources_Reagent]
 
 
 class PlanetSchematics_Types(TypedDict):
@@ -758,7 +764,7 @@ class Races(TypedDict):
     iconID: NotRequired[int]
     name: LocalizedString
     shipTypeID: NotRequired[int]
-    skills: list[Races_Skill]
+    skills: NotRequired[list[Races_Skill]]
 
 
 class SdeInfo(TypedDict):
@@ -793,14 +799,24 @@ class Skins(TypedDict):
     skinDescription: NotRequired[LocalizedString]
 
 
+class SovereigntyUpgrades_Fuel(TypedDict):
+    """Nested model for the sovereigntyUpgrades.jsonl SDE file."""
+
+    hourly_upkeep: int
+    startup_cost: int
+    type_id: int
+
+
 class SovereigntyUpgrades(TypedDict):
+    """Model for the sovereigntyUpgrades.jsonl SDE file."""
+
     _key: int
-    fuel_hourly_upkeep: NotRequired[int]
-    fuel_startup_cost: NotRequired[int]
-    fuel_type_id: NotRequired[int]
+    fuel: NotRequired[SovereigntyUpgrades_Fuel]
     mutually_exclusive_group: str
-    power_allocation: int
-    workforce_allocation: int
+    power_allocation: NotRequired[int]
+    power_production: NotRequired[int]
+    workforce_allocation: NotRequired[int]
+    workforce_production: NotRequired[int]
 
 
 class StationOperations_StationType(TypedDict):
@@ -821,7 +837,7 @@ class StationOperations(TypedDict):
     ratio: float
     researchFactor: float
     services: list[int]
-    stationTypes: list[StationOperations_StationType]
+    stationTypes: NotRequired[list[StationOperations_StationType]]
 
 
 class StationServices(TypedDict):
@@ -864,8 +880,8 @@ class TypeBonus_MiscBonus(TypedDict):
 
 class TypeBonus(TypedDict):
     _key: int
-    roleBonuses: list[TypeBonus_RoleBonus]
-    types: list[TypeBonus_Types]
+    roleBonuses: NotRequired[list[TypeBonus_RoleBonus]]
+    types: NotRequired[list[TypeBonus_Types]]
     iconID: NotRequired[int]
     miscBonuses: NotRequired[list[TypeBonus_MiscBonus]]
 
@@ -883,7 +899,7 @@ class TypeDogma_Effects(TypedDict):
 class TypeDogma(TypedDict):
     _key: int
     dogmaAttributes: list[TypeDogma_Attributes]
-    dogmaEffects: list[TypeDogma_Effects]
+    dogmaEffects: NotRequired[list[TypeDogma_Effects]]
 
 
 class TypeMaterials_Material(TypedDict):
@@ -899,8 +915,8 @@ class TypeMaterials_RandomizedMaterial(TypedDict):
 
 class TypeMaterials(TypedDict):
     _key: int
-    materials: list[TypeMaterials_Material]
-    randomizedMaterials: list[TypeMaterials_RandomizedMaterial]
+    materials: NotRequired[list[TypeMaterials_Material]]
+    randomizedMaterials: NotRequired[list[TypeMaterials_RandomizedMaterial]]
 
 
 class EveTypes(TypedDict):
