@@ -6,6 +6,7 @@ from typing import Any
 from pydantic import BaseModel, TypeAdapter, ValidationError
 
 from eve_static_data.access.sde_reader import SdeReader
+from eve_static_data.helpers.pydantic.save_to_disk import BaseModelToDisk
 from eve_static_data.models.sde_dataset_files import SdeDatasetFiles
 from eve_static_data.models.sde_dataset_models import (
     dataset_pydantic_model_lookup,
@@ -30,7 +31,7 @@ class DatasetStats(BaseModel):
     validation_errors: list[DatasetValidationRecord]
 
 
-class SDEValidationResult(BaseModel):
+class SDEValidationResult(BaseModelToDisk):
     """The result of validating an SDE dataset."""
 
     build_number: int | None = None
@@ -122,7 +123,7 @@ def validate_sde_typeddict(access: SdeReader) -> SDEValidationResult:
     return validation_result
 
 
-class FileCheckResult(BaseModel):
+class FileCheckResult(BaseModelToDisk):
     """The result of checking for dataset files."""
 
     sde_path: Path

@@ -3,14 +3,22 @@
 import json
 from pathlib import Path
 from pprint import pformat
-from typing import Annotated
+from typing import Annotated, Literal
 
 import typer
 from rich.console import Console
+from whenever import Instant
 
 from eve_static_data.access.sde_reader import SdeReader
-
-# from eve_static_data.access.raw_json_td import RawJsonFileAccessValidator
+from eve_static_data.access.validation import (
+    SDEValidationResult,
+    check_for_dataset_files,
+    validate_dataset_pydantic,
+    validate_dataset_typeddict,
+    validate_sde_pydantic,
+    validate_sde_typeddict,
+)
+from eve_static_data.helpers.datetime_filename import file_safe_iso_datetime_string
 from eve_static_data.helpers.dict_diagnostics import (
     collect_dict_keys_and_types_recursive,
 )
@@ -27,26 +35,133 @@ app = typer.Typer(no_args_is_help=True)
 # eve-static-data sde dev dict-sig ~/projects/tmp/sde-download-test/sde-3081406-jsonl -f ~/projects/tmp/sde-download-test/sde-3081406-dict-sig.json -b 3081406
 
 
-# @app.command()
-# def validate_jsonl(
-#     sde_directory: Annotated[
-#         Path, typer.Argument(help="The directory containing the SDE data.")
-#     ],
-# ):
-#     """Validate the jsonl files in a directory against the TypedDict models."""
-#     console = Console()
-#     console.print(
-#         f"[bold green]Validating jsonl files in directory: {sde_directory}[/bold green]"
-#     )
-#     validator = RawJsonFileAccessValidator(dir_path=sde_directory)
-#     validator.validate_all()
-#     if validator.validation_errors:
-#         console.print(
-#             f"[bold red]Validation completed with {len(validator.validation_errors)} errors:[/bold red]"
-#         )
-#         console.print(f"[bold red]See logs for more details.[/bold red]")
-#         for error in validator.validation_errors:
-#             console.print(f"[bold red]{error.source} {error.error}[/bold red]")
+@app.command()
+def validate_jsonl(
+    sde_directory: Annotated[
+        Path, typer.Argument(help="The directory containing the SDE data.")
+    ],
+    reports_path: Annotated[
+        Path,
+        typer.Argument(
+            help="The directory to write validation results to. Will be created if it doesn't exist."
+        ),
+    ],
+    pydantic: Annotated[
+        bool,
+        typer.Option(
+            "-p",
+            "--pydantic",
+            help="Validate against the Pydantic models.",
+        ),
+    ] = True,
+    typed_dict: Annotated[
+        bool,
+        typer.Option(
+            "-t",
+            "--typed-dict",
+            help="Validate against the TypedDict models.",
+        ),
+    ] = False,
+):
+    """Validate the jsonl files in a directory against the TypedDict models."""
+    console = Console()
+    console.print(
+        f"[bold green]Validating jsonl files in directory: {sde_directory}[/bold green]"
+    )
+    now = Instant.now()
+    access = SdeReader(sde_path=sde_directory)
+    files_check(access=access, reports_path=reports_path, now=now)
+
+    if pydantic:
+        pydantic_check(access=access, reports_path=reports_path, now=now)
+    if typed_dict:
+        typed_dict_check(access=access, reports_path=reports_path, now=now)
+
+
+def pydantic_check(access: SdeReader, reports_path: Path, now: Instant):
+    console = Console()
+    console.print(f"[bold green]Validating against Pydantic models...[/bold green]")
+    pydantic_results = validate_sde_pydantic(SdeReader(sde_path=access.sde_path))
+    pydantic_output_file = (
+        reports_path
+        / f"{access.build_number}_pydantic_validation_{file_safe_iso_datetime_string(now.format_iso())}.json"
+    )
+    try:
+        pydantic_results.save_to_disk(pydantic_output_file, overwrite=True)
+        console.print(
+            f"[bold green]Pydantic validation results written to: {pydantic_output_file}[/bold green]"
+        )
+    except Exception as e:
+        console.print(
+            f"[bold red]Error writing Pydantic validation results: {e}[/bold red]"
+        )
+        raise typer.Exit(code=1) from e
+    results_summary(pydantic_results, "Pydantic")
+
+
+def results_summary(
+    validation_result: SDEValidationResult, model_type: Literal["Pydantic", "TypedDict"]
+) -> None:
+    console = Console()
+    console.print(
+        f"[bold green]{model_type} Validation Summary for build: {validation_result.build_number}[/bold green]"
+    )
+    for dataset_name, stats in validation_result.dataset_stats.items():
+        if stats.invalid_records > 0:
+            console.print(
+                f"[bold red]Dataset: {dataset_name}, Total Records: {stats.total_records}, Invalid Records: {stats.invalid_records}[/bold red]"
+            )
+        else:
+            console.print(
+                f"[bold green]Dataset: {dataset_name}, Total Records: {stats.total_records}, Invalid Records: {stats.invalid_records}[/bold green]"
+            )
+
+
+def typed_dict_check(access: SdeReader, reports_path: Path, now: Instant):
+    console = Console()
+    console.print(f"[bold green]Validating against TypedDict models...[/bold green]")
+    typed_dict_results = validate_sde_typeddict(SdeReader(sde_path=access.sde_path))
+    typed_dict_output_file = (
+        reports_path
+        / f"{access.build_number}_typed_dict_validation_{file_safe_iso_datetime_string(now.format_iso())}.json"
+    )
+    try:
+        typed_dict_results.save_to_disk(typed_dict_output_file, overwrite=True)
+        console.print(
+            f"[bold green]TypedDict validation results written to: {typed_dict_output_file}[/bold green]"
+        )
+    except Exception as e:
+        console.print(
+            f"[bold red]Error writing TypedDict validation results: {e}[/bold red]"
+        )
+        raise typer.Exit(code=1) from e
+    results_summary(typed_dict_results, "TypedDict")
+
+
+def files_check(access: SdeReader, reports_path: Path, now: Instant):
+    console = Console()
+    console.print(
+        f"[bold green]Found SDE Build Number: {access.build_number}, release date: {access.release_date}[/bold green]"
+    )
+    files_report = check_for_dataset_files(access.sde_path)
+    files_report_output_file = (
+        reports_path
+        / f"{access.build_number}_files_report_{file_safe_iso_datetime_string(now.format_iso())}.json"
+    )
+    files_report.save_to_disk(files_report_output_file, overwrite=True)
+    if files_report.missing_files or files_report.extra_files:
+        if files_report.missing_files:
+            console.print(
+                f"[bold red]Missing files: {len(files_report.missing_files)}. See report for details: {files_report_output_file}[/bold red]"
+            )
+        if files_report.extra_files:
+            console.print(
+                f"[bold yellow]Extra files: {len(files_report.extra_files)}. See report for details: {files_report_output_file}[/bold yellow]"
+            )
+    else:
+        console.print(
+            f"[bold green]All expected files are present and no extra files found. See report for details: {files_report_output_file}[/bold green]"
+        )
 
 
 @app.command()
