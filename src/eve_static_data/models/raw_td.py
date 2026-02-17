@@ -4,6 +4,7 @@ from typing import Any, NotRequired, TypedDict
 
 # ------------------------------------------------------------------------------
 # Common TypedDict definitions.
+# These are classes used in more than one dataset.
 # ------------------------------------------------------------------------------
 
 
@@ -52,6 +53,10 @@ class Position2D(TypedDict):
 
 # ------------------------------------------------------------------------------
 # File level TypedDict definitions.
+# Note that below-top-level classes for datasets are indicated by the naming convention
+# <DatasetName>_<NestedClassName>, e.g. DogmaEffects_ModifierInfo for the nested
+# ModifierInfo class in the DogmaEffects dataset.
+# The exception to this is when the nested class can be reused in multiple datasets.
 # ------------------------------------------------------------------------------
 
 
