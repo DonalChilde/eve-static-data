@@ -6,8 +6,8 @@ from typing import Any
 from pydantic import BaseModel, TypeAdapter, ValidationError
 
 from eve_static_data.access.sde_reader import SdeReader
-from eve_static_data.models.sde_datasets import SdeDatasets
-from eve_static_data.models.sde_datasets_models import (
+from eve_static_data.models.sde_dataset_files import SdeDatasetFiles
+from eve_static_data.models.sde_dataset_models import (
     dataset_pydantic_model_lookup,
     dataset_td_model_lookup,
 )
@@ -35,20 +35,12 @@ class SDEValidationResult(BaseModel):
 
     build_number: int | None = None
     release_date: str | None = None
-    dataset_stats: dict[str, DatasetStats]
+    dataset_stats: dict[str, DatasetStats] = {}
 
 
-# class DatasetValidator:
-#     def __init__(self, build_number: int | None, release_date: str | None) -> None:
-#         """Initialize the validator."""
-#         self.validation_result: SDEValidationResult = SDEValidationResult(
-#             build_number=build_number,
-#             release_date=release_date,
-#             dataset_stats={},
-#         )
-
-
-def validate_dataset_pydantic(access: SdeReader, dataset: SdeDatasets) -> DatasetStats:
+def validate_dataset_pydantic(
+    access: SdeReader, dataset: SdeDatasetFiles
+) -> DatasetStats:
     """Validate a dataset against its pydantic model."""
     stats = DatasetStats(
         dataset_name=dataset.value,
@@ -74,7 +66,9 @@ def validate_dataset_pydantic(access: SdeReader, dataset: SdeDatasets) -> Datase
     return stats
 
 
-def validate_dataset_typeddict(access: SdeReader, dataset: SdeDatasets) -> DatasetStats:
+def validate_dataset_typeddict(
+    access: SdeReader, dataset: SdeDatasetFiles
+) -> DatasetStats:
     """Validate a dataset against its TypedDict model."""
     stats = DatasetStats(
         dataset_name=dataset.value,
@@ -107,8 +101,22 @@ def validate_sde_pydantic(access: SdeReader) -> SDEValidationResult:
         release_date=access.release_date,
         dataset_stats={},
     )
-    for dataset in SdeDatasets:
+    for dataset in SdeDatasetFiles:
         validation_result.dataset_stats[dataset.value] = validate_dataset_pydantic(
+            access, dataset
+        )
+    return validation_result
+
+
+def validate_sde_typeddict(access: SdeReader) -> SDEValidationResult:
+    """Validate all datasets in the SDE against their TypedDict models."""
+    validation_result = SDEValidationResult(
+        build_number=access.build_number,
+        release_date=access.release_date,
+        dataset_stats={},
+    )
+    for dataset in SdeDatasetFiles:
+        validation_result.dataset_stats[dataset.value] = validate_dataset_typeddict(
             access, dataset
         )
     return validation_result
@@ -130,7 +138,7 @@ def check_for_dataset_files(sde_path: Path) -> FileCheckResult:
     # missing_files: set[Path] = set()
     # extra_files: set[Path] = set()
     existing_files = set(p for p in sde_path.iterdir() if p.is_file())
-    expected_files = set(sde_path / dataset.value for dataset in SdeDatasets)
+    expected_files = set(sde_path / dataset.value for dataset in SdeDatasetFiles)
     # for existing_file in existing_files:
     #     if existing_file not in expected_files:
     #         extra_files.append(existing_file)

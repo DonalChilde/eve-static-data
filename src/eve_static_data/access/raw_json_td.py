@@ -8,7 +8,7 @@ from typing import Any, cast
 
 from eve_static_data.access.sde_reader import SdeReader
 from eve_static_data.models import raw_td as RTD
-from eve_static_data.models.sde_datasets import SdeDatasets
+from eve_static_data.models.sde_dataset_files import SdeDatasetFiles
 
 from .raw_json_td_protocol import RawJsonTDProtocol
 
@@ -23,97 +23,97 @@ class RawJsonTDFileAccess(RawJsonTDProtocol):
         self.access = SdeReader(sde_dir)
 
     def agents_in_space(self, **kwargs: dict[str, Any]) -> Iterable[RTD.AgentsInSpace]:
-        for item in self.access.records(SdeDatasets.AGENTS_IN_SPACE):
+        for item in self.access.records(SdeDatasetFiles.AGENTS_IN_SPACE):
             yield cast(RTD.AgentsInSpace, item)
 
     def agent_types(self, **kwargs: dict[str, Any]) -> Iterable[RTD.AgentTypes]:
-        for item in self.access.records(SdeDatasets.AGENT_TYPES):
+        for item in self.access.records(SdeDatasetFiles.AGENT_TYPES):
             yield cast(RTD.AgentTypes, item)
 
     def ancestries(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Ancestries]:
-        for item in self.access.records(SdeDatasets.ANCESTRIES):
+        for item in self.access.records(SdeDatasetFiles.ANCESTRIES):
             yield cast(RTD.Ancestries, item)
 
     def bloodlines(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Bloodlines]:
-        for item in self.access.records(SdeDatasets.BLOODLINES):
+        for item in self.access.records(SdeDatasetFiles.BLOODLINES):
             yield cast(RTD.Bloodlines, item)
 
     def blueprints(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Blueprints]:
-        for item in self.access.records(SdeDatasets.BLUEPRINTS):
+        for item in self.access.records(SdeDatasetFiles.BLUEPRINTS):
             yield cast(RTD.Blueprints, item)
 
     def categories(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Categories]:
-        for item in self.access.records(SdeDatasets.CATEGORIES):
+        for item in self.access.records(SdeDatasetFiles.CATEGORIES):
             yield cast(RTD.Categories, item)
 
     def certificates(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Certificates]:
-        for item in self.access.records(SdeDatasets.CERTIFICATES):
+        for item in self.access.records(SdeDatasetFiles.CERTIFICATES):
             yield cast(RTD.Certificates, item)
 
     def character_attributes(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.CharacterAttributes]:
-        for item in self.access.records(SdeDatasets.CHARACTER_ATTRIBUTES):
+        for item in self.access.records(SdeDatasetFiles.CHARACTER_ATTRIBUTES):
             yield cast(RTD.CharacterAttributes, item)
 
     def compressible_types(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.CompressibleTypes]:
-        for item in self.access.records(SdeDatasets.COMPRESSIBLE_TYPES):
+        for item in self.access.records(SdeDatasetFiles.COMPRESSIBLE_TYPES):
             yield cast(RTD.CompressibleTypes, item)
 
     def contraband_types(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.ContrabandTypes]:
-        for item in self.access.records(SdeDatasets.CONTRABAND_TYPES):
+        for item in self.access.records(SdeDatasetFiles.CONTRABAND_TYPES):
             yield cast(RTD.ContrabandTypes, item)
 
     def control_tower_resources(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.ControlTowerResources]:
-        for item in self.access.records(SdeDatasets.CONTROL_TOWER_RESOURCES):
+        for item in self.access.records(SdeDatasetFiles.CONTROL_TOWER_RESOURCES):
             yield cast(RTD.ControlTowerResources, item)
 
     def corporation_activities(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.CorporationActivities]:
-        for item in self.access.records(SdeDatasets.CORPORATION_ACTIVITIES):
+        for item in self.access.records(SdeDatasetFiles.CORPORATION_ACTIVITIES):
             yield cast(RTD.CorporationActivities, item)
 
     def debuff_collections(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.DebuffCollections]:
-        for item in self.access.records(SdeDatasets.DEBUFF_COLLECTIONS):
+        for item in self.access.records(SdeDatasetFiles.DEBUFF_COLLECTIONS):
             yield cast(RTD.DebuffCollections, item)
 
     def dogma_attribute_categories(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.DogmaAttributeCategories]:
-        for item in self.access.records(SdeDatasets.DOGMA_ATTRIBUTE_CATEGORIES):
+        for item in self.access.records(SdeDatasetFiles.DOGMA_ATTRIBUTE_CATEGORIES):
             yield cast(RTD.DogmaAttributeCategories, item)
 
     def dogma_attributes(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.DogmaAttributes]:
-        for item in self.access.records(SdeDatasets.DOGMA_ATTRIBUTES):
+        for item in self.access.records(SdeDatasetFiles.DOGMA_ATTRIBUTES):
             yield cast(RTD.DogmaAttributes, item)
 
     def dogma_effects(self, **kwargs: dict[str, Any]) -> Iterable[RTD.DogmaEffects]:
-        for item in self.access.records(SdeDatasets.DOGMA_EFFECTS):
+        for item in self.access.records(SdeDatasetFiles.DOGMA_EFFECTS):
             yield cast(RTD.DogmaEffects, item)
 
     def dogma_units(self, **kwargs: dict[str, Any]) -> Iterable[RTD.DogmaUnits]:
-        for item in self.access.records(SdeDatasets.DOGMA_UNITS):
+        for item in self.access.records(SdeDatasetFiles.DOGMA_UNITS):
             yield cast(RTD.DogmaUnits, item)
 
     def dynamic_item_attributes(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.DynamicItemAttributes]:
-        for item in self.access.records(SdeDatasets.DYNAMIC_ITEM_ATTRIBUTES):
+        for item in self.access.records(SdeDatasetFiles.DYNAMIC_ITEM_ATTRIBUTES):
             yield cast(RTD.DynamicItemAttributes, item)
 
     def factions(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Factions]:
-        for item in self.access.records(SdeDatasets.FACTIONS):
+        for item in self.access.records(SdeDatasetFiles.FACTIONS):
             yield cast(RTD.Factions, item)
 
     def freelance_job_schemas(
@@ -121,164 +121,166 @@ class RawJsonTDFileAccess(RawJsonTDProtocol):
     ) -> RTD.FreelanceJobSchemas:
         return cast(
             RTD.FreelanceJobSchemas,
-            next(iter(self.access.records(SdeDatasets.FREELANCE_JOB_SCHEMAS))),
+            next(iter(self.access.records(SdeDatasetFiles.FREELANCE_JOB_SCHEMAS))),
         )
 
     def graphics(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Graphics]:
-        for item in self.access.records(SdeDatasets.GRAPHICS):
+        for item in self.access.records(SdeDatasetFiles.GRAPHICS):
             yield cast(RTD.Graphics, item)
 
     def groups(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Groups]:
-        for item in self.access.records(SdeDatasets.GROUPS):
+        for item in self.access.records(SdeDatasetFiles.GROUPS):
             yield cast(RTD.Groups, item)
 
     def icons(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Icons]:
-        for item in self.access.records(SdeDatasets.ICONS):
+        for item in self.access.records(SdeDatasetFiles.ICONS):
             yield cast(RTD.Icons, item)
 
     def landmarks(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Landmarks]:
-        for item in self.access.records(SdeDatasets.LANDMARKS):
+        for item in self.access.records(SdeDatasetFiles.LANDMARKS):
             yield cast(RTD.Landmarks, item)
 
     def map_asteroid_belts(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.MapAsteroidBelts]:
-        for item in self.access.records(SdeDatasets.MAP_ASTEROID_BELTS):
+        for item in self.access.records(SdeDatasetFiles.MAP_ASTEROID_BELTS):
             yield cast(RTD.MapAsteroidBelts, item)
 
     def map_constellations(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.MapConstellations]:
-        for item in self.access.records(SdeDatasets.MAP_CONSTELLATIONS):
+        for item in self.access.records(SdeDatasetFiles.MAP_CONSTELLATIONS):
             yield cast(RTD.MapConstellations, item)
 
     def map_moons(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MapMoons]:
-        for item in self.access.records(SdeDatasets.MAP_MOONS):
+        for item in self.access.records(SdeDatasetFiles.MAP_MOONS):
             yield cast(RTD.MapMoons, item)
 
     def map_planets(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MapPlanets]:
-        for item in self.access.records(SdeDatasets.MAP_PLANETS):
+        for item in self.access.records(SdeDatasetFiles.MAP_PLANETS):
             yield cast(RTD.MapPlanets, item)
 
     def map_regions(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MapRegions]:
-        for item in self.access.records(SdeDatasets.MAP_REGIONS):
+        for item in self.access.records(SdeDatasetFiles.MAP_REGIONS):
             yield cast(RTD.MapRegions, item)
 
     def map_solar_systems(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.MapSolarSystems]:
-        for item in self.access.records(SdeDatasets.MAP_SOLAR_SYSTEMS):
+        for item in self.access.records(SdeDatasetFiles.MAP_SOLAR_SYSTEMS):
             yield cast(RTD.MapSolarSystems, item)
 
     def map_stargates(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MapStargates]:
-        for item in self.access.records(SdeDatasets.MAP_STARGATES):
+        for item in self.access.records(SdeDatasetFiles.MAP_STARGATES):
             yield cast(RTD.MapStargates, item)
 
     def map_stars(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MapStars]:
-        for item in self.access.records(SdeDatasets.MAP_STARS):
+        for item in self.access.records(SdeDatasetFiles.MAP_STARS):
             yield cast(RTD.MapStars, item)
 
     def market_groups(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MarketGroups]:
-        for item in self.access.records(SdeDatasets.MARKET_GROUPS):
+        for item in self.access.records(SdeDatasetFiles.MARKET_GROUPS):
             yield cast(RTD.MarketGroups, item)
 
     def masteries(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Masteries]:
-        for item in self.access.records(SdeDatasets.MASTERIES):
+        for item in self.access.records(SdeDatasetFiles.MASTERIES):
             yield cast(RTD.Masteries, item)
 
     def meta_groups(self, **kwargs: dict[str, Any]) -> Iterable[RTD.MetaGroups]:
-        for item in self.access.records(SdeDatasets.META_GROUPS):
+        for item in self.access.records(SdeDatasetFiles.META_GROUPS):
             yield cast(RTD.MetaGroups, item)
 
     def npc_characters(self, **kwargs: dict[str, Any]) -> Iterable[RTD.NpcCharacters]:
-        for item in self.access.records(SdeDatasets.NPC_CHARACTERS):
+        for item in self.access.records(SdeDatasetFiles.NPC_CHARACTERS):
             yield cast(RTD.NpcCharacters, item)
 
     def npc_corporation_divisions(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.NpcCorporationDivisions]:
-        for item in self.access.records(SdeDatasets.NPC_CORPORATION_DIVISIONS):
+        for item in self.access.records(SdeDatasetFiles.NPC_CORPORATION_DIVISIONS):
             yield cast(RTD.NpcCorporationDivisions, item)
 
     def npc_corporations(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.NpcCorporations]:
-        for item in self.access.records(SdeDatasets.NPC_CORPORATIONS):
+        for item in self.access.records(SdeDatasetFiles.NPC_CORPORATIONS):
             yield cast(RTD.NpcCorporations, item)
 
     def npc_stations(self, **kwargs: dict[str, Any]) -> Iterable[RTD.NpcStations]:
-        for item in self.access.records(SdeDatasets.NPC_STATIONS):
+        for item in self.access.records(SdeDatasetFiles.NPC_STATIONS):
             yield cast(RTD.NpcStations, item)
 
     def planet_resources(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.PlanetResources]:
-        for item in self.access.records(SdeDatasets.PLANET_RESOURCES):
+        for item in self.access.records(SdeDatasetFiles.PLANET_RESOURCES):
             yield cast(RTD.PlanetResources, item)
 
     def planet_schematics(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.PlanetSchematics]:
-        for item in self.access.records(SdeDatasets.PLANET_SCHEMATICS):
+        for item in self.access.records(SdeDatasetFiles.PLANET_SCHEMATICS):
             yield cast(RTD.PlanetSchematics, item)
 
     def races(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Races]:
-        for item in self.access.records(SdeDatasets.RACES):
+        for item in self.access.records(SdeDatasetFiles.RACES):
             yield cast(RTD.Races, item)
 
     def sde_info(self, **kwargs: dict[str, Any]) -> RTD.SdeInfo:
-        return cast(RTD.SdeInfo, next(iter(self.access.records(SdeDatasets.SDE_INFO))))
+        return cast(
+            RTD.SdeInfo, next(iter(self.access.records(SdeDatasetFiles.SDE_INFO)))
+        )
 
     def skin_licenses(self, **kwargs: dict[str, Any]) -> Iterable[RTD.SkinLicenses]:
-        for item in self.access.records(SdeDatasets.SKIN_LICENSES):
+        for item in self.access.records(SdeDatasetFiles.SKIN_LICENSES):
             yield cast(RTD.SkinLicenses, item)
 
     def skin_materials(self, **kwargs: dict[str, Any]) -> Iterable[RTD.SkinMaterials]:
-        for item in self.access.records(SdeDatasets.SKIN_MATERIALS):
+        for item in self.access.records(SdeDatasetFiles.SKIN_MATERIALS):
             yield cast(RTD.SkinMaterials, item)
 
     def skins(self, **kwargs: dict[str, Any]) -> Iterable[RTD.Skins]:
-        for item in self.access.records(SdeDatasets.SKINS):
+        for item in self.access.records(SdeDatasetFiles.SKINS):
             yield cast(RTD.Skins, item)
 
     def sovereignty_upgrades(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.SovereigntyUpgrades]:
-        for item in self.access.records(SdeDatasets.SOVEREIGNTY_UPGRADES):
+        for item in self.access.records(SdeDatasetFiles.SOVEREIGNTY_UPGRADES):
             yield cast(RTD.SovereigntyUpgrades, item)
 
     def station_operations(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.StationOperations]:
-        for item in self.access.records(SdeDatasets.STATION_OPERATIONS):
+        for item in self.access.records(SdeDatasetFiles.STATION_OPERATIONS):
             yield cast(RTD.StationOperations, item)
 
     def station_services(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.StationServices]:
-        for item in self.access.records(SdeDatasets.STATION_SERVICES):
+        for item in self.access.records(SdeDatasetFiles.STATION_SERVICES):
             yield cast(RTD.StationServices, item)
 
     def translation_languages(
         self, **kwargs: dict[str, Any]
     ) -> Iterable[RTD.TranslationLanguages]:
-        for item in self.access.records(SdeDatasets.TRANSLATION_LANGUAGES):
+        for item in self.access.records(SdeDatasetFiles.TRANSLATION_LANGUAGES):
             yield cast(RTD.TranslationLanguages, item)
 
     def type_bonus(self, **kwargs: dict[str, Any]) -> Iterable[RTD.TypeBonus]:
-        for item in self.access.records(SdeDatasets.TYPE_BONUS):
+        for item in self.access.records(SdeDatasetFiles.TYPE_BONUS):
             yield cast(RTD.TypeBonus, item)
 
     def type_dogma(self, **kwargs: dict[str, Any]) -> Iterable[RTD.TypeDogma]:
-        for item in self.access.records(SdeDatasets.TYPE_DOGMA):
+        for item in self.access.records(SdeDatasetFiles.TYPE_DOGMA):
             yield cast(RTD.TypeDogma, item)
 
     def type_materials(self, **kwargs: dict[str, Any]) -> Iterable[RTD.TypeMaterials]:
-        for item in self.access.records(SdeDatasets.TYPE_MATERIALS):
+        for item in self.access.records(SdeDatasetFiles.TYPE_MATERIALS):
             yield cast(RTD.TypeMaterials, item)
 
     def eve_types(self, **kwargs: dict[str, Any]) -> Iterable[RTD.EveTypes]:
-        for item in self.access.records(SdeDatasets.TYPES):
+        for item in self.access.records(SdeDatasetFiles.TYPES):
             yield cast(RTD.EveTypes, item)
 
 

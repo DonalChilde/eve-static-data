@@ -3,7 +3,7 @@
 from enum import StrEnum
 
 
-class SdeDatasets(StrEnum):
+class SdeDatasetFiles(StrEnum):
     AGENTS_IN_SPACE = "agentsInSpace.jsonl"
     AGENT_TYPES = "agentTypes.jsonl"
     ANCESTRIES = "ancestries.jsonl"

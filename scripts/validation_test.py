@@ -10,7 +10,7 @@ from eve_static_data.access.validation import (
     validate_dataset_pydantic,
     validate_dataset_typeddict,
 )
-from eve_static_data.models.sde_datasets import SdeDatasets
+from eve_static_data.models.sde_dataset_files import SdeDatasetFiles
 
 app = typer.Typer()
 
@@ -27,7 +27,7 @@ def validate(
 
     access = SdeReader(path_in)
     sde_info: dict[str, Any] = next(
-        iter(access.records(SdeDatasets.SDE_INFO))
+        iter(access.records(SdeDatasetFiles.SDE_INFO))
     )  # Get the first (and only) record from _sde.jsonl
     validator_pydantic = SDEValidationResult(
         build_number=sde_info["buildNumber"],
@@ -35,7 +35,7 @@ def validate(
         dataset_stats={},
     )
     typer.echo("\n\nValidating with pydantic models...\n\n")
-    dataset = SdeDatasets.AGENTS_IN_SPACE
+    dataset = SdeDatasetFiles.AGENTS_IN_SPACE
     validator_pydantic.dataset_stats[dataset.value] = validate_dataset_pydantic(
         access, dataset
     )
@@ -47,7 +47,7 @@ def validate(
         release_date=sde_info["releaseDate"],
         dataset_stats={},
     )
-    dataset = SdeDatasets.AGENTS_IN_SPACE
+    dataset = SdeDatasetFiles.AGENTS_IN_SPACE
     validator_typeddict.dataset_stats[dataset.value] = validate_dataset_typeddict(
         access, dataset
     )

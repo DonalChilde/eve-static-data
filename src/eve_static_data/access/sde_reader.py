@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Any
 
 from eve_static_data.helpers.jsonl_reader import read_jsonl_dicts
-from eve_static_data.models.sde_datasets import SdeDatasets
+from eve_static_data.models.sde_dataset_files import SdeDatasetFiles
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +21,7 @@ class SdeReader:
             logger.error(f"Error parsing SDE info: {e}")
             pass
 
-    def records(self, dataset: SdeDatasets) -> Iterable[dict[str, Any]]:
+    def records(self, dataset: SdeDatasetFiles) -> Iterable[dict[str, Any]]:
         """Yield records from the specified dataset."""
         file_path = self.sde_path / dataset.value
         return read_jsonl_dicts(file_path)
