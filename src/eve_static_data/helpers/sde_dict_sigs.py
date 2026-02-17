@@ -4,7 +4,8 @@ import json
 from pathlib import Path
 from typing import TypedDict
 
-from eve_static_data.raw_jsonl_access import RawJsonFileAccess, SdeFileNames
+from eve_static_data.access.sde_reader import SdeReader
+from eve_static_data.models.sde_dataset_files import SdeDatasetFiles
 
 from .dict_diagnostics import (
     RecursiveKeyInfo,
@@ -21,12 +22,12 @@ def gather_sde_dict_sigs(
     sde_directory: Path, build_number: str = "UNDEFINED"
 ) -> SdeDictSigs:
     """Generate dict sigs from SDE data."""
-    files = list(SdeFileNames)
+    files = list(SdeDatasetFiles)
 
-    access = RawJsonFileAccess(sde_directory=sde_directory)
+    access = SdeReader(sde_path=sde_directory)
     result_sigs: SdeDictSigs = {"build_number": build_number, "files": {}}
     for file_name_enum in files:
-        data_iter = access.jsonl_iter(file_name_enum)
+        data_iter = access.records(file_name_enum)
         key_info = collect_dict_keys_and_types_recursive(
             data_iter, source_info=f"SDE file: {file_name_enum}, build: {build_number}"
         )

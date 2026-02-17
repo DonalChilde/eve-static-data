@@ -3,7 +3,7 @@
 import typer
 from rich.console import Console
 
-from eve_static_data.cli.sde_db import app as sde_db_app
+# from eve_static_data.cli.sde_db import app as sde_db_app
 from eve_static_data.cli.sde_dev import app as sde_dev_app
 from eve_static_data.cli.sde_raw import app as sde_raw_app
 from eve_static_data.settings import get_settings
@@ -11,7 +11,7 @@ from eve_static_data.settings import get_settings
 app = typer.Typer(no_args_is_help=True)
 app.add_typer(sde_dev_app, name="dev", help="SDE development commands.")
 app.add_typer(sde_raw_app, name="raw", help="SDE raw data commands.")
-app.add_typer(sde_db_app, name="db", help="SDE database commands.")
+# app.add_typer(sde_db_app, name="db", help="SDE database commands.")
 
 
 @app.command(name="info")

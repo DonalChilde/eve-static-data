@@ -15,7 +15,6 @@ from eve_static_data.cli.sde_helpers import (
     get_sde_changelog,
     get_sde_latest_info,
 )
-from eve_static_data.raw_jsonl_access import RawJsonFileAccess, SdeFileNames
 from eve_static_data.settings import get_settings
 
 app = typer.Typer(no_args_is_help=True)
@@ -114,30 +113,30 @@ def download_sde(
     console.print("SDE data downloaded successfully.")
 
 
-@app.command(name="print")
-def print_sde(
-    name: Annotated[str, typer.Argument(help="The name of the SDE data to print")],
-    sde_directory: Annotated[
-        Path,
-        typer.Argument(
-            help="The directory where the decompressed SDE data is located",
-            file_okay=False,
-        ),
-    ],
-):
-    """Print SDE data to the console."""
-    # TODO implement printing specific SDE data by line or range of lines
-    # -l line number (repeatable) -s start range -e end range?
-    console = Console()
-    console.print("[bold green]Printing SDE Data...[/bold green]")
-    access = RawJsonFileAccess(sde_directory=sde_directory)
-    try:
-        file_name_enum = SdeFileNames[name.upper()]
-    except KeyError as e:
-        console.print(f"[bold red]Error:[/bold red] Unknown SDE data name: {name}")
-        raise typer.Exit(code=1) from e
-    data_iter = access.jsonl_iter(file_name_enum)
-    for item in data_iter:
-        console.print(item)
-    # Placeholder for print logic
-    console.print("SDE data printed successfully.")
+# @app.command(name="print")
+# def print_sde(
+#     name: Annotated[str, typer.Argument(help="The name of the SDE data to print")],
+#     sde_directory: Annotated[
+#         Path,
+#         typer.Argument(
+#             help="The directory where the decompressed SDE data is located",
+#             file_okay=False,
+#         ),
+#     ],
+# ):
+#     """Print SDE data to the console."""
+#     # TODO implement printing specific SDE data by line or range of lines
+#     # -l line number (repeatable) -s start range -e end range?
+#     console = Console()
+#     console.print("[bold green]Printing SDE Data...[/bold green]")
+#     access = RawJsonFileAccess(sde_directory=sde_directory)
+#     try:
+#         file_name_enum = SdeFileNames[name.upper()]
+#     except KeyError as e:
+#         console.print(f"[bold red]Error:[/bold red] Unknown SDE data name: {name}")
+#         raise typer.Exit(code=1) from e
+#     data_iter = access.jsonl_iter(file_name_enum)
+#     for item in data_iter:
+#         console.print(item)
+#     # Placeholder for print logic
+#     console.print("SDE data printed successfully.")

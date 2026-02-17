@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from pprint import pformat
 
-from eve_static_data.raw_jsonl_access import SdeFileNames
+from eve_static_data.models.sde_dataset_files import SdeDatasetFiles
 
 from .dict_diagnostics import (
     RecursiveKeyInfo,
@@ -32,7 +32,7 @@ class Attribute:
 
 
 def make_typed_dict(
-    file_name_enum: SdeFileNames, key_info: RecursiveKeyInfo, source_info: str
+    file_name_enum: SdeDatasetFiles, key_info: RecursiveKeyInfo, source_info: str
 ) -> str:
     """Generate a TypedDict definition from RecursiveKeyInfo."""
     dict_name = f"{file_name_enum.name.replace('_', ' ').title().replace(' ', '')}Dict"
@@ -83,7 +83,7 @@ def make_module(sde_dict_sigs: SdeDictSigs) -> str:
     result_strings: list[str] = []
     typed_dicts: list[str] = []
     for file_name, key_info in sde_dict_sigs["files"].items():
-        sde_file_name = SdeFileNames(file_name)
+        sde_file_name = SdeDatasetFiles(file_name)
         typed_dicts.append(
             make_typed_dict(
                 file_name_enum=sde_file_name,
