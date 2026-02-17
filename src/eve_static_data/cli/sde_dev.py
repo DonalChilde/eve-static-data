@@ -162,6 +162,8 @@ def files_check(access: SdeReader, reports_path: Path, now: Instant):
         )
 
 
+# TODO Which of these commands is still useful?
+# TODO Option to output to a Python file for easy update and comparrison of type_def_sig.py
 @app.command()
 def sde_type_sig(
     sde_directory: Annotated[

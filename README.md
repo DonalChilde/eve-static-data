@@ -7,6 +7,8 @@
 
 eve-static-data provides a cli to check the status of the latest release of the EVE Online Static Data dataset. It supports downloading, expanding, and iterating over the various files in the dataset.
 
+Provides both TypedDict, and Pydantic models for SDE data.
+
 TODO - More complete instructions and examples as the program evolves.
 
 ## Quick Start
@@ -31,7 +33,7 @@ To run with uv:
 > Note the url format for tool install is the same as that for uv pip install:
 
 ```bash
-# run esi-auth without installing
+# run eve-static-data without installing
 uvx --from git+https://github.com/DonalChilde/eve-static-data@main eve-static-data
 
 # OR
