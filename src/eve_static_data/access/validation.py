@@ -33,19 +33,19 @@ class DatasetStats(BaseModel):
 class SDEValidationResult(BaseModel):
     """The result of validating an SDE dataset."""
 
-    build_number: int
-    release_date: str
+    build_number: int | None = None
+    release_date: str | None = None
     dataset_stats: dict[str, DatasetStats]
 
 
-class DatasetValidator:
-    def __init__(self, build_number: int, release_date: str) -> None:
-        """Initialize the validator."""
-        self.validation_result: SDEValidationResult = SDEValidationResult(
-            build_number=build_number,
-            release_date=release_date,
-            dataset_stats={},
-        )
+# class DatasetValidator:
+#     def __init__(self, build_number: int | None, release_date: str | None) -> None:
+#         """Initialize the validator."""
+#         self.validation_result: SDEValidationResult = SDEValidationResult(
+#             build_number=build_number,
+#             release_date=release_date,
+#             dataset_stats={},
+#         )
 
 
 def validate_dataset_pydantic(access: SdeReader, dataset: SdeDatasets) -> DatasetStats:
@@ -98,6 +98,20 @@ def validate_dataset_typeddict(access: SdeReader, dataset: SdeDatasets) -> Datas
                 )
             )
     return stats
+
+
+def validate_sde_pydantic(access: SdeReader) -> SDEValidationResult:
+    """Validate all datasets in the SDE against their pydantic models."""
+    validation_result = SDEValidationResult(
+        build_number=access.build_number,
+        release_date=access.release_date,
+        dataset_stats={},
+    )
+    for dataset in SdeDatasets:
+        validation_result.dataset_stats[dataset.value] = validate_dataset_pydantic(
+            access, dataset
+        )
+    return validation_result
 
 
 class FileCheckResult(BaseModel):
