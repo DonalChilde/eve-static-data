@@ -208,6 +208,14 @@ class CharacterAttributes(BaseModel):
     shortDescription: str
 
 
+class CloneGrades(BaseModel):
+    """Model for the cloneGrades.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    name: str
+    skills: list[Skills]
+
+
 class CompressibleTypes(BaseModel):
     """Model for the compressibleTypes.jsonl SDE file."""
 
@@ -216,6 +224,8 @@ class CompressibleTypes(BaseModel):
 
 
 class ContrabandTypes_Faction(BaseModel):
+    """Nested model for the contrabandTypes.jsonl SDE file."""
+
     key: int = Field(..., alias="_key")
     attackMinSec: float
     confiscateMinSec: float

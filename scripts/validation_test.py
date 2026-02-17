@@ -6,6 +6,7 @@ import typer
 from eve_static_data.access.sde_reader import SdeReader
 from eve_static_data.access.validation import (
     SDEValidationResult,
+    check_for_dataset_files,
     validate_dataset_pydantic,
     validate_dataset_typeddict,
 )
@@ -20,6 +21,10 @@ def validate(
     path_in: Annotated[Path, typer.Argument(..., help="Path to the input file")],
 ):
     """Validate the SDE dataset."""
+    typer.echo("\n\nChecking for expected dataset files...\n\n")
+    file_check_result = check_for_dataset_files(path_in)
+    print(file_check_result.model_dump_json(indent=2))
+
     access = SdeReader(path_in)
     sde_info: dict[str, Any] = next(
         iter(access.records(SdeDatasets.SDE_INFO))

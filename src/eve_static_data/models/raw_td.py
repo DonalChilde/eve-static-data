@@ -138,6 +138,8 @@ class Categories(TypedDict):
 
 
 class Certificates_SkillType(TypedDict):
+    """Nested model for the certificates.jsonl SDE file."""
+
     _key: int
     basic: int
     standard: int
@@ -147,6 +149,8 @@ class Certificates_SkillType(TypedDict):
 
 
 class Certificates(TypedDict):
+    """Model for the certificates.jsonl SDE file."""
+
     _key: int
     description: LocalizedString
     groupID: int
@@ -156,12 +160,22 @@ class Certificates(TypedDict):
 
 
 class CharacterAttributes(TypedDict):
+    """Model for the characterAttributes.jsonl SDE file."""
+
     _key: int
     description: str
     iconID: int
     name: LocalizedString
     notes: str
     shortDescription: str
+
+
+class CloneGrades(TypedDict):
+    """Model for the cloneGrades.jsonl SDE file."""
+
+    _key: int
+    name: str
+    skills: list[Skills]
 
 
 class CompressibleTypes(TypedDict):

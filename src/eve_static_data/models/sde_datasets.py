@@ -12,6 +12,7 @@ class SdeDatasets(StrEnum):
     CATEGORIES = "categories.jsonl"
     CERTIFICATES = "certificates.jsonl"
     CHARACTER_ATTRIBUTES = "characterAttributes.jsonl"
+    CLONE_GRADES = "cloneGrades.jsonl"
     COMPRESSIBLE_TYPES = "compressibleTypes.jsonl"
     CONTRABAND_TYPES = "contrabandTypes.jsonl"
     CONTROL_TOWER_RESOURCES = "controlTowerResources.jsonl"

@@ -1,5 +1,6 @@
 """Code for validating SDE datasets against the TypedDict schema."""
 
+from pathlib import Path
 from typing import Any
 
 from pydantic import BaseModel, TypeAdapter, ValidationError
@@ -97,3 +98,37 @@ def validate_dataset_typeddict(access: SdeReader, dataset: SdeDatasets) -> Datas
                 )
             )
     return stats
+
+
+class FileCheckResult(BaseModel):
+    """The result of checking for dataset files."""
+
+    sde_path: Path
+    existing_file_count: int
+    existing_files: set[Path]
+    expected_files: set[Path]
+    missing_files: set[Path]
+    extra_files: set[Path]
+
+
+def check_for_dataset_files(sde_path: Path) -> FileCheckResult:
+    """Check if the expected dataset files are present in the SDE path."""
+    # missing_files: set[Path] = set()
+    # extra_files: set[Path] = set()
+    existing_files = set(p for p in sde_path.iterdir() if p.is_file())
+    expected_files = set(sde_path / dataset.value for dataset in SdeDatasets)
+    # for existing_file in existing_files:
+    #     if existing_file not in expected_files:
+    #         extra_files.append(existing_file)
+    # for expected_file in expected_files:
+    #     if expected_file not in existing_files:
+    #         missing_files.append(expected_file)
+
+    return FileCheckResult(
+        sde_path=sde_path,
+        existing_file_count=len(existing_files),
+        existing_files=existing_files,
+        expected_files=expected_files,
+        missing_files=expected_files - existing_files,
+        extra_files=existing_files - expected_files,
+    )
