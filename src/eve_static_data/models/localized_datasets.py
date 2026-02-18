@@ -5,7 +5,6 @@ More models to be added as needed for use.
 
 from typing import Self
 
-from eve_static_data.access.sde_reader import SdeReader
 from eve_static_data.access.sde_records_td import SDERecordsTD
 from eve_static_data.helpers.pydantic.save_to_disk import BaseModelToDisk
 from eve_static_data.models import sde_pydantic as PM
