@@ -15,7 +15,7 @@ if it is missing in the data.
 
 from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 # ------------------------------------------------------------------------------
 # Common Pydantic model definitions.
@@ -80,7 +80,13 @@ class Position2D(BaseModel):
 # ------------------------------------------------------------------------------
 
 
-class AgentsInSpace(BaseModel):
+class Base(BaseModel):
+    """Base model for all SDE datasets."""
+
+    model_config = ConfigDict(serialize_by_alias=True)
+
+
+class AgentsInSpace(Base):
     """Model for the agentsInSpace.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -90,14 +96,14 @@ class AgentsInSpace(BaseModel):
     typeID: int
 
 
-class AgentTypes(BaseModel):
+class AgentTypes(Base):
     """Model for the agentTypes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     name: str
 
 
-class Ancestries(BaseModel):
+class Ancestries(Base):
     """Model for the ancestries.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -113,7 +119,7 @@ class Ancestries(BaseModel):
     willpower: int
 
 
-class Bloodlines(BaseModel):
+class Bloodlines(Base):
     """Model for the bloodlines.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -157,7 +163,7 @@ class Blueprints_Activities(BaseModel):
     research_time: Blueprints_Activity | None = None
 
 
-class Blueprints(BaseModel):
+class Blueprints(Base):
     """Model for the blueprints.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -166,7 +172,7 @@ class Blueprints(BaseModel):
     maxProductionLimit: int
 
 
-class Categories(BaseModel):
+class Categories(Base):
     """Model for the categories.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -174,8 +180,10 @@ class Categories(BaseModel):
     published: bool
     iconID: int | None = None
 
+    # model_config = ConfigDict(serialize_by_alias=True)
 
-class Certificates_SkillType(BaseModel):
+
+class Certificates_SkillType(Base):
     """Nested model for the certificates.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -186,7 +194,7 @@ class Certificates_SkillType(BaseModel):
     elite: int
 
 
-class Certificates(BaseModel):
+class Certificates(Base):
     """Model for the certificates.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -197,7 +205,7 @@ class Certificates(BaseModel):
     skillTypes: list[Certificates_SkillType]
 
 
-class CharacterAttributes(BaseModel):
+class CharacterAttributes(Base):
     """Model for the characterAttributes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -208,7 +216,7 @@ class CharacterAttributes(BaseModel):
     shortDescription: str
 
 
-class CloneGrades(BaseModel):
+class CloneGrades(Base):
     """Model for the cloneGrades.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -216,14 +224,14 @@ class CloneGrades(BaseModel):
     skills: list[Skills]
 
 
-class CompressibleTypes(BaseModel):
+class CompressibleTypes(Base):
     """Model for the compressibleTypes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     compressedTypeID: int
 
 
-class ContrabandTypes_Faction(BaseModel):
+class ContrabandTypes_Faction(Base):
     """Nested model for the contrabandTypes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -233,7 +241,7 @@ class ContrabandTypes_Faction(BaseModel):
     standingLoss: float
 
 
-class ContrabandTypes(BaseModel):
+class ContrabandTypes(Base):
     """Model for the contrabandTypes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -250,14 +258,14 @@ class ControlTowerResources_Resource(BaseModel):
     resourceTypeID: int
 
 
-class ControlTowerResources(BaseModel):
+class ControlTowerResources(Base):
     """Model for the controlTowerResources.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     resources: list[ControlTowerResources_Resource]
 
 
-class CorporationActivities(BaseModel):
+class CorporationActivities(Base):
     """Model for the corporationActivities.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -290,7 +298,7 @@ class DebuffCollections_ItemModifier(BaseModel):
     dogmaAttributeID: int
 
 
-class DebuffCollections(BaseModel):
+class DebuffCollections(Base):
     """Model for the debuffCollections.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -307,7 +315,7 @@ class DebuffCollections(BaseModel):
     displayName: LocalizedString | None = None
 
 
-class DogmaAttributeCategories(BaseModel):
+class DogmaAttributeCategories(Base):
     """Model for the dogmaAttributeCategories.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -315,7 +323,7 @@ class DogmaAttributeCategories(BaseModel):
     name: str
 
 
-class DogmaAttributes(BaseModel):
+class DogmaAttributes(Base):
     """Model for the dogmaAttributes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -351,7 +359,7 @@ class DogmaEffects_ModifierInfo(BaseModel):
     skillTypeID: int | None = None
 
 
-class DogmaEffects(BaseModel):
+class DogmaEffects(Base):
     """Model for the dogmaEffects.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -382,7 +390,7 @@ class DogmaEffects(BaseModel):
     resistanceAttributeID: int | None = None
 
 
-class DogmaUnits(BaseModel):
+class DogmaUnits(Base):
     """Model for the dogmaUnits.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -391,7 +399,7 @@ class DogmaUnits(BaseModel):
     name: str
 
 
-class DynamicItemAttributes_AttributeID(BaseModel):
+class DynamicItemAttributes_AttributeID(Base):
     """Nested model for the dynamicItemAttributes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -407,7 +415,7 @@ class DynamicItemAttributes_InputOutputMapping(BaseModel):
     resultingType: int
 
 
-class DynamicItemAttributes(BaseModel):
+class DynamicItemAttributes(Base):
     """Model for the dynamicItemAttributes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -415,7 +423,7 @@ class DynamicItemAttributes(BaseModel):
     inputOutputMapping: list[DynamicItemAttributes_InputOutputMapping]
 
 
-class Factions(BaseModel):
+class Factions(Base):
     """Model for the factions.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -433,14 +441,14 @@ class Factions(BaseModel):
     uniqueName: bool
 
 
-class FreelanceJobSchemas(BaseModel):
+class FreelanceJobSchemas(Base):
     """Model for the freelanceJobSchemas.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     value: list[dict[str, Any]] = Field(..., alias="_value")
 
 
-class Graphics(BaseModel):
+class Graphics(Base):
     """Model for the graphics.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -453,7 +461,7 @@ class Graphics(BaseModel):
     sofLayout: list[str] | None = None
 
 
-class Groups(BaseModel):
+class Groups(Base):
     """Model for the groups.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -467,14 +475,14 @@ class Groups(BaseModel):
     iconID: int | None = None
 
 
-class Icons(BaseModel):
+class Icons(Base):
     """Model for the icons.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     iconFile: str
 
 
-class Landmarks(BaseModel):
+class Landmarks(Base):
     """Model for the landmarks.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -502,7 +510,7 @@ class MapAsteroidBelts_Statistics(BaseModel):
     temperature: float
 
 
-class MapAsteroidBelts(BaseModel):
+class MapAsteroidBelts(Base):
     """Model for the mapAsteroidBelts.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -517,7 +525,7 @@ class MapAsteroidBelts(BaseModel):
     uniqueName: LocalizedString | None = None
 
 
-class MapConstellations(BaseModel):
+class MapConstellations(Base):
     """Model for the mapConstellations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -555,7 +563,7 @@ class MapMoons_Statistics(BaseModel):
     temperature: float
 
 
-class MapMoons(BaseModel):
+class MapMoons(Base):
     """Model for the mapMoons.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -599,7 +607,7 @@ class MapPlanets_Statistics(BaseModel):
     temperature: float
 
 
-class MapPlanets(BaseModel):
+class MapPlanets(Base):
     """Model for the mapPlanets.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -617,7 +625,7 @@ class MapPlanets(BaseModel):
     uniqueName: LocalizedString | None = None
 
 
-class MapRegions(BaseModel):
+class MapRegions(Base):
     """Model for the mapRegions.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -630,7 +638,7 @@ class MapRegions(BaseModel):
     wormholeClassID: int | None = None
 
 
-class MapSolarSystems(BaseModel):
+class MapSolarSystems(Base):
     """Model for the mapSolarSystems.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -666,7 +674,7 @@ class MapStargates_Destination(BaseModel):
     stargateID: int
 
 
-class MapStargates(BaseModel):
+class MapStargates(Base):
     """Model for the mapStargates.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -686,7 +694,7 @@ class MapStars_Statistics(BaseModel):
     temperature: float
 
 
-class MapStars(BaseModel):
+class MapStars(Base):
     """Model for the mapStars.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -696,7 +704,7 @@ class MapStars(BaseModel):
     typeID: int
 
 
-class MarketGroups(BaseModel):
+class MarketGroups(Base):
     """Model for the marketGroups.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -707,21 +715,21 @@ class MarketGroups(BaseModel):
     parentGroupID: int | None = None
 
 
-class Masteries_Value(BaseModel):
+class Masteries_Value(Base):
     """Nested model for the masteries.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     value: list[int] = Field(..., alias="_value")
 
 
-class Masteries(BaseModel):
+class Masteries(Base):
     """Model for the masteries.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     value: list[Masteries_Value] = Field(..., alias="_value")
 
 
-class MetaGroups(BaseModel):
+class MetaGroups(Base):
     """Model for the metaGroups.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -747,7 +755,7 @@ class NpcCharacters_Agent(BaseModel):
     level: int
 
 
-class NpcCharacters(BaseModel):
+class NpcCharacters(Base):
     """Model for the npcCharacters.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -769,7 +777,7 @@ class NpcCharacters(BaseModel):
     description: str | None = None
 
 
-class NpcCorporationDivisions(BaseModel):
+class NpcCorporationDivisions(Base):
     """Model for the npcCorporationDivisions.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -780,14 +788,14 @@ class NpcCorporationDivisions(BaseModel):
     description: LocalizedString | None = None
 
 
-class NpcCorporations_Trade(BaseModel):
+class NpcCorporations_Trade(Base):
     """Nested model for the npcCorporations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     value: float = Field(..., alias="_value")
 
 
-class NpcCorporations_Divisions(BaseModel):
+class NpcCorporations_Divisions(Base):
     """Nested model for the npcCorporations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -796,21 +804,21 @@ class NpcCorporations_Divisions(BaseModel):
     size: int
 
 
-class NpcCorporations_Investors(BaseModel):
+class NpcCorporations_Investors(Base):
     """Nested model for the npcCorporations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     value: int = Field(..., alias="_value")
 
 
-class NpcCorporations_ExchangeRates(BaseModel):
+class NpcCorporations_ExchangeRates(Base):
     """Nested model for the npcCorporations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     value: float = Field(..., alias="_value")
 
 
-class NpcCorporations(BaseModel):
+class NpcCorporations(Base):
     """Model for the npcCorporations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -848,7 +856,7 @@ class NpcCorporations(BaseModel):
     exchangeRates: list[NpcCorporations_ExchangeRates] | None = None
 
 
-class NpcStations(BaseModel):
+class NpcStations(Base):
     """Model for the npcStations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -876,7 +884,7 @@ class PlanetResources_Reagent(BaseModel):
     unsecured_capacity: int
 
 
-class PlanetResources(BaseModel):
+class PlanetResources(Base):
     """Model for the planetResources.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -885,7 +893,7 @@ class PlanetResources(BaseModel):
     reagent: PlanetResources_Reagent | None = None
 
 
-class PlanetSchematics_Types(BaseModel):
+class PlanetSchematics_Types(Base):
     """Nested model for the planetSchematics.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -893,7 +901,7 @@ class PlanetSchematics_Types(BaseModel):
     quantity: int
 
 
-class PlanetSchematics(BaseModel):
+class PlanetSchematics(Base):
     """Model for the planetSchematics.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -903,14 +911,14 @@ class PlanetSchematics(BaseModel):
     types: list[PlanetSchematics_Types]
 
 
-class Races_Skill(BaseModel):
+class Races_Skill(Base):
     """Nested model for the races.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     value: int = Field(..., alias="_value")
 
 
-class Races(BaseModel):
+class Races(Base):
     """Model for the races.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -921,7 +929,7 @@ class Races(BaseModel):
     skills: list[Races_Skill] | None = None
 
 
-class SdeInfo(BaseModel):
+class SdeInfo(Base):
     """Model for the sdeInfo.jsonl SDE file."""
 
     key: str = Field(..., alias="_key")
@@ -929,7 +937,7 @@ class SdeInfo(BaseModel):
     releaseDate: str
 
 
-class SkinLicenses(BaseModel):
+class SkinLicenses(Base):
     """Model for the skinLicenses.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -939,7 +947,7 @@ class SkinLicenses(BaseModel):
     isSingleUse: bool | None = None
 
 
-class SkinMaterials(BaseModel):
+class SkinMaterials(Base):
     """Model for the skinMaterials.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -947,7 +955,7 @@ class SkinMaterials(BaseModel):
     materialSetID: int
 
 
-class Skins(BaseModel):
+class Skins(Base):
     """Model for the skins.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -969,7 +977,7 @@ class SovereigntyUpgrades_Fuel(BaseModel):
     type_id: int
 
 
-class SovereigntyUpgrades(BaseModel):
+class SovereigntyUpgrades(Base):
     """Model for the sovereigntyUpgrades.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -981,14 +989,14 @@ class SovereigntyUpgrades(BaseModel):
     workforce_production: int | None = None
 
 
-class StationOperations_StationType(BaseModel):
+class StationOperations_StationType(Base):
     """Nested model for the stationOperations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     value: int = Field(..., alias="_value")
 
 
-class StationOperations(BaseModel):
+class StationOperations(Base):
     """Model for the stationOperations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1006,7 +1014,7 @@ class StationOperations(BaseModel):
     stationTypes: list[StationOperations_StationType] | None = None
 
 
-class StationServices(BaseModel):
+class StationServices(Base):
     """Model for the stationServices.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1014,7 +1022,7 @@ class StationServices(BaseModel):
     description: LocalizedString | None = None
 
 
-class TranslationLanguages(BaseModel):
+class TranslationLanguages(Base):
     """Model for the translationLanguages.jsonl SDE file."""
 
     key: str = Field(..., alias="_key")
@@ -1039,7 +1047,7 @@ class TypeBonus_Types_Bonus(BaseModel):
     unitID: int | None = None
 
 
-class TypeBonus_Types(BaseModel):
+class TypeBonus_Types(Base):
     """Nested model for the typeBonus.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1056,7 +1064,7 @@ class TypeBonus_MiscBonus(BaseModel):
     unitID: int | None = None
 
 
-class TypeBonus(BaseModel):
+class TypeBonus(Base):
     """Model for the typeBonus.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1080,7 +1088,7 @@ class TypeDogma_Effects(BaseModel):
     isDefault: bool
 
 
-class TypeDogma(BaseModel):
+class TypeDogma(Base):
     """Model for the typeDogma.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1103,7 +1111,7 @@ class TypeMaterials_RandomizedMaterial(BaseModel):
     quantityMin: int
 
 
-class TypeMaterials(BaseModel):
+class TypeMaterials(Base):
     """Model for the typeMaterials.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1111,7 +1119,7 @@ class TypeMaterials(BaseModel):
     randomizedMaterials: list[TypeMaterials_RandomizedMaterial] | None = None
 
 
-class EveTypes(BaseModel):
+class EveTypes(Base):
     """Model for the types.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
