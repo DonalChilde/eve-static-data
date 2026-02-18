@@ -531,6 +531,31 @@ class MapRegionsLocalized(PM.MapRegions):
         return cls.model_validate(localized_dict)
 
 
+class MapSolarSystemsLocalized(PM.MapSolarSystems):
+    """MapSolarSystems model with localized fields."""
+
+    name: str  # type: ignore
+
+    @classmethod
+    def from_sde(
+        cls, record: TDM.MapSolarSystems, localized: str = "en"
+    ) -> "MapSolarSystemsLocalized":
+        """Create a MapSolarSystemsLocalized instance from a SDE MapSolarSystems.
+
+        Args:
+            record: The SDE MapSolarSystems data.
+            localized: The language code to extract (default is "en" for English).
+
+        Returns:
+            A MapSolarSystemsLocalized instance.
+        """
+        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict["name"] = localize_string_dict(
+            localized_dict.get("name"), localized
+        )
+        return cls.model_validate(localized_dict)
+
+
 class MarketGroupsLocalized(PM.MarketGroups):
     """MarketGroups model with localized fields."""
 
