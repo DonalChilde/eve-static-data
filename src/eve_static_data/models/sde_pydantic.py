@@ -13,9 +13,11 @@ In the pydantic models, the field is defined as optional and will be set to `Non
 if it is missing in the data.
 """
 
-from typing import Any
+from typing import Any, Self
 
 from pydantic import BaseModel, ConfigDict, Field
+
+from eve_static_data.models import sde_typeddict as TDM
 
 # ------------------------------------------------------------------------------
 # Common Pydantic model definitions.
@@ -80,13 +82,13 @@ class Position2D(BaseModel):
 # ------------------------------------------------------------------------------
 
 
-class Base(BaseModel):
+class SdeDataset(BaseModel):
     """Base model for all SDE datasets."""
 
     model_config = ConfigDict(serialize_by_alias=True)
 
 
-class AgentsInSpace(Base):
+class AgentsInSpace(SdeDataset):
     """Model for the agentsInSpace.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -95,15 +97,25 @@ class AgentsInSpace(Base):
     spawnPointID: int
     typeID: int
 
+    @classmethod
+    def from_sde(cls, record: TDM.AgentsInSpace) -> Self:
+        """Create an AgentsInSpace instance from a SDE record."""
+        return cls.model_validate(record)
 
-class AgentTypes(Base):
+
+class AgentTypes(SdeDataset):
     """Model for the agentTypes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     name: str
 
+    @classmethod
+    def from_sde(cls, record: TDM.AgentTypes) -> Self:
+        """Create an AgentTypes instance from a SDE record."""
+        return cls.model_validate(record)
 
-class Ancestries(Base):
+
+class Ancestries(SdeDataset):
     """Model for the ancestries.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -118,8 +130,13 @@ class Ancestries(Base):
     shortDescription: str | None = None
     willpower: int
 
+    @classmethod
+    def from_sde(cls, record: TDM.Ancestries) -> Self:
+        """Create an Ancestries instance from a SDE record."""
+        return cls.model_validate(record)
 
-class Bloodlines(Base):
+
+class Bloodlines(SdeDataset):
     """Model for the bloodlines.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -133,6 +150,11 @@ class Bloodlines(Base):
     perception: int
     raceID: int
     willpower: int
+
+    @classmethod
+    def from_sde(cls, record: TDM.Bloodlines) -> Self:
+        """Create a Bloodlines instance from a SDE record."""
+        return cls.model_validate(record)
 
 
 class Blueprints_Products(BaseModel):
@@ -163,7 +185,7 @@ class Blueprints_Activities(BaseModel):
     research_time: Blueprints_Activity | None = None
 
 
-class Blueprints(Base):
+class Blueprints(SdeDataset):
     """Model for the blueprints.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -171,8 +193,13 @@ class Blueprints(Base):
     blueprintTypeID: int
     maxProductionLimit: int
 
+    @classmethod
+    def from_sde(cls, record: TDM.Blueprints) -> Self:
+        """Create a Blueprints instance from a SDE record."""
+        return cls.model_validate(record)
 
-class Categories(Base):
+
+class Categories(SdeDataset):
     """Model for the categories.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -180,10 +207,13 @@ class Categories(Base):
     published: bool
     iconID: int | None = None
 
-    # model_config = ConfigDict(serialize_by_alias=True)
+    @classmethod
+    def from_sde(cls, record: TDM.Categories) -> Self:
+        """Create a Categories instance from a SDE record."""
+        return cls.model_validate(record)
 
 
-class Certificates_SkillType(Base):
+class Certificates_SkillType(BaseModel):
     """Nested model for the certificates.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -193,8 +223,10 @@ class Certificates_SkillType(Base):
     advanced: int
     elite: int
 
+    model_config = ConfigDict(serialize_by_alias=True)
 
-class Certificates(Base):
+
+class Certificates(SdeDataset):
     """Model for the certificates.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -204,8 +236,13 @@ class Certificates(Base):
     recommendedFor: list[int] | None = None
     skillTypes: list[Certificates_SkillType]
 
+    @classmethod
+    def from_sde(cls, record: TDM.Certificates) -> Self:
+        """Create a Certificates instance from a SDE record."""
+        return cls.model_validate(record)
 
-class CharacterAttributes(Base):
+
+class CharacterAttributes(SdeDataset):
     """Model for the characterAttributes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -215,23 +252,38 @@ class CharacterAttributes(Base):
     notes: str
     shortDescription: str
 
+    @classmethod
+    def from_sde(cls, record: TDM.CharacterAttributes) -> Self:
+        """Create a CharacterAttributes instance from a SDE record."""
+        return cls.model_validate(record)
 
-class CloneGrades(Base):
+
+class CloneGrades(SdeDataset):
     """Model for the cloneGrades.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     name: str
     skills: list[Skills]
 
+    @classmethod
+    def from_sde(cls, record: TDM.CloneGrades) -> Self:
+        """Create a CloneGrades instance from a SDE record."""
+        return cls.model_validate(record)
 
-class CompressibleTypes(Base):
+
+class CompressibleTypes(SdeDataset):
     """Model for the compressibleTypes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     compressedTypeID: int
 
+    @classmethod
+    def from_sde(cls, record: TDM.CompressibleTypes) -> Self:
+        """Create a CompressibleTypes instance from a SDE record."""
+        return cls.model_validate(record)
 
-class ContrabandTypes_Faction(Base):
+
+class ContrabandTypes_Faction(SdeDataset):
     """Nested model for the contrabandTypes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -240,12 +292,22 @@ class ContrabandTypes_Faction(Base):
     fineByValue: float
     standingLoss: float
 
+    @classmethod
+    def from_sde(cls, record: TDM.ContrabandTypes_Faction) -> Self:
+        """Create a ContrabandTypes_Faction instance from a SDE record."""
+        return cls.model_validate(record)
 
-class ContrabandTypes(Base):
+
+class ContrabandTypes(SdeDataset):
     """Model for the contrabandTypes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     factions: list[ContrabandTypes_Faction]
+
+    @classmethod
+    def from_sde(cls, record: TDM.ContrabandTypes) -> Self:
+        """Create a ContrabandTypes instance from a SDE record."""
+        return cls.model_validate(record)
 
 
 class ControlTowerResources_Resource(BaseModel):
@@ -258,18 +320,28 @@ class ControlTowerResources_Resource(BaseModel):
     resourceTypeID: int
 
 
-class ControlTowerResources(Base):
+class ControlTowerResources(SdeDataset):
     """Model for the controlTowerResources.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     resources: list[ControlTowerResources_Resource]
 
+    @classmethod
+    def from_sde(cls, record: TDM.ControlTowerResources) -> Self:
+        """Create a ControlTowerResources instance from a SDE record."""
+        return cls.model_validate(record)
 
-class CorporationActivities(Base):
+
+class CorporationActivities(SdeDataset):
     """Model for the corporationActivities.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     name: LocalizedString
+
+    @classmethod
+    def from_sde(cls, record: TDM.CorporationActivities) -> Self:
+        """Create a CorporationActivities instance from a SDE record."""
+        return cls.model_validate(record)
 
 
 class DebuffCollections_LocationGroupModifier(BaseModel):
@@ -298,7 +370,7 @@ class DebuffCollections_ItemModifier(BaseModel):
     dogmaAttributeID: int
 
 
-class DebuffCollections(Base):
+class DebuffCollections(SdeDataset):
     """Model for the debuffCollections.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -314,16 +386,26 @@ class DebuffCollections(Base):
     showOutputValueInUI: str
     displayName: LocalizedString | None = None
 
+    @classmethod
+    def from_sde(cls, record: TDM.DebuffCollections) -> Self:
+        """Create a DebuffCollections instance from a SDE record."""
+        return cls.model_validate(record)
 
-class DogmaAttributeCategories(Base):
+
+class DogmaAttributeCategories(SdeDataset):
     """Model for the dogmaAttributeCategories.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     description: str | None = None
     name: str
 
+    @classmethod
+    def from_sde(cls, record: TDM.DogmaAttributeCategories) -> Self:
+        """Create a DogmaAttributeCategories instance from a SDE record."""
+        return cls.model_validate(record)
 
-class DogmaAttributes(Base):
+
+class DogmaAttributes(SdeDataset):
     """Model for the dogmaAttributes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -345,6 +427,11 @@ class DogmaAttributes(Base):
     maxAttributeID: int | None = None
     minAttributeID: int | None = None
 
+    @classmethod
+    def from_sde(cls, record: TDM.DogmaAttributes) -> Self:
+        """Create a DogmaAttributes instance from a SDE record."""
+        return cls.model_validate(record)
+
 
 class DogmaEffects_ModifierInfo(BaseModel):
     """Nested model for the dogmaEffects.jsonl SDE file."""
@@ -359,7 +446,7 @@ class DogmaEffects_ModifierInfo(BaseModel):
     skillTypeID: int | None = None
 
 
-class DogmaEffects(Base):
+class DogmaEffects(SdeDataset):
     """Model for the dogmaEffects.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -389,8 +476,13 @@ class DogmaEffects(Base):
     fittingUsageChanceAttributeID: int | None = None
     resistanceAttributeID: int | None = None
 
+    @classmethod
+    def from_sde(cls, record: TDM.DogmaEffects) -> Self:
+        """Create a DogmaEffects instance from a SDE record."""
+        return cls.model_validate(record)
 
-class DogmaUnits(Base):
+
+class DogmaUnits(SdeDataset):
     """Model for the dogmaUnits.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -398,14 +490,24 @@ class DogmaUnits(Base):
     displayName: LocalizedString | None = None
     name: str
 
+    @classmethod
+    def from_sde(cls, record: TDM.DogmaUnits) -> Self:
+        """Create a DogmaUnits instance from a SDE record."""
+        return cls.model_validate(record)
 
-class DynamicItemAttributes_AttributeID(Base):
+
+class DynamicItemAttributes_AttributeID(SdeDataset):
     """Nested model for the dynamicItemAttributes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     highIsGood: bool | None = None
     max: float
     min: float
+
+    @classmethod
+    def from_sde(cls, record: TDM.DynamicItemAttributes_AttributeID) -> Self:
+        """Create a DynamicItemAttributes_AttributeID instance from a SDE record."""
+        return cls.model_validate(record)
 
 
 class DynamicItemAttributes_InputOutputMapping(BaseModel):
@@ -415,15 +517,20 @@ class DynamicItemAttributes_InputOutputMapping(BaseModel):
     resultingType: int
 
 
-class DynamicItemAttributes(Base):
+class DynamicItemAttributes(SdeDataset):
     """Model for the dynamicItemAttributes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     attributeIDs: list[DynamicItemAttributes_AttributeID]
     inputOutputMapping: list[DynamicItemAttributes_InputOutputMapping]
 
+    @classmethod
+    def from_sde(cls, record: TDM.DynamicItemAttributes) -> Self:
+        """Create a DynamicItemAttributes instance from a SDE record."""
+        return cls.model_validate(record)
 
-class Factions(Base):
+
+class Factions(SdeDataset):
     """Model for the factions.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -440,15 +547,25 @@ class Factions(Base):
     solarSystemID: int
     uniqueName: bool
 
+    @classmethod
+    def from_sde(cls, record: TDM.Factions) -> Self:
+        """Create a Factions instance from a SDE record."""
+        return cls.model_validate(record)
 
-class FreelanceJobSchemas(Base):
+
+class FreelanceJobSchemas(SdeDataset):
     """Model for the freelanceJobSchemas.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     value: list[dict[str, Any]] = Field(..., alias="_value")
 
+    @classmethod
+    def from_sde(cls, record: TDM.FreelanceJobSchemas) -> Self:
+        """Create a FreelanceJobSchemas instance from a SDE record."""
+        return cls.model_validate(record)
 
-class Graphics(Base):
+
+class Graphics(SdeDataset):
     """Model for the graphics.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -460,8 +577,13 @@ class Graphics(Base):
     sofMaterialSetID: int | None = None
     sofLayout: list[str] | None = None
 
+    @classmethod
+    def from_sde(cls, record: TDM.Graphics) -> Self:
+        """Create a Graphics instance from a SDE record."""
+        return cls.model_validate(record)
 
-class Groups(Base):
+
+class Groups(SdeDataset):
     """Model for the groups.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -474,15 +596,25 @@ class Groups(Base):
     useBasePrice: bool
     iconID: int | None = None
 
+    @classmethod
+    def from_sde(cls, record: TDM.Groups) -> Self:
+        """Create a Groups instance from a SDE record."""
+        return cls.model_validate(record)
 
-class Icons(Base):
+
+class Icons(SdeDataset):
     """Model for the icons.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     iconFile: str
 
+    @classmethod
+    def from_sde(cls, record: TDM.Icons) -> Self:
+        """Create an Icons instance from a SDE record."""
+        return cls.model_validate(record)
 
-class Landmarks(Base):
+
+class Landmarks(SdeDataset):
     """Model for the landmarks.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -491,6 +623,11 @@ class Landmarks(Base):
     position: Position
     iconID: int | None = None
     locationID: int | None = None
+
+    @classmethod
+    def from_sde(cls, record: TDM.Landmarks) -> Self:
+        """Create a Landmarks instance from a SDE record."""
+        return cls.model_validate(record)
 
 
 class MapAsteroidBelts_Statistics(BaseModel):
@@ -510,7 +647,7 @@ class MapAsteroidBelts_Statistics(BaseModel):
     temperature: float
 
 
-class MapAsteroidBelts(Base):
+class MapAsteroidBelts(SdeDataset):
     """Model for the mapAsteroidBelts.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -524,8 +661,13 @@ class MapAsteroidBelts(Base):
     typeID: int
     uniqueName: LocalizedString | None = None
 
+    @classmethod
+    def from_sde(cls, record: TDM.MapAsteroidBelts) -> Self:
+        """Create a MapAsteroidBelts instance from a SDE record."""
+        return cls.model_validate(record)
 
-class MapConstellations(Base):
+
+class MapConstellations(SdeDataset):
     """Model for the mapConstellations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -535,6 +677,11 @@ class MapConstellations(Base):
     regionID: int
     solarSystemIDs: list[int]
     wormholeClassID: int | None = None
+
+    @classmethod
+    def from_sde(cls, record: TDM.MapConstellations) -> Self:
+        """Create a MapConstellations instance from a SDE record."""
+        return cls.model_validate(record)
 
 
 class MapMoons_Attributes(BaseModel):
@@ -563,7 +710,7 @@ class MapMoons_Statistics(BaseModel):
     temperature: float
 
 
-class MapMoons(Base):
+class MapMoons(SdeDataset):
     """Model for the mapMoons.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -578,6 +725,11 @@ class MapMoons(Base):
     typeID: int
     npcStationIDs: list[int] | None = None
     uniqueName: LocalizedString | None = None
+
+    @classmethod
+    def from_sde(cls, record: TDM.MapMoons) -> Self:
+        """Create a MapMoons instance from a SDE record."""
+        return cls.model_validate(record)
 
 
 class MapPlanets_Attributes(BaseModel):
@@ -607,7 +759,7 @@ class MapPlanets_Statistics(BaseModel):
     temperature: float
 
 
-class MapPlanets(Base):
+class MapPlanets(SdeDataset):
     """Model for the mapPlanets.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -624,8 +776,13 @@ class MapPlanets(Base):
     npcStationIDs: list[int] | None = None
     uniqueName: LocalizedString | None = None
 
+    @classmethod
+    def from_sde(cls, record: TDM.MapPlanets) -> Self:
+        """Create a MapPlanets instance from a SDE record."""
+        return cls.model_validate(record)
 
-class MapRegions(Base):
+
+class MapRegions(SdeDataset):
     """Model for the mapRegions.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -637,8 +794,13 @@ class MapRegions(Base):
     position: Position
     wormholeClassID: int | None = None
 
+    @classmethod
+    def from_sde(cls, record: TDM.MapRegions) -> Self:
+        """Create a MapRegions instance from a SDE record."""
+        return cls.model_validate(record)
 
-class MapSolarSystems(Base):
+
+class MapSolarSystems(SdeDataset):
     """Model for the mapSolarSystems.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -666,6 +828,11 @@ class MapSolarSystems(Base):
     visualEffect: str | None = None
     wormholeClassID: int | None = None
 
+    @classmethod
+    def from_sde(cls, record: TDM.MapSolarSystems) -> Self:
+        """Create a MapSolarSystems instance from a SDE record."""
+        return cls.model_validate(record)
+
 
 class MapStargates_Destination(BaseModel):
     """Nested model for the mapStargates.jsonl SDE file."""
@@ -674,7 +841,7 @@ class MapStargates_Destination(BaseModel):
     stargateID: int
 
 
-class MapStargates(Base):
+class MapStargates(SdeDataset):
     """Model for the mapStargates.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -682,6 +849,11 @@ class MapStargates(Base):
     position: Position
     solarSystemID: int
     typeID: int
+
+    @classmethod
+    def from_sde(cls, record: TDM.MapStargates) -> Self:
+        """Create a MapStargates instance from a SDE record."""
+        return cls.model_validate(record)
 
 
 class MapStars_Statistics(BaseModel):
@@ -694,7 +866,7 @@ class MapStars_Statistics(BaseModel):
     temperature: float
 
 
-class MapStars(Base):
+class MapStars(SdeDataset):
     """Model for the mapStars.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -703,8 +875,13 @@ class MapStars(Base):
     statistics: MapStars_Statistics
     typeID: int
 
+    @classmethod
+    def from_sde(cls, record: TDM.MapStars) -> Self:
+        """Create a MapStars instance from a SDE record."""
+        return cls.model_validate(record)
 
-class MarketGroups(Base):
+
+class MarketGroups(SdeDataset):
     """Model for the marketGroups.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -714,22 +891,37 @@ class MarketGroups(Base):
     name: LocalizedString
     parentGroupID: int | None = None
 
+    @classmethod
+    def from_sde(cls, record: TDM.MarketGroups) -> Self:
+        """Create a MarketGroups instance from a SDE record."""
+        return cls.model_validate(record)
 
-class Masteries_Value(Base):
+
+class Masteries_Value(SdeDataset):
     """Nested model for the masteries.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     value: list[int] = Field(..., alias="_value")
 
+    @classmethod
+    def from_sde(cls, record: TDM.Masteries_Value) -> Self:
+        """Create a Masteries_Value instance from a SDE record."""
+        return cls.model_validate(record)
 
-class Masteries(Base):
+
+class Masteries(SdeDataset):
     """Model for the masteries.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     value: list[Masteries_Value] = Field(..., alias="_value")
 
+    @classmethod
+    def from_sde(cls, record: TDM.Masteries) -> Self:
+        """Create a Masteries instance from a SDE record."""
+        return cls.model_validate(record)
 
-class MetaGroups(Base):
+
+class MetaGroups(SdeDataset):
     """Model for the metaGroups.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -738,6 +930,11 @@ class MetaGroups(Base):
     iconID: int | None = None
     iconSuffix: str | None = None
     description: LocalizedString | None = None
+
+    @classmethod
+    def from_sde(cls, record: TDM.MetaGroups) -> Self:
+        """Create a MetaGroups instance from a SDE record."""
+        return cls.model_validate(record)
 
 
 class NpcCharacters_Skill(BaseModel):
@@ -755,7 +952,7 @@ class NpcCharacters_Agent(BaseModel):
     level: int
 
 
-class NpcCharacters(Base):
+class NpcCharacters(SdeDataset):
     """Model for the npcCharacters.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -776,8 +973,13 @@ class NpcCharacters(Base):
     agent: NpcCharacters_Agent | None = None
     description: str | None = None
 
+    @classmethod
+    def from_sde(cls, record: TDM.NpcCharacters) -> Self:
+        """Create a NpcCharacters instance from a SDE record."""
+        return cls.model_validate(record)
 
-class NpcCorporationDivisions(Base):
+
+class NpcCorporationDivisions(SdeDataset):
     """Model for the npcCorporationDivisions.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -787,15 +989,25 @@ class NpcCorporationDivisions(Base):
     name: LocalizedString
     description: LocalizedString | None = None
 
+    @classmethod
+    def from_sde(cls, record: TDM.NpcCorporationDivisions) -> Self:
+        """Create a NpcCorporationDivisions instance from a SDE record."""
+        return cls.model_validate(record)
 
-class NpcCorporations_Trade(Base):
+
+class NpcCorporations_Trade(SdeDataset):
     """Nested model for the npcCorporations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     value: float = Field(..., alias="_value")
 
+    @classmethod
+    def from_sde(cls, record: TDM.NpcCorporations_Trade) -> Self:
+        """Create a NpcCorporations_Trade instance from a SDE record."""
+        return cls.model_validate(record)
 
-class NpcCorporations_Divisions(Base):
+
+class NpcCorporations_Divisions(SdeDataset):
     """Nested model for the npcCorporations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -803,22 +1015,37 @@ class NpcCorporations_Divisions(Base):
     leaderID: int
     size: int
 
+    @classmethod
+    def from_sde(cls, record: TDM.NpcCorporations_Divisions) -> Self:
+        """Create a NpcCorporations_Divisions instance from a SDE record."""
+        return cls.model_validate(record)
 
-class NpcCorporations_Investors(Base):
+
+class NpcCorporations_Investors(SdeDataset):
     """Nested model for the npcCorporations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     value: int = Field(..., alias="_value")
 
+    @classmethod
+    def from_sde(cls, record: TDM.NpcCorporations_Investors) -> Self:
+        """Create a NpcCorporations_Investors instance from a SDE record."""
+        return cls.model_validate(record)
 
-class NpcCorporations_ExchangeRates(Base):
+
+class NpcCorporations_ExchangeRates(SdeDataset):
     """Nested model for the npcCorporations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     value: float = Field(..., alias="_value")
 
+    @classmethod
+    def from_sde(cls, record: TDM.NpcCorporations_ExchangeRates) -> Self:
+        """Create a NpcCorporations_ExchangeRates instance from a SDE record."""
+        return cls.model_validate(record)
 
-class NpcCorporations(Base):
+
+class NpcCorporations(SdeDataset):
     """Model for the npcCorporations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -855,8 +1082,13 @@ class NpcCorporations(Base):
     secondaryActivityID: int | None = None
     exchangeRates: list[NpcCorporations_ExchangeRates] | None = None
 
+    @classmethod
+    def from_sde(cls, record: TDM.NpcCorporations) -> Self:
+        """Create a NpcCorporations instance from a SDE record."""
+        return cls.model_validate(record)
 
-class NpcStations(Base):
+
+class NpcStations(SdeDataset):
     """Model for the npcStations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -873,6 +1105,11 @@ class NpcStations(Base):
     typeID: int
     useOperationName: bool
 
+    @classmethod
+    def from_sde(cls, record: TDM.NpcStations) -> Self:
+        """Create a NpcStations instance from a SDE record."""
+        return cls.model_validate(record)
+
 
 class PlanetResources_Reagent(BaseModel):
     """Nested model for the planetResources.jsonl SDE file."""
@@ -884,7 +1121,7 @@ class PlanetResources_Reagent(BaseModel):
     unsecured_capacity: int
 
 
-class PlanetResources(Base):
+class PlanetResources(SdeDataset):
     """Model for the planetResources.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -892,16 +1129,23 @@ class PlanetResources(Base):
     workforce: int | None = None
     reagent: PlanetResources_Reagent | None = None
 
+    @classmethod
+    def from_sde(cls, record: TDM.PlanetResources) -> Self:
+        """Create a PlanetResources instance from a SDE record."""
+        return cls.model_validate(record)
 
-class PlanetSchematics_Types(Base):
+
+class PlanetSchematics_Types(BaseModel):
     """Nested model for the planetSchematics.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     isInput: bool
     quantity: int
 
+    model_config = ConfigDict(serialize_by_alias=True)
 
-class PlanetSchematics(Base):
+
+class PlanetSchematics(SdeDataset):
     """Model for the planetSchematics.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -910,15 +1154,22 @@ class PlanetSchematics(Base):
     pins: list[int]
     types: list[PlanetSchematics_Types]
 
+    @classmethod
+    def from_sde(cls, record: TDM.PlanetSchematics) -> Self:
+        """Create a PlanetSchematics instance from a SDE record."""
+        return cls.model_validate(record)
 
-class Races_Skill(Base):
+
+class Races_Skill(BaseModel):
     """Nested model for the races.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     value: int = Field(..., alias="_value")
 
+    model_config = ConfigDict(serialize_by_alias=True)
 
-class Races(Base):
+
+class Races(SdeDataset):
     """Model for the races.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -928,16 +1179,26 @@ class Races(Base):
     shipTypeID: int | None = None
     skills: list[Races_Skill] | None = None
 
+    @classmethod
+    def from_sde(cls, record: TDM.Races) -> Self:
+        """Create a Races instance from a SDE record."""
+        return cls.model_validate(record)
 
-class SdeInfo(Base):
+
+class SdeInfo(SdeDataset):
     """Model for the sdeInfo.jsonl SDE file."""
 
     key: str = Field(..., alias="_key")
     buildNumber: int
     releaseDate: str
 
+    @classmethod
+    def from_sde(cls, record: TDM.SdeInfo) -> Self:
+        """Create a SdeInfo instance from a SDE record."""
+        return cls.model_validate(record)
 
-class SkinLicenses(Base):
+
+class SkinLicenses(SdeDataset):
     """Model for the skinLicenses.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -946,16 +1207,26 @@ class SkinLicenses(Base):
     skinID: int
     isSingleUse: bool | None = None
 
+    @classmethod
+    def from_sde(cls, record: TDM.SkinLicenses) -> Self:
+        """Create a SkinLicenses instance from a SDE record."""
+        return cls.model_validate(record)
 
-class SkinMaterials(Base):
+
+class SkinMaterials(SdeDataset):
     """Model for the skinMaterials.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     displayName: LocalizedString | None = None
     materialSetID: int
 
+    @classmethod
+    def from_sde(cls, record: TDM.SkinMaterials) -> Self:
+        """Create a SkinMaterials instance from a SDE record."""
+        return cls.model_validate(record)
 
-class Skins(Base):
+
+class Skins(SdeDataset):
     """Model for the skins.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -968,6 +1239,11 @@ class Skins(Base):
     isStructureSkin: bool | None = None
     skinDescription: LocalizedString | None = None
 
+    @classmethod
+    def from_sde(cls, record: TDM.Skins) -> Self:
+        """Create a Skins instance from a SDE record."""
+        return cls.model_validate(record)
+
 
 class SovereigntyUpgrades_Fuel(BaseModel):
     """Nested model for the sovereigntyUpgrades.jsonl SDE file."""
@@ -977,7 +1253,7 @@ class SovereigntyUpgrades_Fuel(BaseModel):
     type_id: int
 
 
-class SovereigntyUpgrades(Base):
+class SovereigntyUpgrades(SdeDataset):
     """Model for the sovereigntyUpgrades.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -988,15 +1264,22 @@ class SovereigntyUpgrades(Base):
     workforce_allocation: int | None = None
     workforce_production: int | None = None
 
+    @classmethod
+    def from_sde(cls, record: TDM.SovereigntyUpgrades) -> Self:
+        """Create a SovereigntyUpgrades instance from a SDE record."""
+        return cls.model_validate(record)
 
-class StationOperations_StationType(Base):
+
+class StationOperations_StationType(SdeDataset):
     """Nested model for the stationOperations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     value: int = Field(..., alias="_value")
 
+    model_config = ConfigDict(serialize_by_alias=True)
 
-class StationOperations(Base):
+
+class StationOperations(SdeDataset):
     """Model for the stationOperations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1013,20 +1296,35 @@ class StationOperations(Base):
     services: list[int]
     stationTypes: list[StationOperations_StationType] | None = None
 
+    @classmethod
+    def from_sde(cls, record: TDM.StationOperations) -> Self:
+        """Create a StationOperations instance from a SDE record."""
+        return cls.model_validate(record)
 
-class StationServices(Base):
+
+class StationServices(SdeDataset):
     """Model for the stationServices.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     serviceName: LocalizedString
     description: LocalizedString | None = None
 
+    @classmethod
+    def from_sde(cls, record: TDM.StationServices) -> Self:
+        """Create a StationServices instance from a SDE record."""
+        return cls.model_validate(record)
 
-class TranslationLanguages(Base):
+
+class TranslationLanguages(SdeDataset):
     """Model for the translationLanguages.jsonl SDE file."""
 
     key: str = Field(..., alias="_key")
     name: str
+
+    @classmethod
+    def from_sde(cls, record: TDM.TranslationLanguages) -> Self:
+        """Create a TranslationLanguages instance from a SDE record."""
+        return cls.model_validate(record)
 
 
 class TypeBonus_RoleBonus(BaseModel):
@@ -1047,11 +1345,13 @@ class TypeBonus_Types_Bonus(BaseModel):
     unitID: int | None = None
 
 
-class TypeBonus_Types(Base):
+class TypeBonus_Types(BaseModel):
     """Nested model for the typeBonus.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     value: list[TypeBonus_Types_Bonus] = Field(..., alias="_value")
+
+    model_config = ConfigDict(serialize_by_alias=True)
 
 
 class TypeBonus_MiscBonus(BaseModel):
@@ -1064,7 +1364,7 @@ class TypeBonus_MiscBonus(BaseModel):
     unitID: int | None = None
 
 
-class TypeBonus(Base):
+class TypeBonus(SdeDataset):
     """Model for the typeBonus.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1072,6 +1372,11 @@ class TypeBonus(Base):
     types: list[TypeBonus_Types] | None = None
     iconID: int | None = None
     miscBonuses: list[TypeBonus_MiscBonus] | None = None
+
+    @classmethod
+    def from_sde(cls, record: TDM.TypeBonus) -> Self:
+        """Create a TypeBonus instance from a SDE record."""
+        return cls.model_validate(record)
 
 
 class TypeDogma_Attributes(BaseModel):
@@ -1088,12 +1393,17 @@ class TypeDogma_Effects(BaseModel):
     isDefault: bool
 
 
-class TypeDogma(Base):
+class TypeDogma(SdeDataset):
     """Model for the typeDogma.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     dogmaAttributes: list[TypeDogma_Attributes]
     dogmaEffects: list[TypeDogma_Effects] | None = None
+
+    @classmethod
+    def from_sde(cls, record: TDM.TypeDogma) -> Self:
+        """Create a TypeDogma instance from a SDE record."""
+        return cls.model_validate(record)
 
 
 class TypeMaterials_Material(BaseModel):
@@ -1111,15 +1421,20 @@ class TypeMaterials_RandomizedMaterial(BaseModel):
     quantityMin: int
 
 
-class TypeMaterials(Base):
+class TypeMaterials(SdeDataset):
     """Model for the typeMaterials.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
     materials: list[TypeMaterials_Material] | None = None
     randomizedMaterials: list[TypeMaterials_RandomizedMaterial] | None = None
 
+    @classmethod
+    def from_sde(cls, record: TDM.TypeMaterials) -> Self:
+        """Create a TypeMaterials instance from a SDE record."""
+        return cls.model_validate(record)
 
-class EveTypes(Base):
+
+class EveTypes(SdeDataset):
     """Model for the types.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1141,3 +1456,8 @@ class EveTypes(Base):
     metaGroupID: int | None = None
     variationParentTypeID: int | None = None
     factionID: int | None = None
+
+    @classmethod
+    def from_sde(cls, record: TDM.EveTypes) -> Self:
+        """Create an EveTypes instance from a SDE record."""
+        return cls.model_validate(record)

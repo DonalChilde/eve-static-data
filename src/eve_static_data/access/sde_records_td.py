@@ -26,6 +26,8 @@ class SDERecordsTD:
         """
         self.sde_dir = sde_dir
         self.access = SdeRecords(sde_dir)
+        self.build_number = self.access.build_number
+        self.release_date = self.access.release_date
 
     def agents_in_space(self, **kwargs: dict[str, Any]) -> Iterable[RTD.AgentsInSpace]:
         """Records from the agentsInSpace.jsonl dataset."""

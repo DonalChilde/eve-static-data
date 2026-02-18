@@ -47,18 +47,18 @@ class AncestriesLocalized(PM.Ancestries):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.Ancestries, localized: str = "en"
+        cls, record: TDM.Ancestries, localized: str = "en"
     ) -> "AncestriesLocalized":
         """Create an AncestriesLocalized instance from a SDE Ancestries.
 
         Args:
-            data: The SDE Ancestries data.
+            record: The SDE Ancestries data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             An AncestriesLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
@@ -76,18 +76,18 @@ class BloodlinesLocalized(PM.Bloodlines):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.Bloodlines, localized: str = "en"
+        cls, record: TDM.Bloodlines, localized: str = "en"
     ) -> "BloodlinesLocalized":
         """Create a BloodlinesLocalized instance from a SDE Bloodlines.
 
         Args:
-            data: The SDE Bloodlines data.
+            record: The SDE Bloodlines data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A BloodlinesLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
@@ -104,18 +104,18 @@ class CategoriesLocalized(PM.Categories):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.Categories, localized: str = "en"
+        cls, record: TDM.Categories, localized: str = "en"
     ) -> "CategoriesLocalized":
         """Create a CategoriesLocalized instance from a SDE Categories.
 
         Args:
-            data: The SDE Categories data.
+            record: The SDE Categories data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A CategoriesLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
@@ -130,18 +130,18 @@ class CertificatesLocalized(PM.Certificates):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.Certificates, localized: str = "en"
+        cls, record: TDM.Certificates, localized: str = "en"
     ) -> "CertificatesLocalized":
         """Create a CertificatesLocalized instance from a SDE Certificates.
 
         Args:
-            data: The SDE Certificates data.
+            record: The SDE Certificates data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A CertificatesLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
@@ -158,18 +158,18 @@ class CharacterAttributesLocalized(PM.CharacterAttributes):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.CharacterAttributes, localized: str = "en"
+        cls, record: TDM.CharacterAttributes, localized: str = "en"
     ) -> "CharacterAttributesLocalized":
         """Create a CharacterAttributesLocalized instance from a SDE CharacterAttributes.
 
         Args:
-            data: The SDE CharacterAttributes data.
+            record: The SDE CharacterAttributes data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A CharacterAttributesLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
@@ -183,18 +183,18 @@ class CorporationActivitiesLocalized(PM.CorporationActivities):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.CorporationActivities, localized: str = "en"
+        cls, record: TDM.CorporationActivities, localized: str = "en"
     ) -> "CorporationActivitiesLocalized":
         """Create a CorporationActivitiesLocalized instance from a SDE CorporationActivities.
 
         Args:
-            data: The SDE CorporationActivities data.
+            record: The SDE CorporationActivities data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A CorporationActivitiesLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
@@ -208,18 +208,18 @@ class DebuffCollectionsLocalized(PM.DebuffCollections):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.DebuffCollections, localized: str = "en"
+        cls, record: TDM.DebuffCollections, localized: str = "en"
     ) -> "DebuffCollectionsLocalized":
         """Create a DebuffCollectionsLocalized instance from a SDE DebuffCollections.
 
         Args:
-            data: The SDE DebuffCollections data.
+            record: The SDE DebuffCollections data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A DebuffCollectionsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["displayName"] = localize_string_dict(
             localized_dict.get("displayName"), localized
         )
@@ -235,18 +235,18 @@ class DogmaAttributesLocalized(PM.DogmaAttributes):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.DogmaAttributes, localized: str = "en"
+        cls, record: TDM.DogmaAttributes, localized: str = "en"
     ) -> "DogmaAttributesLocalized":
         """Create a DogmaAttributesLocalized instance from a SDE DogmaAttributes.
 
         Args:
-            data: The SDE DogmaAttributes data.
+            record: The SDE DogmaAttributes data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A DogmaAttributesLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["displayName"] = localize_string_dict(
             localized_dict.get("displayName"), localized
         )
@@ -267,18 +267,18 @@ class DogmaEffectsLocalized(PM.DogmaEffects):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.DogmaEffects, localized: str = "en"
+        cls, record: TDM.DogmaEffects, localized: str = "en"
     ) -> "DogmaEffectsLocalized":
         """Create a DogmaEffectsLocalized instance from a SDE DogmaEffects.
 
         Args:
-            data: The SDE DogmaEffects data.
+            record: The SDE DogmaEffects data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A DogmaEffectsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["displayName"] = localize_string_dict(
             localized_dict.get("displayName"), localized
         )
@@ -296,18 +296,18 @@ class DogmaUnitsLocalized(PM.DogmaUnits):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.DogmaUnits, localized: str = "en"
+        cls, record: TDM.DogmaUnits, localized: str = "en"
     ) -> "DogmaUnitsLocalized":
         """Create a DogmaUnitsLocalized instance from a SDE DogmaUnits.
 
         Args:
-            data: The SDE DogmaUnits data.
+            record: The SDE DogmaUnits data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A DogmaUnitsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["displayName"] = localize_string_dict(
             localized_dict.get("displayName"), localized
         )
@@ -325,17 +325,19 @@ class FactionsLocalized(PM.Factions):
     shortDescription: str  # type: ignore
 
     @classmethod
-    def from_sde(cls, data: TDM.Factions, localized: str = "en") -> "FactionsLocalized":
+    def from_sde(
+        cls, record: TDM.Factions, localized: str = "en"
+    ) -> "FactionsLocalized":
         """Create a FactionsLocalized instance from a SDE Factions.
 
         Args:
-            data: The SDE Factions data.
+            record: The SDE Factions data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A FactionsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
@@ -354,17 +356,17 @@ class GroupsLocalized(PM.Groups):
     name: str  # type: ignore
 
     @classmethod
-    def from_sde(cls, data: TDM.Groups, localized: str = "en") -> "GroupsLocalized":
+    def from_sde(cls, record: TDM.Groups, localized: str = "en") -> "GroupsLocalized":
         """Create a GroupsLocalized instance from a SDE Groups.
 
         Args:
-            data: The SDE Groups data.
+            record: The SDE Groups data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A GroupsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
@@ -379,18 +381,18 @@ class LandmarksLocalized(PM.Landmarks):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.Landmarks, localized: str = "en"
+        cls, record: TDM.Landmarks, localized: str = "en"
     ) -> "LandmarksLocalized":
         """Create a LandmarksLocalized instance from a SDE Landmarks.
 
         Args:
-            data: The SDE Landmarks data.
+            record: The SDE Landmarks data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A LandmarksLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
@@ -407,18 +409,18 @@ class MapAsteroidBeltsLocalized(PM.MapAsteroidBelts):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.MapAsteroidBelts, localized: str = "en"
+        cls, record: TDM.MapAsteroidBelts, localized: str = "en"
     ) -> "MapAsteroidBeltsLocalized":
         """Create a MapAsteroidBeltsLocalized instance from a SDE MapAsteroidBelts.
 
         Args:
-            data: The SDE MapAsteroidBelts data.
+            record: The SDE MapAsteroidBelts data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A MapAsteroidBeltsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["uniqueName"] = localize_string_dict(
             localized_dict.get("uniqueName"), localized
         )
@@ -432,18 +434,18 @@ class MapConstellationsLocalized(PM.MapConstellations):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.MapConstellations, localized: str = "en"
+        cls, record: TDM.MapConstellations, localized: str = "en"
     ) -> "MapConstellationsLocalized":
         """Create a MapConstellationsLocalized instance from a SDE MapConstellations.
 
         Args:
-            data: The SDE MapConstellations data.
+            record: The SDE MapConstellations data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A MapConstellationsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
@@ -456,17 +458,19 @@ class MapMoonsLocalized(PM.MapMoons):
     uniqueName: str  # type: ignore
 
     @classmethod
-    def from_sde(cls, data: TDM.MapMoons, localized: str = "en") -> "MapMoonsLocalized":
+    def from_sde(
+        cls, record: TDM.MapMoons, localized: str = "en"
+    ) -> "MapMoonsLocalized":
         """Create a MapMoonsLocalized instance from a SDE MapMoons.
 
         Args:
-            data: The SDE MapMoons data.
+            record: The SDE MapMoons data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A MapMoonsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["uniqueName"] = localize_string_dict(
             localized_dict.get("uniqueName"), localized
         )
@@ -480,18 +484,18 @@ class MapPlanetsLocalized(PM.MapPlanets):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.MapPlanets, localized: str = "en"
+        cls, record: TDM.MapPlanets, localized: str = "en"
     ) -> "MapPlanetsLocalized":
         """Create a MapPlanetsLocalized instance from a SDE MapPlanets.
 
         Args:
-            data: The SDE MapPlanets data.
+            record: The SDE MapPlanets data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A MapPlanetsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["uniqueName"] = localize_string_dict(
             localized_dict.get("uniqueName"), localized
         )
@@ -506,18 +510,18 @@ class MapRegionsLocalized(PM.MapRegions):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.MapRegions, localized: str = "en"
+        cls, record: TDM.MapRegions, localized: str = "en"
     ) -> "MapRegionsLocalized":
         """Create a MapRegionsLocalized instance from a SDE MapRegions.
 
         Args:
-            data: The SDE MapRegions data.
+            record: The SDE MapRegions data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A MapRegionsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
@@ -535,18 +539,18 @@ class MarketGroupsLocalized(PM.MarketGroups):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.MarketGroups, localized: str = "en"
+        cls, record: TDM.MarketGroups, localized: str = "en"
     ) -> "MarketGroupsLocalized":
         """Create a MarketGroupsLocalized instance from a SDE MarketGroups.
 
         Args:
-            data: The SDE MarketGroups data.
+            record: The SDE MarketGroups data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A MarketGroupsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
@@ -564,18 +568,18 @@ class MetaGroupsLocalized(PM.MetaGroups):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.MetaGroups, localized: str = "en"
+        cls, record: TDM.MetaGroups, localized: str = "en"
     ) -> "MetaGroupsLocalized":
         """Create a MetaGroupsLocalized instance from a SDE MetaGroups.
 
         Args:
-            data: The SDE MetaGroups data.
+            record: The SDE MetaGroups data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A MetaGroupsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
@@ -592,18 +596,18 @@ class NpcCharactersLocalized(PM.NpcCharacters):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.NpcCharacters, localized: str = "en"
+        cls, record: TDM.NpcCharacters, localized: str = "en"
     ) -> "NpcCharactersLocalized":
         """Create a NpcCharactersLocalized instance from a SDE NpcCharacters.
 
         Args:
-            data: The SDE NpcCharacters data.
+            record: The SDE NpcCharacters data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A NpcCharactersLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
@@ -619,18 +623,18 @@ class NpcCorporationDivisionsLocalized(PM.NpcCorporationDivisions):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.NpcCorporationDivisions, localized: str = "en"
+        cls, record: TDM.NpcCorporationDivisions, localized: str = "en"
     ) -> "NpcCorporationDivisionsLocalized":
         """Create a NpcCorporationDivisionsLocalized instance from a SDE NpcCorporationDivisions.
 
         Args:
-            data: The SDE NpcCorporationDivisions data.
+            record: The SDE NpcCorporationDivisions data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A NpcCorporationDivisionsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
@@ -651,18 +655,18 @@ class NpcCorporationsLocalized(PM.NpcCorporations):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.NpcCorporations, localized: str = "en"
+        cls, record: TDM.NpcCorporations, localized: str = "en"
     ) -> "NpcCorporationsLocalized":
         """Create a NpcCorporationsLocalized instance from a SDE NpcCorporations.
 
         Args:
-            data: The SDE NpcCorporations data.
+            record: The SDE NpcCorporations data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A NpcCorporationsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
@@ -679,18 +683,18 @@ class PlanetSchematicsLocalized(PM.PlanetSchematics):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.PlanetSchematics, localized: str = "en"
+        cls, record: TDM.PlanetSchematics, localized: str = "en"
     ) -> "PlanetSchematicsLocalized":
         """Create a PlanetSchematicsLocalized instance from a SDE PlanetSchematics.
 
         Args:
-            data: The SDE PlanetSchematics data.
+            record: The SDE PlanetSchematics data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A PlanetSchematicsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
@@ -704,17 +708,17 @@ class RacesLocalized(PM.Races):
     description: str  # type: ignore
 
     @classmethod
-    def from_sde(cls, data: TDM.Races, localized: str = "en") -> "RacesLocalized":
+    def from_sde(cls, record: TDM.Races, localized: str = "en") -> "RacesLocalized":
         """Create a RacesLocalized instance from a SDE Races.
 
         Args:
-            data: The SDE Races data.
+            record: The SDE Races data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A RacesLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
@@ -731,18 +735,18 @@ class SkinMaterialsLocalized(PM.SkinMaterials):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.SkinMaterials, localized: str = "en"
+        cls, record: TDM.SkinMaterials, localized: str = "en"
     ) -> "SkinMaterialsLocalized":
         """Create a SkinMaterialsLocalized instance from a SDE SkinMaterials.
 
         Args:
-            data: The SDE SkinMaterials data.
+            record: The SDE SkinMaterials data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A SkinMaterialsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["displayName"] = localize_string_dict(
             localized_dict.get("displayName"), localized
         )
@@ -755,17 +759,17 @@ class SkinsLocalized(PM.Skins):
     skinDescription: str  # type: ignore
 
     @classmethod
-    def from_sde(cls, data: TDM.Skins, localized: str = "en") -> "SkinsLocalized":
+    def from_sde(cls, record: TDM.Skins, localized: str = "en") -> "SkinsLocalized":
         """Create a SkinsLocalized instance from a SDE Skins.
 
         Args:
-            data: The SDE Skins data.
+            record: The SDE Skins data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A SkinsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["skinDescription"] = localize_string_dict(
             localized_dict.get("skinDescription"), localized
         )
@@ -780,18 +784,18 @@ class StationOperationsLocalized(PM.StationOperations):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.StationOperations, localized: str = "en"
+        cls, record: TDM.StationOperations, localized: str = "en"
     ) -> "StationOperationsLocalized":
         """Create a StationOperationsLocalized instance from a SDE StationOperations.
 
         Args:
-            data: The SDE StationOperations data.
+            record: The SDE StationOperations data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A StationOperationsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["operationName"] = localize_string_dict(
             localized_dict.get("operationName"), localized
         )
@@ -809,18 +813,18 @@ class StationServicesLocalized(PM.StationServices):
 
     @classmethod
     def from_sde(
-        cls, data: TDM.StationServices, localized: str = "en"
+        cls, record: TDM.StationServices, localized: str = "en"
     ) -> "StationServicesLocalized":
         """Create a StationServicesLocalized instance from a SDE StationServices.
 
         Args:
-            data: The SDE StationServices data.
+            record: The SDE StationServices data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A StationServicesLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["serviceName"] = localize_string_dict(
             localized_dict.get("serviceName"), localized
         )
@@ -841,17 +845,19 @@ class EveTypesLocalized(PM.EveTypes):
     description: str  # type: ignore
 
     @classmethod
-    def from_sde(cls, data: TDM.EveTypes, localized: str = "en") -> "EveTypesLocalized":
+    def from_sde(
+        cls, record: TDM.EveTypes, localized: str = "en"
+    ) -> "EveTypesLocalized":
         """Create an EveTypesLocalized instance from a SDE EveTypes.
 
         Args:
-            data: The SDE EveTypes data.
+            record: The SDE EveTypes data.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             An EveTypesLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(data))
+        localized_dict = cast(dict[str, Any], deepcopy(record))
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )

@@ -20,6 +20,8 @@ class SdeRecords:
         """
         self.sde_path = sde_path
         self.access = SdeReader(sde_path=sde_path)
+        self.build_number = self.access.build_number
+        self.release_date = self.access.release_date
 
     def agents_in_space(self) -> Iterable[dict[str, Any]]:
         """Records from the agentsInSpace.jsonl dataset."""
