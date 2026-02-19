@@ -3,6 +3,7 @@ from pathlib import Path
 from eve_static_data.access.sde_records_td import SDERecordsTD
 from eve_static_data.models import localized_datasets as LDS
 from eve_static_data.models.localized_dataset_files import LocalizedDatasetFiles
+from eve_static_data.models.market_path import MarketPathsDataset
 
 
 def export_localized_datasets(
@@ -55,4 +56,13 @@ def export_localized_datasets(
     eve_types_dataset = LDS.EveTypesDataset.from_sde(sde_records)
     eve_types_dataset.save_to_disk(
         output_dir / LocalizedDatasetFiles.EVE_TYPES, overwrite=overwrite
+    )
+
+    # ------------------------------------------
+    # Derived datasets
+    # ------------------------------------------
+
+    market_paths_dataset = MarketPathsDataset.from_dataset(market_groups_dataset)
+    market_paths_dataset.save_to_disk(
+        output_dir / LocalizedDatasetFiles.MARKET_PATHS, overwrite=overwrite
     )

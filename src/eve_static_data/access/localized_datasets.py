@@ -6,6 +6,7 @@ from eve_static_data.models import localized_datasets as LDS
 from eve_static_data.models import sde_pydantic as PM
 from eve_static_data.models import sde_pydantic_localized as PML
 from eve_static_data.models.localized_dataset_files import LocalizedDatasetFiles
+from eve_static_data.models.market_path import MarketPath, MarketPathsDataset
 
 
 class LocalizedDatasets:
@@ -22,6 +23,12 @@ class LocalizedDatasets:
         self.meta_groups_dataset: LDS.MetaGroupsDataset | None = None
         self.type_materials_dataset: LDS.TypeMaterialsDataset | None = None
         self.eve_types_dataset: LDS.EveTypesDataset | None = None
+
+        # ------------------------------------------
+        # Derived datasets
+        # ------------------------------------------
+
+        self.market_paths_dataset: MarketPathsDataset | None = None
 
     def ancestries(self) -> dict[int, PML.AncestriesLocalized]:
         """Ancestries dataset, lazily loaded from disk."""
@@ -102,3 +109,15 @@ class LocalizedDatasets:
                 self.datasets_path / LocalizedDatasetFiles.EVE_TYPES
             )
         return self.eve_types_dataset.data
+
+    # --------------------------------------------------
+    # Derived datasets
+    # --------------------------------------------------
+
+    def market_paths(self) -> dict[int, MarketPath]:
+        """Market paths dataset, lazily loaded from disk."""
+        if self.market_paths_dataset is None:
+            self.market_paths_dataset = MarketPathsDataset.load_from_disk(
+                self.datasets_path / LocalizedDatasetFiles.MARKET_PATHS
+            )
+        return self.market_paths_dataset.data

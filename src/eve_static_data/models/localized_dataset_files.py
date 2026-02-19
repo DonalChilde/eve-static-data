@@ -12,3 +12,7 @@ class LocalizedDatasetFiles(StrEnum):
     META_GROUPS = "meta_groups-localized.json"
     TYPE_MATERIALS = "type_materials.json"
     EVE_TYPES = "eve_types-localized.json"
+    # ------------------------------------------
+    # Derived datasets
+    # ------------------------------------------
+    MARKET_PATHS = "market_paths.json"
