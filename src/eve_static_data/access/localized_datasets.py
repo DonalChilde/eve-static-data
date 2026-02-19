@@ -7,6 +7,10 @@ from eve_static_data.models import sde_pydantic as PM
 from eve_static_data.models import sde_pydantic_localized as PML
 from eve_static_data.models.localized_dataset_files import LocalizedDatasetFiles
 from eve_static_data.models.market_path import MarketPath, MarketPathsDataset
+from eve_static_data.models.normalized_eve_type import (
+    NormalizedEveType,
+    NormalizedEveTypesDataset,
+)
 
 
 class LocalizedDatasets:
@@ -29,6 +33,7 @@ class LocalizedDatasets:
         # ------------------------------------------
 
         self.market_paths_dataset: MarketPathsDataset | None = None
+        self.normalized_eve_types_dataset: NormalizedEveTypesDataset | None = None
 
     def ancestries(self) -> dict[int, PML.AncestriesLocalized]:
         """Ancestries dataset, lazily loaded from disk."""
@@ -121,3 +126,13 @@ class LocalizedDatasets:
                 self.datasets_path / LocalizedDatasetFiles.MARKET_PATHS
             )
         return self.market_paths_dataset.data
+
+    def normalized_eve_types(self) -> dict[int, NormalizedEveType]:
+        """Normalized Eve types dataset, lazily loaded from disk."""
+        if self.normalized_eve_types_dataset is None:
+            self.normalized_eve_types_dataset = (
+                NormalizedEveTypesDataset.load_from_disk(
+                    self.datasets_path / LocalizedDatasetFiles.NORMALIZED_EVE_TYPES
+                )
+            )
+        return self.normalized_eve_types_dataset.data

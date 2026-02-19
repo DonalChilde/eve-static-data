@@ -36,14 +36,22 @@ class MarketPathsDataset(SdeDataset):
             data={},
         )
         for mg_id in market_groups_dataset.data.keys():
-            int_path = get_market_path_int(mg_id, market_groups_dataset.data)
-            str_path = get_market_path_string(int_path, market_groups_dataset.data)
-            result.data[mg_id] = MarketPath(
-                key=mg_id,
-                int_path=int_path,
-                str_path=str_path.split("/"),
-            )
+            market_path = get_market_path(mg_id, market_groups_dataset.data)
+            result.data[mg_id] = market_path
         return result
+
+
+def get_market_path(
+    market_group_id: int, market_groups: dict[int, MarketGroupsLocalized]
+) -> MarketPath:
+    """Get the market path for a given market group ID."""
+    int_path = get_market_path_int(market_group_id, market_groups)
+    str_path = get_market_path_string(int_path, market_groups)
+    return MarketPath(
+        key=market_group_id,
+        int_path=int_path,
+        str_path=str_path.split("/"),
+    )
 
 
 def get_market_path_int(

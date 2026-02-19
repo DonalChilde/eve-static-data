@@ -4,6 +4,7 @@ from eve_static_data.access.sde_records_td import SDERecordsTD
 from eve_static_data.models import localized_datasets as LDS
 from eve_static_data.models.localized_dataset_files import LocalizedDatasetFiles
 from eve_static_data.models.market_path import MarketPathsDataset
+from eve_static_data.models.normalized_eve_type import NormalizedEveTypesDataset
 
 
 def export_localized_datasets(
@@ -65,4 +66,15 @@ def export_localized_datasets(
     market_paths_dataset = MarketPathsDataset.from_dataset(market_groups_dataset)
     market_paths_dataset.save_to_disk(
         output_dir / LocalizedDatasetFiles.MARKET_PATHS, overwrite=overwrite
+    )
+
+    normalized_eve_types_dataset = NormalizedEveTypesDataset.from_datasets(
+        eve_types_dataset=eve_types_dataset,
+        groups_dataset=groups_dataset,
+        categories_dataset=categories_dataset,
+        market_groups_dataset=market_groups_dataset,
+        meta_groups_dataset=meta_groups_dataset,
+    )
+    normalized_eve_types_dataset.save_to_disk(
+        output_dir / LocalizedDatasetFiles.NORMALIZED_EVE_TYPES, overwrite=overwrite
     )
