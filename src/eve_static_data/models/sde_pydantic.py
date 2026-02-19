@@ -82,13 +82,13 @@ class Position2D(BaseModel):
 # ------------------------------------------------------------------------------
 
 
-class SdeDataset(BaseModel):
+class SdeDatasetRecord(BaseModel):
     """Base model for all SDE datasets."""
 
     model_config = ConfigDict(serialize_by_alias=True)
 
 
-class AgentsInSpace(SdeDataset):
+class AgentsInSpace(SdeDatasetRecord):
     """Model for the agentsInSpace.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -103,7 +103,7 @@ class AgentsInSpace(SdeDataset):
         return cls.model_validate(record)
 
 
-class AgentTypes(SdeDataset):
+class AgentTypes(SdeDatasetRecord):
     """Model for the agentTypes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -115,7 +115,7 @@ class AgentTypes(SdeDataset):
         return cls.model_validate(record)
 
 
-class Ancestries(SdeDataset):
+class Ancestries(SdeDatasetRecord):
     """Model for the ancestries.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -136,7 +136,7 @@ class Ancestries(SdeDataset):
         return cls.model_validate(record)
 
 
-class Bloodlines(SdeDataset):
+class Bloodlines(SdeDatasetRecord):
     """Model for the bloodlines.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -185,7 +185,7 @@ class Blueprints_Activities(BaseModel):
     research_time: Blueprints_Activity | None = None
 
 
-class Blueprints(SdeDataset):
+class Blueprints(SdeDatasetRecord):
     """Model for the blueprints.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -199,7 +199,7 @@ class Blueprints(SdeDataset):
         return cls.model_validate(record)
 
 
-class Categories(SdeDataset):
+class Categories(SdeDatasetRecord):
     """Model for the categories.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -226,7 +226,7 @@ class Certificates_SkillType(BaseModel):
     model_config = ConfigDict(serialize_by_alias=True)
 
 
-class Certificates(SdeDataset):
+class Certificates(SdeDatasetRecord):
     """Model for the certificates.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -242,7 +242,7 @@ class Certificates(SdeDataset):
         return cls.model_validate(record)
 
 
-class CharacterAttributes(SdeDataset):
+class CharacterAttributes(SdeDatasetRecord):
     """Model for the characterAttributes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -258,7 +258,7 @@ class CharacterAttributes(SdeDataset):
         return cls.model_validate(record)
 
 
-class CloneGrades(SdeDataset):
+class CloneGrades(SdeDatasetRecord):
     """Model for the cloneGrades.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -271,7 +271,7 @@ class CloneGrades(SdeDataset):
         return cls.model_validate(record)
 
 
-class CompressibleTypes(SdeDataset):
+class CompressibleTypes(SdeDatasetRecord):
     """Model for the compressibleTypes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -283,7 +283,7 @@ class CompressibleTypes(SdeDataset):
         return cls.model_validate(record)
 
 
-class ContrabandTypes_Faction(SdeDataset):
+class ContrabandTypes_Faction(SdeDatasetRecord):
     """Nested model for the contrabandTypes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -298,7 +298,7 @@ class ContrabandTypes_Faction(SdeDataset):
         return cls.model_validate(record)
 
 
-class ContrabandTypes(SdeDataset):
+class ContrabandTypes(SdeDatasetRecord):
     """Model for the contrabandTypes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -320,7 +320,7 @@ class ControlTowerResources_Resource(BaseModel):
     resourceTypeID: int
 
 
-class ControlTowerResources(SdeDataset):
+class ControlTowerResources(SdeDatasetRecord):
     """Model for the controlTowerResources.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -332,7 +332,7 @@ class ControlTowerResources(SdeDataset):
         return cls.model_validate(record)
 
 
-class CorporationActivities(SdeDataset):
+class CorporationActivities(SdeDatasetRecord):
     """Model for the corporationActivities.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -370,7 +370,7 @@ class DebuffCollections_ItemModifier(BaseModel):
     dogmaAttributeID: int
 
 
-class DebuffCollections(SdeDataset):
+class DebuffCollections(SdeDatasetRecord):
     """Model for the debuffCollections.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -392,7 +392,7 @@ class DebuffCollections(SdeDataset):
         return cls.model_validate(record)
 
 
-class DogmaAttributeCategories(SdeDataset):
+class DogmaAttributeCategories(SdeDatasetRecord):
     """Model for the dogmaAttributeCategories.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -405,7 +405,7 @@ class DogmaAttributeCategories(SdeDataset):
         return cls.model_validate(record)
 
 
-class DogmaAttributes(SdeDataset):
+class DogmaAttributes(SdeDatasetRecord):
     """Model for the dogmaAttributes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -446,7 +446,7 @@ class DogmaEffects_ModifierInfo(BaseModel):
     skillTypeID: int | None = None
 
 
-class DogmaEffects(SdeDataset):
+class DogmaEffects(SdeDatasetRecord):
     """Model for the dogmaEffects.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -482,7 +482,7 @@ class DogmaEffects(SdeDataset):
         return cls.model_validate(record)
 
 
-class DogmaUnits(SdeDataset):
+class DogmaUnits(SdeDatasetRecord):
     """Model for the dogmaUnits.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -496,7 +496,7 @@ class DogmaUnits(SdeDataset):
         return cls.model_validate(record)
 
 
-class DynamicItemAttributes_AttributeID(SdeDataset):
+class DynamicItemAttributes_AttributeID(SdeDatasetRecord):
     """Nested model for the dynamicItemAttributes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -517,7 +517,7 @@ class DynamicItemAttributes_InputOutputMapping(BaseModel):
     resultingType: int
 
 
-class DynamicItemAttributes(SdeDataset):
+class DynamicItemAttributes(SdeDatasetRecord):
     """Model for the dynamicItemAttributes.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -530,7 +530,7 @@ class DynamicItemAttributes(SdeDataset):
         return cls.model_validate(record)
 
 
-class Factions(SdeDataset):
+class Factions(SdeDatasetRecord):
     """Model for the factions.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -553,7 +553,7 @@ class Factions(SdeDataset):
         return cls.model_validate(record)
 
 
-class FreelanceJobSchemas(SdeDataset):
+class FreelanceJobSchemas(SdeDatasetRecord):
     """Model for the freelanceJobSchemas.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -565,7 +565,7 @@ class FreelanceJobSchemas(SdeDataset):
         return cls.model_validate(record)
 
 
-class Graphics(SdeDataset):
+class Graphics(SdeDatasetRecord):
     """Model for the graphics.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -583,7 +583,7 @@ class Graphics(SdeDataset):
         return cls.model_validate(record)
 
 
-class Groups(SdeDataset):
+class Groups(SdeDatasetRecord):
     """Model for the groups.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -602,7 +602,7 @@ class Groups(SdeDataset):
         return cls.model_validate(record)
 
 
-class Icons(SdeDataset):
+class Icons(SdeDatasetRecord):
     """Model for the icons.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -614,7 +614,7 @@ class Icons(SdeDataset):
         return cls.model_validate(record)
 
 
-class Landmarks(SdeDataset):
+class Landmarks(SdeDatasetRecord):
     """Model for the landmarks.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -647,7 +647,7 @@ class MapAsteroidBelts_Statistics(BaseModel):
     temperature: float
 
 
-class MapAsteroidBelts(SdeDataset):
+class MapAsteroidBelts(SdeDatasetRecord):
     """Model for the mapAsteroidBelts.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -667,7 +667,7 @@ class MapAsteroidBelts(SdeDataset):
         return cls.model_validate(record)
 
 
-class MapConstellations(SdeDataset):
+class MapConstellations(SdeDatasetRecord):
     """Model for the mapConstellations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -710,7 +710,7 @@ class MapMoons_Statistics(BaseModel):
     temperature: float
 
 
-class MapMoons(SdeDataset):
+class MapMoons(SdeDatasetRecord):
     """Model for the mapMoons.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -759,7 +759,7 @@ class MapPlanets_Statistics(BaseModel):
     temperature: float
 
 
-class MapPlanets(SdeDataset):
+class MapPlanets(SdeDatasetRecord):
     """Model for the mapPlanets.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -782,7 +782,7 @@ class MapPlanets(SdeDataset):
         return cls.model_validate(record)
 
 
-class MapRegions(SdeDataset):
+class MapRegions(SdeDatasetRecord):
     """Model for the mapRegions.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -800,7 +800,7 @@ class MapRegions(SdeDataset):
         return cls.model_validate(record)
 
 
-class MapSolarSystems(SdeDataset):
+class MapSolarSystems(SdeDatasetRecord):
     """Model for the mapSolarSystems.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -841,7 +841,7 @@ class MapStargates_Destination(BaseModel):
     stargateID: int
 
 
-class MapStargates(SdeDataset):
+class MapStargates(SdeDatasetRecord):
     """Model for the mapStargates.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -866,7 +866,7 @@ class MapStars_Statistics(BaseModel):
     temperature: float
 
 
-class MapStars(SdeDataset):
+class MapStars(SdeDatasetRecord):
     """Model for the mapStars.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -881,7 +881,7 @@ class MapStars(SdeDataset):
         return cls.model_validate(record)
 
 
-class MarketGroups(SdeDataset):
+class MarketGroups(SdeDatasetRecord):
     """Model for the marketGroups.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -897,7 +897,7 @@ class MarketGroups(SdeDataset):
         return cls.model_validate(record)
 
 
-class Masteries_Value(SdeDataset):
+class Masteries_Value(SdeDatasetRecord):
     """Nested model for the masteries.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -909,7 +909,7 @@ class Masteries_Value(SdeDataset):
         return cls.model_validate(record)
 
 
-class Masteries(SdeDataset):
+class Masteries(SdeDatasetRecord):
     """Model for the masteries.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -921,7 +921,7 @@ class Masteries(SdeDataset):
         return cls.model_validate(record)
 
 
-class MetaGroups(SdeDataset):
+class MetaGroups(SdeDatasetRecord):
     """Model for the metaGroups.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -952,7 +952,7 @@ class NpcCharacters_Agent(BaseModel):
     level: int
 
 
-class NpcCharacters(SdeDataset):
+class NpcCharacters(SdeDatasetRecord):
     """Model for the npcCharacters.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -979,7 +979,7 @@ class NpcCharacters(SdeDataset):
         return cls.model_validate(record)
 
 
-class NpcCorporationDivisions(SdeDataset):
+class NpcCorporationDivisions(SdeDatasetRecord):
     """Model for the npcCorporationDivisions.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -995,7 +995,7 @@ class NpcCorporationDivisions(SdeDataset):
         return cls.model_validate(record)
 
 
-class NpcCorporations_Trade(SdeDataset):
+class NpcCorporations_Trade(SdeDatasetRecord):
     """Nested model for the npcCorporations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1007,7 +1007,7 @@ class NpcCorporations_Trade(SdeDataset):
         return cls.model_validate(record)
 
 
-class NpcCorporations_Divisions(SdeDataset):
+class NpcCorporations_Divisions(SdeDatasetRecord):
     """Nested model for the npcCorporations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1021,7 +1021,7 @@ class NpcCorporations_Divisions(SdeDataset):
         return cls.model_validate(record)
 
 
-class NpcCorporations_Investors(SdeDataset):
+class NpcCorporations_Investors(SdeDatasetRecord):
     """Nested model for the npcCorporations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1033,7 +1033,7 @@ class NpcCorporations_Investors(SdeDataset):
         return cls.model_validate(record)
 
 
-class NpcCorporations_ExchangeRates(SdeDataset):
+class NpcCorporations_ExchangeRates(SdeDatasetRecord):
     """Nested model for the npcCorporations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1045,7 +1045,7 @@ class NpcCorporations_ExchangeRates(SdeDataset):
         return cls.model_validate(record)
 
 
-class NpcCorporations(SdeDataset):
+class NpcCorporations(SdeDatasetRecord):
     """Model for the npcCorporations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1088,7 +1088,7 @@ class NpcCorporations(SdeDataset):
         return cls.model_validate(record)
 
 
-class NpcStations(SdeDataset):
+class NpcStations(SdeDatasetRecord):
     """Model for the npcStations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1121,7 +1121,7 @@ class PlanetResources_Reagent(BaseModel):
     unsecured_capacity: int
 
 
-class PlanetResources(SdeDataset):
+class PlanetResources(SdeDatasetRecord):
     """Model for the planetResources.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1145,7 +1145,7 @@ class PlanetSchematics_Types(BaseModel):
     model_config = ConfigDict(serialize_by_alias=True)
 
 
-class PlanetSchematics(SdeDataset):
+class PlanetSchematics(SdeDatasetRecord):
     """Model for the planetSchematics.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1169,7 +1169,7 @@ class Races_Skill(BaseModel):
     model_config = ConfigDict(serialize_by_alias=True)
 
 
-class Races(SdeDataset):
+class Races(SdeDatasetRecord):
     """Model for the races.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1185,7 +1185,7 @@ class Races(SdeDataset):
         return cls.model_validate(record)
 
 
-class SdeInfo(SdeDataset):
+class SdeInfo(SdeDatasetRecord):
     """Model for the sdeInfo.jsonl SDE file."""
 
     key: str = Field(..., alias="_key")
@@ -1198,7 +1198,7 @@ class SdeInfo(SdeDataset):
         return cls.model_validate(record)
 
 
-class SkinLicenses(SdeDataset):
+class SkinLicenses(SdeDatasetRecord):
     """Model for the skinLicenses.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1213,7 +1213,7 @@ class SkinLicenses(SdeDataset):
         return cls.model_validate(record)
 
 
-class SkinMaterials(SdeDataset):
+class SkinMaterials(SdeDatasetRecord):
     """Model for the skinMaterials.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1226,7 +1226,7 @@ class SkinMaterials(SdeDataset):
         return cls.model_validate(record)
 
 
-class Skins(SdeDataset):
+class Skins(SdeDatasetRecord):
     """Model for the skins.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1253,7 +1253,7 @@ class SovereigntyUpgrades_Fuel(BaseModel):
     type_id: int
 
 
-class SovereigntyUpgrades(SdeDataset):
+class SovereigntyUpgrades(SdeDatasetRecord):
     """Model for the sovereigntyUpgrades.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1270,7 +1270,7 @@ class SovereigntyUpgrades(SdeDataset):
         return cls.model_validate(record)
 
 
-class StationOperations_StationType(SdeDataset):
+class StationOperations_StationType(SdeDatasetRecord):
     """Nested model for the stationOperations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1279,7 +1279,7 @@ class StationOperations_StationType(SdeDataset):
     model_config = ConfigDict(serialize_by_alias=True)
 
 
-class StationOperations(SdeDataset):
+class StationOperations(SdeDatasetRecord):
     """Model for the stationOperations.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1302,7 +1302,7 @@ class StationOperations(SdeDataset):
         return cls.model_validate(record)
 
 
-class StationServices(SdeDataset):
+class StationServices(SdeDatasetRecord):
     """Model for the stationServices.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1315,7 +1315,7 @@ class StationServices(SdeDataset):
         return cls.model_validate(record)
 
 
-class TranslationLanguages(SdeDataset):
+class TranslationLanguages(SdeDatasetRecord):
     """Model for the translationLanguages.jsonl SDE file."""
 
     key: str = Field(..., alias="_key")
@@ -1364,7 +1364,7 @@ class TypeBonus_MiscBonus(BaseModel):
     unitID: int | None = None
 
 
-class TypeBonus(SdeDataset):
+class TypeBonus(SdeDatasetRecord):
     """Model for the typeBonus.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1393,7 +1393,7 @@ class TypeDogma_Effects(BaseModel):
     isDefault: bool
 
 
-class TypeDogma(SdeDataset):
+class TypeDogma(SdeDatasetRecord):
     """Model for the typeDogma.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1421,7 +1421,7 @@ class TypeMaterials_RandomizedMaterial(BaseModel):
     quantityMin: int
 
 
-class TypeMaterials(SdeDataset):
+class TypeMaterials(SdeDatasetRecord):
     """Model for the typeMaterials.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
@@ -1434,7 +1434,7 @@ class TypeMaterials(SdeDataset):
         return cls.model_validate(record)
 
 
-class EveTypes(SdeDataset):
+class EveTypes(SdeDatasetRecord):
     """Model for the types.jsonl SDE file."""
 
     key: int = Field(..., alias="_key")
