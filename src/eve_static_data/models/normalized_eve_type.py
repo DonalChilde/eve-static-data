@@ -1,39 +1,24 @@
-from typing import Self
+"""Models for normalized Eve types, which combine data from multiple localized datasets into a single structure."""
 
-from pydantic import BaseModel
+from typing import Self
 
 from eve_static_data.models import localized_datasets as LDS
 from eve_static_data.models import sde_pydantic_localized as PML
 
 
-class NormalizedEveType(BaseModel):
-    """A normalized version of an Eve type, with related data from other datasets included.
+class NormalizedEveType(PML.EveTypesLocalized):
+    """A normalized version of a localized Eve type, with related data from other datasets included.
 
     This is useful for spreadsheet exports and other use cases where having all related
     data in one place is convenient.
     """
 
-    typeID: int
-    name: str
-    groupID: int | None
     group: str | None
     categoryID: int | None
     category: str | None
-    marketGroupID: int | None
     market_group: str | None
-    metaGroupID: int | None
     meta_group: str | None
-    factionID: int | None
     # faction: str | None
-    variationParentTypeID: int | None
-    volume: float | None
-    radius: float | None
-    mass: float | None
-    portion_size: int
-    published: bool
-    description: str | None
-    base_price: float | None
-    capacity: float | None
 
 
 class NormalizedEveTypesDataset(LDS.SdeDataset):
@@ -62,7 +47,7 @@ class NormalizedEveTypesDataset(LDS.SdeDataset):
                 market_groups_dataset.data,
                 meta_groups_dataset.data,
             )
-            result.data[normalized_type.typeID] = normalized_type
+            result.data[normalized_type.key] = normalized_type
         return result
 
 
@@ -82,24 +67,24 @@ def normalize_eve_type(
     meta_group = meta_groups.get(eve_type.metaGroupID) if eve_type.metaGroupID else None
 
     return NormalizedEveType(
-        typeID=eve_type.key,
+        _key=eve_type.key,
         name=eve_type.name,
-        groupID=group.key if group else None,
+        groupID=eve_type.groupID,
         group=group.name if group else None,
-        categoryID=category.key if category else None,
+        categoryID=group.categoryID if group else None,
         category=category.name if category else None,
-        marketGroupID=market_group.key if market_group else None,
+        marketGroupID=eve_type.marketGroupID,
         market_group=market_group.name if market_group else None,
-        metaGroupID=meta_group.key if meta_group else None,
+        metaGroupID=eve_type.metaGroupID,
         meta_group=meta_group.name if meta_group else None,
         factionID=eve_type.factionID,
         variationParentTypeID=eve_type.variationParentTypeID,
         volume=eve_type.volume,
         radius=eve_type.radius,
         mass=eve_type.mass,
-        portion_size=eve_type.portionSize,
+        portionSize=eve_type.portionSize,
         published=eve_type.published,
         description=eve_type.description,
-        base_price=eve_type.basePrice,
+        basePrice=eve_type.basePrice,
         capacity=eve_type.capacity,
     )

@@ -12,7 +12,9 @@ def export_localized_datasets(
 ) -> None:
     """Export localized datasets to JSON files."""
     ancestries_dataset = LDS.AncestriesDataset.from_sde(sde_records)
-    ancestries_dataset.save_to_disk(output_dir / LocalizedDatasetFiles.ANCESTRIES)
+    ancestries_dataset.save_to_disk(
+        output_dir / LocalizedDatasetFiles.ANCESTRIES, overwrite=overwrite
+    )
 
     blueprints_dataset = LDS.BlueprintsDataset.from_sde(sde_records)
     blueprints_dataset.save_to_disk(
