@@ -1,3 +1,4 @@
+from copy import deepcopy
 from pathlib import Path
 
 from eve_static_data.access.sde_records_td import SDERecordsTD
@@ -79,4 +80,13 @@ def export_localized_datasets(
     )
     normalized_eve_types_dataset.save_to_disk(
         output_dir / LocalizedDatasetFiles.NORMALIZED_EVE_TYPES, overwrite=overwrite
+    )
+
+    normalized_eve_types_published_dataset = deepcopy(normalized_eve_types_dataset)
+    for key, record in list(normalized_eve_types_published_dataset.data.items()):
+        if not record.published:
+            normalized_eve_types_published_dataset.data.pop(key)
+    normalized_eve_types_published_dataset.save_to_disk(
+        output_dir / LocalizedDatasetFiles.NORMALIZED_EVE_TYPES_PUBLISHED,
+        overwrite=overwrite,
     )

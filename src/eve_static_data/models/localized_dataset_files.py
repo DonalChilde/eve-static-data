@@ -19,3 +19,4 @@ class LocalizedDatasetFiles(StrEnum):
     # ------------------------------------------
     MARKET_PATHS = "market_paths.json"
     NORMALIZED_EVE_TYPES = "normalized_eve_types.json"
+    NORMALIZED_EVE_TYPES_PUBLISHED = "normalized_eve_types_published.json"

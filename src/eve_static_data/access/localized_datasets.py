@@ -34,6 +34,9 @@ class LocalizedDatasets:
 
         self.market_paths_dataset: MarketPathsDataset | None = None
         self.normalized_eve_types_dataset: NormalizedEveTypesDataset | None = None
+        self.normalized_eve_types_published_dataset: (
+            NormalizedEveTypesDataset | None
+        ) = None
 
     def ancestries(self) -> dict[int, PML.AncestriesLocalized]:
         """Ancestries dataset, lazily loaded from disk."""
@@ -136,3 +139,14 @@ class LocalizedDatasets:
                 )
             )
         return self.normalized_eve_types_dataset.data
+
+    def normalized_eve_types_published(self) -> dict[int, NormalizedEveType]:
+        """Normalized Eve types published dataset, lazily loaded from disk."""
+        if self.normalized_eve_types_published_dataset is None:
+            self.normalized_eve_types_published_dataset = (
+                NormalizedEveTypesDataset.load_from_disk(
+                    self.datasets_path
+                    / LocalizedDatasetFiles.NORMALIZED_EVE_TYPES_PUBLISHED
+                )
+            )
+        return self.normalized_eve_types_published_dataset.data
