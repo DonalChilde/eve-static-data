@@ -1,3 +1,5 @@
+"""CLI for exporting SDE data to JSON files."""
+
 from pathlib import Path
 from typing import Annotated
 
