@@ -12,8 +12,8 @@ from copy import deepcopy
 from typing import Any
 
 from eve_static_data.access.sde_reader import SDERecordMetadata
-from eve_static_data.models import sde_pydantic as PM
-from eve_static_data.models import sde_typeddict as TDM
+from eve_static_data.models.records import sde_pydantic as PM
+from eve_static_data.models.records import sde_typeddict as TDM
 
 logger = logging.getLogger(__name__)
 

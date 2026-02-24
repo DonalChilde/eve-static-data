@@ -13,8 +13,8 @@ from collections.abc import Iterable
 from typing import cast
 
 from eve_static_data.access.sde_reader import SdeReader, SDERecordMetadata
-from eve_static_data.models import sde_typeddict as RTD
-from eve_static_data.models.sde_dataset_files import SdeDatasetFiles
+from eve_static_data.models.datasets.sde_dataset_files import SdeDatasetFiles
+from eve_static_data.models.records import sde_typeddict as RTD
 
 logger = logging.getLogger(__name__)
 

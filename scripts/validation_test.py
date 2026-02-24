@@ -10,7 +10,7 @@ from eve_static_data.access.validation import (
     validate_dataset_pydantic,
     validate_dataset_typeddict,
 )
-from eve_static_data.models.sde_dataset_files import SdeDatasetFiles
+from eve_static_data.models.datasets.sde_dataset_files import SdeDatasetFiles
 
 app = typer.Typer()
 

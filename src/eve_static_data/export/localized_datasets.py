@@ -2,15 +2,15 @@ from copy import deepcopy
 from pathlib import Path
 
 from eve_static_data.access.sde_reader import SdeReader
-from eve_static_data.models import exported_datasets as ED
-from eve_static_data.models import exported_localized_datasets as LDS
-from eve_static_data.models.exported_dataset_files import (
+from eve_static_data.models.datasets import exported_datasets as ED
+from eve_static_data.models.datasets import exported_localized_datasets as LDS
+from eve_static_data.models.datasets.exported_dataset_files import (
     DerivedLocalizedDatasetFiles,
     ExportedDatasetFiles,
     ExportedLocalizedDatasetFiles,
 )
-from eve_static_data.models.market_path import MarketPathsDataset
-from eve_static_data.models.normalized_eve_type import NormalizedEveTypesDataset
+from eve_static_data.models.derived.market_path import MarketPathsDataset
+from eve_static_data.models.derived.normalized_eve_type import NormalizedEveTypesDataset
 
 
 def export_localized_datasets(

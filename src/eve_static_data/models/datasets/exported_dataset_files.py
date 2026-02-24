@@ -22,6 +22,7 @@ class ExportedDatasetFiles(StrEnum):
     EVE_TYPES = "eve_types.json"
 
 
+# TODO make this a template, add language code to filename.
 class ExportedLocalizedDatasetFiles(StrEnum):
     ANCESTRIES = "ancestries-localized.json"
     CATEGORIES = "categories-localized.json"

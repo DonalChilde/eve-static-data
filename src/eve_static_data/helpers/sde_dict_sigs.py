@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import TypedDict
 
 from eve_static_data.access.sde_reader import SdeReader
-from eve_static_data.models.sde_dataset_files import SdeDatasetFiles
+from eve_static_data.models.datasets.sde_dataset_files import SdeDatasetFiles
 
 from .dict_diagnostics import (
     RecursiveKeyInfo,

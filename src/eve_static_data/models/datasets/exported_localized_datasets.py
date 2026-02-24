@@ -6,9 +6,9 @@ More models to be added as needed for use.
 from typing import Self
 
 from eve_static_data.access.sde_reader import SdeReader
-from eve_static_data.models import sde_pydantic_localized as PML
-from eve_static_data.models.sde_dataset_base import SdeDataset
-from eve_static_data.models.sde_dataset_files import SdeDatasetFiles
+from eve_static_data.models.datasets import sde_pydantic_localized as PML
+from eve_static_data.models.datasets.sde_dataset_base import SdeDataset
+from eve_static_data.models.datasets.sde_dataset_files import SdeDatasetFiles
 
 
 class LocalizedSdeDataset(SdeDataset):

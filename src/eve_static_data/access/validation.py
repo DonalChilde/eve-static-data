@@ -8,8 +8,8 @@ from pydantic import BaseModel, TypeAdapter, ValidationError
 
 from eve_static_data.access.sde_reader import SdeReader, SDERecordMetadata
 from eve_static_data.helpers.pydantic.save_to_disk import BaseModelToDisk
-from eve_static_data.models.sde_dataset_files import SdeDatasetFiles
-from eve_static_data.models.sde_dataset_models import (
+from eve_static_data.models.datasets.sde_dataset_files import SdeDatasetFiles
+from eve_static_data.models.datasets.sde_dataset_models import (
     dataset_pydantic_model_lookup,
     dataset_td_model_lookup,
 )

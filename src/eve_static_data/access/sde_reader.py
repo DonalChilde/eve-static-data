@@ -8,7 +8,7 @@ from time import perf_counter
 from typing import Any
 
 from eve_static_data.helpers.jsonl_reader import read_jsonl_dicts
-from eve_static_data.models.sde_dataset_files import SdeDatasetFiles
+from eve_static_data.models.datasets.sde_dataset_files import SdeDatasetFiles
 
 logger = logging.getLogger(__name__)
 

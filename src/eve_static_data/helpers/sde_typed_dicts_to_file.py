@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from pprint import pformat
 
-from eve_static_data.models.sde_dataset_files import SdeDatasetFiles
+from eve_static_data.models.datasets.sde_dataset_files import SdeDatasetFiles
 
 from .dict_diagnostics import (
     RecursiveKeyInfo,

@@ -9,9 +9,9 @@ and a data field that contains the actual data records as a dictionary.
 from typing import Self
 
 from eve_static_data.access.sde_reader import SdeReader
-from eve_static_data.models import sde_pydantic as PM
-from eve_static_data.models.sde_dataset_base import SdeDataset
-from eve_static_data.models.sde_dataset_files import SdeDatasetFiles
+from eve_static_data.models.datasets.sde_dataset_base import SdeDataset
+from eve_static_data.models.datasets.sde_dataset_files import SdeDatasetFiles
+from eve_static_data.models.records import sde_pydantic as PM
 
 
 class BlueprintsDataset(SdeDataset):

@@ -5,9 +5,9 @@ Used in validation.
 
 from typing import TypedDict
 
-import eve_static_data.models.sde_pydantic as PM
-import eve_static_data.models.sde_typeddict as TDM
-from eve_static_data.models.sde_dataset_files import SdeDatasetFiles
+import eve_static_data.models.records.sde_pydantic as PM
+import eve_static_data.models.records.sde_typeddict as TDM
+from eve_static_data.models.datasets.sde_dataset_files import SdeDatasetFiles
 
 DatasetPydanticModels: dict[SdeDatasetFiles, type[PM.SdeDatasetRecord]] = {
     SdeDatasetFiles.AGENTS_IN_SPACE: PM.AgentsInSpace,

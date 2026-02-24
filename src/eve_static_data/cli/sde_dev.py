@@ -25,7 +25,7 @@ from eve_static_data.helpers.sde_typed_dicts_to_file import (
     make_typed_dict,
     sde_typed_dicts_to_file,
 )
-from eve_static_data.models.sde_dataset_files import SdeDatasetFiles
+from eve_static_data.models.datasets.sde_dataset_files import SdeDatasetFiles
 from eve_static_data.type_explorer.sde_types import sde_type_info
 
 app = typer.Typer(no_args_is_help=True)

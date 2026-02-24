@@ -1,7 +1,7 @@
 import json
 
-from eve_static_data.models import sde_pydantic as PM
-from eve_static_data.models import sde_pydantic_localized as LM
+from eve_static_data.models.datasets import sde_pydantic_localized as LM
+from eve_static_data.models.records import sde_pydantic as PM
 
 TestString = '{"_key": 20, "iconID": 0, "name": {"de": "Implantat", "en": "Implant", "es": "Implante", "fr": "Implant", "ja": "インプラント", "ko": "임플란트", "ru": "Имплантат", "zh": "植入体"}, "published": true}'
 
