@@ -19,11 +19,11 @@ logger = logging.getLogger(__name__)
 class SDERecordMetadata:
     dataset: SdeDatasetFiles
     file_path: Path
-    record_number: int
+    record_index: int
 
     def __str__(self) -> str:
         """Return a string representation of the SDE record metadata."""
-        return f"{self.dataset.value} record {self.record_number} in {self.file_path}"
+        return f"{self.dataset.value} record {self.record_index} in {self.file_path}"
 
 
 class SdeReader:
@@ -56,7 +56,7 @@ class SdeReader:
         index = 0
         for record, index in read_jsonl_dicts(file_path):
             metadata = SDERecordMetadata(
-                dataset=dataset, file_path=file_path, record_number=index
+                dataset=dataset, file_path=file_path, record_index=index
             )
             yield record, metadata
         logger.info(
@@ -79,7 +79,7 @@ class SdeReader:
         for record, line_number in read_jsonl_dicts(file_path):
             if line_number == index:
                 metadata = SDERecordMetadata(
-                    dataset=dataset, file_path=file_path, record_number=line_number
+                    dataset=dataset, file_path=file_path, record_index=line_number
                 )
                 logger.info(
                     f"Finished reading {dataset.value} record {index} of {line_number} from {file_path} in {perf_counter() - start:.4f} seconds."

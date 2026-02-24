@@ -2,6 +2,7 @@
 
 import logging
 from pathlib import Path
+from time import perf_counter
 from typing import Any
 
 from pydantic import BaseModel, TypeAdapter, ValidationError
@@ -141,17 +142,8 @@ class FileCheckResult(BaseModelToDisk):
 
 def check_for_dataset_files(sde_path: Path) -> FileCheckResult:
     """Check if the expected dataset files are present in the SDE path."""
-    # missing_files: set[Path] = set()
-    # extra_files: set[Path] = set()
     existing_files = set(p for p in sde_path.iterdir() if p.is_file())
     expected_files = set(sde_path / dataset.value for dataset in SdeDatasetFiles)
-    # for existing_file in existing_files:
-    #     if existing_file not in expected_files:
-    #         extra_files.append(existing_file)
-    # for expected_file in expected_files:
-    #     if expected_file not in existing_files:
-    #         missing_files.append(expected_file)
-
     return FileCheckResult(
         sde_path=sde_path,
         existing_file_count=len(existing_files),
@@ -159,4 +151,41 @@ def check_for_dataset_files(sde_path: Path) -> FileCheckResult:
         expected_files=expected_files,
         missing_files=expected_files - existing_files,
         extra_files=existing_files - expected_files,
+    )
+
+
+def validate_and_save_validation_results(access: SdeReader, output_dir: Path) -> None:
+    """Validate the SDE datasets and save the results to disk."""
+    logger.info(
+        f"Validating SDE datasets for build {access.build_number} and saving results to {output_dir}"
+    )
+    start = perf_counter()
+    file_check_result = check_for_dataset_files(access.sde_path)
+    output_file = output_dir / f"dataset_file_check_{access.build_number}.json"
+    file_check_result.save_to_disk(output_file)
+    logger.info(
+        f"Dataset file check results saved to {output_file} (took {perf_counter() - start:.4f} seconds)"
+    )
+
+    pydantic_validation_result = validate_sde_pydantic(access)
+    output_file = (
+        output_dir
+        / f"pydantic_model_validation_{pydantic_validation_result.build_number}.json"
+    )
+    pydantic_validation_result.save_to_disk(output_file)
+    logger.info(
+        f"SDE pydantic model validation results saved to {output_file} (took {perf_counter() - start:.4f} seconds)"
+    )
+
+    typeddict_validation_result = validate_sde_typeddict(access)
+    output_file = (
+        output_dir
+        / f"typeddict_model_validation_{typeddict_validation_result.build_number}.json"
+    )
+    typeddict_validation_result.save_to_disk(output_file)
+    logger.info(
+        f"SDE TypedDict model validation results saved to {output_file} (took {perf_counter() - start:.4f} seconds)"
+    )
+    logger.info(
+        f"Finished validating SDE datasets and saving results to {output_dir} in {perf_counter() - start:.4f} seconds."
     )

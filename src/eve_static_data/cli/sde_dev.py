@@ -10,12 +10,6 @@ from rich.console import Console
 from whenever import Instant
 
 from eve_static_data.access.sde_reader import SdeReader
-from eve_static_data.access.validation import (
-    SDEValidationResult,
-    check_for_dataset_files,
-    validate_sde_pydantic,
-    validate_sde_typeddict,
-)
 from eve_static_data.helpers.datetime_filename import file_safe_iso_datetime_string
 from eve_static_data.helpers.dict_diagnostics import (
     collect_dict_keys_and_types_recursive,
@@ -26,6 +20,12 @@ from eve_static_data.helpers.sde_typed_dicts_to_file import (
     sde_typed_dicts_to_file,
 )
 from eve_static_data.models.datasets.sde_dataset_files import SdeDatasetFiles
+from eve_static_data.sde_data.validation import (
+    SDEValidationResult,
+    check_for_dataset_files,
+    validate_sde_pydantic,
+    validate_sde_typeddict,
+)
 from eve_static_data.type_explorer.sde_types import sde_type_info
 
 app = typer.Typer(no_args_is_help=True)
