@@ -3,6 +3,7 @@
 from typing import Self
 
 from eve_static_data.models.datasets import localized_pydantic as LDS
+from eve_static_data.models.datasets.sde_dataset_base import LocalizedSdeDataset
 from eve_static_data.models.records import sde_pydantic_localized as PML
 
 
@@ -21,7 +22,7 @@ class NormalizedEveType(PML.EveTypesLocalized):
     # faction: str | None
 
 
-class NormalizedEveTypesDataset(LDS.SdeDataset):
+class NormalizedEveTypesDataset(LocalizedSdeDataset):
     data: dict[int, NormalizedEveType]
 
     @classmethod
@@ -35,6 +36,7 @@ class NormalizedEveTypesDataset(LDS.SdeDataset):
     ) -> Self:
         """Create a NormalizedEveTypesDataset instance from localized datasets."""
         result = cls(
+            localized=eve_types_dataset.localized,
             build_number=eve_types_dataset.build_number,
             release_date=eve_types_dataset.release_date,
             data={},

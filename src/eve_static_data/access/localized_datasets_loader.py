@@ -4,8 +4,8 @@ from pathlib import Path
 
 from eve_static_data.models.datasets import localized_pydantic as LDS
 from eve_static_data.models.datasets import sde_pydantic as ED
-from eve_static_data.models.datasets.exported_dataset_files import (
-    DerivedLocalizedDatasetFiles,
+from eve_static_data.models.datasets.sde_dataset_files import (
+    DerivedDatasetFiles,
     ExportedDatasetFiles,
     ExportedLocalizedDatasetFiles,
 )
@@ -16,6 +16,9 @@ from eve_static_data.models.derived.normalized_eve_type import (
 )
 from eve_static_data.models.records import sde_pydantic as PM
 from eve_static_data.models.records import sde_pydantic_localized as PML
+
+# TODO use localized file names. How does this fit with API?
+# I think this is not needed, as all but derived datasets are loaded from the sde jsonl files.
 
 
 class LocalizedDatasets:
@@ -135,7 +138,7 @@ class LocalizedDatasets:
         """Market paths dataset, lazily loaded from disk."""
         if self.market_paths_dataset is None:
             self.market_paths_dataset = MarketPathsDataset.load_from_disk(
-                self.datasets_path / DerivedLocalizedDatasetFiles.MARKET_PATHS
+                self.datasets_path / DerivedDatasetFiles.MARKET_PATHS
             )
         return self.market_paths_dataset.data
 
@@ -144,8 +147,7 @@ class LocalizedDatasets:
         if self.normalized_eve_types_dataset is None:
             self.normalized_eve_types_dataset = (
                 NormalizedEveTypesDataset.load_from_disk(
-                    self.datasets_path
-                    / DerivedLocalizedDatasetFiles.NORMALIZED_EVE_TYPES
+                    self.datasets_path / DerivedDatasetFiles.NORMALIZED_EVE_TYPES
                 )
             )
         return self.normalized_eve_types_dataset.data
@@ -156,7 +158,7 @@ class LocalizedDatasets:
             self.normalized_eve_types_published_dataset = (
                 NormalizedEveTypesDataset.load_from_disk(
                     self.datasets_path
-                    / DerivedLocalizedDatasetFiles.NORMALIZED_EVE_TYPES_PUBLISHED
+                    / DerivedDatasetFiles.NORMALIZED_EVE_TYPES_PUBLISHED
                 )
             )
         return self.normalized_eve_types_published_dataset.data

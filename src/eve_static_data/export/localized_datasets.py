@@ -4,8 +4,8 @@ from pathlib import Path
 from eve_static_data.access.sde_reader import SdeReader
 from eve_static_data.models.datasets import localized_pydantic as LDS
 from eve_static_data.models.datasets import sde_pydantic as ED
-from eve_static_data.models.datasets.exported_dataset_files import (
-    DerivedLocalizedDatasetFiles,
+from eve_static_data.models.datasets.sde_dataset_files import (
+    DerivedDatasetFiles,
     ExportedDatasetFiles,
     ExportedLocalizedDatasetFiles,
 )
@@ -73,7 +73,7 @@ def export_localized_datasets(
 
     market_paths_dataset = MarketPathsDataset.from_dataset(market_groups_dataset)
     market_paths_dataset.save_to_disk(
-        output_dir / DerivedLocalizedDatasetFiles.MARKET_PATHS, overwrite=overwrite
+        output_dir / DerivedDatasetFiles.MARKET_PATHS, overwrite=overwrite
     )
 
     normalized_eve_types_dataset = NormalizedEveTypesDataset.from_datasets(
@@ -84,7 +84,7 @@ def export_localized_datasets(
         meta_groups_dataset=meta_groups_dataset,
     )
     normalized_eve_types_dataset.save_to_disk(
-        output_dir / DerivedLocalizedDatasetFiles.NORMALIZED_EVE_TYPES,
+        output_dir / DerivedDatasetFiles.NORMALIZED_EVE_TYPES,
         overwrite=overwrite,
     )
 
@@ -93,6 +93,6 @@ def export_localized_datasets(
         if not record.published:
             normalized_eve_types_published_dataset.data.pop(key)
     normalized_eve_types_published_dataset.save_to_disk(
-        output_dir / DerivedLocalizedDatasetFiles.NORMALIZED_EVE_TYPES_PUBLISHED,
+        output_dir / DerivedDatasetFiles.NORMALIZED_EVE_TYPES_PUBLISHED,
         overwrite=overwrite,
     )

@@ -6,15 +6,9 @@ More models to be added as needed for use.
 from typing import Self
 
 from eve_static_data.access.sde_reader import SdeReader
-from eve_static_data.models.datasets.sde_dataset_base import SdeDataset
+from eve_static_data.models.datasets.sde_dataset_base import LocalizedSdeDataset
 from eve_static_data.models.datasets.sde_dataset_files import SdeDatasetFiles
 from eve_static_data.models.records import sde_pydantic_localized as PML
-
-
-class LocalizedSdeDataset(SdeDataset):
-    """Base class for localized SDE datasets."""
-
-    localized: str
 
 
 class AncestriesLocalizedDataset(LocalizedSdeDataset):

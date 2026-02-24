@@ -6,8 +6,8 @@ from pydantic import BaseModel
 
 from eve_static_data.models.datasets.localized_pydantic import (
     MarketGroupsLocalizedDataset,
-    SdeDataset,
 )
+from eve_static_data.models.datasets.sde_dataset_base import LocalizedSdeDataset
 from eve_static_data.models.records.sde_pydantic_localized import MarketGroupsLocalized
 
 
@@ -27,13 +27,14 @@ class MarketPath(BaseModel):
         return separator.join(self.str_path)
 
 
-class MarketPathsDataset(SdeDataset):
+class MarketPathsDataset(LocalizedSdeDataset):
     data: dict[int, MarketPath]
 
     @classmethod
     def from_dataset(cls, market_groups_dataset: MarketGroupsLocalizedDataset) -> Self:
         """Create a MarketPathsDataset instance from a MarketGroupsLocalizedDataset."""
         result = cls(
+            localized=market_groups_dataset.localized,
             build_number=market_groups_dataset.build_number,
             release_date=market_groups_dataset.release_date,
             data={},
