@@ -2,8 +2,8 @@
 
 from typing import Self
 
-from eve_static_data.models.datasets import exported_localized_datasets as LDS
-from eve_static_data.models.datasets import sde_pydantic_localized as PML
+from eve_static_data.models.datasets import localized_pydantic as LDS
+from eve_static_data.models.records import sde_pydantic_localized as PML
 
 
 class NormalizedEveType(PML.EveTypesLocalized):

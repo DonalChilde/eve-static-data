@@ -2,8 +2,8 @@ from copy import deepcopy
 from pathlib import Path
 
 from eve_static_data.access.sde_reader import SdeReader
-from eve_static_data.models.datasets import exported_datasets as ED
-from eve_static_data.models.datasets import exported_localized_datasets as LDS
+from eve_static_data.models.datasets import localized_pydantic as LDS
+from eve_static_data.models.datasets import sde_pydantic as ED
 from eve_static_data.models.datasets.exported_dataset_files import (
     DerivedLocalizedDatasetFiles,
     ExportedDatasetFiles,

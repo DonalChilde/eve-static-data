@@ -4,11 +4,11 @@ from typing import Self
 
 from pydantic import BaseModel
 
-from eve_static_data.models.datasets.exported_localized_datasets import (
+from eve_static_data.models.datasets.localized_pydantic import (
     MarketGroupsLocalizedDataset,
     SdeDataset,
 )
-from eve_static_data.models.datasets.sde_pydantic_localized import MarketGroupsLocalized
+from eve_static_data.models.records.sde_pydantic_localized import MarketGroupsLocalized
 
 
 class MarketPath(BaseModel):

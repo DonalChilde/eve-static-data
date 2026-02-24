@@ -3,12 +3,8 @@
 from typing import Any, NotRequired, TypedDict
 
 # TODO: refactor top level records to be SdeDatasetRecord, for clarity.
-# TODO: make a sde_typeddict_dataset module, with SdeDataset definitions of all the datasets.
 # TODO: make factory functions for creating SdeDataset objects from the raw jsonl files, which will handle parsing the buildNumber and releaseDate fields,
 # NOTE: The above refactors are not needed for the current use case, which is just to have TypedDict definitions for the records in each dataset, but they would be nice to have to allow for data export without validation.
-# For example:
-# class AgentsInSpaceDataset(SdeDataset):
-#     records: list[AgentsInSpace]
 
 
 class SdeDatasetRecord(TypedDict):
@@ -16,16 +12,6 @@ class SdeDatasetRecord(TypedDict):
 
     All SDE dataset record TypedDicts should inherit from this.
     """
-
-
-class SdeDataset(TypedDict):
-    """Base TypedDict for SDE datasets.
-
-    All SDE dataset TypedDicts should inherit from this.
-    """
-
-    buildNumber: int
-    releaseDate: str
 
 
 # ------------------------------------------------------------------------------
