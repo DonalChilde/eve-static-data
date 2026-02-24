@@ -51,6 +51,24 @@ def path_to_sde(build_number: int | None = None) -> Path:
     return sde_path
 
 
+def path_to_derived(build_number: int | None = None) -> Path:
+    """Get the path to the derived datasets for a specific build number.
+
+    Args:
+        build_number: The build number of the SDE data to read. If None, the most recent build will be used.
+
+    Returns:
+        The path to the derived datasets for the specified build number.
+    """
+    sde_path = path_to_sde(build_number)
+    derived_path = sde_path / "derived"
+    if not derived_path.exists():
+        raise FileNotFoundError(
+            f"Derived datasets for build {build_number} not found at {derived_path}"
+        )
+    return derived_path
+
+
 # Import from sde jsonl zip
 #  - unzip to temporary directory
 #  - basic validation of files - check for _sde.jsonl
