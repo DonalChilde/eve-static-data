@@ -1,11 +1,12 @@
 """Code for validating SDE datasets against the TypedDict schema."""
 
+import logging
 from pathlib import Path
 from typing import Any
 
 from pydantic import BaseModel, TypeAdapter, ValidationError
 
-from eve_static_data.access.sde_reader import SdeReader
+from eve_static_data.access.sde_reader import SdeReader, SDERecordMetadata
 from eve_static_data.helpers.pydantic.save_to_disk import BaseModelToDisk
 from eve_static_data.models.sde_dataset_files import SdeDatasetFiles
 from eve_static_data.models.sde_dataset_models import (
@@ -13,11 +14,13 @@ from eve_static_data.models.sde_dataset_models import (
     dataset_td_model_lookup,
 )
 
+logger = logging.getLogger(__name__)
+
 
 class DatasetValidationRecord(BaseModel):
     """A record of a validation error for a dataset."""
 
-    record_number: int
+    metadata: SDERecordMetadata
     data: dict[str, Any]
     error_message: str
 
@@ -50,16 +53,16 @@ def validate_dataset_pydantic(
         validation_errors=[],
     )
     model = dataset_pydantic_model_lookup(dataset)
-    for record_number, record in enumerate(access.records(dataset), start=1):
+    for record, metadata in access.records(dataset):
         stats.total_records += 1
         try:
             # Validate the record against the pydantic model.
-            _ = model.model_validate(record, extra="forbid")
+            _ = model.from_sde(record, metadata)
         except ValidationError as e:
             stats.invalid_records += 1
             stats.validation_errors.append(
                 DatasetValidationRecord(
-                    record_number=record_number,
+                    metadata=metadata,
                     data=record,
                     error_message=str(e),
                 )
@@ -68,7 +71,7 @@ def validate_dataset_pydantic(
 
 
 def validate_dataset_typeddict(
-    access: SdeReader, dataset: SdeDatasetFiles
+    reader: SdeReader, dataset: SdeDatasetFiles, file_name: str | None = None
 ) -> DatasetStats:
     """Validate a dataset against its TypedDict model."""
     stats = DatasetStats(
@@ -78,7 +81,7 @@ def validate_dataset_typeddict(
         validation_errors=[],
     )
     model = TypeAdapter(dataset_td_model_lookup(dataset))
-    for record_number, record in enumerate(access.records(dataset), start=1):
+    for record, metadata in reader.records(dataset, file_name=file_name):
         stats.total_records += 1
         try:
             # Validate the record against the TypedDict model.
@@ -87,7 +90,7 @@ def validate_dataset_typeddict(
             stats.invalid_records += 1
             stats.validation_errors.append(
                 DatasetValidationRecord(
-                    record_number=record_number,
+                    metadata=metadata,
                     data=record,
                     error_message=str(e),
                 )
@@ -97,6 +100,7 @@ def validate_dataset_typeddict(
 
 def validate_sde_pydantic(access: SdeReader) -> SDEValidationResult:
     """Validate all datasets in the SDE against their pydantic models."""
+    logger.info("Starting SDE validation against pydantic models.")
     validation_result = SDEValidationResult(
         build_number=access.build_number,
         release_date=access.release_date,
@@ -111,6 +115,7 @@ def validate_sde_pydantic(access: SdeReader) -> SDEValidationResult:
 
 def validate_sde_typeddict(access: SdeReader) -> SDEValidationResult:
     """Validate all datasets in the SDE against their TypedDict models."""
+    logger.info("Starting SDE validation against TypedDict models.")
     validation_result = SDEValidationResult(
         build_number=access.build_number,
         release_date=access.release_date,

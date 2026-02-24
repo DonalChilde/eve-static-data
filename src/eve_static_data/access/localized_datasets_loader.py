@@ -2,10 +2,10 @@
 
 from pathlib import Path
 
-from eve_static_data.models import localized_datasets as LDS
+from eve_static_data.models import exported_localized_datasets as LDS
 from eve_static_data.models import sde_pydantic as PM
 from eve_static_data.models import sde_pydantic_localized as PML
-from eve_static_data.models.localized_dataset_files import LocalizedDatasetFiles
+from eve_static_data.models.exported_dataset_files import LocalizedDatasetFiles
 from eve_static_data.models.market_path import MarketPath, MarketPathsDataset
 from eve_static_data.models.normalized_eve_type import (
     NormalizedEveType,

@@ -9,8 +9,9 @@ and it's complicated to subclass that. I'll spend time on it when i need it.
 
 import logging
 from copy import deepcopy
-from typing import Any, cast
+from typing import Any
 
+from eve_static_data.access.sde_reader import SDERecordMetadata
 from eve_static_data.models import sde_pydantic as PM
 from eve_static_data.models import sde_typeddict as TDM
 
@@ -47,25 +48,29 @@ class AncestriesLocalized(PM.Ancestries):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.Ancestries, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "AncestriesLocalized":
         """Create an AncestriesLocalized instance from a SDE Ancestries.
 
         Args:
             record: The SDE Ancestries data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             An AncestriesLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
         localized_dict["description"] = localize_string_dict(
             localized_dict.get("description"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class BloodlinesLocalized(PM.Bloodlines):
@@ -76,25 +81,29 @@ class BloodlinesLocalized(PM.Bloodlines):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.Bloodlines, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "BloodlinesLocalized":
         """Create a BloodlinesLocalized instance from a SDE Bloodlines.
 
         Args:
             record: The SDE Bloodlines data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A BloodlinesLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
         localized_dict["description"] = localize_string_dict(
             localized_dict.get("description"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class CategoriesLocalized(PM.Categories):
@@ -104,22 +113,26 @@ class CategoriesLocalized(PM.Categories):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.Categories, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "CategoriesLocalized":
         """Create a CategoriesLocalized instance from a SDE Categories.
 
         Args:
             record: The SDE Categories data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A CategoriesLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class CertificatesLocalized(PM.Certificates):
@@ -130,25 +143,29 @@ class CertificatesLocalized(PM.Certificates):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.Certificates, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "CertificatesLocalized":
         """Create a CertificatesLocalized instance from a SDE Certificates.
 
         Args:
             record: The SDE Certificates data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A CertificatesLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
         localized_dict["description"] = localize_string_dict(
             localized_dict.get("description"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class CharacterAttributesLocalized(PM.CharacterAttributes):
@@ -158,22 +175,26 @@ class CharacterAttributesLocalized(PM.CharacterAttributes):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.CharacterAttributes, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "CharacterAttributesLocalized":
         """Create a CharacterAttributesLocalized instance from a SDE CharacterAttributes.
 
         Args:
             record: The SDE CharacterAttributes data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A CharacterAttributesLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class CorporationActivitiesLocalized(PM.CorporationActivities):
@@ -183,22 +204,26 @@ class CorporationActivitiesLocalized(PM.CorporationActivities):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.CorporationActivities, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "CorporationActivitiesLocalized":
         """Create a CorporationActivitiesLocalized instance from a SDE CorporationActivities.
 
         Args:
             record: The SDE CorporationActivities data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A CorporationActivitiesLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class DebuffCollectionsLocalized(PM.DebuffCollections):
@@ -208,22 +233,26 @@ class DebuffCollectionsLocalized(PM.DebuffCollections):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.DebuffCollections, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "DebuffCollectionsLocalized":
         """Create a DebuffCollectionsLocalized instance from a SDE DebuffCollections.
 
         Args:
             record: The SDE DebuffCollections data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A DebuffCollectionsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["displayName"] = localize_string_dict(
             localized_dict.get("displayName"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class DogmaAttributesLocalized(PM.DogmaAttributes):
@@ -235,18 +264,22 @@ class DogmaAttributesLocalized(PM.DogmaAttributes):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.DogmaAttributes, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "DogmaAttributesLocalized":
         """Create a DogmaAttributesLocalized instance from a SDE DogmaAttributes.
 
         Args:
             record: The SDE DogmaAttributes data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A DogmaAttributesLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["displayName"] = localize_string_dict(
             localized_dict.get("displayName"), localized
         )
@@ -256,7 +289,7 @@ class DogmaAttributesLocalized(PM.DogmaAttributes):
         localized_dict["tooltipTitle"] = localize_string_dict(
             localized_dict.get("tooltipTitle"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class DogmaEffectsLocalized(PM.DogmaEffects):
@@ -267,25 +300,29 @@ class DogmaEffectsLocalized(PM.DogmaEffects):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.DogmaEffects, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "DogmaEffectsLocalized":
         """Create a DogmaEffectsLocalized instance from a SDE DogmaEffects.
 
         Args:
             record: The SDE DogmaEffects data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A DogmaEffectsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["displayName"] = localize_string_dict(
             localized_dict.get("displayName"), localized
         )
         localized_dict["description"] = localize_string_dict(
             localized_dict.get("description"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class DogmaUnitsLocalized(PM.DogmaUnits):
@@ -296,25 +333,29 @@ class DogmaUnitsLocalized(PM.DogmaUnits):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.DogmaUnits, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "DogmaUnitsLocalized":
         """Create a DogmaUnitsLocalized instance from a SDE DogmaUnits.
 
         Args:
             record: The SDE DogmaUnits data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A DogmaUnitsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["displayName"] = localize_string_dict(
             localized_dict.get("displayName"), localized
         )
         localized_dict["description"] = localize_string_dict(
             localized_dict.get("description"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class FactionsLocalized(PM.Factions):
@@ -326,18 +367,22 @@ class FactionsLocalized(PM.Factions):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.Factions, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "FactionsLocalized":
         """Create a FactionsLocalized instance from a SDE Factions.
 
         Args:
             record: The SDE Factions data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A FactionsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
@@ -347,7 +392,7 @@ class FactionsLocalized(PM.Factions):
         localized_dict["shortDescription"] = localize_string_dict(
             localized_dict.get("shortDescription"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class GroupsLocalized(PM.Groups):
@@ -356,21 +401,27 @@ class GroupsLocalized(PM.Groups):
     name: str  # type: ignore
 
     @classmethod
-    def from_sde(cls, record: TDM.Groups, localized: str = "en") -> "GroupsLocalized":
+    def from_sde(
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
+    ) -> "GroupsLocalized":
         """Create a GroupsLocalized instance from a SDE Groups.
 
         Args:
             record: The SDE Groups data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A GroupsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class LandmarksLocalized(PM.Landmarks):
@@ -381,25 +432,29 @@ class LandmarksLocalized(PM.Landmarks):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.Landmarks, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "LandmarksLocalized":
         """Create a LandmarksLocalized instance from a SDE Landmarks.
 
         Args:
             record: The SDE Landmarks data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A LandmarksLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
         localized_dict["description"] = localize_string_dict(
             localized_dict.get("description"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class MapAsteroidBeltsLocalized(PM.MapAsteroidBelts):
@@ -409,22 +464,26 @@ class MapAsteroidBeltsLocalized(PM.MapAsteroidBelts):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.MapAsteroidBelts, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "MapAsteroidBeltsLocalized":
         """Create a MapAsteroidBeltsLocalized instance from a SDE MapAsteroidBelts.
 
         Args:
             record: The SDE MapAsteroidBelts data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A MapAsteroidBeltsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["uniqueName"] = localize_string_dict(
             localized_dict.get("uniqueName"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class MapConstellationsLocalized(PM.MapConstellations):
@@ -434,22 +493,26 @@ class MapConstellationsLocalized(PM.MapConstellations):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.MapConstellations, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "MapConstellationsLocalized":
         """Create a MapConstellationsLocalized instance from a SDE MapConstellations.
 
         Args:
             record: The SDE MapConstellations data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A MapConstellationsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class MapMoonsLocalized(PM.MapMoons):
@@ -459,22 +522,26 @@ class MapMoonsLocalized(PM.MapMoons):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.MapMoons, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "MapMoonsLocalized":
         """Create a MapMoonsLocalized instance from a SDE MapMoons.
 
         Args:
             record: The SDE MapMoons data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A MapMoonsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["uniqueName"] = localize_string_dict(
             localized_dict.get("uniqueName"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class MapPlanetsLocalized(PM.MapPlanets):
@@ -484,22 +551,26 @@ class MapPlanetsLocalized(PM.MapPlanets):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.MapPlanets, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "MapPlanetsLocalized":
         """Create a MapPlanetsLocalized instance from a SDE MapPlanets.
 
         Args:
             record: The SDE MapPlanets data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A MapPlanetsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["uniqueName"] = localize_string_dict(
             localized_dict.get("uniqueName"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class MapRegionsLocalized(PM.MapRegions):
@@ -510,25 +581,29 @@ class MapRegionsLocalized(PM.MapRegions):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.MapRegions, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "MapRegionsLocalized":
         """Create a MapRegionsLocalized instance from a SDE MapRegions.
 
         Args:
             record: The SDE MapRegions data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A MapRegionsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
         localized_dict["description"] = localize_string_dict(
             localized_dict.get("description"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class MapSolarSystemsLocalized(PM.MapSolarSystems):
@@ -538,22 +613,26 @@ class MapSolarSystemsLocalized(PM.MapSolarSystems):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.MapSolarSystems, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "MapSolarSystemsLocalized":
         """Create a MapSolarSystemsLocalized instance from a SDE MapSolarSystems.
 
         Args:
             record: The SDE MapSolarSystems data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A MapSolarSystemsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class MarketGroupsLocalized(PM.MarketGroups):
@@ -564,25 +643,29 @@ class MarketGroupsLocalized(PM.MarketGroups):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.MarketGroups, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "MarketGroupsLocalized":
         """Create a MarketGroupsLocalized instance from a SDE MarketGroups.
 
         Args:
             record: The SDE MarketGroups data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A MarketGroupsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
         localized_dict["description"] = localize_string_dict(
             localized_dict.get("description"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class MetaGroupsLocalized(PM.MetaGroups):
@@ -593,25 +676,29 @@ class MetaGroupsLocalized(PM.MetaGroups):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.MetaGroups, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "MetaGroupsLocalized":
         """Create a MetaGroupsLocalized instance from a SDE MetaGroups.
 
         Args:
             record: The SDE MetaGroups data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A MetaGroupsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
         localized_dict["description"] = localize_string_dict(
             localized_dict.get("description"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class NpcCharactersLocalized(PM.NpcCharacters):
@@ -621,22 +708,26 @@ class NpcCharactersLocalized(PM.NpcCharacters):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.NpcCharacters, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "NpcCharactersLocalized":
         """Create a NpcCharactersLocalized instance from a SDE NpcCharacters.
 
         Args:
             record: The SDE NpcCharacters data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A NpcCharactersLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class NpcCorporationDivisionsLocalized(PM.NpcCorporationDivisions):
@@ -648,18 +739,22 @@ class NpcCorporationDivisionsLocalized(PM.NpcCorporationDivisions):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.NpcCorporationDivisions, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "NpcCorporationDivisionsLocalized":
         """Create a NpcCorporationDivisionsLocalized instance from a SDE NpcCorporationDivisions.
 
         Args:
             record: The SDE NpcCorporationDivisions data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A NpcCorporationDivisionsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
@@ -669,7 +764,7 @@ class NpcCorporationDivisionsLocalized(PM.NpcCorporationDivisions):
         localized_dict["leaderTypeName"] = localize_string_dict(
             localized_dict.get("leaderTypeName"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class NpcCorporationsLocalized(PM.NpcCorporations):
@@ -680,25 +775,29 @@ class NpcCorporationsLocalized(PM.NpcCorporations):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.NpcCorporations, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "NpcCorporationsLocalized":
         """Create a NpcCorporationsLocalized instance from a SDE NpcCorporations.
 
         Args:
             record: The SDE NpcCorporations data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A NpcCorporationsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
         localized_dict["description"] = localize_string_dict(
             localized_dict.get("description"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class PlanetSchematicsLocalized(PM.PlanetSchematics):
@@ -708,22 +807,26 @@ class PlanetSchematicsLocalized(PM.PlanetSchematics):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.PlanetSchematics, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "PlanetSchematicsLocalized":
         """Create a PlanetSchematicsLocalized instance from a SDE PlanetSchematics.
 
         Args:
             record: The SDE PlanetSchematics data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A PlanetSchematicsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class RacesLocalized(PM.Races):
@@ -733,24 +836,30 @@ class RacesLocalized(PM.Races):
     description: str  # type: ignore
 
     @classmethod
-    def from_sde(cls, record: TDM.Races, localized: str = "en") -> "RacesLocalized":
+    def from_sde(
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
+    ) -> "RacesLocalized":
         """Create a RacesLocalized instance from a SDE Races.
 
         Args:
             record: The SDE Races data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A RacesLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
         localized_dict["description"] = localize_string_dict(
             localized_dict.get("description"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class SkinMaterialsLocalized(PM.SkinMaterials):
@@ -760,22 +869,26 @@ class SkinMaterialsLocalized(PM.SkinMaterials):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.SkinMaterials, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "SkinMaterialsLocalized":
         """Create a SkinMaterialsLocalized instance from a SDE SkinMaterials.
 
         Args:
             record: The SDE SkinMaterials data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A SkinMaterialsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["displayName"] = localize_string_dict(
             localized_dict.get("displayName"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class SkinsLocalized(PM.Skins):
@@ -784,21 +897,27 @@ class SkinsLocalized(PM.Skins):
     skinDescription: str  # type: ignore
 
     @classmethod
-    def from_sde(cls, record: TDM.Skins, localized: str = "en") -> "SkinsLocalized":
+    def from_sde(
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
+    ) -> "SkinsLocalized":
         """Create a SkinsLocalized instance from a SDE Skins.
 
         Args:
             record: The SDE Skins data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A SkinsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["skinDescription"] = localize_string_dict(
             localized_dict.get("skinDescription"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class StationOperationsLocalized(PM.StationOperations):
@@ -809,25 +928,29 @@ class StationOperationsLocalized(PM.StationOperations):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.StationOperations, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "StationOperationsLocalized":
         """Create a StationOperationsLocalized instance from a SDE StationOperations.
 
         Args:
             record: The SDE StationOperations data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A StationOperationsLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["operationName"] = localize_string_dict(
             localized_dict.get("operationName"), localized
         )
         localized_dict["description"] = localize_string_dict(
             localized_dict.get("description"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 class StationServicesLocalized(PM.StationServices):
@@ -838,25 +961,29 @@ class StationServicesLocalized(PM.StationServices):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.StationServices, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "StationServicesLocalized":
         """Create a StationServicesLocalized instance from a SDE StationServices.
 
         Args:
             record: The SDE StationServices data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             A StationServicesLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["serviceName"] = localize_string_dict(
             localized_dict.get("serviceName"), localized
         )
         localized_dict["description"] = localize_string_dict(
             localized_dict.get("description"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)
 
 
 # NOTE the TypeBonus model is not localized yet, because the nested classes have LocalizedStrings,
@@ -871,22 +998,26 @@ class EveTypesLocalized(PM.EveTypes):
 
     @classmethod
     def from_sde(
-        cls, record: TDM.EveTypes, localized: str = "en"
+        cls,
+        record: dict[str, Any],
+        metadata: SDERecordMetadata | None = None,
+        localized: str = "en",
     ) -> "EveTypesLocalized":
         """Create an EveTypesLocalized instance from a SDE EveTypes.
 
         Args:
             record: The SDE EveTypes data.
+            metadata: Optional metadata for error logging context.
             localized: The language code to extract (default is "en" for English).
 
         Returns:
             An EveTypesLocalized instance.
         """
-        localized_dict = cast(dict[str, Any], deepcopy(record))
+        localized_dict = deepcopy(record)
         localized_dict["name"] = localize_string_dict(
             localized_dict.get("name"), localized
         )
         localized_dict["description"] = localize_string_dict(
             localized_dict.get("description"), localized
         )
-        return cls.model_validate(localized_dict)
+        return PM.log_validation(cls, localized_dict, metadata)

@@ -13,11 +13,14 @@ In the pydantic models, the field is defined as optional and will be set to `Non
 if it is missing in the data.
 """
 
+import logging
 from typing import Any, Self
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from eve_static_data.models import sde_typeddict as TDM
+from eve_static_data.access.sde_reader import SDERecordMetadata
+
+logger = logging.getLogger(__name__)
 
 # ------------------------------------------------------------------------------
 # Common Pydantic model definitions.
@@ -87,6 +90,51 @@ class SdeDatasetRecord(BaseModel):
 
     model_config = ConfigDict(serialize_by_alias=True)
 
+    @classmethod
+    def from_sde(
+        cls, record: dict[str, Any], metadata: SDERecordMetadata | None = None
+    ) -> Self:
+        """Create an instance of the model from a SDE record.
+
+        Args:
+            record: The SDE record to create the model from.
+            metadata: Optional metadata for error logging context.
+
+        Returns:
+            An instance of the model.
+
+        Raises:
+            Exception: If validation fails.
+        """
+        return log_validation(cls, record, metadata)
+
+
+def log_validation[T: BaseModel](
+    cls: type[T], record: dict[str, Any], metadata: SDERecordMetadata | None = None
+) -> T:
+    """Helper function to log validation errors with metadata context.
+
+    Args:
+        cls: A Pydantic BaseModel class to validate against.
+        record: Dictionary to validate.
+        metadata: Optional metadata for error logging context.
+
+    Returns:
+        Validated instance of type T.
+
+    Raises:
+        Exception: If validation fails.
+    """
+    try:
+        result = cls.model_validate(record, extra="forbid")
+    except Exception as e:
+        if metadata:
+            logger.error(f"Error validating {cls.__name__} for dataset {metadata}: {e}")
+        else:
+            logger.error(f"Error validating {cls.__name__}: {e}")
+        raise e
+    return result
+
 
 class AgentsInSpace(SdeDatasetRecord):
     """Model for the agentsInSpace.jsonl SDE file."""
@@ -97,10 +145,12 @@ class AgentsInSpace(SdeDatasetRecord):
     spawnPointID: int
     typeID: int
 
-    @classmethod
-    def from_sde(cls, record: TDM.AgentsInSpace) -> Self:
-        """Create an AgentsInSpace instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.AgentsInSpace, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create an AgentsInSpace instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class AgentTypes(SdeDatasetRecord):
@@ -109,10 +159,12 @@ class AgentTypes(SdeDatasetRecord):
     key: int = Field(..., alias="_key")
     name: str
 
-    @classmethod
-    def from_sde(cls, record: TDM.AgentTypes) -> Self:
-        """Create an AgentTypes instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.AgentTypes, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create an AgentTypes instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class Ancestries(SdeDatasetRecord):
@@ -130,10 +182,12 @@ class Ancestries(SdeDatasetRecord):
     shortDescription: str | None = None
     willpower: int
 
-    @classmethod
-    def from_sde(cls, record: TDM.Ancestries) -> Self:
-        """Create an Ancestries instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.Ancestries, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create an Ancestries instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class Bloodlines(SdeDatasetRecord):
@@ -151,10 +205,12 @@ class Bloodlines(SdeDatasetRecord):
     raceID: int
     willpower: int
 
-    @classmethod
-    def from_sde(cls, record: TDM.Bloodlines) -> Self:
-        """Create a Bloodlines instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.Bloodlines, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a Bloodlines instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class Blueprints_Products(BaseModel):
@@ -193,10 +249,12 @@ class Blueprints(SdeDatasetRecord):
     blueprintTypeID: int
     maxProductionLimit: int
 
-    @classmethod
-    def from_sde(cls, record: TDM.Blueprints) -> Self:
-        """Create a Blueprints instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.Blueprints, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a Blueprints instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class Categories(SdeDatasetRecord):
@@ -207,10 +265,12 @@ class Categories(SdeDatasetRecord):
     published: bool
     iconID: int | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.Categories) -> Self:
-        """Create a Categories instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.Categories, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a Categories instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class Certificates_SkillType(BaseModel):
@@ -236,10 +296,12 @@ class Certificates(SdeDatasetRecord):
     recommendedFor: list[int] | None = None
     skillTypes: list[Certificates_SkillType]
 
-    @classmethod
-    def from_sde(cls, record: TDM.Certificates) -> Self:
-        """Create a Certificates instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.Certificates, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a Certificates instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class CharacterAttributes(SdeDatasetRecord):
@@ -252,10 +314,12 @@ class CharacterAttributes(SdeDatasetRecord):
     notes: str
     shortDescription: str
 
-    @classmethod
-    def from_sde(cls, record: TDM.CharacterAttributes) -> Self:
-        """Create a CharacterAttributes instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.CharacterAttributes, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a CharacterAttributes instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class CloneGrades(SdeDatasetRecord):
@@ -265,10 +329,12 @@ class CloneGrades(SdeDatasetRecord):
     name: str
     skills: list[Skills]
 
-    @classmethod
-    def from_sde(cls, record: TDM.CloneGrades) -> Self:
-        """Create a CloneGrades instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.CloneGrades, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a CloneGrades instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class CompressibleTypes(SdeDatasetRecord):
@@ -277,10 +343,12 @@ class CompressibleTypes(SdeDatasetRecord):
     key: int = Field(..., alias="_key")
     compressedTypeID: int
 
-    @classmethod
-    def from_sde(cls, record: TDM.CompressibleTypes) -> Self:
-        """Create a CompressibleTypes instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.CompressibleTypes, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a CompressibleTypes instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class ContrabandTypes_Faction(SdeDatasetRecord):
@@ -292,10 +360,14 @@ class ContrabandTypes_Faction(SdeDatasetRecord):
     fineByValue: float
     standingLoss: float
 
-    @classmethod
-    def from_sde(cls, record: TDM.ContrabandTypes_Faction) -> Self:
-        """Create a ContrabandTypes_Faction instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls,
+    #     record: TDM.ContrabandTypes_Faction,
+    #     metadata: SDERecordMetadata | None = None,
+    # ) -> Self:
+    #     """Create a ContrabandTypes_Faction instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class ContrabandTypes(SdeDatasetRecord):
@@ -304,10 +376,12 @@ class ContrabandTypes(SdeDatasetRecord):
     key: int = Field(..., alias="_key")
     factions: list[ContrabandTypes_Faction]
 
-    @classmethod
-    def from_sde(cls, record: TDM.ContrabandTypes) -> Self:
-        """Create a ContrabandTypes instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.ContrabandTypes, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a ContrabandTypes instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class ControlTowerResources_Resource(BaseModel):
@@ -326,10 +400,14 @@ class ControlTowerResources(SdeDatasetRecord):
     key: int = Field(..., alias="_key")
     resources: list[ControlTowerResources_Resource]
 
-    @classmethod
-    def from_sde(cls, record: TDM.ControlTowerResources) -> Self:
-        """Create a ControlTowerResources instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls,
+    #     record: TDM.ControlTowerResources,
+    #     metadata: SDERecordMetadata | None = None,
+    # ) -> Self:
+    #     """Create a ControlTowerResources instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class CorporationActivities(SdeDatasetRecord):
@@ -338,10 +416,14 @@ class CorporationActivities(SdeDatasetRecord):
     key: int = Field(..., alias="_key")
     name: LocalizedString
 
-    @classmethod
-    def from_sde(cls, record: TDM.CorporationActivities) -> Self:
-        """Create a CorporationActivities instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls,
+    #     record: TDM.CorporationActivities,
+    #     metadata: SDERecordMetadata | None = None,
+    # ) -> Self:
+    #     """Create a CorporationActivities instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class DebuffCollections_LocationGroupModifier(BaseModel):
@@ -386,10 +468,12 @@ class DebuffCollections(SdeDatasetRecord):
     showOutputValueInUI: str
     displayName: LocalizedString | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.DebuffCollections) -> Self:
-        """Create a DebuffCollections instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.DebuffCollections, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a DebuffCollections instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class DogmaAttributeCategories(SdeDatasetRecord):
@@ -399,10 +483,14 @@ class DogmaAttributeCategories(SdeDatasetRecord):
     description: str | None = None
     name: str
 
-    @classmethod
-    def from_sde(cls, record: TDM.DogmaAttributeCategories) -> Self:
-        """Create a DogmaAttributeCategories instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls,
+    #     record: TDM.DogmaAttributeCategories,
+    #     metadata: SDERecordMetadata | None = None,
+    # ) -> Self:
+    #     """Create a DogmaAttributeCategories instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class DogmaAttributes(SdeDatasetRecord):
@@ -427,10 +515,12 @@ class DogmaAttributes(SdeDatasetRecord):
     maxAttributeID: int | None = None
     minAttributeID: int | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.DogmaAttributes) -> Self:
-        """Create a DogmaAttributes instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.DogmaAttributes, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a DogmaAttributes instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class DogmaEffects_ModifierInfo(BaseModel):
@@ -476,10 +566,12 @@ class DogmaEffects(SdeDatasetRecord):
     fittingUsageChanceAttributeID: int | None = None
     resistanceAttributeID: int | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.DogmaEffects) -> Self:
-        """Create a DogmaEffects instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.DogmaEffects, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a DogmaEffects instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class DogmaUnits(SdeDatasetRecord):
@@ -490,10 +582,12 @@ class DogmaUnits(SdeDatasetRecord):
     displayName: LocalizedString | None = None
     name: str
 
-    @classmethod
-    def from_sde(cls, record: TDM.DogmaUnits) -> Self:
-        """Create a DogmaUnits instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.DogmaUnits, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a DogmaUnits instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class DynamicItemAttributes_AttributeID(SdeDatasetRecord):
@@ -504,10 +598,14 @@ class DynamicItemAttributes_AttributeID(SdeDatasetRecord):
     max: float
     min: float
 
-    @classmethod
-    def from_sde(cls, record: TDM.DynamicItemAttributes_AttributeID) -> Self:
-        """Create a DynamicItemAttributes_AttributeID instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls,
+    #     record: TDM.DynamicItemAttributes_AttributeID,
+    #     metadata: SDERecordMetadata | None = None,
+    # ) -> Self:
+    #     """Create a DynamicItemAttributes_AttributeID instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class DynamicItemAttributes_InputOutputMapping(BaseModel):
@@ -524,10 +622,14 @@ class DynamicItemAttributes(SdeDatasetRecord):
     attributeIDs: list[DynamicItemAttributes_AttributeID]
     inputOutputMapping: list[DynamicItemAttributes_InputOutputMapping]
 
-    @classmethod
-    def from_sde(cls, record: TDM.DynamicItemAttributes) -> Self:
-        """Create a DynamicItemAttributes instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls,
+    #     record: TDM.DynamicItemAttributes,
+    #     metadata: SDERecordMetadata | None = None,
+    # ) -> Self:
+    #     """Create a DynamicItemAttributes instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class Factions(SdeDatasetRecord):
@@ -547,10 +649,12 @@ class Factions(SdeDatasetRecord):
     solarSystemID: int
     uniqueName: bool
 
-    @classmethod
-    def from_sde(cls, record: TDM.Factions) -> Self:
-        """Create a Factions instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.Factions, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a Factions instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class FreelanceJobSchemas(SdeDatasetRecord):
@@ -559,10 +663,12 @@ class FreelanceJobSchemas(SdeDatasetRecord):
     key: int = Field(..., alias="_key")
     value: list[dict[str, Any]] = Field(..., alias="_value")
 
-    @classmethod
-    def from_sde(cls, record: TDM.FreelanceJobSchemas) -> Self:
-        """Create a FreelanceJobSchemas instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.FreelanceJobSchemas, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a FreelanceJobSchemas instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class Graphics(SdeDatasetRecord):
@@ -577,10 +683,12 @@ class Graphics(SdeDatasetRecord):
     sofMaterialSetID: int | None = None
     sofLayout: list[str] | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.Graphics) -> Self:
-        """Create a Graphics instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.Graphics, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a Graphics instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class Groups(SdeDatasetRecord):
@@ -596,10 +704,12 @@ class Groups(SdeDatasetRecord):
     useBasePrice: bool
     iconID: int | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.Groups) -> Self:
-        """Create a Groups instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.Groups, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a Groups instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class Icons(SdeDatasetRecord):
@@ -608,10 +718,12 @@ class Icons(SdeDatasetRecord):
     key: int = Field(..., alias="_key")
     iconFile: str
 
-    @classmethod
-    def from_sde(cls, record: TDM.Icons) -> Self:
-        """Create an Icons instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.Icons, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create an Icons instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class Landmarks(SdeDatasetRecord):
@@ -624,10 +736,12 @@ class Landmarks(SdeDatasetRecord):
     iconID: int | None = None
     locationID: int | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.Landmarks) -> Self:
-        """Create a Landmarks instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.Landmarks, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a Landmarks instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class MapAsteroidBelts_Statistics(BaseModel):
@@ -661,10 +775,12 @@ class MapAsteroidBelts(SdeDatasetRecord):
     typeID: int
     uniqueName: LocalizedString | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.MapAsteroidBelts) -> Self:
-        """Create a MapAsteroidBelts instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.MapAsteroidBelts, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a MapAsteroidBelts instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class MapConstellations(SdeDatasetRecord):
@@ -678,10 +794,12 @@ class MapConstellations(SdeDatasetRecord):
     solarSystemIDs: list[int]
     wormholeClassID: int | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.MapConstellations) -> Self:
-        """Create a MapConstellations instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.MapConstellations, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a MapConstellations instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class MapMoons_Attributes(BaseModel):
@@ -726,10 +844,12 @@ class MapMoons(SdeDatasetRecord):
     npcStationIDs: list[int] | None = None
     uniqueName: LocalizedString | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.MapMoons) -> Self:
-        """Create a MapMoons instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.MapMoons, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a MapMoons instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class MapPlanets_Attributes(BaseModel):
@@ -776,10 +896,12 @@ class MapPlanets(SdeDatasetRecord):
     npcStationIDs: list[int] | None = None
     uniqueName: LocalizedString | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.MapPlanets) -> Self:
-        """Create a MapPlanets instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.MapPlanets, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a MapPlanets instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class MapRegions(SdeDatasetRecord):
@@ -794,10 +916,12 @@ class MapRegions(SdeDatasetRecord):
     position: Position
     wormholeClassID: int | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.MapRegions) -> Self:
-        """Create a MapRegions instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.MapRegions, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a MapRegions instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class MapSolarSystems(SdeDatasetRecord):
@@ -828,10 +952,12 @@ class MapSolarSystems(SdeDatasetRecord):
     visualEffect: str | None = None
     wormholeClassID: int | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.MapSolarSystems) -> Self:
-        """Create a MapSolarSystems instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.MapSolarSystems, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a MapSolarSystems instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class MapStargates_Destination(BaseModel):
@@ -850,10 +976,12 @@ class MapStargates(SdeDatasetRecord):
     solarSystemID: int
     typeID: int
 
-    @classmethod
-    def from_sde(cls, record: TDM.MapStargates) -> Self:
-        """Create a MapStargates instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.MapStargates, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a MapStargates instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class MapStars_Statistics(BaseModel):
@@ -875,10 +1003,12 @@ class MapStars(SdeDatasetRecord):
     statistics: MapStars_Statistics
     typeID: int
 
-    @classmethod
-    def from_sde(cls, record: TDM.MapStars) -> Self:
-        """Create a MapStars instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.MapStars, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a MapStars instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class MarketGroups(SdeDatasetRecord):
@@ -891,10 +1021,12 @@ class MarketGroups(SdeDatasetRecord):
     name: LocalizedString
     parentGroupID: int | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.MarketGroups) -> Self:
-        """Create a MarketGroups instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.MarketGroups, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a MarketGroups instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class Masteries_Value(SdeDatasetRecord):
@@ -903,10 +1035,12 @@ class Masteries_Value(SdeDatasetRecord):
     key: int = Field(..., alias="_key")
     value: list[int] = Field(..., alias="_value")
 
-    @classmethod
-    def from_sde(cls, record: TDM.Masteries_Value) -> Self:
-        """Create a Masteries_Value instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.Masteries_Value, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a Masteries_Value instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class Masteries(SdeDatasetRecord):
@@ -915,10 +1049,12 @@ class Masteries(SdeDatasetRecord):
     key: int = Field(..., alias="_key")
     value: list[Masteries_Value] = Field(..., alias="_value")
 
-    @classmethod
-    def from_sde(cls, record: TDM.Masteries) -> Self:
-        """Create a Masteries instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.Masteries, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a Masteries instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class MetaGroups(SdeDatasetRecord):
@@ -931,10 +1067,12 @@ class MetaGroups(SdeDatasetRecord):
     iconSuffix: str | None = None
     description: LocalizedString | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.MetaGroups) -> Self:
-        """Create a MetaGroups instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.MetaGroups, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a MetaGroups instance from a SDE record."""
+    # return log_validation(cls, record, metadata)  # type: ignore
 
 
 class NpcCharacters_Skill(BaseModel):
@@ -973,10 +1111,12 @@ class NpcCharacters(SdeDatasetRecord):
     agent: NpcCharacters_Agent | None = None
     description: str | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.NpcCharacters) -> Self:
-        """Create a NpcCharacters instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.NpcCharacters, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a NpcCharacters instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class NpcCorporationDivisions(SdeDatasetRecord):
@@ -989,10 +1129,14 @@ class NpcCorporationDivisions(SdeDatasetRecord):
     name: LocalizedString
     description: LocalizedString | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.NpcCorporationDivisions) -> Self:
-        """Create a NpcCorporationDivisions instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls,
+    #     record: TDM.NpcCorporationDivisions,
+    #     metadata: SDERecordMetadata | None = None,
+    # ) -> Self:
+    #     """Create a NpcCorporationDivisions instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class NpcCorporations_Trade(SdeDatasetRecord):
@@ -1001,10 +1145,14 @@ class NpcCorporations_Trade(SdeDatasetRecord):
     key: int = Field(..., alias="_key")
     value: float = Field(..., alias="_value")
 
-    @classmethod
-    def from_sde(cls, record: TDM.NpcCorporations_Trade) -> Self:
-        """Create a NpcCorporations_Trade instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls,
+    #     record: TDM.NpcCorporations_Trade,
+    #     metadata: SDERecordMetadata | None = None,
+    # ) -> Self:
+    #     """Create a NpcCorporations_Trade instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class NpcCorporations_Divisions(SdeDatasetRecord):
@@ -1015,10 +1163,14 @@ class NpcCorporations_Divisions(SdeDatasetRecord):
     leaderID: int
     size: int
 
-    @classmethod
-    def from_sde(cls, record: TDM.NpcCorporations_Divisions) -> Self:
-        """Create a NpcCorporations_Divisions instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls,
+    #     record: TDM.NpcCorporations_Divisions,
+    #     metadata: SDERecordMetadata | None = None,
+    # ) -> Self:
+    #     """Create a NpcCorporations_Divisions instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class NpcCorporations_Investors(SdeDatasetRecord):
@@ -1027,10 +1179,14 @@ class NpcCorporations_Investors(SdeDatasetRecord):
     key: int = Field(..., alias="_key")
     value: int = Field(..., alias="_value")
 
-    @classmethod
-    def from_sde(cls, record: TDM.NpcCorporations_Investors) -> Self:
-        """Create a NpcCorporations_Investors instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls,
+    #     record: TDM.NpcCorporations_Investors,
+    #     metadata: SDERecordMetadata | None = None,
+    # ) -> Self:
+    #     """Create a NpcCorporations_Investors instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class NpcCorporations_ExchangeRates(SdeDatasetRecord):
@@ -1039,10 +1195,14 @@ class NpcCorporations_ExchangeRates(SdeDatasetRecord):
     key: int = Field(..., alias="_key")
     value: float = Field(..., alias="_value")
 
-    @classmethod
-    def from_sde(cls, record: TDM.NpcCorporations_ExchangeRates) -> Self:
-        """Create a NpcCorporations_ExchangeRates instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls,
+    #     record: TDM.NpcCorporations_ExchangeRates,
+    #     metadata: SDERecordMetadata | None = None,
+    # ) -> Self:
+    #     """Create a NpcCorporations_ExchangeRates instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class NpcCorporations(SdeDatasetRecord):
@@ -1082,10 +1242,12 @@ class NpcCorporations(SdeDatasetRecord):
     secondaryActivityID: int | None = None
     exchangeRates: list[NpcCorporations_ExchangeRates] | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.NpcCorporations) -> Self:
-        """Create a NpcCorporations instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.NpcCorporations, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a NpcCorporations instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class NpcStations(SdeDatasetRecord):
@@ -1105,10 +1267,12 @@ class NpcStations(SdeDatasetRecord):
     typeID: int
     useOperationName: bool
 
-    @classmethod
-    def from_sde(cls, record: TDM.NpcStations) -> Self:
-        """Create a NpcStations instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.NpcStations, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a NpcStations instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class PlanetResources_Reagent(BaseModel):
@@ -1129,10 +1293,12 @@ class PlanetResources(SdeDatasetRecord):
     workforce: int | None = None
     reagent: PlanetResources_Reagent | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.PlanetResources) -> Self:
-        """Create a PlanetResources instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.PlanetResources, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a PlanetResources instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class PlanetSchematics_Types(BaseModel):
@@ -1154,10 +1320,12 @@ class PlanetSchematics(SdeDatasetRecord):
     pins: list[int]
     types: list[PlanetSchematics_Types]
 
-    @classmethod
-    def from_sde(cls, record: TDM.PlanetSchematics) -> Self:
-        """Create a PlanetSchematics instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.PlanetSchematics, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a PlanetSchematics instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class Races_Skill(BaseModel):
@@ -1179,10 +1347,12 @@ class Races(SdeDatasetRecord):
     shipTypeID: int | None = None
     skills: list[Races_Skill] | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.Races) -> Self:
-        """Create a Races instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.Races, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a Races instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class SdeInfo(SdeDatasetRecord):
@@ -1192,10 +1362,12 @@ class SdeInfo(SdeDatasetRecord):
     buildNumber: int
     releaseDate: str
 
-    @classmethod
-    def from_sde(cls, record: TDM.SdeInfo) -> Self:
-        """Create a SdeInfo instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.SdeInfo, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a SdeInfo instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class SkinLicenses(SdeDatasetRecord):
@@ -1207,10 +1379,12 @@ class SkinLicenses(SdeDatasetRecord):
     skinID: int
     isSingleUse: bool | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.SkinLicenses) -> Self:
-        """Create a SkinLicenses instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.SkinLicenses, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a SkinLicenses instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class SkinMaterials(SdeDatasetRecord):
@@ -1220,10 +1394,12 @@ class SkinMaterials(SdeDatasetRecord):
     displayName: LocalizedString | None = None
     materialSetID: int
 
-    @classmethod
-    def from_sde(cls, record: TDM.SkinMaterials) -> Self:
-        """Create a SkinMaterials instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.SkinMaterials, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a SkinMaterials instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class Skins(SdeDatasetRecord):
@@ -1239,10 +1415,12 @@ class Skins(SdeDatasetRecord):
     isStructureSkin: bool | None = None
     skinDescription: LocalizedString | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.Skins) -> Self:
-        """Create a Skins instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.Skins, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a Skins instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class SovereigntyUpgrades_Fuel(BaseModel):
@@ -1264,10 +1442,12 @@ class SovereigntyUpgrades(SdeDatasetRecord):
     workforce_allocation: int | None = None
     workforce_production: int | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.SovereigntyUpgrades) -> Self:
-        """Create a SovereigntyUpgrades instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.SovereigntyUpgrades, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a SovereigntyUpgrades instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class StationOperations_StationType(SdeDatasetRecord):
@@ -1296,10 +1476,12 @@ class StationOperations(SdeDatasetRecord):
     services: list[int]
     stationTypes: list[StationOperations_StationType] | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.StationOperations) -> Self:
-        """Create a StationOperations instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.StationOperations, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a StationOperations instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class StationServices(SdeDatasetRecord):
@@ -1309,10 +1491,12 @@ class StationServices(SdeDatasetRecord):
     serviceName: LocalizedString
     description: LocalizedString | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.StationServices) -> Self:
-        """Create a StationServices instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.StationServices, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a StationServices instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class TranslationLanguages(SdeDatasetRecord):
@@ -1321,10 +1505,12 @@ class TranslationLanguages(SdeDatasetRecord):
     key: str = Field(..., alias="_key")
     name: str
 
-    @classmethod
-    def from_sde(cls, record: TDM.TranslationLanguages) -> Self:
-        """Create a TranslationLanguages instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.TranslationLanguages, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a TranslationLanguages instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class TypeBonus_RoleBonus(BaseModel):
@@ -1373,10 +1559,12 @@ class TypeBonus(SdeDatasetRecord):
     iconID: int | None = None
     miscBonuses: list[TypeBonus_MiscBonus] | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.TypeBonus) -> Self:
-        """Create a TypeBonus instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.TypeBonus, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a TypeBonus instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class TypeDogma_Attributes(BaseModel):
@@ -1400,10 +1588,12 @@ class TypeDogma(SdeDatasetRecord):
     dogmaAttributes: list[TypeDogma_Attributes]
     dogmaEffects: list[TypeDogma_Effects] | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.TypeDogma) -> Self:
-        """Create a TypeDogma instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.TypeDogma, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a TypeDogma instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class TypeMaterials_Material(BaseModel):
@@ -1428,10 +1618,12 @@ class TypeMaterials(SdeDatasetRecord):
     materials: list[TypeMaterials_Material] | None = None
     randomizedMaterials: list[TypeMaterials_RandomizedMaterial] | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.TypeMaterials) -> Self:
-        """Create a TypeMaterials instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.TypeMaterials, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create a TypeMaterials instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore
 
 
 class EveTypes(SdeDatasetRecord):
@@ -1457,7 +1649,9 @@ class EveTypes(SdeDatasetRecord):
     variationParentTypeID: int | None = None
     factionID: int | None = None
 
-    @classmethod
-    def from_sde(cls, record: TDM.EveTypes) -> Self:
-        """Create an EveTypes instance from a SDE record."""
-        return cls.model_validate(record)
+    # @classmethod
+    # def from_sde(
+    #     cls, record: TDM.EveTypes, metadata: SDERecordMetadata | None = None
+    # ) -> Self:
+    #     """Create an EveTypes instance from a SDE record."""
+    #     return log_validation(cls, record, metadata)  # type: ignore

@@ -2,7 +2,7 @@
 
 from typing import Self
 
-from eve_static_data.models import localized_datasets as LDS
+from eve_static_data.models import exported_localized_datasets as LDS
 from eve_static_data.models import sde_pydantic_localized as PML
 
 
@@ -27,11 +27,11 @@ class NormalizedEveTypesDataset(LDS.SdeDataset):
     @classmethod
     def from_datasets(
         cls,
-        eve_types_dataset: LDS.EveTypesDataset,
-        groups_dataset: LDS.GroupsDataset,
-        categories_dataset: LDS.CategoriesDataset,
-        market_groups_dataset: LDS.MarketGroupsDataset,
-        meta_groups_dataset: LDS.MetaGroupsDataset,
+        eve_types_dataset: LDS.EveTypesLocalizedDataset,
+        groups_dataset: LDS.GroupsLocalizedDataset,
+        categories_dataset: LDS.CategoriesLocalizedDataset,
+        market_groups_dataset: LDS.MarketGroupsLocalizedDataset,
+        meta_groups_dataset: LDS.MetaGroupsLocalizedDataset,
     ) -> Self:
         """Create a NormalizedEveTypesDataset instance from localized datasets."""
         result = cls(

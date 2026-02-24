@@ -4,7 +4,10 @@ from typing import Self
 
 from pydantic import BaseModel
 
-from eve_static_data.models.localized_datasets import MarketGroupsDataset, SdeDataset
+from eve_static_data.models.exported_localized_datasets import (
+    MarketGroupsLocalizedDataset,
+    SdeDataset,
+)
 from eve_static_data.models.sde_pydantic_localized import MarketGroupsLocalized
 
 
@@ -28,8 +31,8 @@ class MarketPathsDataset(SdeDataset):
     data: dict[int, MarketPath]
 
     @classmethod
-    def from_dataset(cls, market_groups_dataset: MarketGroupsDataset) -> Self:
-        """Create a MarketPathsDataset instance from a MarketGroupsDataset."""
+    def from_dataset(cls, market_groups_dataset: MarketGroupsLocalizedDataset) -> Self:
+        """Create a MarketPathsDataset instance from a MarketGroupsLocalizedDataset."""
         result = cls(
             build_number=market_groups_dataset.build_number,
             release_date=market_groups_dataset.release_date,

@@ -2,13 +2,11 @@
 
 from typing import TypedDict
 
-from pydantic import BaseModel
-
 import eve_static_data.models.sde_pydantic as PM
 import eve_static_data.models.sde_typeddict as TDM
 from eve_static_data.models.sde_dataset_files import SdeDatasetFiles
 
-DatasetPydanticModels: dict[SdeDatasetFiles, type[BaseModel]] = {
+DatasetPydanticModels: dict[SdeDatasetFiles, type[PM.SdeDatasetRecord]] = {
     SdeDatasetFiles.AGENTS_IN_SPACE: PM.AgentsInSpace,
     SdeDatasetFiles.AGENT_TYPES: PM.AgentTypes,
     SdeDatasetFiles.ANCESTRIES: PM.Ancestries,
@@ -124,7 +122,9 @@ DatasetTDModels: dict[SdeDatasetFiles, type[TypedDict]] = {  # type: ignore
 }
 
 
-def dataset_pydantic_model_lookup(dataset: SdeDatasetFiles) -> type[BaseModel]:
+def dataset_pydantic_model_lookup(
+    dataset: SdeDatasetFiles,
+) -> type[PM.SdeDatasetRecord]:
     """Lookup the pydantic model for a given dataset."""
     if dataset not in DatasetPydanticModels:
         raise ValueError(f"No pydantic model found for dataset: {dataset}")
