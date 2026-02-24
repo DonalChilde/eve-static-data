@@ -49,3 +49,11 @@ def default_options(
 def version():
     """Show the eve-static-data app version."""
     typer.echo(f"eve-static-data app version: {__version__}")
+
+
+@app.command()
+def settings():
+    """Show the eve-static-data app settings."""
+    console = Console()
+    settings = get_settings()
+    console.print(settings)
