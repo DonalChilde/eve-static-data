@@ -1,4 +1,7 @@
-"""Lookup for pydantic models corresponding to SDE datasets."""
+"""Lookup for pydantic models corresponding to SDE datasets.
+
+Used in validation.
+"""
 
 from typing import TypedDict
 

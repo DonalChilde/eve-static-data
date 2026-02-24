@@ -14,9 +14,9 @@ def sde_type_info(dir_path: Path, build_number: str) -> dict[str, RecursiveKeyIn
     jsonl_files = sorted(list(dir_path.glob("*.jsonl")))
     sde_type_info: dict[str, RecursiveKeyInfo] = {}
     for jsonl_file in jsonl_files:
-        dicts = read_jsonl_dicts(jsonl_file)
         type_info = collect_dict_keys_and_types_recursive(
-            dicts, source_info=f"{jsonl_file.name} (build {build_number})"
+            dict_data=read_jsonl_dicts(jsonl_file),
+            source_info=f"{jsonl_file.name} (build {build_number})",
         )
         sde_type_info[jsonl_file.name] = type_info
     return sde_type_info

@@ -1,6 +1,19 @@
 # EVE Static Data Roadmap
 
-EVE Static Data is a cli program used to download, validate, and export the EVE static dataset.
+EVE Static Data is a cli program used to download, validate, access, and export the EVE static dataset.
+
+Typical Flow:
+
+- Download the latest SDE data
+  - data is unzipped and initially verified, checking for \_sde and a build number
+  - unzipped data is copied to the data directory, normally `<app_dir>/data/<buildnumber>/sde/`
+  - data is validated, and the validation report saved to `<app_dir>/data/<buildnumber>/validation/`
+  - derived datasets are generated, and saved to `<app_dir>/data/<buildnumber>/derived/<lang>/`
+- Derived datasets exist to save memory later, as they are either cut down datasets for common operations like region name lookups, or combined datasets like normailzed_types. Derived datasets are also localized.
+- Top level api access will load the various dataset types - Typeddict, Pydantic, Localized, derived
+  - app provides configured SdeReader, and derived dataset loader. Use dataset Models to load non derived data ,`<Dataset>.from_sde(reader)`
+- Downloading a new SDE Dataset will not delete the old one automatically
+- the CLI provides info on how many datasets are available, and tools to erase them.
 
 ## Features
 

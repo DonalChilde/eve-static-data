@@ -6,6 +6,8 @@ the source file.
 """
 # ruff: noqa: D102
 
+# FIXME Evaluate whether these factory functions are necessary or useful in any way.
+
 import logging
 from collections.abc import Iterable
 from typing import cast
@@ -191,8 +193,8 @@ def freelance_job_schemas(
     reader: SdeReader, file_name: str | None = None
 ) -> tuple[RTD.FreelanceJobSchemas, SDERecordMetadata]:
     """Records from the freelanceJobSchemas.jsonl dataset."""
-    item, metadata = next(
-        iter(reader.records(SdeDatasetFiles.FREELANCE_JOB_SCHEMAS, file_name))
+    item, metadata = reader.record_at(
+        SdeDatasetFiles.FREELANCE_JOB_SCHEMAS, index=1, file_name=file_name
     )
     return cast(RTD.FreelanceJobSchemas, item), metadata
 
@@ -379,10 +381,9 @@ def sde_info(
     reader: SdeReader, file_name: str | None = None
 ) -> tuple[RTD.SdeInfo, SDERecordMetadata]:
     """Records from the _sde.jsonl dataset."""
-    result = next(iter(reader.records(SdeDatasetFiles.SDE_INFO, file_name)), None)
-    if result is None:
-        raise ValueError("SDE info file is empty.")
-    sde_info, metadata = result
+    sde_info, metadata = reader.record_at(
+        SdeDatasetFiles.SDE_INFO, index=1, file_name=file_name
+    )
     if "buildNumber" not in sde_info:
         raise ValueError("SDE info file is missing 'buildNumber' key.")
     return cast(RTD.SdeInfo, sde_info), metadata

@@ -42,6 +42,10 @@ class EveStaticDataSettings(BaseSettings):
         default=f"{DEFAULT_APP_DIR}/logs",
         description="The directory where log files are stored.",
     )
+    data_path: str = Field(
+        default=f"{DEFAULT_APP_DIR}/data",
+        description="The directory where data files are stored.",
+    )
     sde_base_url: str = Field(
         default="https://developers.eveonline.com/static-data",
         description="The base URL to download the latest SDE data.",
@@ -75,16 +79,6 @@ class EveStaticDataSettings(BaseSettings):
         url = f"{self.sde_base_url}{self.sde_schema_changelog_url}"
         return url
 
-    def db_path(self, db_name: str = "eve-static-data") -> Path:
-        """Get the path to a database file."""
-        return Path(f"{self.app_dir}/data/{db_name}.db")
-
-    def db_backup_path(
-        self, build_number: int, db_name: str = "eve-static-data"
-    ) -> Path:
-        """Get the path to a database backup file."""
-        return Path(f"{self.app_dir}/data/{db_name}_{build_number}_backup.db")
-
 
 def get_settings() -> EveStaticDataSettings:
     """Get the Eve Static Data settings."""
@@ -93,6 +87,5 @@ def get_settings() -> EveStaticDataSettings:
     Path(settings.app_dir).mkdir(parents=True, exist_ok=True)
     Path(settings.config_dir).mkdir(parents=True, exist_ok=True)
     Path(settings.log_path).mkdir(parents=True, exist_ok=True)
-    settings.db_path().parent.mkdir(parents=True, exist_ok=True)
-    settings.db_backup_path(0).parent.mkdir(parents=True, exist_ok=True)
+    Path(settings.data_path).mkdir(parents=True, exist_ok=True)
     return settings

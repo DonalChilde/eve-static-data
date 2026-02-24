@@ -14,11 +14,13 @@ if it is missing in the data.
 """
 
 import logging
+from collections.abc import Iterable
 from typing import Any, Self
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from eve_static_data.access.sde_reader import SDERecordMetadata
+from eve_static_data.access.sde_reader import SdeReader, SDERecordMetadata
+from eve_static_data.models.sde_dataset_files import SdeDatasetFiles
 
 logger = logging.getLogger(__name__)
 
@@ -107,6 +109,23 @@ class SdeDatasetRecord(BaseModel):
             Exception: If validation fails.
         """
         return log_validation(cls, record, metadata)
+
+    @classmethod
+    def from_sde_iter(
+        cls, reader: SdeReader, dataset: SdeDatasetFiles, file_name: str | None = None
+    ) -> Iterable[Self]:
+        """Create an iterable of model instances from a SDE dataset.
+
+        Args:
+            reader: An instance of SdeReader to read the dataset.
+            dataset: The dataset to read.
+            file_name: Optional specific file name to read from the dataset.
+
+        Returns:
+            An iterable of model instances.
+        """
+        for record, metadata in reader.records(dataset, file_name):
+            yield cls.from_sde(record, metadata)
 
 
 def log_validation[T: BaseModel](

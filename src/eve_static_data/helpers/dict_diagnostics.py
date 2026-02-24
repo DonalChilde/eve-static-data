@@ -104,7 +104,7 @@ class RecursiveKeyInfo(TypedDict):
 
 
 def collect_dict_keys_and_types_recursive(
-    dict_data: Iterable[dict[str, Any]], source_info: str
+    dict_data: Iterable[tuple[dict[str, Any], int]], source_info: str
 ) -> RecursiveKeyInfo:
     """Recursively analyze dictionaries and return all keys with their associated value types.
 
@@ -157,7 +157,8 @@ def collect_dict_keys_and_types_recursive(
                     process_value(key_path, item)
 
     # Process each dictionary in the input iterable
-    for entry in dict_data:
+    for entry, line_number in dict_data:
+        _ = line_number
         if isinstance(entry, dict):
             dict_count += 1
             for key, value in entry.items():

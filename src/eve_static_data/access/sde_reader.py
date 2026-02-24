@@ -12,6 +12,8 @@ from eve_static_data.models.sde_dataset_files import SdeDatasetFiles
 
 logger = logging.getLogger(__name__)
 
+# FIXME: Error handling when data is missing or malformed.
+
 
 @dataclass(slots=True)
 class SDERecordMetadata:
@@ -20,6 +22,7 @@ class SDERecordMetadata:
     record_number: int
 
     def __str__(self) -> str:
+        """Return a string representation of the SDE record metadata."""
         return f"{self.dataset.value} record {self.record_number} in {self.file_path}"
 
 
@@ -50,15 +53,40 @@ class SdeReader:
         else:
             file_path = self.sde_path / dataset.value
         start = perf_counter()
-        record_count = 0
-        for record in read_jsonl_dicts(file_path):
-            record_count += 1
+        index = 0
+        for record, index in read_jsonl_dicts(file_path):
             metadata = SDERecordMetadata(
-                dataset=dataset, file_path=file_path, record_number=record_count
+                dataset=dataset, file_path=file_path, record_number=index
             )
             yield record, metadata
         logger.info(
-            f"Finished reading {dataset.value} {record_count} records from {file_path} in {perf_counter() - start:.4f} seconds."
+            f"Finished reading {dataset.value} {index} records from {file_path} in {perf_counter() - start:.4f} seconds."
+        )
+
+    def record_at(
+        self, dataset: SdeDatasetFiles, index: int, file_name: str | None = None
+    ) -> tuple[dict[str, Any], SDERecordMetadata]:
+        """Return the record at the specified index from the specified dataset.
+
+        Indexes are line numbers in the JSONL file, starting at 1. If the index is out of range, an IndexError is raised.
+        """
+        if file_name:
+            file_path = self.sde_path / file_name
+        else:
+            file_path = self.sde_path / dataset.value
+        start = perf_counter()
+        line_number = 0
+        for record, line_number in read_jsonl_dicts(file_path):
+            if line_number == index:
+                metadata = SDERecordMetadata(
+                    dataset=dataset, file_path=file_path, record_number=line_number
+                )
+                logger.info(
+                    f"Finished reading {dataset.value} record {index} of {line_number} from {file_path} in {perf_counter() - start:.4f} seconds."
+                )
+                return record, metadata
+        raise IndexError(
+            f"Index {index} of {line_number} out of range for dataset {dataset.value} in file {file_path}"
         )
 
     def _parse_sde_info(self) -> None:
@@ -66,9 +94,9 @@ class SdeReader:
         sde_info_path = self.sde_path / self.sde_info_name
         if not sde_info_path.is_file():
             raise FileNotFoundError(f"SDE info file not found at {sde_info_path}")
-        sde_info = read_jsonl_dicts(sde_info_path)
-        if not sde_info:
-            raise ValueError(f"SDE info file is empty at {sde_info_path}")
-        sde_info_record = next(iter(sde_info))
-        self.build_number = sde_info_record.get("buildNumber")
-        self.release_date = sde_info_record.get("releaseDate")
+        data, metadata = self.record_at(
+            dataset=SdeDatasetFiles.SDE_INFO, index=1, file_name=self.sde_info_name
+        )
+        _ = metadata
+        self.build_number = data.get("buildNumber")  # type: ignore
+        self.release_date = data.get("releaseDate")  # type: ignore

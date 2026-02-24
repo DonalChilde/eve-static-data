@@ -2,6 +2,32 @@
 
 from typing import Any, NotRequired, TypedDict
 
+# TODO: refactor top level records to be SdeDatasetRecord, for clarity.
+# TODO: make a sde_typeddict_dataset module, with SdeDataset definitions of all the datasets.
+# TODO: make factory functions for creating SdeDataset objects from the raw jsonl files, which will handle parsing the buildNumber and releaseDate fields,
+# NOTE: The above refactors are not needed for the current use case, which is just to have TypedDict definitions for the records in each dataset, but they would be nice to have to allow for data export without validation.
+# For example:
+# class AgentsInSpaceDataset(SdeDataset):
+#     records: list[AgentsInSpace]
+
+
+class SdeDatasetRecord(TypedDict):
+    """Base TypedDict for SDE dataset records.
+
+    All SDE dataset record TypedDicts should inherit from this.
+    """
+
+
+class SdeDataset(TypedDict):
+    """Base TypedDict for SDE datasets.
+
+    All SDE dataset TypedDicts should inherit from this.
+    """
+
+    buildNumber: int
+    releaseDate: str
+
+
 # ------------------------------------------------------------------------------
 # Common TypedDict definitions.
 # These are classes used in more than one dataset.
@@ -9,7 +35,7 @@ from typing import Any, NotRequired, TypedDict
 
 
 class LocalizedString(TypedDict):
-    """Type definition for LocalizedString.
+    """Nested model used in several datasets, e.g. the name field in the Ancestries dataset.
 
     Source info: SDE file: translationLanguages.jsonl
     """
@@ -25,42 +51,55 @@ class LocalizedString(TypedDict):
 
 
 class Materials(TypedDict):
+    """Nested model used in several datasets, e.g. the materials field in the Blueprints dataset."""
+
     typeID: int
     quantity: int
 
 
 class Skills(TypedDict):
+    """Nested model used in several datasets, e.g. the skills field in the Blueprints dataset."""
+
     typeID: int
     level: int
 
 
 class Color(TypedDict):
+    """Nested model used in several datasets, e.g. the color field in the MetaGroups dataset."""
+
     b: float
     g: float
     r: float
 
 
 class Position(TypedDict):
+    """Nested model used in several datasets, e.g. the position field in the Stations dataset."""
+
     x: float
     y: float
     z: float
 
 
 class Position2D(TypedDict):
+    """Nested model used in several datasets, e.g. the position2D field in the MapSolarSystems dataset."""
+
     x: float
     y: float
 
 
 # ------------------------------------------------------------------------------
 # File level TypedDict definitions.
-# Note that below-top-level classes for datasets are indicated by the naming convention
+# Note that nested classes for datasets are indicated by the naming convention
 # <DatasetName>_<NestedClassName>, e.g. DogmaEffects_ModifierInfo for the nested
 # ModifierInfo class in the DogmaEffects dataset.
 # The exception to this is when the nested class can be reused in multiple datasets.
 # ------------------------------------------------------------------------------
 
 
-class AgentsInSpace(TypedDict):
+# TODO: provide a docstring for each of these classes, indicating the source SDE file. Note nested classes as appropriate.
+class AgentsInSpace(SdeDatasetRecord):
+    """Model for the agentsInSpace.jsonl SDE file."""
+
     _key: int
     dungeonID: int
     solarSystemID: int
@@ -68,12 +107,16 @@ class AgentsInSpace(TypedDict):
     typeID: int
 
 
-class AgentTypes(TypedDict):
+class AgentTypes(SdeDatasetRecord):
+    """Model for the agentTypes.jsonl SDE file."""
+
     _key: int
     name: str
 
 
-class Ancestries(TypedDict):
+class Ancestries(SdeDatasetRecord):
+    """Model for the ancestries.jsonl SDE file."""
+
     _key: int
     bloodlineID: int
     charisma: int
@@ -87,7 +130,9 @@ class Ancestries(TypedDict):
     willpower: int
 
 
-class Bloodlines(TypedDict):
+class Bloodlines(SdeDatasetRecord):
+    """Model for the bloodlines.jsonl SDE file."""
+
     _key: int
     charisma: int
     corporationID: int
@@ -102,6 +147,8 @@ class Bloodlines(TypedDict):
 
 
 class Blueprints_Products(TypedDict):
+    """Nested model for the blueprints.jsonl SDE file."""
+
     typeID: int
     quantity: int
     probability: NotRequired[float]
@@ -123,14 +170,14 @@ class Blueprints_Activities(TypedDict):
     research_time: NotRequired[Blueprints_Activity]
 
 
-class Blueprints(TypedDict):
+class Blueprints(SdeDatasetRecord):
     _key: int
     activities: Blueprints_Activities
     blueprintTypeID: int
     maxProductionLimit: int
 
 
-class Categories(TypedDict):
+class Categories(SdeDatasetRecord):
     _key: int
     name: LocalizedString
     published: bool
@@ -148,7 +195,7 @@ class Certificates_SkillType(TypedDict):
     elite: int
 
 
-class Certificates(TypedDict):
+class Certificates(SdeDatasetRecord):
     """Model for the certificates.jsonl SDE file."""
 
     _key: int
@@ -159,7 +206,7 @@ class Certificates(TypedDict):
     skillTypes: list[Certificates_SkillType]
 
 
-class CharacterAttributes(TypedDict):
+class CharacterAttributes(SdeDatasetRecord):
     """Model for the characterAttributes.jsonl SDE file."""
 
     _key: int
@@ -170,7 +217,7 @@ class CharacterAttributes(TypedDict):
     shortDescription: str
 
 
-class CloneGrades(TypedDict):
+class CloneGrades(SdeDatasetRecord):
     """Model for the cloneGrades.jsonl SDE file."""
 
     _key: int
@@ -178,7 +225,7 @@ class CloneGrades(TypedDict):
     skills: list[Skills]
 
 
-class CompressibleTypes(TypedDict):
+class CompressibleTypes(SdeDatasetRecord):
     _key: int
     compressedTypeID: int
 
@@ -191,7 +238,7 @@ class ContrabandTypes_Faction(TypedDict):
     standingLoss: float
 
 
-class ContrabandTypes(TypedDict):
+class ContrabandTypes(SdeDatasetRecord):
     _key: int
     factions: list[ContrabandTypes_Faction]
 
@@ -204,12 +251,12 @@ class ControlTowerResources_Resource(TypedDict):
     resourceTypeID: int
 
 
-class ControlTowerResources(TypedDict):
+class ControlTowerResources(SdeDatasetRecord):
     _key: int
     resources: list[ControlTowerResources_Resource]
 
 
-class CorporationActivities(TypedDict):
+class CorporationActivities(SdeDatasetRecord):
     _key: int
     name: LocalizedString
 
@@ -232,7 +279,7 @@ class DebuffCollections_ItemModifier(TypedDict):
     dogmaAttributeID: int
 
 
-class DebuffCollections(TypedDict):
+class DebuffCollections(SdeDatasetRecord):
     _key: int
     aggregateMode: str
     developerDescription: str
@@ -247,13 +294,13 @@ class DebuffCollections(TypedDict):
     displayName: NotRequired[LocalizedString]
 
 
-class DogmaAttributeCategories(TypedDict):
+class DogmaAttributeCategories(SdeDatasetRecord):
     _key: int
     description: NotRequired[str]
     name: str
 
 
-class DogmaAttributes(TypedDict):
+class DogmaAttributes(SdeDatasetRecord):
     _key: int
     attributeCategoryID: NotRequired[int]
     dataType: int
@@ -285,7 +332,7 @@ class DogmaEffects_ModifierInfo(TypedDict):
     skillTypeID: NotRequired[int]
 
 
-class DogmaEffects(TypedDict):
+class DogmaEffects(SdeDatasetRecord):
     _key: int
     disallowAutoRepeat: bool
     dischargeAttributeID: NotRequired[int]
@@ -314,7 +361,7 @@ class DogmaEffects(TypedDict):
     resistanceAttributeID: NotRequired[int]
 
 
-class DogmaUnits(TypedDict):
+class DogmaUnits(SdeDatasetRecord):
     _key: int
     description: NotRequired[LocalizedString]
     displayName: NotRequired[LocalizedString]
@@ -333,13 +380,13 @@ class DynamicItemAttributes_InputOutputMapping(TypedDict):
     resultingType: int
 
 
-class DynamicItemAttributes(TypedDict):
+class DynamicItemAttributes(SdeDatasetRecord):
     _key: int
     attributeIDs: list[DynamicItemAttributes_AttributeID]
     inputOutputMapping: list[DynamicItemAttributes_InputOutputMapping]
 
 
-class Factions(TypedDict):
+class Factions(SdeDatasetRecord):
     _key: int
     corporationID: NotRequired[int]
     description: LocalizedString
@@ -355,12 +402,12 @@ class Factions(TypedDict):
     uniqueName: bool
 
 
-class FreelanceJobSchemas(TypedDict):
+class FreelanceJobSchemas(SdeDatasetRecord):
     _key: int
     _value: list[dict[str, Any]]
 
 
-class Graphics(TypedDict):
+class Graphics(SdeDatasetRecord):
     _key: int
     graphicFile: NotRequired[str]
     iconFolder: NotRequired[str]
@@ -371,7 +418,7 @@ class Graphics(TypedDict):
     sofLayout: NotRequired[list[str]]
 
 
-class Groups(TypedDict):
+class Groups(SdeDatasetRecord):
     _key: int
     anchorable: bool
     anchored: bool
@@ -383,12 +430,12 @@ class Groups(TypedDict):
     iconID: NotRequired[int]
 
 
-class Icons(TypedDict):
+class Icons(SdeDatasetRecord):
     _key: int
     iconFile: str
 
 
-class Landmarks(TypedDict):
+class Landmarks(SdeDatasetRecord):
     _key: int
     description: LocalizedString
     name: LocalizedString
@@ -412,7 +459,7 @@ class MapAsteroidBelts_Statistics(TypedDict):
     temperature: float
 
 
-class MapAsteroidBelts(TypedDict):
+class MapAsteroidBelts(SdeDatasetRecord):
     _key: int
     celestialIndex: int
     orbitID: int
@@ -425,7 +472,7 @@ class MapAsteroidBelts(TypedDict):
     uniqueName: NotRequired[LocalizedString]
 
 
-class MapConstellations(TypedDict):
+class MapConstellations(SdeDatasetRecord):
     _key: int
     factionID: NotRequired[int]
     name: LocalizedString
@@ -457,7 +504,7 @@ class MapMoons_Statistics(TypedDict):
     temperature: float
 
 
-class MapMoons(TypedDict):
+class MapMoons(SdeDatasetRecord):
     _key: int
     attributes: MapMoons_Attributes
     celestialIndex: int
@@ -495,7 +542,7 @@ class MapPlanets_Statistics(TypedDict):
     temperature: float
 
 
-class MapPlanets(TypedDict):
+class MapPlanets(SdeDatasetRecord):
     _key: int
     asteroidBeltIDs: NotRequired[list[int]]
     attributes: MapPlanets_Attributes
@@ -511,7 +558,7 @@ class MapPlanets(TypedDict):
     uniqueName: NotRequired[LocalizedString]
 
 
-class MapRegions(TypedDict):
+class MapRegions(SdeDatasetRecord):
     _key: int
     constellationIDs: list[int]
     description: NotRequired[LocalizedString]
@@ -522,7 +569,7 @@ class MapRegions(TypedDict):
     wormholeClassID: NotRequired[int]
 
 
-class MapSolarSystems(TypedDict):
+class MapSolarSystems(SdeDatasetRecord):
     _key: int
     border: NotRequired[bool]
     constellationID: int
@@ -554,7 +601,7 @@ class MapStargates_Destination(TypedDict):
     stargateID: int
 
 
-class MapStargates(TypedDict):
+class MapStargates(SdeDatasetRecord):
     _key: int
     destination: MapStargates_Destination
     position: Position
@@ -570,7 +617,7 @@ class MapStars_Statistics(TypedDict):
     temperature: float
 
 
-class MapStars(TypedDict):
+class MapStars(SdeDatasetRecord):
     _key: int
     radius: int
     solarSystemID: int
@@ -578,7 +625,7 @@ class MapStars(TypedDict):
     typeID: int
 
 
-class MarketGroups(TypedDict):
+class MarketGroups(SdeDatasetRecord):
     _key: int
     description: NotRequired[LocalizedString]
     hasTypes: bool
@@ -592,12 +639,12 @@ class Masteries_Value(TypedDict):
     _value: list[int]
 
 
-class Masteries(TypedDict):
+class Masteries(SdeDatasetRecord):
     _key: int
     _value: list[Masteries_Value]
 
 
-class MetaGroups(TypedDict):
+class MetaGroups(SdeDatasetRecord):
     _key: int
     color: NotRequired[Color]
     name: LocalizedString
@@ -617,7 +664,7 @@ class NpcCharacters_Agent(TypedDict):
     level: int
 
 
-class NpcCharacters(TypedDict):
+class NpcCharacters(SdeDatasetRecord):
     _key: int
     bloodlineID: int
     ceo: bool
@@ -637,7 +684,7 @@ class NpcCharacters(TypedDict):
     description: NotRequired[str]
 
 
-class NpcCorporationDivisions(TypedDict):
+class NpcCorporationDivisions(SdeDatasetRecord):
     _key: int
     displayName: NotRequired[str]
     internalName: str
@@ -668,7 +715,7 @@ class NpcCorporations_ExchangeRates(TypedDict):
     _value: float
 
 
-class NpcCorporations(TypedDict):
+class NpcCorporations(SdeDatasetRecord):
     _key: int
     ceoID: NotRequired[int]
     deleted: bool
@@ -704,7 +751,7 @@ class NpcCorporations(TypedDict):
     exchangeRates: NotRequired[list[NpcCorporations_ExchangeRates]]
 
 
-class NpcStations(TypedDict):
+class NpcStations(SdeDatasetRecord):
     _key: int
     celestialIndex: NotRequired[int]
     operationID: int
@@ -730,7 +777,7 @@ class PlanetResources_Reagent(TypedDict):
     unsecured_capacity: int
 
 
-class PlanetResources(TypedDict):
+class PlanetResources(SdeDatasetRecord):
     """Model for the planetResources.jsonl SDE file."""
 
     _key: int
@@ -745,7 +792,7 @@ class PlanetSchematics_Types(TypedDict):
     quantity: int
 
 
-class PlanetSchematics(TypedDict):
+class PlanetSchematics(SdeDatasetRecord):
     _key: int
     cycleTime: int
     name: LocalizedString
@@ -758,7 +805,7 @@ class Races_Skill(TypedDict):
     _value: int
 
 
-class Races(TypedDict):
+class Races(SdeDatasetRecord):
     _key: int
     description: NotRequired[LocalizedString]
     iconID: NotRequired[int]
@@ -767,13 +814,13 @@ class Races(TypedDict):
     skills: NotRequired[list[Races_Skill]]
 
 
-class SdeInfo(TypedDict):
+class SdeInfo(SdeDatasetRecord):
     _key: str
     buildNumber: int
     releaseDate: str
 
 
-class SkinLicenses(TypedDict):
+class SkinLicenses(SdeDatasetRecord):
     _key: int
     duration: int
     licenseTypeID: int
@@ -781,13 +828,13 @@ class SkinLicenses(TypedDict):
     isSingleUse: NotRequired[bool]
 
 
-class SkinMaterials(TypedDict):
+class SkinMaterials(SdeDatasetRecord):
     _key: int
     displayName: NotRequired[LocalizedString]
     materialSetID: int
 
 
-class Skins(TypedDict):
+class Skins(SdeDatasetRecord):
     _key: int
     allowCCPDevs: bool
     internalName: str
@@ -807,7 +854,7 @@ class SovereigntyUpgrades_Fuel(TypedDict):
     type_id: int
 
 
-class SovereigntyUpgrades(TypedDict):
+class SovereigntyUpgrades(SdeDatasetRecord):
     """Model for the sovereigntyUpgrades.jsonl SDE file."""
 
     _key: int
@@ -824,7 +871,7 @@ class StationOperations_StationType(TypedDict):
     _value: int
 
 
-class StationOperations(TypedDict):
+class StationOperations(SdeDatasetRecord):
     _key: int
     activityID: int
     border: float
@@ -840,13 +887,13 @@ class StationOperations(TypedDict):
     stationTypes: NotRequired[list[StationOperations_StationType]]
 
 
-class StationServices(TypedDict):
+class StationServices(SdeDatasetRecord):
     _key: int
     serviceName: LocalizedString
     description: NotRequired[LocalizedString]
 
 
-class TranslationLanguages(TypedDict):
+class TranslationLanguages(SdeDatasetRecord):
     _key: str
     name: str
 
@@ -878,7 +925,7 @@ class TypeBonus_MiscBonus(TypedDict):
     unitID: NotRequired[int]
 
 
-class TypeBonus(TypedDict):
+class TypeBonus(SdeDatasetRecord):
     _key: int
     roleBonuses: NotRequired[list[TypeBonus_RoleBonus]]
     types: NotRequired[list[TypeBonus_Types]]
@@ -896,7 +943,7 @@ class TypeDogma_Effects(TypedDict):
     isDefault: bool
 
 
-class TypeDogma(TypedDict):
+class TypeDogma(SdeDatasetRecord):
     _key: int
     dogmaAttributes: list[TypeDogma_Attributes]
     dogmaEffects: NotRequired[list[TypeDogma_Effects]]
@@ -913,13 +960,13 @@ class TypeMaterials_RandomizedMaterial(TypedDict):
     quantityMin: int
 
 
-class TypeMaterials(TypedDict):
+class TypeMaterials(SdeDatasetRecord):
     _key: int
     materials: NotRequired[list[TypeMaterials_Material]]
     randomizedMaterials: NotRequired[list[TypeMaterials_RandomizedMaterial]]
 
 
-class EveTypes(TypedDict):
+class EveTypes(SdeDatasetRecord):
     _key: int
     groupID: int
     mass: NotRequired[float]
