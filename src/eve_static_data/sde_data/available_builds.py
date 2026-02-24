@@ -150,17 +150,14 @@ def import_zipped_sde(zip_file_path: Path) -> None:
         # Unzip the file to the temporary directory
         with zipfile.ZipFile(zip_file_path, "r") as zip_ref:
             zip_ref.extractall(temp_path)
-        reader = SdeReader(temp_path)
-        # Validate the presence of _sde.jsonl in the unzipped directory
-        build_number = reader.build_number
-        if build_number is None:
+        if not (temp_path / "_sde.jsonl").exists():
             raise FileNotFoundError(
-                f"_sde.jsonl file not found in the unzipped SDE data at {temp_path}"
+                f"_sde.jsonl file not found in the unzipped SDE data at {temp_path}. Is this a valid SDE zip file?"
             )
-        import_unzipped_sde(temp_path, build_number)
+        import_unzipped_sde(temp_path)
 
 
-def import_unzipped_sde(unzipped_path: Path, build_number: int) -> None:
+def import_unzipped_sde(unzipped_path: Path) -> None:
     """Import SDE data from an unzipped directory.
 
     This function will validate the presence of the expected "_sde.jsonl" file in the provided directory, and then
@@ -168,7 +165,6 @@ def import_unzipped_sde(unzipped_path: Path, build_number: int) -> None:
 
     Args:
         unzipped_path: The path to the unzipped SDE data directory.
-        build_number: The build number of the SDE data to import.
     """
     if not unzipped_path.exists() or not unzipped_path.is_dir():
         raise FileNotFoundError(
@@ -179,6 +175,13 @@ def import_unzipped_sde(unzipped_path: Path, build_number: int) -> None:
             f"_sde.jsonl file not found in the unzipped SDE data at {unzipped_path}. Is "
             "this a valid SDE data directory?"
         )
+    reader = SdeReader(unzipped_path)
+
+    if reader.build_number is None:
+        raise ValueError(
+            f"Build number not found in _sde.jsonl file at {unzipped_path / '_sde.jsonl'}"
+        )
+    build_number = reader.build_number
     initialize_build_data(build_number)
     build_data_dir = path_to_build_data_dir(build_number)
     build_sde_dir = path_to_sde(build_number)
