@@ -125,17 +125,253 @@ DatasetTDModels: dict[SdeDatasetFiles, type[TypedDict]] = {  # type: ignore
 }
 
 
-def dataset_pydantic_model_lookup(
-    dataset: SdeDatasetFiles,
-) -> type[PM.SdeDatasetRecord]:
-    """Lookup the pydantic model for a given dataset."""
-    if dataset not in DatasetPydanticModels:
-        raise ValueError(f"No pydantic model found for dataset: {dataset}")
-    return DatasetPydanticModels[dataset]
+# def dataset_pydantic_model_lookup(
+#     dataset: SdeDatasetFiles,
+# ) -> type[PM.SdeDatasetRecord]:
+#     """Lookup the pydantic model for a given dataset."""
+#     if dataset not in DatasetPydanticModels:
+#         raise ValueError(f"No pydantic model found for dataset: {dataset}")
+#     return DatasetPydanticModels[dataset]
+
+
+# def dataset_td_model_lookup(dataset: SdeDatasetFiles) -> type[TypedDict]:  # type: ignore
+#     """Lookup the TypedDict model for a given dataset."""
+#     if dataset not in DatasetTDModels:
+#         raise ValueError(f"No TypedDict model found for dataset: {dataset}")
+#     return DatasetTDModels[dataset]
 
 
 def dataset_td_model_lookup(dataset: SdeDatasetFiles) -> type[TypedDict]:  # type: ignore
     """Lookup the TypedDict model for a given dataset."""
-    if dataset not in DatasetTDModels:
-        raise ValueError(f"No TypedDict model found for dataset: {dataset}")
-    return DatasetTDModels[dataset]
+    match dataset:
+        case SdeDatasetFiles.AGENTS_IN_SPACE:
+            return TDM.AgentsInSpace
+        case SdeDatasetFiles.AGENT_TYPES:
+            return TDM.AgentTypes
+        case SdeDatasetFiles.ANCESTRIES:
+            return TDM.Ancestries
+        case SdeDatasetFiles.BLOODLINES:
+            return TDM.Bloodlines
+        case SdeDatasetFiles.BLUEPRINTS:
+            return TDM.Blueprints
+        case SdeDatasetFiles.CATEGORIES:
+            return TDM.Categories
+        case SdeDatasetFiles.CERTIFICATES:
+            return TDM.Certificates
+        case SdeDatasetFiles.CHARACTER_ATTRIBUTES:
+            return TDM.CharacterAttributes
+        case SdeDatasetFiles.CLONE_GRADES:
+            return TDM.CloneGrades
+        case SdeDatasetFiles.COMPRESSIBLE_TYPES:
+            return TDM.CompressibleTypes
+        case SdeDatasetFiles.CONTRABAND_TYPES:
+            return TDM.ContrabandTypes
+        case SdeDatasetFiles.CONTROL_TOWER_RESOURCES:
+            return TDM.ControlTowerResources
+        case SdeDatasetFiles.CORPORATION_ACTIVITIES:
+            return TDM.CorporationActivities
+        case SdeDatasetFiles.DEBUFF_COLLECTIONS:
+            return TDM.DebuffCollections
+        case SdeDatasetFiles.DOGMA_ATTRIBUTE_CATEGORIES:
+            return TDM.DogmaAttributeCategories
+        case SdeDatasetFiles.DOGMA_ATTRIBUTES:
+            return TDM.DogmaAttributes
+        case SdeDatasetFiles.DOGMA_EFFECTS:
+            return TDM.DogmaEffects
+        case SdeDatasetFiles.DOGMA_UNITS:
+            return TDM.DogmaUnits
+        case SdeDatasetFiles.DYNAMIC_ITEM_ATTRIBUTES:
+            return TDM.DynamicItemAttributes
+        case SdeDatasetFiles.FACTIONS:
+            return TDM.Factions
+        case SdeDatasetFiles.FREELANCE_JOB_SCHEMAS:
+            return TDM.FreelanceJobSchemas
+        case SdeDatasetFiles.GRAPHICS:
+            return TDM.Graphics
+        case SdeDatasetFiles.GROUPS:
+            return TDM.Groups
+        case SdeDatasetFiles.ICONS:
+            return TDM.Icons
+        case SdeDatasetFiles.LANDMARKS:
+            return TDM.Landmarks
+        case SdeDatasetFiles.MAP_ASTEROID_BELTS:
+            return TDM.MapAsteroidBelts
+        case SdeDatasetFiles.MAP_CONSTELLATIONS:
+            return TDM.MapConstellations
+        case SdeDatasetFiles.MAP_MOONS:
+            return TDM.MapMoons
+        case SdeDatasetFiles.MAP_PLANETS:
+            return TDM.MapPlanets
+        case SdeDatasetFiles.MAP_REGIONS:
+            return TDM.MapRegions
+        case SdeDatasetFiles.MAP_SOLAR_SYSTEMS:
+            return TDM.MapSolarSystems
+        case SdeDatasetFiles.MAP_STARGATES:
+            return TDM.MapStargates
+        case SdeDatasetFiles.MAP_STARS:
+            return TDM.MapStars
+        case SdeDatasetFiles.MARKET_GROUPS:
+            return TDM.MarketGroups
+        case SdeDatasetFiles.MASTERIES:
+            return TDM.Masteries
+        case SdeDatasetFiles.META_GROUPS:
+            return TDM.MetaGroups
+        case SdeDatasetFiles.NPC_CHARACTERS:
+            return TDM.NpcCharacters
+        case SdeDatasetFiles.NPC_CORPORATION_DIVISIONS:
+            return TDM.NpcCorporationDivisions
+        case SdeDatasetFiles.NPC_CORPORATIONS:
+            return TDM.NpcCorporations
+        case SdeDatasetFiles.NPC_STATIONS:
+            return TDM.NpcStations
+        case SdeDatasetFiles.PLANET_RESOURCES:
+            return TDM.PlanetResources
+        case SdeDatasetFiles.PLANET_SCHEMATICS:
+            return TDM.PlanetSchematics
+        case SdeDatasetFiles.RACES:
+            return TDM.Races
+        case SdeDatasetFiles.SDE_INFO:
+            return TDM.SdeInfo
+        case SdeDatasetFiles.SKIN_LICENSES:
+            return TDM.SkinLicenses
+        case SdeDatasetFiles.SKIN_MATERIALS:
+            return TDM.SkinMaterials
+        case SdeDatasetFiles.SKINS:
+            return TDM.Skins
+        case SdeDatasetFiles.SOVEREIGNTY_UPGRADES:
+            return TDM.SovereigntyUpgrades
+        case SdeDatasetFiles.STATION_OPERATIONS:
+            return TDM.StationOperations
+        case SdeDatasetFiles.STATION_SERVICES:
+            return TDM.StationServices
+        case SdeDatasetFiles.TRANSLATION_LANGUAGES:
+            return TDM.TranslationLanguages
+        case SdeDatasetFiles.TYPE_BONUS:
+            return TDM.TypeBonus
+        case SdeDatasetFiles.TYPE_DOGMA:
+            return TDM.TypeDogma
+        case SdeDatasetFiles.TYPE_MATERIALS:
+            return TDM.TypeMaterials
+        case SdeDatasetFiles.TYPES:
+            return TDM.EveTypes
+        case _:
+            raise ValueError(f"No TypedDict model found for dataset: {dataset}")
+
+
+def dataset_pydantic_model_lookup(
+    dataset: SdeDatasetFiles,
+) -> type[PM.SdeDatasetRecord]:
+    """Lookup the pydantic model for a given dataset."""
+    match dataset:
+        case SdeDatasetFiles.AGENTS_IN_SPACE:
+            return PM.AgentsInSpace
+        case SdeDatasetFiles.AGENT_TYPES:
+            return PM.AgentTypes
+        case SdeDatasetFiles.ANCESTRIES:
+            return PM.Ancestries
+        case SdeDatasetFiles.BLOODLINES:
+            return PM.Bloodlines
+        case SdeDatasetFiles.BLUEPRINTS:
+            return PM.Blueprints
+        case SdeDatasetFiles.CATEGORIES:
+            return PM.Categories
+        case SdeDatasetFiles.CERTIFICATES:
+            return PM.Certificates
+        case SdeDatasetFiles.CHARACTER_ATTRIBUTES:
+            return PM.CharacterAttributes
+        case SdeDatasetFiles.CLONE_GRADES:
+            return PM.CloneGrades
+        case SdeDatasetFiles.COMPRESSIBLE_TYPES:
+            return PM.CompressibleTypes
+        case SdeDatasetFiles.CONTRABAND_TYPES:
+            return PM.ContrabandTypes
+        case SdeDatasetFiles.CONTROL_TOWER_RESOURCES:
+            return PM.ControlTowerResources
+        case SdeDatasetFiles.CORPORATION_ACTIVITIES:
+            return PM.CorporationActivities
+        case SdeDatasetFiles.DEBUFF_COLLECTIONS:
+            return PM.DebuffCollections
+        case SdeDatasetFiles.DOGMA_ATTRIBUTE_CATEGORIES:
+            return PM.DogmaAttributeCategories
+        case SdeDatasetFiles.DOGMA_ATTRIBUTES:
+            return PM.DogmaAttributes
+        case SdeDatasetFiles.DOGMA_EFFECTS:
+            return PM.DogmaEffects
+        case SdeDatasetFiles.DOGMA_UNITS:
+            return PM.DogmaUnits
+        case SdeDatasetFiles.DYNAMIC_ITEM_ATTRIBUTES:
+            return PM.DynamicItemAttributes
+        case SdeDatasetFiles.FACTIONS:
+            return PM.Factions
+        case SdeDatasetFiles.FREELANCE_JOB_SCHEMAS:
+            return PM.FreelanceJobSchemas
+        case SdeDatasetFiles.GRAPHICS:
+            return PM.Graphics
+        case SdeDatasetFiles.GROUPS:
+            return PM.Groups
+        case SdeDatasetFiles.ICONS:
+            return PM.Icons
+        case SdeDatasetFiles.LANDMARKS:
+            return PM.Landmarks
+        case SdeDatasetFiles.MAP_ASTEROID_BELTS:
+            return PM.MapAsteroidBelts
+        case SdeDatasetFiles.MAP_CONSTELLATIONS:
+            return PM.MapConstellations
+        case SdeDatasetFiles.MAP_MOONS:
+            return PM.MapMoons
+        case SdeDatasetFiles.MAP_PLANETS:
+            return PM.MapPlanets
+        case SdeDatasetFiles.MAP_REGIONS:
+            return PM.MapRegions
+        case SdeDatasetFiles.MAP_SOLAR_SYSTEMS:
+            return PM.MapSolarSystems
+        case SdeDatasetFiles.MAP_STARGATES:
+            return PM.MapStargates
+        case SdeDatasetFiles.MAP_STARS:
+            return PM.MapStars
+        case SdeDatasetFiles.MARKET_GROUPS:
+            return PM.MarketGroups
+        case SdeDatasetFiles.MASTERIES:
+            return PM.Masteries
+        case SdeDatasetFiles.META_GROUPS:
+            return PM.MetaGroups
+        case SdeDatasetFiles.NPC_CHARACTERS:
+            return PM.NpcCharacters
+        case SdeDatasetFiles.NPC_CORPORATION_DIVISIONS:
+            return PM.NpcCorporationDivisions
+        case SdeDatasetFiles.NPC_CORPORATIONS:
+            return PM.NpcCorporations
+        case SdeDatasetFiles.NPC_STATIONS:
+            return PM.NpcStations
+        case SdeDatasetFiles.PLANET_RESOURCES:
+            return PM.PlanetResources
+        case SdeDatasetFiles.PLANET_SCHEMATICS:
+            return PM.PlanetSchematics
+        case SdeDatasetFiles.RACES:
+            return PM.Races
+        case SdeDatasetFiles.SDE_INFO:
+            return PM.SdeInfo
+        case SdeDatasetFiles.SKIN_LICENSES:
+            return PM.SkinLicenses
+        case SdeDatasetFiles.SKIN_MATERIALS:
+            return PM.SkinMaterials
+        case SdeDatasetFiles.SKINS:
+            return PM.Skins
+        case SdeDatasetFiles.SOVEREIGNTY_UPGRADES:
+            return PM.SovereigntyUpgrades
+        case SdeDatasetFiles.STATION_OPERATIONS:
+            return PM.StationOperations
+        case SdeDatasetFiles.STATION_SERVICES:
+            return PM.StationServices
+        case SdeDatasetFiles.TRANSLATION_LANGUAGES:
+            return PM.TranslationLanguages
+        case SdeDatasetFiles.TYPE_BONUS:
+            return PM.TypeBonus
+        case SdeDatasetFiles.TYPE_DOGMA:
+            return PM.TypeDogma
+        case SdeDatasetFiles.TYPE_MATERIALS:
+            return PM.TypeMaterials
+        case SdeDatasetFiles.TYPES:
+            return PM.EveTypes
+        case _:
+            raise ValueError(f"No pydantic model found for dataset: {dataset}")
