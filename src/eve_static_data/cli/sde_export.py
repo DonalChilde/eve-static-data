@@ -7,7 +7,6 @@ import typer
 from rich.console import Console
 
 from eve_static_data.access.sde_reader import SdeReader
-from eve_static_data.export.localized_datasets import export_localized_datasets
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -42,5 +41,5 @@ def localized(
     """Export localized SDE data to JSON files."""
     console = Console()
     console.print("[bold green]Exporting Localized SDE Data[/bold green]")
-    reader = SdeReader(sde_path)
-    export_localized_datasets(reader, localized_path, overwrite)
+    # reader = SdeReader(sde_path)
+    # export_localized_datasets(reader, localized_path, overwrite)

@@ -8,15 +8,15 @@ from rich.console import Console
 
 from eve_static_data import __version__
 from eve_static_data.cli.sde_dev import app as sde_dev_app
-from eve_static_data.cli.sde_export import app as sde_export_app
-from eve_static_data.cli.sde_raw import app as sde_app
+from eve_static_data.cli.sde_io import app as sde_io_app
+from eve_static_data.cli.sde_network import app as sde_network_app
 from eve_static_data.logging_config import setup_logging
 from eve_static_data.settings import get_settings
 
 app = typer.Typer(no_args_is_help=True)
-app.add_typer(sde_app, name="sde", help="SDE related commands.")
+app.add_typer(sde_network_app, name="network", help="SDE internet related commands.")
 app.add_typer(sde_dev_app, name="dev", help="SDE development commands.")
-app.add_typer(sde_export_app, name="export", help="SDE export commands.")
+app.add_typer(sde_io_app, name="io", help="SDE import/export related commands.")
 
 
 @app.callback(invoke_without_command=True)
