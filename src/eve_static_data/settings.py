@@ -93,8 +93,21 @@ class EveStaticDataSettings(BaseSettings):
         return url
 
     def available_builds(self) -> list[int]:
-        """Get a list of available build numbers."""
-        ...
+        """Get a sorted list of available build numbers."""
+        builds: list[int] = []
+        for build_dir in Path(self.data_path).iterdir():
+            if build_dir.is_dir() and build_dir.name.isdigit():
+                builds.append(int(build_dir.name))
+        return sorted(builds)
+
+    def latest_build(self) -> int:
+        """Get the latest available build number, or None if no builds are available."""
+        builds = self.available_builds()
+        if not builds:
+            raise ValueError(
+                f"No available builds found in data directory {self.data_path}"
+            )
+        return builds[-1]
 
     def build_data_dir(self, build_number: int, initialize: bool = False) -> Path:
         """Get the directory path for a specific build number."""
@@ -144,14 +157,6 @@ class EveStaticDataSettings(BaseSettings):
                 f"Tried to get validation data directory for build {build_number}, but it does not exist: {validation_dir}"
             )
         return validation_dir
-
-    def available_builds(self) -> list[int]:
-        """Get a list of available build numbers."""
-        builds: list[int] = []
-        for build_dir in Path(self.data_path).iterdir():
-            if build_dir.is_dir() and build_dir.name.isdigit():
-                builds.append(int(build_dir.name))
-        return sorted(builds)
 
 
 def get_settings() -> EveStaticDataSettings:
