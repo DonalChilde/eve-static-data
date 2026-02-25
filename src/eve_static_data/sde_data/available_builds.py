@@ -33,9 +33,10 @@ def available_builds(data_path: Path) -> list[int]:
     ]
     valid_builds: list[int] = []
     for build_dir in build_directories:
-        sde_info_file = build_dir / "_sde.jsonl"
-        if sde_info_file.exists():
-            valid_builds.append(int(build_dir.name))
+        #     sde_info_file = build_dir / "_sde.jsonl"
+        #     if sde_info_file.exists():
+        #         valid_builds.append(int(build_dir.name))
+        valid_builds.append(int(build_dir.name))
     return valid_builds
 
 
