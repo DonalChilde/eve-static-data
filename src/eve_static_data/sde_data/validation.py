@@ -1,5 +1,6 @@
 """Code for validating SDE datasets against the TypedDict schema."""
 
+import json
 import logging
 from pathlib import Path
 from time import perf_counter
@@ -14,6 +15,7 @@ from eve_static_data.models.datasets.sde_dataset_models import (
     dataset_pydantic_model_lookup,
     dataset_td_model_lookup,
 )
+from eve_static_data.type_explorer.sde_types import sde_type_info
 
 logger = logging.getLogger(__name__)
 
@@ -154,21 +156,33 @@ def check_for_dataset_files(sde_path: Path) -> FileCheckResult:
     )
 
 
-def validate_and_save_validation_results(access: SdeReader, output_dir: Path) -> None:
+def validate_and_save_validation_results(reader: SdeReader, output_dir: Path) -> None:
     """Validate the SDE datasets and save the results to disk."""
     logger.info(
-        f"Validating SDE datasets for build {access.build_number} and saving results to {output_dir}"
+        f"Validating SDE datasets for build {reader.build_number} and saving results to {output_dir}"
     )
-    # TODO: also generate and save type_sig_def
+
     start = perf_counter()
-    file_check_result = check_for_dataset_files(access.sde_path)
-    output_file = output_dir / f"dataset_file_check_{access.build_number}.json"
+
+    # Generate and save type signature definitions for the SDE datasets.
+    sig = sde_type_info(dir_path=reader.sde_path, build_number=str(reader.build_number))
+    output_file = output_dir / f"sde_type_sig-{reader.build_number}.json"
+    with output_file.open("w", encoding="utf-8") as f:
+        json.dump(sig, f, indent=2)
+    logger.info(
+        f"SDE type signature definitions saved to {output_file} (took {perf_counter() - start:.4f} seconds)"
+    )
+
+    # Check for expected dataset files and save results.
+    file_check_result = check_for_dataset_files(reader.sde_path)
+    output_file = output_dir / f"dataset_file_check_{reader.build_number}.json"
     file_check_result.save_to_disk(output_file)
     logger.info(
         f"Dataset file check results saved to {output_file} (took {perf_counter() - start:.4f} seconds)"
     )
 
-    pydantic_validation_result = validate_sde_pydantic(access)
+    # Validate datasets against pydantic models and save results.
+    pydantic_validation_result = validate_sde_pydantic(reader)
     output_file = (
         output_dir
         / f"pydantic_model_validation_{pydantic_validation_result.build_number}.json"
@@ -178,7 +192,8 @@ def validate_and_save_validation_results(access: SdeReader, output_dir: Path) ->
         f"SDE pydantic model validation results saved to {output_file} (took {perf_counter() - start:.4f} seconds)"
     )
 
-    typeddict_validation_result = validate_sde_typeddict(access)
+    # Validate datasets against TypedDict models and save results.
+    typeddict_validation_result = validate_sde_typeddict(reader)
     output_file = (
         output_dir
         / f"typeddict_model_validation_{typeddict_validation_result.build_number}.json"
