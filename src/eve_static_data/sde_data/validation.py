@@ -159,6 +159,7 @@ def validate_and_save_validation_results(access: SdeReader, output_dir: Path) ->
     logger.info(
         f"Validating SDE datasets for build {access.build_number} and saving results to {output_dir}"
     )
+    # TODO: also generate and save type_sig_def
     start = perf_counter()
     file_check_result = check_for_dataset_files(access.sde_path)
     output_file = output_dir / f"dataset_file_check_{access.build_number}.json"
