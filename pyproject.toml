@@ -18,7 +18,7 @@ dependencies = [
 ]
 
 [project.scripts]
-eve-static-data = "eve_static_data.cli.main_typer:app"
+esd = "eve_static_data.cli.main_typer:app"
 
 [build-system]
 requires = ["uv_build>=0.8.22,<0.9.0"]
