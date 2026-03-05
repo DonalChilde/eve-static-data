@@ -1,22 +1,27 @@
-# TODO for completion
-# TODO needs factory function for loading from reader, and saving to disk.
+"""Models for EVE Static Data Export (SDE) datasets as typeddicts.
 
-from typing import TypedDict
+Honestly not sure if this is needed.
 
-from eve_static_data.models.records import sde_typeddict as STD
+"""
 
+# from typing import Any, TypedDict
 
-class SdeDataset(TypedDict):
-    """Base TypedDict for SDE datasets.
-
-    All SDE dataset TypedDicts should inherit from this.
-    """
-
-    buildNumber: int
-    releaseDate: str
+# from eve_static_data.models.records import sde_typeddict as STD
 
 
-class AgentsInSpaceDataset(SdeDataset):
-    """Model for the agentsInSpace.jsonl SDE file."""
+# class SdeDataset(TypedDict):
+#     """Base TypedDict for SDE datasets.
 
-    records: list[STD.AgentsInSpace]
+#     All SDE dataset TypedDicts should inherit from this.
+#     """
+
+#     buildNumber: int
+#     releaseDate: str
+#     dataset: str
+#     data: list[dict[str, Any]]
+
+
+# class AgentsInSpaceDataset(SdeDataset):
+#     """Model for the agentsInSpace.jsonl SDE file."""
+
+#     records: list[STD.AgentsInSpace]

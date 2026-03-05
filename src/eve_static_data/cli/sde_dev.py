@@ -77,6 +77,7 @@ def validate_jsonl(
 
 
 def pydantic_check(access: SdeReader, reports_path: Path, now: Instant):
+    """Validate the jsonl files against the Pydantic models and write results to disk."""
     console = Console()
     console.print(f"[bold green]Validating against Pydantic models...[/bold green]")
     pydantic_results = validate_sde_pydantic(SdeReader(sde_path=access.sde_path))
@@ -100,6 +101,7 @@ def pydantic_check(access: SdeReader, reports_path: Path, now: Instant):
 def results_summary(
     validation_result: SDEValidationResult, model_type: Literal["Pydantic", "TypedDict"]
 ) -> None:
+    """Print a summary of the validation results."""
     console = Console()
     console.print(
         f"[bold green]{model_type} Validation Summary for build: {validation_result.build_number}[/bold green]"
@@ -116,6 +118,7 @@ def results_summary(
 
 
 def typed_dict_check(access: SdeReader, reports_path: Path, now: Instant):
+    """Validate the jsonl files against the TypedDict models and write results to disk."""
     console = Console()
     console.print(f"[bold green]Validating against TypedDict models...[/bold green]")
     typed_dict_results = validate_sde_typeddict(SdeReader(sde_path=access.sde_path))
@@ -137,6 +140,7 @@ def typed_dict_check(access: SdeReader, reports_path: Path, now: Instant):
 
 
 def files_check(access: SdeReader, reports_path: Path, now: Instant):
+    """Check for missing or extra dataset files and write results to disk."""
     console = Console()
     console.print(
         f"[bold green]Found SDE Build Number: {access.build_number}, release date: {access.release_date}[/bold green]"

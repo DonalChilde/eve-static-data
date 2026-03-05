@@ -1,3 +1,5 @@
+"""Functions for analyzing dictionaries and generating TypedDict definitions."""
+
 from collections.abc import Iterable
 from typing import Any, TypedDict
 
@@ -19,7 +21,7 @@ class DictField:
     is_optional: bool
 
 
-def collect_dict_keys_and_types(dict_data: Iterable[dict]) -> DatasetKeyInfo:
+def collect_dict_keys_and_types(dict_data: Iterable[dict[str, Any]]) -> DatasetKeyInfo:
     """Analyze a list of dictionaries and return the keys and their associated value types.
 
     Args:

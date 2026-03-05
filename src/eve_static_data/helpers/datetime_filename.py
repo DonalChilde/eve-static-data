@@ -1,3 +1,5 @@
+"""Make datetime strings safe for use in filenames."""
+
 from datetime import datetime
 
 

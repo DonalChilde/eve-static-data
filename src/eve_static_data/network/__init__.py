@@ -1,3 +1,5 @@
+"""Network utilities for EVE Static Data Export (SDE) data."""
+
 from eve_static_data.network.download_sde import download_sde_to_file
 from eve_static_data.network.latest_available import (
     current_sde_info,

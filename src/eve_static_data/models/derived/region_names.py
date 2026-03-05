@@ -1,3 +1,5 @@
+"""Region names derived from the MapRegionsLocalizedDataset."""
+
 from typing import Self
 
 from eve_static_data.models.datasets import localized_pydantic as LDS

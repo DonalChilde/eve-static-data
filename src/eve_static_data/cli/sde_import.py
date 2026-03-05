@@ -1,3 +1,5 @@
+"""CLI commands for importing EVE Static Data Export (SDE) data."""
+
 import logging
 from pathlib import Path
 from typing import Annotated, cast

@@ -1,3 +1,5 @@
+"""CLI commands for working with EVE Static Data Export (SDE) data."""
+
 import typer
 
 from eve_static_data.cli.sde_export import app as sde_export_app

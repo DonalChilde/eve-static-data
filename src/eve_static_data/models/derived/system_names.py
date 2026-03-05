@@ -1,3 +1,5 @@
+"""System names derived from the MapSolarSystemsLocalizedDataset."""
+
 from typing import Self
 
 from eve_static_data.models.datasets import localized_pydantic as LDS

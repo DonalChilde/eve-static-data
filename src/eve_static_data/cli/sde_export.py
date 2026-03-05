@@ -6,11 +6,17 @@ from typing import Annotated
 import typer
 from rich.console import Console
 
-from eve_static_data.access.sde_reader import SdeReader
+# from eve_static_data.access.sde_reader import SdeReader
 
 app = typer.Typer(no_args_is_help=True)
 
 
+# TODO This should work with sde data that has already been imported into the data directory,
+# so it should use the get_sde_reader.reader function to get an SDEReader instance for the
+# specified build number. It should also use the export_localized_datasets function from
+# eve_static_data.api.export to export the localized datasets to JSON files in the specified
+# output directory. The overwrite flag should determine whether to overwrite existing files
+# in the output directory or skip exporting if files already exist.
 @app.command()
 def localized(
     sde_path: Annotated[

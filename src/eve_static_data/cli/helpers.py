@@ -1,3 +1,5 @@
+"""Helper functions and classes for ESD CLI commands."""
+
 from dataclasses import dataclass
 from pathlib import Path
 

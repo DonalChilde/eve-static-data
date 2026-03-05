@@ -1,3 +1,5 @@
+"""Functions for exploring the types of data in the SDE."""
+
 from pathlib import Path
 
 from eve_static_data.helpers.dict_diagnostics import (
