@@ -5,14 +5,17 @@ checking for the current version, checking the changelog, and printing the data.
 """
 
 from pathlib import Path
-from typing import Annotated, Literal
+from typing import Annotated, Literal, cast
 
 import typer
 from rich.console import Console
 from yaml import safe_dump
 
 from eve_static_data import network
-from eve_static_data.settings import get_settings
+from eve_static_data.cli.helpers import SETTINGS_KEY, ESDSettings
+from eve_static_data.helpers import app_data as AD
+
+# from eve_static_data.settings import get_settings
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -125,6 +128,7 @@ def data_changelog(
 
 @app.command(name="download")
 def download_sde(
+    ctx: typer.Context,
     output_dir: Annotated[
         Path,
         typer.Argument(
@@ -162,7 +166,8 @@ def download_sde(
     """Download the latest SDE data."""
     console = Console()
     console.print("[bold green]Downloading SDE Data...[/bold green]")
-    settings = get_settings()
+    settings = ctx.obj[SETTINGS_KEY]
+    settings = cast(ESDSettings, settings)
     latest_info = network.current_sde_info()
     # Resolve latest build number if needed, because `latest` causes a 403 error.
     if build_number is None:
@@ -175,8 +180,13 @@ def download_sde(
             raise typer.Exit(code=1)
         console.print(f"Resolved latest build number to: {build_number}")
 
-    url = settings.resolve_sde_download_url(build_number=build_number, variant=variant)
-    output_path = output_dir / f"static-data-{build_number}-{variant}.zip"
+    url = AD.sde_download_url(
+        settings.sde_download_url_template, build_number=build_number, variant=variant
+    )
+    output_filename = AD.sde_data_filename(
+        settings.sde_data_filename_template, build_number=build_number, variant=variant
+    )
+    output_path = output_dir / output_filename
     console.print(f"Downloading SDE data.")
     console.print(f"URL: {url}")
     console.print(f"Output path: {output_path}")
@@ -192,32 +202,3 @@ def download_sde(
         raise typer.Exit(code=1) from e
 
     console.print("SDE data downloaded successfully.")
-
-
-# @app.command(name="print")
-# def print_sde(
-#     name: Annotated[str, typer.Argument(help="The name of the SDE data to print")],
-#     sde_directory: Annotated[
-#         Path,
-#         typer.Argument(
-#             help="The directory where the decompressed SDE data is located",
-#             file_okay=False,
-#         ),
-#     ],
-# ):
-#     """Print SDE data to the console."""
-#     # TODO implement printing specific SDE data by line or range of lines
-#     # -l line number (repeatable) -s start range -e end range?
-#     console = Console()
-#     console.print("[bold green]Printing SDE Data...[/bold green]")
-#     access = RawJsonFileAccess(sde_directory=sde_directory)
-#     try:
-#         file_name_enum = SdeFileNames[name.upper()]
-#     except KeyError as e:
-#         console.print(f"[bold red]Error:[/bold red] Unknown SDE data name: {name}")
-#         raise typer.Exit(code=1) from e
-#     data_iter = access.jsonl_iter(file_name_enum)
-#     for item in data_iter:
-#         console.print(item)
-#     # Placeholder for print logic
-#     console.print("SDE data printed successfully.")

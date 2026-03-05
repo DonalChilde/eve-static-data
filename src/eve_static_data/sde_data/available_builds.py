@@ -9,17 +9,15 @@ from pathlib import Path
 from time import perf_counter
 
 from eve_static_data.access.sde_reader import SdeReader
+from eve_static_data.helpers import app_data as AD
 from eve_static_data.models import derived as derived_models
 from eve_static_data.models.datasets import localized_pydantic as LDS
 from eve_static_data.models.datasets.sde_dataset_files import DerivedDatasetFiles
-from eve_static_data.settings import get_settings
 
 logger = logging.getLogger(__name__)
 
-# TODO separate functions that work directly with app, and more generic functions that just work with paths and data.
 
-
-def import_zipped_sde(zip_file_path: Path) -> int:
+def import_zipped_sde(zip_file_path: Path, data_path: Path) -> int:
     """Import SDE data from a zipped file.
 
     This function will unzip the provided zip file to a temporary directory, validate the presence of the expected
@@ -27,6 +25,7 @@ def import_zipped_sde(zip_file_path: Path) -> int:
 
     Args:
         zip_file_path: The path to the zipped SDE data file.
+        data_path: The path to the data directory.
 
     Returns:
         The build number of the imported SDE data.
@@ -41,10 +40,10 @@ def import_zipped_sde(zip_file_path: Path) -> int:
             raise FileNotFoundError(
                 f"_sde.jsonl file not found in the unzipped SDE data at {temp_path}. Is this a valid SDE zip file?"
             )
-        return import_unzipped_sde(temp_path)
+        return import_unzipped_sde(temp_path, data_path=data_path)
 
 
-def import_unzipped_sde(unzipped_path: Path) -> int:
+def import_unzipped_sde(unzipped_path: Path, data_path: Path) -> int:
     """Import SDE data from an unzipped directory.
 
     This function will validate the presence of the expected "_sde.jsonl" file in the provided directory, and then
@@ -52,6 +51,7 @@ def import_unzipped_sde(unzipped_path: Path) -> int:
 
     Args:
         unzipped_path: The path to the unzipped SDE data directory.
+        data_path: The path to the data directory.
 
     Returns:
         The build number of the imported SDE data.
@@ -72,9 +72,8 @@ def import_unzipped_sde(unzipped_path: Path) -> int:
             f"Build number not found in _sde.jsonl file at {unzipped_path / '_sde.jsonl'}"
         )
     build_number = reader.build_number
-    settings = get_settings()
-    settings.build_data_dir(build_number, initialize=True)
-    build_sde_dir = settings.build_data_sde_dir(build_number)
+    AD.init_dirs(data_path, build_number)
+    build_sde_dir = AD.sde_dir(data_path, build_number)
 
     # Copy JSONL files from unzipped directory to the appropriate location in the data directory
     for file in unzipped_path.glob("*.jsonl"):
@@ -88,6 +87,26 @@ def import_unzipped_sde(unzipped_path: Path) -> int:
     return build_number
 
 
+def generate_derived_datasets_for_build(
+    data_path: Path, build_number: int, localized: str = "en"
+) -> None:
+    """Generate derived datasets for a specific build number.
+
+    This function will read the SDE data for the specified build number, generate the derived datasets, and save them
+    to the appropriate location in the data directory.
+
+    Args:
+        data_path: The path to the data directory.
+        build_number: The build number for which to generate derived datasets.
+        localized: The localization to use for the derived datasets. Defaults to "en".
+    """
+    sde_dir = AD.sde_dir(data_path, build_number)
+    derived_dir = AD.derived_dir(data_path, build_number)
+    generate_derived_datasets(sde_dir, derived_dir, localized=localized)
+
+
+# TODO move this function to a more generic location,
+# to devide up app and general functions.
 def generate_derived_datasets(
     sde_path: Path, dir_out: Path, localized: str = "en"
 ) -> None:
