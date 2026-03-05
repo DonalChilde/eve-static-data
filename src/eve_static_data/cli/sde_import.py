@@ -1,11 +1,13 @@
 """CLI commands for importing EVE Static Data Export (SDE) data."""
 
+import asyncio
 import logging
 from pathlib import Path
 from typing import Annotated, cast
 
 import typer
 from rich.console import Console
+from yaml import safe_dump
 
 from eve_static_data import network
 from eve_static_data.access.sde_reader import SdeReader
@@ -96,7 +98,13 @@ def after_import(build_number: int, settings: ESDSettings):
     console.print("Downloading SDE changelog...")
     schema_changelog_path = validation_dir / "schema-changelog.yaml"
     try:
-        network.save_sde_schema_changelog(schema_changelog_path, overwrite=False)
+        schema_changelog = asyncio.run(
+            network.get_sde_schema_changelog(url=settings.sde_schema_changelog_url)
+        )
+        with schema_changelog_path.open("w", encoding="utf-8") as f:
+            schema_str = safe_dump(schema_changelog, sort_keys=False)
+            f.write(schema_str)
+
     except Exception as e:
         console.print(f"Error downloading SDE schema changelog: {e}")
         logger.error(f"Error downloading SDE schema changelog: {e}", exc_info=True)
@@ -104,11 +112,16 @@ def after_import(build_number: int, settings: ESDSettings):
 
     # Download data changelog and save to validation directory, fail gracefully in case offline.
     console.print("Downloading SDE data changelog...")
-    data_changelog_path = validation_dir / f"data-changelog-{build_number}.yaml"
+    data_changelog_path = validation_dir / f"data-changelog-{build_number}.jsonl"
     try:
-        network.save_sde_data_changelog(
-            build_number, data_changelog_path, overwrite=False
+        changes = asyncio.run(
+            network.get_sde_data_changelog(
+                url_template=settings.sde_changes_url_template,
+                build_number=build_number,
+            )
         )
+        with data_changelog_path.open("w", encoding="utf-8") as f:
+            f.write(changes)
     except Exception as e:
         console.print(f"Error downloading SDE data changelog: {e}")
         logger.error(f"Error downloading SDE data changelog: {e}", exc_info=True)

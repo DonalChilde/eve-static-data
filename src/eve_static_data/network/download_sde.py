@@ -5,7 +5,7 @@ from typing import Literal
 
 from eve_static_data import USER_AGENT
 from eve_static_data.helpers import app_data as AD
-from eve_static_data.helpers.simple_download_async import download_file
+from eve_static_data.helpers.aiohttp.download_files import download_bytes_to_file
 
 
 async def download_sde_to_file(
@@ -26,6 +26,6 @@ async def download_sde_to_file(
             f"File {output_path} already exists and overwrite is False."
         )
 
-    await download_file(
+    await download_bytes_to_file(
         url=url, headers=headers, file_path=output_path, overwrite=overwrite
     )
