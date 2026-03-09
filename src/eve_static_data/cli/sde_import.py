@@ -18,7 +18,7 @@ from eve_static_data.sde_data.available_builds import (
     import_unzipped_sde,
     import_zipped_sde,
 )
-from eve_static_data.sde_data.validation import validate_and_save_validation_results
+from eve_static_data.validation import validate_and_save_results
 
 logger = logging.getLogger(__name__)
 
@@ -89,7 +89,7 @@ def after_import(build_number: int, settings: ESDSettings):
 
     console.print("Validating imported SDE data...")
     sde_reader = SdeReader(sde_dir)
-    validate_and_save_validation_results(sde_reader, validation_dir)
+    validate_and_save_results(sde_reader, validation_dir)
 
     console.print("Generating derived datasets...")
     generate_derived_datasets_for_build(settings.data_path, build_number)
