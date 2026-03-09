@@ -1,18 +1,19 @@
 """Protocols for static data classes."""
 
-from collections.abc import Iterable
 from pathlib import Path
-from typing import Any, Literal, Protocol, TypeVar
+from typing import Any, Literal, Protocol
 
 from multidict import CIMultiDictProxy
 
-T = TypeVar("T")  # TypedDicts
-P = TypeVar("P")  # Pydantic models of records
-D = TypeVar("D")  # Pydantic models of datasets
+from eve_static_data.models.dataset_filenames import (
+    DerivedDatasetFiles,
+    SdeDatasetFiles,
+)
+from eve_static_data.models.type_defs import Lang
 
 
 class ESDToolsProtocol(Protocol):
-    """Protocol for static data classes."""
+    """Tools for working with EVE Online static data."""
 
     async def download(
         self,
@@ -24,106 +25,308 @@ class ESDToolsProtocol(Protocol):
         """Download the static data."""
         ...
 
-    def unpack(self, input_path: Path, output_path: Path) -> None:
+    def unpack(
+        self, input_path: Path, output_path: Path, build_number: int | None
+    ) -> None:
         """Unpack the static data.
+
+        Unzip the input file and save the unpacked data to the output path.
+        If a build number is provided, save the unpacked data to <output_path>/<build_number>/sde/.
+
+        Checks for the presence of the _sde.jsonl file in the unpacked files. If the file is not
+        found, raises a ValueError.
+
+        If build number is provided, checks that the build number in the _sde.jsonl
+        file matches the provided build number. If it does not match, raises a ValueError.
 
         Args:
             input_path: The path to the static data jsonl zip file.
             output_path: The path to the directory where the unpacked data should be saved.
+            build_number: The build number of the static data.
+
         """
         ...
 
-    def validate(self, input_path: Path, output_path: Path) -> bool:
+    def validate(
+        self, input_path: Path, output_path: Path, build_number: int | None
+    ) -> bool:
         """Validate the static data.
 
         Save validation results to the <output_path> directory.
+        If a build number is provided, save the validation results to <output_path>/<build_number>/validated/.
+
+        Checks for the presence of the <input_path>/_sde.jsonl file. If the file is not
+        found, raises a ValueError.
+
+        If build number is provided, checks that the build number in the <input_path>/_sde.jsonl
+        file matches the provided build number. If it does not match, raises a ValueError.
 
         Results include:
-        - <output_path>/validation_report.json: A JSON file containing a summary of the validation results, including the number of records validated, the number of records that passed validation, and the number of records that failed validation.
-        - <output_path>/validation_errors.json: A JSON file containing a list of validation errors, including the record that failed validation and the reason for the failure.
-        - <output_path>/validation_summary.txt: A human-readable text file summarizing the validation results.
-        - <output_path>/sde_data_changelog.jsonl: A JSONL file containing the sde data changelog.
-        - <output_path>/sde_schema_changelog.yaml: A YAML file containing the schema changelog.
+        - validation_report.json: A JSON file containing a summary of the validation results, including the number of records validated, the number of records that passed validation, and the number of records that failed validation.
+        - validation_errors.json: A JSON file containing a list of validation errors, including the record that failed validation and the reason for the failure.
+        - validation_summary.txt: A human-readable text file summarizing the validation results.
+        - sde_data_changelog.jsonl: A JSONL file containing the sde data changelog.
+        - sde_schema_changelog.yaml: A YAML file containing the schema changelog.
 
         """
         ...
 
-    def derive(self, input_path: Path, output_path: Path) -> None:
-        """Derive additional static data from the original data."""
+    def derive(
+        self,
+        input_path: Path,
+        output_path: Path,
+        build_number: int | None,
+        lang: Lang = "en",
+    ) -> None:
+        """Derive localized static data from the original data.
+
+        Save the derived data to the <output_path> directory.
+        If a build number is provided, save the derived data to <output_path>/<build_number>/derived/.
+
+        Checks for the presence of the <input_path>/_sde.jsonl file. If the file is not
+        found, raises a ValueError.
+
+        If build number is provided, checks that the build number in the <input_path>/_sde.jsonl
+        file matches the provided build number. If it does not match, raises a ValueError.
+
+        Args:
+            input_path: The path to the unpacked and validated static data.
+            output_path: The path to the directory where the derived data should be saved.
+            build_number: The build number of the static data.
+            lang: The language of the derived data.
+        """
         ...
 
-    def esd_import(self, input_path: Path) -> None:
+    def export_localized(
+        self,
+        input_path: Path,
+        output_path: Path,
+        build_number: int | None,
+        lang: Lang = "en",
+    ) -> None:
+        """Export the static data as localized dataset json files.
+
+        Save the exported data to the <output_path> directory.
+        If a build number is provided, save the exported data to <output_path>/<build_number>/exported/.
+
+        Checks for the presence of the <input_path>/_sde.jsonl file. If the file is not
+        found, raises a ValueError.
+
+        If build number is provided, checks that the build number in the <input_path>/_sde.jsonl
+        file matches the provided build number. If it does not match, raises a ValueError.
+
+
+        Args:
+            input_path: The path to the unpacked, validated, and derived static data.
+            output_path: The path to the directory where the exported data should be saved.
+            build_number: The build number of the static data.
+            lang: The language of the exported data.
+
+        Raises:
+            ValueError: If the <input_path>/_sde.jsonl file is not found
+            ValueError: If the build number in the <input_path>/_sde.jsonl file does not
+                match the provided build number.
+        """
+        ...
+
+    def export_records(
+        self, input_path: Path, output_path: Path, build_number: int | None
+    ) -> None:
+        """Export the JSONL static data as JSON files containing lists of records.
+
+        Checks for the presence of the <input_path>/_sde.jsonl file. If the file is not
+        found, raises a ValueError.
+
+        If build number is provided, checks that the build number in the <input_path>/_sde.jsonl
+        file matches the provided build number. If it does not match, raises a ValueError.
+
+        Note that this format removes the advantages of data in jsonl format, such as
+        the ability to stream the data and process it in chunks. But it may be useful
+        for some use cases.
+
+        Args:
+            input_path: The path to the unpacked, validated, and derived static data.
+            output_path: The path to the directory where the exported data should be saved.
+            build_number: The build number of the static data.
+        """
+        ...
+
+    async def data_changelog(
+        self, build_number: int, output_path: Path | None = None
+    ) -> dict[str, Any]:
+        """Download the sde data changelog for the given build number.
+
+        Raises a ValueError if the changelog is not available for the given build number.
+
+        Raises a ValueError if a file exists at the output path with the same name as the changelog file.
+
+        The changelog file is named "sde_data_changelog-<build_number>.jsonl" and is
+        saved to the <output_path> directory if an output path is provided.
+
+        Args:
+            build_number: The build number of the static data.
+            output_path: The path to the directory where the changelog should be saved.
+                If None, the changelog will not be saved to disk.
+
+        Returns:
+            A dictionary containing the sde data changelog.
+        """
+        ...
+
+    async def schema_changelog(
+        self, build_number: int, output_path: Path | None = None
+    ) -> dict[str, Any]:
+        """Download the sde schema changelog for the given build number.
+
+        Raises a ValueError if the changelog is not available for the given build number.
+
+        Raises a ValueError if a file exists at the output path with the same name as the changelog file.
+
+        The changelog file is named "sde_schema_changelog-<build_number>.yaml" and is
+        saved to the <output_path> directory if an output path is provided.
+
+        Args:
+            build_number: The build number of the static data.
+            output_path: The path to the directory where the changelog should be saved.
+                If None, the changelog will not be saved to disk.
+
+        Returns:
+            A dictionary containing the sde schema changelog.
+        """
+        ...
+
+    def process(
+        self,
+        input_path: Path,
+        output_path: Path,
+        lang: list[Lang] | None = None,
+    ) -> None:
         """Prepare the static data for use.
 
-        runs the full pipeline of unpacking, validating, and deriving the data.
-        outputs to the esd app data directory, in a subdirectory named after the build number.
+        Runs the full pipeline of unpacking, validating, and deriving the data.
+
+        Build number is determined from the _sde.jsonl file in the input path unpacked files.
+        If the file is not found, or if the build number is not found in the file, raises a ValueError.
+
+        Raises a ValueError if the build number is already available in the output path.
+
+        Raises a ValueError if one of the languages in the lang list is not supported.
+
+        Saves the processed data to the <output_path>/<build_number>/ directory, with the following structure:
+        - <output_path>/<build_number>/sde/: The unpacked original data.
+        - <output_path>/<build_number>/derived/: The derived localized data.
+        - <output_path>/<build_number>/validated/: The sde validation results.
+        - <output_path>/<build_number>/validated/sde_data_changelog.jsonl: The sde data changelog.
+        - <output_path>/<build_number>/validated/sde_schema_changelog.yaml: The sde schema changelog.
+        - <output_path>/<build_number>/exported/: The exported dataset json files (if export is True).
 
         Args:
             input_path: The path to the static data jsonl zip file.
+            output_path: The path to the directory where the processed data should be saved.
+            lang: A list of languages for which to generate derived dataset files. If None, ["en"] will be used.
         """
-        ...
-
-
-class StaticDataReaderProtocol(Protocol):
-    def read_pm(self, file_name: str, record_model: type[P]) -> Iterable[P]:
-        """Read the static data records as pydantic models."""
-        ...
-
-    def read_td(self, file_name: str, record_model: type[T]) -> Iterable[T]:
-        """Read the static data records as TypedDicts."""
-        ...
-
-    def read_dict(self, file_name: str) -> Iterable[dict[str, Any]]:
-        """Read the static data records as dictionaries."""
-        ...
-
-    def info(self) -> dict[str, Any]:
-        """Return information about the static data."""
         ...
 
 
 class StaticDataStoreProtocol(Protocol):
-    """Protocol for static data store classes."""
+    """Protocol for storing and accessing static data builds.
 
-    def read(self, dataset_name: str, dataset_model: type[D]) -> Iterable[D]:
-        """Read the static data records as pydantic models."""
-        ...
+    The static data store can hold multiple builds of static data, each identified by a
+    build number. The store provides methods for importing new builds, listing available
+    builds, accessing the directory of a specific build, and removing builds from the store.
 
-    def info(self) -> dict[str, Any]:
-        """Return information about the static data store."""
-        ...
+    Most sde data is kept in the original jsonl format, and users are expected to transform
+    the data as needed for their use case. The exception to this is the derived dataset files.
+    These are pre-generated since some of them involve combining data from multiple datasets.
 
-    def update(self, input_path: Path) -> None:
-        """Update the static data store with new data.
+    In many cases, the user will only need to access the derived dataset files.
 
-        Expects data to be in certain locations.
 
-        - <input_path>/sde for unpacked data
-        - <input_path>/derived for derived data
-        - <input_path>/validated for validated data
+
+    """
+
+    def import_build(self, input_path: Path, langs: list[Lang] | None = None) -> None:
+        """Import a build of static data from the given input path.
+
+        Will not overwrite an existing build with the same build number.
+
+        Args:
+            input_path: The path to the sde jsonl variant zip file.
+            langs: A list of languages for which to generate derived dataset files.
+                If None, ["en"] will be used.
+
+        Raises:
+            ValueError: If the build number is already available in the store.
+
         """
         ...
 
+    def available_builds(self) -> list[tuple[int, str]]:
+        """Return a list of available build numbers and release dates in the static data store.
 
-class StaticDataChangelogProtocol(Protocol):
-    """Protocol for static data changelog classes."""
-
-    async def download(self, output_path: Path | None) -> dict[str, Any]:
-        """Download the static data changelog."""
+        Returns:
+            A list of tuples, where each tuple contains a build number and its corresponding release date.
+        """
         ...
 
-    def load(self, input_path: Path) -> dict[str, Any]:
-        """Load the static data changelog."""
+    def latest_build(self) -> tuple[int, str] | None:
+        """Return the latest build number and release date in the static data store, or None if no builds are available.
+
+        Returns:
+            A tuple containing the latest build number and its corresponding release date, or None if no builds are available.
+        """
         ...
 
+    def build_directory(self, build_number: int) -> Path | None:
+        """Return the directory where the static data for the given build number is stored.
 
-class StaticDataSchemaChangelogProtocol(Protocol):
-    """Protocol for static data schema changelog classes."""
+        This would be the directory containing the `sde/`, `derived/`, and `validated/`
+        subdirectories for the given build number.
 
-    async def download(self, output_path: Path | None) -> dict[str, Any]:
-        """Download the static data schema changelog."""
+        Args:
+            build_number: The build number of the static data.
+
+        Returns:
+            The path to the directory where the static data for the given build number is stored, or None if the build is not available.
+        """
         ...
 
-    def load(self, input_path: Path) -> dict[str, Any]:
-        """Load the static data schema changelog."""
+    def dataset_file(self, build_number: int, dataset: SdeDatasetFiles) -> Path | None:
+        """Return the path to the specified jsonl dataset file for the given build number.
+
+        Args:
+            build_number: The build number of the static data.
+            dataset: The dataset file to be accessed.
+
+        Returns:
+            The path to the specified jsonl dataset file for the given build number, or None
+                if the build or dataset file is not available.
+        """
+        ...
+
+    def derived_dataset_file(
+        self, build_number: int, dataset: DerivedDatasetFiles, lang: Lang = "en"
+    ) -> Path | None:
+        """Return the path to the specified derived dataset file for the given build number.
+
+        Args:
+            build_number: The build number of the static data.
+            dataset: The dataset file to be accessed.
+            lang: The language of the derived dataset file to be accessed.
+
+        Returns:
+            The path to the specified derived dataset file for the given build number, or None
+                if the build or dataset file is not available.
+        """
+        ...
+
+    def remove_build(self, build_number: int) -> None:
+        """Remove the static data for the given build number from the store.
+
+        Args:
+            build_number: The build number of the static data to be removed.
+
+        Raises:
+            ValueError: If the build number is not available in the store.
+        """
         ...

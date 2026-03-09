@@ -2,12 +2,11 @@
 
 from typing import Self
 
-from eve_static_data.models.datasets import localized_pydantic as LDS
-from eve_static_data.models.datasets.sde_dataset_base import LocalizedSdeDataset
+from eve_static_data.models.pydantic import localized_datasets as LDS
 
 
-class SystemNames(LocalizedSdeDataset):
-    data: dict[int, str]
+class SystemNames(LDS.SdeDatasetLocalized):
+    records: dict[int, str]
 
     @classmethod
     def from_datasets(
@@ -15,11 +14,11 @@ class SystemNames(LocalizedSdeDataset):
     ) -> Self:
         """Create a SystemNames instance from the MapSolarSystemsLocalizedDataset."""
         return cls(
-            localized=map_solar_systems_dataset.localized,
+            lang=map_solar_systems_dataset.lang,
             build_number=map_solar_systems_dataset.build_number,
             release_date=map_solar_systems_dataset.release_date,
-            data={
+            records={
                 system.key: system.name
-                for system in map_solar_systems_dataset.data.values()
+                for system in map_solar_systems_dataset.records.values()
             },
         )

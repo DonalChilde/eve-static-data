@@ -2,9 +2,8 @@
 
 from typing import Self
 
-from eve_static_data.models.datasets import localized_pydantic as LDS
-from eve_static_data.models.datasets.sde_dataset_base import LocalizedSdeDataset
-from eve_static_data.models.records import sde_pydantic_localized as PML
+from eve_static_data.models.pydantic import localized_datasets as LDS
+from eve_static_data.models.pydantic import localized_records as PML
 
 
 class NormalizedEveType(PML.EveTypesLocalized):
@@ -22,8 +21,8 @@ class NormalizedEveType(PML.EveTypesLocalized):
     # faction: str | None
 
 
-class NormalizedEveTypesDataset(LocalizedSdeDataset):
-    data: dict[int, NormalizedEveType]
+class NormalizedEveTypesDataset(LDS.SdeDatasetLocalized):
+    records: dict[int, NormalizedEveType]
 
     @classmethod
     def from_datasets(
@@ -36,20 +35,20 @@ class NormalizedEveTypesDataset(LocalizedSdeDataset):
     ) -> Self:
         """Create a NormalizedEveTypesDataset instance from localized datasets."""
         result = cls(
-            localized=eve_types_dataset.localized,
+            lang=eve_types_dataset.lang,
             build_number=eve_types_dataset.build_number,
             release_date=eve_types_dataset.release_date,
-            data={},
+            records={},
         )
-        for eve_type in eve_types_dataset.data.values():
+        for eve_type in eve_types_dataset.records.values():
             normalized_type = normalize_eve_type(
                 eve_type,
-                groups_dataset.data,
-                categories_dataset.data,
-                market_groups_dataset.data,
-                meta_groups_dataset.data,
+                groups_dataset.records,
+                categories_dataset.records,
+                market_groups_dataset.records,
+                meta_groups_dataset.records,
             )
-            result.data[normalized_type.key] = normalized_type
+            result.records[normalized_type.key] = normalized_type
         return result
 
 

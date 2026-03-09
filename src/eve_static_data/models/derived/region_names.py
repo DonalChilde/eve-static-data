@@ -2,21 +2,21 @@
 
 from typing import Self
 
-from eve_static_data.models.datasets import localized_pydantic as LDS
-from eve_static_data.models.datasets.sde_dataset_base import LocalizedSdeDataset
+from eve_static_data.models.pydantic import localized_datasets as LDS
 
 
-class RegionNames(LocalizedSdeDataset):
-    data: dict[int, str]
+class RegionNames(LDS.SdeDatasetLocalized):
+    records: dict[int, str]
 
     @classmethod
     def from_datasets(cls, map_regions_dataset: LDS.MapRegionsLocalizedDataset) -> Self:
         """Create a RegionNames instance from the MapRegionsLocalizedDataset."""
         return cls(
-            localized=map_regions_dataset.localized,
+            lang=map_regions_dataset.lang,
             build_number=map_regions_dataset.build_number,
             release_date=map_regions_dataset.release_date,
-            data={
-                region.key: region.name for region in map_regions_dataset.data.values()
+            records={
+                region.key: region.name
+                for region in map_regions_dataset.records.values()
             },
         )

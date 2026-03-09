@@ -4,11 +4,11 @@ from typing import Self
 
 from pydantic import BaseModel
 
-from eve_static_data.models.datasets.localized_pydantic import (
+from eve_static_data.models.pydantic.localized_datasets import (
     MarketGroupsLocalizedDataset,
+    SdeDatasetLocalized,
 )
-from eve_static_data.models.datasets.sde_dataset_base import LocalizedSdeDataset
-from eve_static_data.models.records.sde_pydantic_localized import MarketGroupsLocalized
+from eve_static_data.models.pydantic.localized_records import MarketGroupsLocalized
 
 
 class MarketPath(BaseModel):
@@ -27,21 +27,21 @@ class MarketPath(BaseModel):
         return separator.join(self.str_path)
 
 
-class MarketPathsDataset(LocalizedSdeDataset):
-    data: dict[int, MarketPath]
+class MarketPathsDataset(SdeDatasetLocalized):
+    records: dict[int, MarketPath]
 
     @classmethod
     def from_dataset(cls, market_groups_dataset: MarketGroupsLocalizedDataset) -> Self:
         """Create a MarketPathsDataset instance from a MarketGroupsLocalizedDataset."""
         result = cls(
-            localized=market_groups_dataset.localized,
+            lang=market_groups_dataset.lang,
             build_number=market_groups_dataset.build_number,
             release_date=market_groups_dataset.release_date,
-            data={},
+            records={},
         )
-        for mg_id in market_groups_dataset.data.keys():
-            market_path = get_market_path(mg_id, market_groups_dataset.data)
-            result.data[mg_id] = market_path
+        for mg_id in market_groups_dataset.records.keys():
+            market_path = get_market_path(mg_id, market_groups_dataset.records)
+            result.records[mg_id] = market_path
         return result
 
 

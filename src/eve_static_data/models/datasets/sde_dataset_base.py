@@ -1,14 +1,14 @@
-"""The base dataset model for SDE datasets, containing common metadata fields."""
+# """The base dataset model for SDE datasets, containing common metadata fields."""
 
-from eve_static_data.helpers.pydantic.save_to_disk import BaseModelToDisk
-
-
-class SdeDataset(BaseModelToDisk):
-    build_number: int
-    release_date: str
+# from eve_static_data.helpers.pydantic.save_to_disk import BaseModelToDisk
 
 
-class LocalizedSdeDataset(SdeDataset):
-    """Base class for localized SDE datasets."""
+# class SdeDataset(BaseModelToDisk):
+#     build_number: int
+#     release_date: str
 
-    localized: str
+
+# class LocalizedSdeDataset(SdeDataset):
+#     """Base class for localized SDE datasets."""
+
+#     localized: str
