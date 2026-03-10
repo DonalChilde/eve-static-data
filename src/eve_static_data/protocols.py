@@ -291,13 +291,16 @@ class StaticDataStoreProtocol(Protocol):
 
     """
 
-    def import_build(self, input_path: Path, langs: list[Lang] | None = None) -> None:
+    def import_build(
+        self, input_path: Path, build_number: int, langs: list[Lang] | None = None
+    ) -> None:
         """Import a build of static data from the given input path.
 
         Will not overwrite an existing build with the same build number.
 
         Args:
             input_path: The path to the sde jsonl variant zip file.
+            build_number: The build number of the static data.
             langs: A list of languages for which to generate derived dataset files.
                 If None, ["en"] will be used.
 

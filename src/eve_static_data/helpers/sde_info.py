@@ -23,6 +23,17 @@ def load_sde_info(input_path: Path) -> SdeInfo:
         "buildNumber": 123456,
         "releaseDate": "2024-01-01"
     }
+
+    Args:
+        input_path: The path to the directory containing the SDE datasets and the `_sde.jsonl` file.
+
+    Returns:
+        An SdeInfo TypedDict containing the SDE info from the `_sde.jsonl` file.
+
+    Raises:
+        FileNotFoundError: If the `_sde.jsonl` file is not found at the given input path.
+        json.JSONDecodeError: If the first line of the `_sde.jsonl` file is not valid JSON.
+        KeyError: If the expected keys are not found in the JSON data.
     """
     sde_info_path = input_path / "_sde.jsonl"
     if not sde_info_path.exists():
