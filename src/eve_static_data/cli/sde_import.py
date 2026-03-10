@@ -9,7 +9,7 @@ import typer
 from rich.console import Console
 from yaml import safe_dump
 
-from eve_static_data import network
+from eve_static_data import network_old
 from eve_static_data.access.sde_reader import SdeReader
 from eve_static_data.cli.helpers import SETTINGS_KEY, ESDSettings
 from eve_static_data.helpers import app_data as AD
@@ -99,7 +99,7 @@ def after_import(build_number: int, settings: ESDSettings):
     schema_changelog_path = validation_dir / "schema-changelog.yaml"
     try:
         schema_changelog = asyncio.run(
-            network.get_sde_schema_changelog(url=settings.sde_schema_changelog_url)
+            network_old.get_sde_schema_changelog(url=settings.sde_schema_changelog_url)
         )
         with schema_changelog_path.open("w", encoding="utf-8") as f:
             schema_str = safe_dump(schema_changelog, sort_keys=False)
@@ -115,7 +115,7 @@ def after_import(build_number: int, settings: ESDSettings):
     data_changelog_path = validation_dir / f"data-changelog-{build_number}.jsonl"
     try:
         changes = asyncio.run(
-            network.get_sde_data_changelog(
+            network_old.get_sde_data_changelog(
                 url_template=settings.sde_changes_url_template,
                 build_number=build_number,
             )

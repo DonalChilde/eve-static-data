@@ -12,7 +12,7 @@ import typer
 from rich.console import Console
 from yaml import safe_dump
 
-from eve_static_data import network
+from eve_static_data import network_old
 from eve_static_data.cli.helpers import SETTINGS_KEY, ESDSettings
 from eve_static_data.helpers import app_data as AD
 
@@ -37,7 +37,7 @@ def latest(
     console.print("[bold green]Latest SDE Information[/bold green]")
     settings = ctx.obj[SETTINGS_KEY]
     settings = cast(ESDSettings, settings)
-    info = asyncio.run(network.current_sde_info(url=settings.sde_latest_info_url))
+    info = asyncio.run(network_old.current_sde_info(url=settings.sde_latest_info_url))
     console.print(info)
     if file_out:
         try:
@@ -70,7 +70,7 @@ def changelog(
     settings = ctx.obj[SETTINGS_KEY]
     settings = cast(ESDSettings, settings)
     changelog = asyncio.run(
-        network.get_sde_schema_changelog(url=settings.sde_schema_changelog_url)
+        network_old.get_sde_schema_changelog(url=settings.sde_schema_changelog_url)
     )
     console.print(changelog)
     if file_out:
@@ -115,7 +115,7 @@ def data_changelog(
         console.print("No build number provided, resolving latest build number...")
 
         latest_info = asyncio.run(
-            network.current_sde_info(url=settings.sde_latest_info_url)
+            network_old.current_sde_info(url=settings.sde_latest_info_url)
         )
         build_number = latest_info.get("buildNumber")
         if not build_number:
@@ -126,7 +126,7 @@ def data_changelog(
             raise typer.Exit(code=1)
         console.print(f"Resolved latest build number to: {build_number}")
     changelog = asyncio.run(
-        network.get_sde_data_changelog(
+        network_old.get_sde_data_changelog(
             url_template=settings.sde_changes_url_template, build_number=build_number
         )
     )
@@ -186,7 +186,7 @@ def download_sde(
     settings = ctx.obj[SETTINGS_KEY]
     settings = cast(ESDSettings, settings)
     latest_info = asyncio.run(
-        network.current_sde_info(url=settings.sde_latest_info_url)
+        network_old.current_sde_info(url=settings.sde_latest_info_url)
     )
     # Resolve latest build number if needed, because `latest` causes a 403 error.
     if build_number is None:
@@ -211,7 +211,7 @@ def download_sde(
     console.print(f"Output path: {output_path}")
     try:
         asyncio.run(
-            network.download_sde_to_file(
+            network_old.download_sde_to_file(
                 url_template_str=settings.sde_download_url_template,
                 build_number=build_number,
                 variant=variant,

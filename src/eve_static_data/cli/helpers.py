@@ -26,7 +26,7 @@ def create_esd_settings(settings: EveStaticDataSettings) -> ESDSettings:
     esd_settings = ESDSettings(
         sde_latest_info_url=settings.sde_latest_info_url,
         sde_download_url_template=settings.sde_download_url_template,
-        sde_changes_url_template=settings.sde_changes_url_template,
+        sde_changes_url_template=settings.sde_data_changes_url_template,
         sde_schema_changelog_url=settings.sde_schema_changelog_url,
         sde_data_filename_template=settings.sde_data_filename_template,
         data_path=Path(settings.data_path),

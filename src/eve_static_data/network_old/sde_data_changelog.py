@@ -1,5 +1,7 @@
 """Functions for retrieving the SDE changelog for a specific build number."""
 
+from string import Template
+
 from eve_static_data import USER_AGENT
 from eve_static_data.helpers import app_data as AD
 from eve_static_data.helpers.aiohttp.download_files import download_text
@@ -11,7 +13,7 @@ async def get_sde_data_changelog(url_template: str, build_number: int) -> str:
     The SDE changelog is a JSONL file that contains a list of changes for a build.
     The record with key _meta contains lastBuildNumber, referring to the previous SDE.
     """
-    url = AD.sde_changes_url(url_template_str=url_template, build_number=build_number)
+    url = Template(url_template).substitute(build_number=build_number)
     headers = {"User-Agent": USER_AGENT}
     changelog, _ = await download_text(url=url, headers=headers)
     return changelog

@@ -3,6 +3,7 @@
 More models to be added as needed for use.
 """
 
+from pathlib import Path
 from typing import Self
 
 from pydantic import BaseModel
@@ -19,7 +20,7 @@ class SdeDatasetLocalized(BaseModel):
 
     @classmethod
     def from_jsonl_file(
-        cls, file_path: str, build_number: int, release_date: str, lang: Lang
+        cls, file_path: Path | str, build_number: int, release_date: str, lang: Lang
     ) -> Self:
         """Create an instance of SdeDataset from a JSONL file."""
         raise NotImplementedError("This method should be implemented in a subclass.")
@@ -30,7 +31,7 @@ class AncestriesLocalizedDataset(SdeDatasetLocalized):
 
     @classmethod
     def from_jsonl_file(
-        cls, file_path: str, build_number: int, release_date: str, lang: Lang
+        cls, file_path: Path | str, build_number: int, release_date: str, lang: Lang
     ) -> Self:
         """Create an AncestriesLocalizedDataset instance from a JSONL file."""
         records: dict[int, LPM.AncestriesLocalized] = {}
@@ -50,7 +51,7 @@ class CategoriesLocalizedDataset(SdeDatasetLocalized):
 
     @classmethod
     def from_jsonl_file(
-        cls, file_path: str, build_number: int, release_date: str, lang: Lang
+        cls, file_path: Path | str, build_number: int, release_date: str, lang: Lang
     ) -> Self:
         """Create a CategoriesLocalizedDataset instance from a JSONL file."""
         records: dict[int, LPM.CategoriesLocalized] = {}
@@ -70,7 +71,7 @@ class GroupsLocalizedDataset(SdeDatasetLocalized):
 
     @classmethod
     def from_jsonl_file(
-        cls, file_path: str, build_number: int, release_date: str, lang: Lang
+        cls, file_path: Path | str, build_number: int, release_date: str, lang: Lang
     ) -> Self:
         """Create a GroupsLocalizedDataset instance from a JSONL file."""
         records: dict[int, LPM.GroupsLocalized] = {}
@@ -90,7 +91,7 @@ class MapRegionsLocalizedDataset(SdeDatasetLocalized):
 
     @classmethod
     def from_jsonl_file(
-        cls, file_path: str, build_number: int, release_date: str, lang: Lang
+        cls, file_path: Path | str, build_number: int, release_date: str, lang: Lang
     ) -> Self:
         """Create a MapRegionsLocalizedDataset instance from a JSONL file."""
         records: dict[int, LPM.MapRegionsLocalized] = {}
@@ -110,7 +111,7 @@ class MapSolarSystemsLocalizedDataset(SdeDatasetLocalized):
 
     @classmethod
     def from_jsonl_file(
-        cls, file_path: str, build_number: int, release_date: str, lang: Lang
+        cls, file_path: Path | str, build_number: int, release_date: str, lang: Lang
     ) -> Self:
         """Create a MapSolarSystemsLocalizedDataset instance from a JSONL file."""
         records: dict[int, LPM.MapSolarSystemsLocalized] = {}
@@ -130,7 +131,7 @@ class MarketGroupsLocalizedDataset(SdeDatasetLocalized):
 
     @classmethod
     def from_jsonl_file(
-        cls, file_path: str, build_number: int, release_date: str, lang: Lang
+        cls, file_path: Path | str, build_number: int, release_date: str, lang: Lang
     ) -> Self:
         """Create a MarketGroupsLocalizedDataset instance from a JSONL file."""
         records: dict[int, LPM.MarketGroupsLocalized] = {}
@@ -150,7 +151,7 @@ class MetaGroupsLocalizedDataset(SdeDatasetLocalized):
 
     @classmethod
     def from_jsonl_file(
-        cls, file_path: str, build_number: int, release_date: str, lang: Lang
+        cls, file_path: Path | str, build_number: int, release_date: str, lang: Lang
     ) -> Self:
         """Create a MetaGroupsLocalizedDataset instance from a JSONL file."""
         records: dict[int, LPM.MetaGroupsLocalized] = {}
@@ -170,7 +171,7 @@ class EveTypesLocalizedDataset(SdeDatasetLocalized):
 
     @classmethod
     def from_jsonl_file(
-        cls, file_path: str, build_number: int, release_date: str, lang: Lang
+        cls, file_path: Path | str, build_number: int, release_date: str, lang: Lang
     ) -> Self:
         """Create an EveTypesLocalizedDataset instance from a JSONL file."""
         records: dict[int, LPM.EveTypesLocalized] = {}

@@ -57,7 +57,7 @@ class EveStaticDataSettings(BaseSettings):
         default="https://developers.eveonline.com/static-data/tranquility/eve-online-static-data-${build_number}-${variant}.zip",
         description="The URL template to download the SDE data file. build-number can be any valid build number. variant can be jsonl or yaml",
     )
-    sde_changes_url_template: str = Field(
+    sde_data_changes_url_template: str = Field(
         default="https://developers.eveonline.com/static-data/tranquility/changes/${build_number}.jsonl",
         description="The URL template to download the SDE changes file. build-number can be any valid build number.",
     )

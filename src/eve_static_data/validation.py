@@ -158,7 +158,7 @@ def check_for_dataset_files(input_path: Path) -> FileCheckResult:
     )
 
 
-def validate_and_save_results(input_path: Path, output_dir: Path) -> None:
+def validate_and_save_results(input_path: Path, output_path: Path) -> None:
     """Validate the SDE datasets and save the results to disk.
 
     This will perform the following validations:
@@ -169,7 +169,7 @@ def validate_and_save_results(input_path: Path, output_dir: Path) -> None:
     """
     sde_info = load_sde_info(input_path)
     logger.info(
-        f"Validating SDE datasets for build {sde_info['buildNumber']} and saving results to {output_dir}"
+        f"Validating SDE datasets for build {sde_info['buildNumber']} and saving results to {output_path}"
     )
 
     start = perf_counter()
@@ -178,16 +178,16 @@ def validate_and_save_results(input_path: Path, output_dir: Path) -> None:
     sde_sigs = get_sde_type_sigs(
         input_path=input_path, build_number=str(sde_info["buildNumber"])
     )
-    output_file = output_dir / f"sde_type_sig-{sde_info['buildNumber']}.json"
+    output_file = output_path / f"sde_type_sig-{sde_info['buildNumber']}.json"
     with output_file.open("w", encoding="utf-8") as f:
-        json.dump(sde_sigs, f, indent=2)
+        json.dump(sde_sigs, f, indent=2, sort_keys=True)
     logger.info(
         f"SDE type signature definitions saved to {output_file} (took {perf_counter() - start:.4f} seconds)"
     )
 
     # Check for expected dataset files and save results.
     file_check_result = check_for_dataset_files(input_path)
-    output_file = output_dir / f"dataset_file_check_{sde_info['buildNumber']}.json"
+    output_file = output_path / f"dataset_file_check_{sde_info['buildNumber']}.json"
     with output_file.open("w", encoding="utf-8") as f:
         f.write(file_check_result.model_dump_json(indent=2))
     logger.info(
@@ -197,7 +197,7 @@ def validate_and_save_results(input_path: Path, output_dir: Path) -> None:
     # Validate datasets against pydantic models and save results.
     pydantic_validation_result = validate_sde_datasets(input_path)
     output_file = (
-        output_dir
+        output_path
         / f"pydantic_model_validation_{pydantic_validation_result.build_number}.json"
     )
     pydantic_validation_result.save_to_disk(output_file)
@@ -206,5 +206,5 @@ def validate_and_save_results(input_path: Path, output_dir: Path) -> None:
     )
 
     logger.info(
-        f"Finished validating SDE datasets and saving results to {output_dir} in {perf_counter() - start:.4f} seconds."
+        f"Finished validating SDE datasets and saving results to {output_path} in {perf_counter() - start:.4f} seconds."
     )

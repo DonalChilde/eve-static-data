@@ -3,8 +3,7 @@
 from pathlib import Path
 from typing import Any, Literal, Protocol
 
-from multidict import CIMultiDictProxy
-
+from eve_static_data import network
 from eve_static_data.models.dataset_filenames import (
     DerivedDatasetFiles,
     SdeDatasetFiles,
@@ -18,23 +17,33 @@ class ESDToolsProtocol(Protocol):
     async def download(
         self,
         build_number: int,
-        variant: Literal["jsonl", "yaml"],
         output_path: Path,
+        variant: Literal["jsonl", "yaml"] = "jsonl",
         overwrite: bool = False,
-    ) -> CIMultiDictProxy[str]:
-        """Download the static data."""
+    ) -> Path:
+        """Download the static data.
+
+        Args:
+            build_number: The build number of the SDE to download.
+            output_path: The directory to save the downloaded SDE file to.
+            variant: The variant of the SDE data to download, either "jsonl" or "yaml". Defaults to "jsonl".
+            overwrite: Whether to overwrite the output file if it already exists. Defaults to False.
+
+        Returns:
+            The path to the downloaded SDE file.
+        """
         ...
 
     def unpack(
         self, input_path: Path, output_path: Path, build_number: int | None
-    ) -> None:
+    ) -> Path:
         """Unpack the static data.
 
         Unzip the input file and save the unpacked data to the output path.
         If a build number is provided, save the unpacked data to <output_path>/<build_number>/sde/.
 
         Checks for the presence of the _sde.jsonl file in the unpacked files. If the file is not
-        found, raises a ValueError.
+        found, raises a FileNotFoundError.
 
         If build number is provided, checks that the build number in the _sde.jsonl
         file matches the provided build number. If it does not match, raises a ValueError.
@@ -47,9 +56,9 @@ class ESDToolsProtocol(Protocol):
         """
         ...
 
-    def validate(
+    async def validate(
         self, input_path: Path, output_path: Path, build_number: int | None
-    ) -> bool:
+    ) -> None:
         """Validate the static data.
 
         Save validation results to the <output_path> directory.
@@ -151,16 +160,16 @@ class ESDToolsProtocol(Protocol):
         """
         ...
 
-    async def data_changelog(
+    async def data_changes(
         self, build_number: int, output_path: Path | None = None
-    ) -> dict[str, Any]:
-        """Download the sde data changelog for the given build number.
+    ) -> list[str]:
+        """Download the sde data changes for the given build number.
 
-        Raises a ValueError if the changelog is not available for the given build number.
+        Raises a ValueError if the changes are not available for the given build number.
 
         Raises a ValueError if a file exists at the output path with the same name as the changelog file.
 
-        The changelog file is named "sde_data_changelog-<build_number>.jsonl" and is
+        The changes file is named "sde_data_changes-<build_number>.jsonl" and is
         saved to the <output_path> directory if an output path is provided.
 
         Args:
@@ -169,7 +178,7 @@ class ESDToolsProtocol(Protocol):
                 If None, the changelog will not be saved to disk.
 
         Returns:
-            A dictionary containing the sde data changelog.
+            A list of strings representing the sde data changes.
         """
         ...
 
@@ -195,10 +204,19 @@ class ESDToolsProtocol(Protocol):
         """
         ...
 
-    def process(
+    async def latest_sde_info(self) -> network.SdeLatestInfo:
+        """Download the latest sde info.
+
+        Returns:
+            A dictionary containing the latest sde info, including the latest build number and release date.
+        """
+        ...
+
+    async def process(
         self,
         input_path: Path,
         output_path: Path,
+        build_number: int,
         lang: list[Lang] | None = None,
     ) -> None:
         """Prepare the static data for use.
@@ -212,17 +230,17 @@ class ESDToolsProtocol(Protocol):
 
         Raises a ValueError if one of the languages in the lang list is not supported.
 
-        Saves the processed data to the <output_path>/<build_number>/ directory, with the following structure:
-        - <output_path>/<build_number>/sde/: The unpacked original data.
-        - <output_path>/<build_number>/derived/: The derived localized data.
-        - <output_path>/<build_number>/validated/: The sde validation results.
-        - <output_path>/<build_number>/validated/sde_data_changelog.jsonl: The sde data changelog.
-        - <output_path>/<build_number>/validated/sde_schema_changelog.yaml: The sde schema changelog.
-        - <output_path>/<build_number>/exported/: The exported dataset json files (if export is True).
+        Saves the processed data to the <output_path>/<build_number>/ directory, with the
+        following structure:
+        - `<output_path>/<build_number>/sde/`: The unpacked original data.
+        - `<output_path>/<build_number>/derived/`: The derived localized data.
+        - `<output_path>/<build_number>/validation/`: The sde validation results.
+
 
         Args:
             input_path: The path to the static data jsonl zip file.
             output_path: The path to the directory where the processed data should be saved.
+            build_number: The build number of the static data.
             lang: A list of languages for which to generate derived dataset files. If None, ["en"] will be used.
         """
         ...

@@ -63,7 +63,7 @@ class SdeDatasetFiles(StrEnum):
 
         This file name is used when working with the original SDE dataset files, which are in JSONL format.
         """
-        return self.value
+        return f"{self.value}.jsonl"
 
     def as_json(self) -> str:
         """Return the filename for the JSON version of this file name.
