@@ -14,6 +14,42 @@ from eve_static_data.models.type_defs import Lang
 class ESDToolsProtocol(Protocol):
     """Tools for working with EVE Online static data."""
 
+    def sde_directory(self, base_path: Path, build_number: int) -> Path:
+        """Return the directory where the SDE data for the given build number is stored.
+
+        Args:
+            base_path: The base path where the SDE data is stored.
+            build_number: The build number of the SDE data.
+
+        Returns:
+            The path to the directory where the SDE data for the given build number is stored.
+        """
+        return base_path / str(build_number) / "sde"
+
+    def derived_directory(self, base_path: Path, build_number: int) -> Path:
+        """Return the directory where the derived dataset files for the given build number are stored.
+
+        Args:
+            base_path: The base path where the derived dataset files are stored.
+            build_number: The build number of the derived dataset files.
+
+        Returns:
+            The path to the directory where the derived dataset files for the given build number are stored.
+        """
+        return base_path / str(build_number) / "derived"
+
+    def validation_directory(self, base_path: Path, build_number: int) -> Path:
+        """Return the directory where the validation results for the given build number are stored.
+
+        Args:
+            base_path: The base path where the validation results are stored.
+            build_number: The build number of the validation results.
+
+        Returns:
+            The path to the directory where the validation results for the given build number are stored.
+        """
+        return base_path / str(build_number) / "validated"
+
     async def download(
         self,
         build_number: int,
@@ -34,9 +70,7 @@ class ESDToolsProtocol(Protocol):
         """
         ...
 
-    def unpack(
-        self, input_path: Path, output_path: Path, build_number: int | None
-    ) -> Path:
+    def unpack(self, input_path: Path, output_path: Path) -> Path:
         """Unpack the static data.
 
         Unzip the input file and save the unpacked data to the output path.
@@ -51,14 +85,10 @@ class ESDToolsProtocol(Protocol):
         Args:
             input_path: The path to the static data jsonl zip file.
             output_path: The path to the directory where the unpacked data should be saved.
-            build_number: The build number of the static data.
-
         """
         ...
 
-    async def validate(
-        self, input_path: Path, output_path: Path, build_number: int | None
-    ) -> None:
+    async def validate(self, input_path: Path, output_path: Path) -> None:
         """Validate the static data.
 
         Save validation results to the <output_path> directory.
@@ -84,7 +114,6 @@ class ESDToolsProtocol(Protocol):
         self,
         input_path: Path,
         output_path: Path,
-        build_number: int | None,
         lang: Lang = "en",
     ) -> None:
         """Derive localized static data from the original data.
@@ -101,7 +130,6 @@ class ESDToolsProtocol(Protocol):
         Args:
             input_path: The path to the unpacked and validated static data.
             output_path: The path to the directory where the derived data should be saved.
-            build_number: The build number of the static data.
             lang: The language of the derived data.
         """
         ...

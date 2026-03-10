@@ -52,9 +52,7 @@ class EsdTools(ESDToolsProtocol):
         )
         return response_headers
 
-    def unpack(
-        self, input_path: Path, output_path: Path, build_number: int | None
-    ) -> Path:
+    def unpack(self, input_path: Path, output_path: Path) -> Path:
         """Unpack the static data.
 
         Unzip the input file and save the unpacked data to the output path.
@@ -69,8 +67,9 @@ class EsdTools(ESDToolsProtocol):
         Args:
             input_path: The path to the static data jsonl zip file.
             output_path: The path to the directory where the unpacked data should be saved.
-            build_number: The build number of the static data.
 
+        Returns:
+            The path to the directory where the unpacked data is saved.
         """
         if not input_path.is_file():
             raise FileNotFoundError(f"Input path {input_path} is not a file.")
@@ -84,72 +83,38 @@ class EsdTools(ESDToolsProtocol):
                 raise FileNotFoundError(
                     f"_sde.jsonl file not found in the unzipped SDE data at {temp_dir}. Is this a valid SDE zip file?"
                 )
-            # There should only be one record in the _sde.jsonl file, but we'll read it as a list just in case
-            sde_info_data = load_sde_info(Path(temp_dir))
-            if (
-                build_number is not None
-                and sde_info_data.get("buildNumber") != build_number
-            ):
-                raise ValueError(
-                    f"Build number in _sde.jsonl file ({sde_info_data.get('buildNumber')}) does not match the expected build number ({build_number}). Is this a valid SDE zip file?"
-                )
-            if build_number is None:
-                output_dir = output_path
-            else:
-                output_dir = output_path / str(build_number) / "sde"
-            output_dir.mkdir(parents=True, exist_ok=True)
+            output_path.mkdir(parents=True, exist_ok=True)
             for file in Path(temp_dir).iterdir():
                 if file.is_file():
-                    target_file = output_dir / file.name
+                    target_file = output_path / file.name
                     if target_file.exists():
                         raise FileExistsError(
                             f"Target file {target_file} already exists. Cannot move processed data to {target_file}"
                         )
                     shutil.move(file, target_file)
-            return output_dir
+            return output_path
 
-    async def validate(
-        self, input_path: Path, output_path: Path, build_number: int | None = None
-    ) -> None:
+    async def validate(self, input_path: Path, output_path: Path) -> None:
         """Validate the ESD tools static data."""
         sde_info = load_sde_info(input_path)
-        if build_number is not None and sde_info.get("buildNumber") != build_number:
-            raise ValueError(
-                f"Build number in _sde.jsonl file ({sde_info.get('buildNumber')}) does "
-                f"not match the expected build number ({build_number}). Is this a valid SDE zip file?"
-            )
-        if build_number is not None:
-            output_dir = output_path / str(build_number) / "validation"
-        else:
-            output_dir = output_path
-            build_number = sde_info.get("buildNumber")
-        output_dir.mkdir(parents=True, exist_ok=True)
 
-        validate_and_save_results(input_path=input_path, output_path=output_dir)
-        await self.schema_changelog(build_number=build_number, output_path=output_dir)
-        await self.data_changes(build_number=build_number, output_path=output_dir)
+        build_number = sde_info.get("buildNumber")
+        output_path.mkdir(parents=True, exist_ok=True)
+
+        validate_and_save_results(input_path=input_path, output_path=output_path)
+        await self.schema_changelog(build_number=build_number, output_path=output_path)
+        await self.data_changes(build_number=build_number, output_path=output_path)
 
     def derive(
         self,
         input_path: Path,
         output_path: Path,
-        build_number: int | None = None,
         lang: Lang = "en",
     ) -> None:
         """Derive additional ESD tools static data from the original data."""
-        sde_info = load_sde_info(input_path)
-        if build_number is not None and sde_info.get("buildNumber") != build_number:
-            raise ValueError(
-                f"Build number in _sde.jsonl file ({sde_info.get('buildNumber')}) does "
-                f"not match the expected build number ({build_number}). Is this a valid SDE zip file?"
-            )
-        if build_number is not None:
-            output_dir = output_path / str(build_number) / "derived"
-        else:
-            output_dir = output_path
-        output_dir.mkdir(parents=True, exist_ok=True)
+        output_path.mkdir(parents=True, exist_ok=True)
         generate_derived_datasets(
-            input_path=input_path, output_path=output_dir, lang=lang
+            input_path=input_path, output_path=output_path, lang=lang
         )
 
     async def data_changes(
@@ -297,22 +262,22 @@ class EsdTools(ESDToolsProtocol):
             raise ValueError(
                 f"Output path {output_path} is a file, expected a directory."
             )
+        sde_dir = self.sde_directory(base_path=output_path, build_number=build_number)
 
-        sde_dir = self.unpack(
-            input_path=input_path, output_path=output_path, build_number=build_number
-        )
+        self.unpack(input_path=input_path, output_path=sde_dir)
 
         # Validate unpacked data and save results to disk
-        await self.validate(
-            input_path=sde_dir,
-            output_path=output_path,
-            build_number=build_number,
+        validated_dir = self.validation_directory(
+            base_path=output_path, build_number=build_number
         )
+        await self.validate(input_path=sde_dir, output_path=validated_dir)
         # Derive additional datasets and save to disk
+        derived_dir = self.derived_directory(
+            base_path=output_path, build_number=build_number
+        )
         for language in lang:
             self.derive(
                 input_path=sde_dir,
-                output_path=output_path,
-                build_number=build_number,
+                output_path=derived_dir,
                 lang=language,
             )
