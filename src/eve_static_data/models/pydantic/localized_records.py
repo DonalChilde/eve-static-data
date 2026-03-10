@@ -64,7 +64,7 @@ class LocalizableRecord(PM.SdeDatasetRecord):
     @classmethod
     def localize(cls, file_path: str | Path, lang: Lang) -> Iterable[tuple[Self, int]]:
         """Read a JSONL file and yield localized records as instances of this class."""
-        for record_dict, line_number in cls.dicts_from_jsonl_file(file_path):
+        for record_dict, line_number in cls.lines_as_dict(file_path):
             try:
                 localized_dict = cls.localize_dict(record_dict, lang)
                 localized_record = cls.model_validate(localized_dict)

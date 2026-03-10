@@ -71,7 +71,7 @@ def validate_dataset_records(
         )
         return stats
 
-    for record_dict, index in model.dicts_from_jsonl_file(file_path):
+    for record_dict, index in model.lines_as_dict(file_path):
         stats.total_records = index
         try:
             # Validate the record against the pydantic model.

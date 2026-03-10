@@ -29,7 +29,7 @@ class BlueprintsDataset(SdeDataset):
     ) -> Self:
         """Create a BlueprintsDataset instance from a JSONL file."""
         records: dict[int, PM.Blueprints] = {}
-        for record, index in PM.Blueprints.from_jsonl_file(file_path):
+        for record, index in PM.Blueprints.lines_as_model(file_path):
             _ = index
             records[record.key] = record
         return cls(
