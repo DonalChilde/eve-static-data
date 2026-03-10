@@ -1,92 +1,18 @@
 """Models for localized records in the EVE Static Data Export (SDE)."""
 
-import logging
-from collections.abc import Iterable
-from copy import deepcopy
-from pathlib import Path
-from typing import Any, Self, TypedDict
-
-from pydantic import ValidationError
-
 from eve_static_data.models.dataset_filenames import SdeDatasetFiles
 from eve_static_data.models.pydantic import records as PM
 from eve_static_data.models.type_defs import Lang
-
-logger = logging.getLogger(__name__)
-
-
-class LocalizedString(TypedDict):
-    """The shape of a localized string.
-
-    The languages are defined in the SDE file: translationLanguages.jsonl
-    """
-
-    en: str
-    de: str
-    fr: str
-    ja: str
-    zh: str
-    ru: str
-    ko: str
-    es: str
-
-
-def localize_string_dict(string_dict: LocalizedString | None, lang: Lang = "en") -> str:
-    """Extract the localized string from a LocalizedString.
-
-    Args:
-        string_dict: The LocalizedString to extract from.
-        lang: The language code to extract (default is "en" for English).
-
-    Returns:
-        The localized string for the specified language, OR:
-        - "TRANSLATIONS_NOT_PRESENT" if the input string_dict is None (indicating that the translations are not present in the dataset).
-        - "TRANSLATION_NOT_PROVIDED" if the specified language is not found in the string_dict (indicating that the translation for that language is not provided).
-    """
-    if string_dict is None:
-        return "TRANSLATIONS_NOT_PRESENT"
-    if lang not in string_dict:
-        logger.warning(
-            f"Localized string for '{lang=}' not found. Available languages: {list(string_dict.keys())}"
-        )
-        return "TRANSLATION_NOT_PROVIDED"
-    return string_dict[lang]
+from eve_static_data.transformers import LocalizationTransformer
 
 
 class LocalizableRecord(PM.SdeDatasetRecord):
     """A record that can be localized to multiple languages."""
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the record for the given language."""
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
         raise NotImplementedError("This method should be implemented by subclasses.")
-
-    @classmethod
-    def localize(cls, file_path: str | Path, lang: Lang) -> Iterable[tuple[Self, int]]:
-        """Read a JSONL file and yield localized records as instances of this class."""
-        for record_dict, line_number in cls.lines_as_dict(file_path):
-            try:
-                localized_dict = cls.localize_dict(record_dict, lang)
-                localized_record = cls.model_validate(localized_dict)
-                yield localized_record, line_number
-            except ValidationError as e:
-                logger.exception(
-                    "Validation error for line %d: %s in class %s For file %s",
-                    line_number,
-                    e,
-                    cls.__name__,
-                    file_path,
-                )
-                raise e
-            except Exception as e:
-                logger.exception(
-                    "Unexpected error for line %d: %s in class %s For file %s",
-                    line_number,
-                    e,
-                    cls.__name__,
-                    file_path,
-                )
-                raise e
 
 
 class AncestriesLocalized(LocalizableRecord, PM.Ancestries):
@@ -96,14 +22,11 @@ class AncestriesLocalized(LocalizableRecord, PM.Ancestries):
     description: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the Ancestries record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["name"] = localize_string_dict(localized_dict.get("name"), lang)
-        localized_dict["description"] = localize_string_dict(
-            localized_dict.get("description"), lang
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(
+            localized_fields=["name", "description"], lang=lang
         )
-        return localized_dict
 
 
 class BloodlinesLocalized(LocalizableRecord, PM.Bloodlines):
@@ -113,14 +36,11 @@ class BloodlinesLocalized(LocalizableRecord, PM.Bloodlines):
     description: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the Bloodlines record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["name"] = localize_string_dict(localized_dict.get("name"), lang)
-        localized_dict["description"] = localize_string_dict(
-            localized_dict.get("description"), lang
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(
+            localized_fields=["name", "description"], lang=lang
         )
-        return localized_dict
 
 
 class CategoriesLocalized(LocalizableRecord, PM.Categories):
@@ -129,11 +49,9 @@ class CategoriesLocalized(LocalizableRecord, PM.Categories):
     name: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the Categories record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["name"] = localize_string_dict(localized_dict.get("name"), lang)
-        return localized_dict
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(localized_fields=["name"], lang=lang)
 
 
 class CertificatesLocalized(LocalizableRecord, PM.Certificates):
@@ -143,14 +61,11 @@ class CertificatesLocalized(LocalizableRecord, PM.Certificates):
     description: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the Certificates record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["name"] = localize_string_dict(localized_dict.get("name"), lang)
-        localized_dict["description"] = localize_string_dict(
-            localized_dict.get("description"), lang
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(
+            localized_fields=["name", "description"], lang=lang
         )
-        return localized_dict
 
 
 class CharacterAttributesLocalized(LocalizableRecord, PM.CharacterAttributes):
@@ -159,11 +74,9 @@ class CharacterAttributesLocalized(LocalizableRecord, PM.CharacterAttributes):
     name: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the CharacterAttributes record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["name"] = localize_string_dict(localized_dict.get("name"), lang)
-        return localized_dict
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(localized_fields=["name"], lang=lang)
 
 
 class CorporationActivitiesLocalized(LocalizableRecord, PM.CorporationActivities):
@@ -172,11 +85,9 @@ class CorporationActivitiesLocalized(LocalizableRecord, PM.CorporationActivities
     name: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the CorporationActivities record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["name"] = localize_string_dict(localized_dict.get("name"), lang)
-        return localized_dict
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(localized_fields=["name"], lang=lang)
 
 
 class DebuffCollectionsLocalized(LocalizableRecord, PM.DebuffCollections):
@@ -185,13 +96,9 @@ class DebuffCollectionsLocalized(LocalizableRecord, PM.DebuffCollections):
     displayName: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the DebuffCollections record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["displayName"] = localize_string_dict(
-            localized_dict.get("displayName"), lang
-        )
-        return localized_dict
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(localized_fields=["displayName"], lang=lang)
 
 
 class DogmaAttributesLocalized(LocalizableRecord, PM.DogmaAttributes):
@@ -202,19 +109,12 @@ class DogmaAttributesLocalized(LocalizableRecord, PM.DogmaAttributes):
     tooltipTitle: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the DogmaAttributes record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["displayName"] = localize_string_dict(
-            localized_dict.get("displayName"), lang
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(
+            localized_fields=["displayName", "tooltipDescription", "tooltipTitle"],
+            lang=lang,
         )
-        localized_dict["tooltipDescription"] = localize_string_dict(
-            localized_dict.get("tooltipDescription"), lang
-        )
-        localized_dict["tooltipTitle"] = localize_string_dict(
-            localized_dict.get("tooltipTitle"), lang
-        )
-        return localized_dict
 
 
 class DogmaEffectsLocalized(LocalizableRecord, PM.DogmaEffects):
@@ -224,16 +124,11 @@ class DogmaEffectsLocalized(LocalizableRecord, PM.DogmaEffects):
     description: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the DogmaEffects record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["displayName"] = localize_string_dict(
-            localized_dict.get("displayName"), lang
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(
+            localized_fields=["displayName", "description"], lang=lang
         )
-        localized_dict["description"] = localize_string_dict(
-            localized_dict.get("description"), lang
-        )
-        return localized_dict
 
 
 class DogmaUnitsLocalized(LocalizableRecord, PM.DogmaUnits):
@@ -243,16 +138,11 @@ class DogmaUnitsLocalized(LocalizableRecord, PM.DogmaUnits):
     description: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the DogmaUnits record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["displayName"] = localize_string_dict(
-            localized_dict.get("displayName"), lang
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(
+            localized_fields=["displayName", "description"], lang=lang
         )
-        localized_dict["description"] = localize_string_dict(
-            localized_dict.get("description"), lang
-        )
-        return localized_dict
 
 
 class FactionsLocalized(LocalizableRecord, PM.Factions):
@@ -263,17 +153,11 @@ class FactionsLocalized(LocalizableRecord, PM.Factions):
     shortDescription: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the Factions record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["name"] = localize_string_dict(localized_dict.get("name"), lang)
-        localized_dict["description"] = localize_string_dict(
-            localized_dict.get("description"), lang
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(
+            localized_fields=["name", "description", "shortDescription"], lang=lang
         )
-        localized_dict["shortDescription"] = localize_string_dict(
-            localized_dict.get("shortDescription"), lang
-        )
-        return localized_dict
 
 
 class GroupsLocalized(LocalizableRecord, PM.Groups):
@@ -282,11 +166,9 @@ class GroupsLocalized(LocalizableRecord, PM.Groups):
     name: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the Groups record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["name"] = localize_string_dict(localized_dict.get("name"), lang)
-        return localized_dict
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(localized_fields=["name"], lang=lang)
 
 
 class LandmarksLocalized(LocalizableRecord, PM.Landmarks):
@@ -296,14 +178,11 @@ class LandmarksLocalized(LocalizableRecord, PM.Landmarks):
     description: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the Landmarks record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["name"] = localize_string_dict(localized_dict.get("name"), lang)
-        localized_dict["description"] = localize_string_dict(
-            localized_dict.get("description"), lang
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(
+            localized_fields=["name", "description"], lang=lang
         )
-        return localized_dict
 
 
 class MapAsteroidBeltsLocalized(LocalizableRecord, PM.MapAsteroidBelts):
@@ -312,13 +191,9 @@ class MapAsteroidBeltsLocalized(LocalizableRecord, PM.MapAsteroidBelts):
     uniqueName: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the MapAsteroidBelts record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["uniqueName"] = localize_string_dict(
-            localized_dict.get("uniqueName"), lang
-        )
-        return localized_dict
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(localized_fields=["uniqueName"], lang=lang)
 
 
 class MapConstellationsLocalized(LocalizableRecord, PM.MapConstellations):
@@ -327,11 +202,9 @@ class MapConstellationsLocalized(LocalizableRecord, PM.MapConstellations):
     name: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the MapConstellations record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["name"] = localize_string_dict(localized_dict.get("name"), lang)
-        return localized_dict
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(localized_fields=["name"], lang=lang)
 
 
 class MapMoonsLocalized(LocalizableRecord, PM.MapMoons):
@@ -340,13 +213,9 @@ class MapMoonsLocalized(LocalizableRecord, PM.MapMoons):
     uniqueName: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the MapMoons record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["uniqueName"] = localize_string_dict(
-            localized_dict.get("uniqueName"), lang
-        )
-        return localized_dict
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(localized_fields=["uniqueName"], lang=lang)
 
 
 class MapPlanetsLocalized(LocalizableRecord, PM.MapPlanets):
@@ -355,13 +224,9 @@ class MapPlanetsLocalized(LocalizableRecord, PM.MapPlanets):
     uniqueName: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the MapPlanets record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["uniqueName"] = localize_string_dict(
-            localized_dict.get("uniqueName"), lang
-        )
-        return localized_dict
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(localized_fields=["uniqueName"], lang=lang)
 
 
 class MapRegionsLocalized(LocalizableRecord, PM.MapRegions):
@@ -371,14 +236,11 @@ class MapRegionsLocalized(LocalizableRecord, PM.MapRegions):
     description: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the MapRegions record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["name"] = localize_string_dict(localized_dict.get("name"), lang)
-        localized_dict["description"] = localize_string_dict(
-            localized_dict.get("description"), lang
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(
+            localized_fields=["name", "description"], lang=lang
         )
-        return localized_dict
 
 
 class MapSolarSystemsLocalized(LocalizableRecord, PM.MapSolarSystems):
@@ -387,11 +249,9 @@ class MapSolarSystemsLocalized(LocalizableRecord, PM.MapSolarSystems):
     name: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the MapSolarSystems record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["name"] = localize_string_dict(localized_dict.get("name"), lang)
-        return localized_dict
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(localized_fields=["name"], lang=lang)
 
 
 class MarketGroupsLocalized(LocalizableRecord, PM.MarketGroups):
@@ -401,14 +261,11 @@ class MarketGroupsLocalized(LocalizableRecord, PM.MarketGroups):
     description: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the MarketGroups record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["name"] = localize_string_dict(localized_dict.get("name"), lang)
-        localized_dict["description"] = localize_string_dict(
-            localized_dict.get("description"), lang
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(
+            localized_fields=["name", "description"], lang=lang
         )
-        return localized_dict
 
 
 class MetaGroupsLocalized(LocalizableRecord, PM.MetaGroups):
@@ -418,14 +275,11 @@ class MetaGroupsLocalized(LocalizableRecord, PM.MetaGroups):
     description: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the MetaGroups record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["name"] = localize_string_dict(localized_dict.get("name"), lang)
-        localized_dict["description"] = localize_string_dict(
-            localized_dict.get("description"), lang
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(
+            localized_fields=["name", "description"], lang=lang
         )
-        return localized_dict
 
 
 class NpcCharactersLocalized(LocalizableRecord, PM.NpcCharacters):
@@ -434,11 +288,9 @@ class NpcCharactersLocalized(LocalizableRecord, PM.NpcCharacters):
     name: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the NpcCharacters record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["name"] = localize_string_dict(localized_dict.get("name"), lang)
-        return localized_dict
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(localized_fields=["name"], lang=lang)
 
 
 class NpcCorporationDivisionsLocalized(LocalizableRecord, PM.NpcCorporationDivisions):
@@ -449,17 +301,11 @@ class NpcCorporationDivisionsLocalized(LocalizableRecord, PM.NpcCorporationDivis
     leaderTypeName: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the NpcCorporationDivisions record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["name"] = localize_string_dict(localized_dict.get("name"), lang)
-        localized_dict["description"] = localize_string_dict(
-            localized_dict.get("description"), lang
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(
+            localized_fields=["name", "description", "leaderTypeName"], lang=lang
         )
-        localized_dict["leaderTypeName"] = localize_string_dict(
-            localized_dict.get("leaderTypeName"), lang
-        )
-        return localized_dict
 
 
 class NpcCorporationsLocalized(LocalizableRecord, PM.NpcCorporations):
@@ -469,14 +315,11 @@ class NpcCorporationsLocalized(LocalizableRecord, PM.NpcCorporations):
     description: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the NpcCorporations record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["name"] = localize_string_dict(localized_dict.get("name"), lang)
-        localized_dict["description"] = localize_string_dict(
-            localized_dict.get("description"), lang
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(
+            localized_fields=["name", "description"], lang=lang
         )
-        return localized_dict
 
 
 class PlanetSchematicsLocalized(LocalizableRecord, PM.PlanetSchematics):
@@ -485,11 +328,9 @@ class PlanetSchematicsLocalized(LocalizableRecord, PM.PlanetSchematics):
     name: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the PlanetSchematics record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["name"] = localize_string_dict(localized_dict.get("name"), lang)
-        return localized_dict
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(localized_fields=["name"], lang=lang)
 
 
 class RacesLocalized(LocalizableRecord, PM.Races):
@@ -499,14 +340,11 @@ class RacesLocalized(LocalizableRecord, PM.Races):
     description: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the Races record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["name"] = localize_string_dict(localized_dict.get("name"), lang)
-        localized_dict["description"] = localize_string_dict(
-            localized_dict.get("description"), lang
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(
+            localized_fields=["name", "description"], lang=lang
         )
-        return localized_dict
 
 
 class SkinMaterialsLocalized(LocalizableRecord, PM.SkinMaterials):
@@ -515,13 +353,9 @@ class SkinMaterialsLocalized(LocalizableRecord, PM.SkinMaterials):
     displayName: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the SkinMaterials record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["displayName"] = localize_string_dict(
-            localized_dict.get("displayName"), lang
-        )
-        return localized_dict
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(localized_fields=["displayName"], lang=lang)
 
 
 class SkinsLocalized(LocalizableRecord, PM.Skins):
@@ -530,13 +364,9 @@ class SkinsLocalized(LocalizableRecord, PM.Skins):
     skinDescription: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the Skins record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["skinDescription"] = localize_string_dict(
-            localized_dict.get("skinDescription"), lang
-        )
-        return localized_dict
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(localized_fields=["skinDescription"], lang=lang)
 
 
 class StationOperationsLocalized(LocalizableRecord, PM.StationOperations):
@@ -546,16 +376,11 @@ class StationOperationsLocalized(LocalizableRecord, PM.StationOperations):
     description: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the StationOperations record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["operationName"] = localize_string_dict(
-            localized_dict.get("operationName"), lang
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(
+            localized_fields=["operationName", "description"], lang=lang
         )
-        localized_dict["description"] = localize_string_dict(
-            localized_dict.get("description"), lang
-        )
-        return localized_dict
 
 
 class StationServicesLocalized(LocalizableRecord, PM.StationServices):
@@ -565,16 +390,11 @@ class StationServicesLocalized(LocalizableRecord, PM.StationServices):
     description: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the StationServices record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["serviceName"] = localize_string_dict(
-            localized_dict.get("serviceName"), lang
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(
+            localized_fields=["serviceName", "description"], lang=lang
         )
-        localized_dict["description"] = localize_string_dict(
-            localized_dict.get("description"), lang
-        )
-        return localized_dict
 
 
 # NOTE the TypeBonus model is not localized yet, because the nested classes have LocalizedStrings,
@@ -588,14 +408,11 @@ class EveTypesLocalized(LocalizableRecord, PM.EveTypes):
     description: str  # type: ignore
 
     @classmethod
-    def localize_dict(cls, record: dict[str, Any], lang: Lang) -> dict[str, Any]:
-        """Return a localized version of the EveTypes record for the given language."""
-        localized_dict = deepcopy(record)
-        localized_dict["name"] = localize_string_dict(localized_dict.get("name"), lang)
-        localized_dict["description"] = localize_string_dict(
-            localized_dict.get("description"), lang
+    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
+        """Get a transformer for this record class and the specified language."""
+        return LocalizationTransformer(
+            localized_fields=["name", "description"], lang=lang
         )
-        return localized_dict
 
 
 LOOKUP: dict[SdeDatasetFiles, type[LocalizableRecord]] = {

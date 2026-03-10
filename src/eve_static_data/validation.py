@@ -4,35 +4,39 @@ import json
 import logging
 from pathlib import Path
 from time import perf_counter
-from typing import Any
 
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel
 
 from eve_static_data.helpers.pydantic.save_to_disk import BaseModelToDisk
 from eve_static_data.helpers.sde_info import load_sde_info
 from eve_static_data.models.dataset_filenames import SdeDatasetFiles
 from eve_static_data.models.pydantic.records import LOOKUP as pydantic_model_lookup
 from eve_static_data.sde_type_sigs import get_sde_type_sigs
+from eve_static_data.transformers import ModelValidationErrorRecord, ValidModels
 
 logger = logging.getLogger(__name__)
 
 
-class DatasetValidationRecord(BaseModel):
-    """A record of a validation error for a dataset."""
+# class DatasetValidationRecord(BaseModel):
+#     """A record of a validation error for a dataset."""
 
-    file_path: Path
-    line_number: int
-    data: dict[str, Any]
-    error_message: str
+#     file_path: Path
+#     line_number: int
+#     data: dict[str, Any]
+#     error_message: str
 
 
 class DatasetStats(BaseModel):
     """Statistics about a dataset."""
 
     dataset_name: str
+    model_name: str
+    file_path: Path
     total_records: int
     invalid_records: int
-    validation_errors: list[DatasetValidationRecord]
+    error_records: dict[int, ModelValidationErrorRecord]
+    published_records_with_errors: list[int] = []
+    not_published_records: list[int]
 
 
 class SDEValidationResult(BaseModelToDisk):
@@ -47,74 +51,44 @@ def validate_dataset_records(
     input_path: Path, dataset: SdeDatasetFiles
 ) -> DatasetStats:
     """Validate a dataset against its pydantic model."""
-    stats = DatasetStats(
-        dataset_name=dataset.value,
-        total_records=0,
-        invalid_records=0,
-        validation_errors=[],
-    )
     file_path = input_path / dataset.as_jsonl()
     model = pydantic_model_lookup.get(dataset, None)
+    stats = DatasetStats(
+        dataset_name=dataset.value,
+        model_name=model.__name__ if model is not None else "None",
+        file_path=file_path,
+        total_records=0,
+        invalid_records=0,
+        error_records={},
+        not_published_records=[],
+        published_records_with_errors=[],
+    )
+
     if model is None:
         msg = (
             f"No pydantic model found for dataset {dataset.value}, skipping validation."
         )
         logger.warning(msg)
         stats.invalid_records += 1
-        stats.validation_errors.append(
-            DatasetValidationRecord(
-                file_path=file_path,
-                line_number=0,
-                data={},
-                error_message=msg,
-            )
+        stats.error_records[0] = ModelValidationErrorRecord(
+            model="NONE",
+            line_number=0,
+            data="",
+            error_messages=[msg],
         )
         return stats
-
-    for record_dict, index in model.lines_as_dict(file_path):
+    transformer = ValidModels()
+    for index, record in model.transform(file_path, transformer):
         stats.total_records = index
-        try:
-            # Validate the record against the pydantic model.
-            _ = model.model_validate(record_dict)
-        except ValidationError as e:
+        if record is None:
             stats.invalid_records += 1
-            stats.validation_errors.append(
-                DatasetValidationRecord(
-                    file_path=file_path,
-                    line_number=index,
-                    data=record_dict,
-                    error_message=str(e),
-                )
-            )
+    stats.error_records = transformer.validation_errors
+    stats.not_published_records = transformer.not_published
+    stats.published_records_with_errors = list(
+        set(stats.error_records.keys()) - set(stats.not_published_records)
+    )
+
     return stats
-
-
-# def validate_dataset_typeddict(
-#     reader: SdeReader, dataset: SdeDatasetFiles, file_name: str | None = None
-# ) -> DatasetStats:
-#     """Validate a dataset against its TypedDict model."""
-#     stats = DatasetStats(
-#         dataset_name=dataset.value,
-#         total_records=0,
-#         invalid_records=0,
-#         validation_errors=[],
-#     )
-#     model = TypeAdapter(dataset_td_model_lookup(dataset))
-#     for record, metadata in reader.records(dataset, file_name=file_name):
-#         stats.total_records += 1
-#         try:
-#             # Validate the record against the TypedDict model.
-#             _ = model.validate_python(record, extra="forbid")
-#         except ValidationError as e:
-#             stats.invalid_records += 1
-#             stats.validation_errors.append(
-#                 DatasetValidationRecord(
-#                     metadata=metadata,
-#                     data=record,
-#                     error_message=str(e),
-#                 )
-#             )
-#     return stats
 
 
 def validate_sde_datasets(input_path: Path) -> SDEValidationResult:

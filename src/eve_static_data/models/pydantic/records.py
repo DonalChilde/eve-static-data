@@ -30,14 +30,14 @@ class LocalizedString(BaseModel):
     Source info: SDE file: translationLanguages.jsonl
     """
 
-    en: str
-    de: str
-    fr: str
-    ja: str
-    zh: str
-    ru: str
-    ko: str
-    es: str
+    en: str = Field("NOT_TRANSLATED", description="English translation")
+    de: str = Field("NOT_TRANSLATED", description="German translation")
+    fr: str = Field("NOT_TRANSLATED", description="French translation")
+    ja: str = Field("NOT_TRANSLATED", description="Japanese translation")
+    zh: str = Field("NOT_TRANSLATED", description="Chinese translation")
+    ru: str = Field("NOT_TRANSLATED", description="Russian translation")
+    ko: str = Field("NOT_TRANSLATED", description="Korean translation")
+    es: str = Field("NOT_TRANSLATED", description="Spanish translation")
 
 
 class Materials(BaseModel):
