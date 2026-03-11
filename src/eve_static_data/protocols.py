@@ -70,21 +70,20 @@ class ESDToolsProtocol(Protocol):
         """
         ...
 
-    def unpack(self, input_path: Path, output_path: Path) -> Path:
+    def unpack(self, input_path: Path, output_path: Path) -> tuple[Path, int]:
         """Unpack the static data.
 
-        Unzip the input file and save the unpacked data to the output path.
-        If a build number is provided, save the unpacked data to <output_path>/<build_number>/sde/.
+        Unzip the input file and save the unpacked data to `<output_path>/<build_number>/sde/`.
 
         Checks for the presence of the _sde.jsonl file in the unpacked files. If the file is not
         found, raises a FileNotFoundError.
 
-        If build number is provided, checks that the build number in the _sde.jsonl
-        file matches the provided build number. If it does not match, raises a ValueError.
-
         Args:
             input_path: The path to the static data jsonl zip file.
             output_path: The path to the directory where the unpacked data should be saved.
+
+        Returns:
+            A tuple containing the path to the directory where the unpacked data is saved and the build number.
         """
         ...
 
@@ -244,7 +243,6 @@ class ESDToolsProtocol(Protocol):
         self,
         input_path: Path,
         output_path: Path,
-        build_number: int,
         lang: list[Lang] | None = None,
     ) -> None:
         """Prepare the static data for use.
@@ -268,7 +266,6 @@ class ESDToolsProtocol(Protocol):
         Args:
             input_path: The path to the static data jsonl zip file.
             output_path: The path to the directory where the processed data should be saved.
-            build_number: The build number of the static data.
             lang: A list of languages for which to generate derived dataset files. If None, ["en"] will be used.
         """
         ...

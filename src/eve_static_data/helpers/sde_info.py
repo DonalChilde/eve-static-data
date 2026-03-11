@@ -1,4 +1,5 @@
 import json
+import zipfile
 from pathlib import Path
 from typing import TypedDict
 
@@ -41,4 +42,29 @@ def load_sde_info(input_path: Path) -> SdeInfo:
     with open(sde_info_path) as f:
         first_line = f.readline()
         sde_info = json.loads(first_line)
+    return SdeInfo(**sde_info)
+
+
+def load_sde_info_from_zipfile(sde_zip_file: Path) -> SdeInfo:
+    """Get the SDE info from the given SDE zip file.
+
+    This function opens the given SDE zip file, looks for the `_sde.jsonl` file inside it,
+    reads the first line of that file, which should contain the SDE info in JSON format, and
+    returns it as an SdeInfo TypedDict.
+
+    Args:
+        sde_zip_file: The path to the SDE zip file.
+
+    Returns:
+        An SdeInfo TypedDict containing the SDE info from the `_sde.jsonl` file inside the zip file.
+
+    Raises:
+        FileNotFoundError: If the `_sde.jsonl` file is not found inside the zip file.
+        json.JSONDecodeError: If the first line of the `_sde.jsonl` file is not valid JSON.
+        KeyError: If the expected keys are not found in the JSON data.
+    """
+    with zipfile.ZipFile(sde_zip_file, "r") as zip_ref:
+        with zip_ref.open("_sde.jsonl") as f:
+            first_line = f.readline().decode("utf-8")
+            sde_info = json.loads(first_line)
     return SdeInfo(**sde_info)

@@ -11,7 +11,7 @@ from yaml import safe_load
 
 from eve_static_data import network
 from eve_static_data.derive_datasets import generate_derived_datasets
-from eve_static_data.helpers.sde_info import load_sde_info
+from eve_static_data.helpers.sde_info import load_sde_info, load_sde_info_from_zipfile
 from eve_static_data.models.type_defs import Lang
 from eve_static_data.protocols import ESDToolsProtocol
 from eve_static_data.validation import validate_and_save_results
@@ -52,17 +52,16 @@ class EsdTools(ESDToolsProtocol):
         )
         return response_headers
 
-    def unpack(self, input_path: Path, output_path: Path) -> Path:
+    def unpack(self, input_path: Path, output_path: Path) -> tuple[Path, int]:
         """Unpack the static data.
 
         Unzip the input file and save the unpacked data to the output path.
-        If a build number is provided, save the unpacked data to <output_path>/<build_number>/sde/.
 
         Checks for the presence of the _sde.jsonl file in the unpacked files. If the file is not
         found, raises a FileNotFoundError.
 
-        If build number is provided, checks that the build number in the _sde.jsonl
-        file matches the provided build number. If it does not match, raises a ValueError.
+        Files will be saved to `<output_path>/<build_number>/sde/` directory, where the
+        build number is determined from the `_sde.jsonl` file inside the zip file.
 
         Args:
             input_path: The path to the static data jsonl zip file.
@@ -75,6 +74,16 @@ class EsdTools(ESDToolsProtocol):
             raise FileNotFoundError(f"Input path {input_path} is not a file.")
         if input_path.suffix != ".zip":
             raise ValueError(f"Input file {input_path} is not a zip file.")
+        if output_path.exists() and not output_path.is_dir():
+            raise FileExistsError(
+                f"Output path {output_path} already exists and is not a directory."
+            )
+        sde_info = load_sde_info_from_zipfile(input_path)
+        build_number = sde_info.get("buildNumber")
+        if build_number is None:  # type: ignore
+            raise ValueError(
+                f"Build number not found in _sde.jsonl file in the zip file {input_path}."
+            )
         with TemporaryDirectory() as temp_dir:
             with zipfile.ZipFile(input_path, "r") as zip_ref:
                 zip_ref.extractall(temp_dir)
@@ -83,16 +92,17 @@ class EsdTools(ESDToolsProtocol):
                 raise FileNotFoundError(
                     f"_sde.jsonl file not found in the unzipped SDE data at {temp_dir}. Is this a valid SDE zip file?"
                 )
-            output_path.mkdir(parents=True, exist_ok=True)
+            output_dir = output_path / str(build_number) / "sde"
+            output_dir.mkdir(parents=True, exist_ok=True)
             for file in Path(temp_dir).iterdir():
                 if file.is_file():
-                    target_file = output_path / file.name
+                    target_file = output_dir / file.name
                     if target_file.exists():
                         raise FileExistsError(
                             f"Target file {target_file} already exists. Cannot move processed data to {target_file}"
                         )
                     shutil.move(file, target_file)
-            return output_path
+            return output_dir, build_number
 
     async def validate(self, input_path: Path, output_path: Path) -> None:
         """Validate the ESD tools static data."""
@@ -229,7 +239,6 @@ class EsdTools(ESDToolsProtocol):
         self,
         input_path: Path,
         output_path: Path,
-        build_number: int,
         lang: list[Literal["en", "de", "fr", "ja", "ru", "zh", "ko", "es"]]
         | None = None,
     ) -> None:
@@ -262,9 +271,10 @@ class EsdTools(ESDToolsProtocol):
             raise ValueError(
                 f"Output path {output_path} is a file, expected a directory."
             )
-        sde_dir = self.sde_directory(base_path=output_path, build_number=build_number)
 
-        self.unpack(input_path=input_path, output_path=sde_dir)
+        sde_dir, build_number = self.unpack(
+            input_path=input_path, output_path=output_path
+        )
 
         # Validate unpacked data and save results to disk
         validated_dir = self.validation_directory(
