@@ -26,6 +26,9 @@ def generate_derived_datasets(
     This function will read the SDE data for the specified build number, generate the derived datasets, and save them
     to the appropriate location in the data directory.
 
+    These datasets default to published records only and will raise an error if any
+    validation failures are encountered.
+
     Args:
         input_path: The path to the SDE data directory.
         output_path: The directory where the derived datasets should be saved.
@@ -70,25 +73,13 @@ def generate_derived_datasets(
         market_groups_dataset,
         meta_groups_dataset,
     )
-    normalized_eve_types_file = (
-        output_path / DerivedDatasetFiles.NORMALIZED_EVE_TYPES.localized(lang)
-    )
-    normalized_eve_types_file.parent.mkdir(parents=True, exist_ok=True)
-    normalized_eve_types_file.write_text(
-        normalized_eve_types_dataset.model_dump_json(indent=2)
-    )
 
-    # NormalizedEveTypesPublishedDataset
-    normalized_eve_types_published_dataset = deepcopy(normalized_eve_types_dataset)
-    for key, record in list(normalized_eve_types_published_dataset.records.items()):
-        if not record.published:
-            normalized_eve_types_published_dataset.records.pop(key)
     normalized_eve_types_published_file = (
         output_path / DerivedDatasetFiles.NORMALIZED_EVE_TYPES_PUBLISHED.localized(lang)
     )
     normalized_eve_types_published_file.parent.mkdir(parents=True, exist_ok=True)
     normalized_eve_types_published_file.write_text(
-        normalized_eve_types_published_dataset.model_dump_json(indent=2)
+        normalized_eve_types_dataset.model_dump_json(indent=2)
     )
 
     # RegionNamesDataset

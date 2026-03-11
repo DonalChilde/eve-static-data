@@ -427,7 +427,7 @@ def get_model_for_dataset(dataset: SdeDatasetFiles) -> type[LocalizableRecord]:
 
 
 def get_transformer[T: LocalizableRecord](
-    model: type[T], lang: Lang, only_published: bool
+    model: type[T], lang: Lang, only_published: bool, skip_validation_failures: bool
 ) -> LocalizationTransformer[T]:
     """Get the transformer for a given model."""
     localizer = LocalizationTransformer(
@@ -435,6 +435,7 @@ def get_transformer[T: LocalizableRecord](
         localized_fields=list(model.localized_fields()),
         lang=lang,
         only_published=only_published,
+        skip_validation_failures=skip_validation_failures,
     )
     return localizer
 
@@ -448,10 +449,19 @@ def get_dataset_file_for_model[T: LocalizableRecord](model: type[T]) -> SdeDatas
 
 
 def read_records[T: LocalizableRecord](
-    sde_path: Path, model: type[T], only_published: bool, lang: Lang
+    sde_path: Path,
+    model: type[T],
+    only_published: bool,
+    lang: Lang,
+    skip_validation_failures: bool,
 ) -> Iterator[tuple[int, T | None]]:
     """Read records of type T from the appropriate JSONL file in the SDE path."""
     dataset_file = get_dataset_file_for_model(model)
-    transformer = get_transformer(model, lang=lang, only_published=only_published)
+    transformer = get_transformer(
+        model,
+        lang=lang,
+        only_published=only_published,
+        skip_validation_failures=skip_validation_failures,
+    )
     file_path = sde_path / dataset_file.as_jsonl()
     return read_jsonl_file(file_path, transformer)

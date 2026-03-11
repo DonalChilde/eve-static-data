@@ -1,3 +1,5 @@
+"""Trnasformer classes for use in the data loading process."""
+
 import json
 import logging
 from dataclasses import dataclass
@@ -24,23 +26,38 @@ def is_published_false(text: str) -> bool:
 
     This is used to identify records that are not published.
     Unpublished records fail validation more often.
+
+    AFAIK, the "published" field is only present in some datasets, at the top level of the record.
+    So, this function is a simple string check, rather than parsing the JSON and checking the field.
     """
     return '"published": false' in text
 
 
-class ValidModels(PydanticTransformer[BASE_MODELS]):
-    """A transformer that validates the models and records any validation errors.
+class ModelLoader(PydanticTransformer[BASE_MODELS]):
+    def __init__(
+        self,
+        model: type[BASE_MODELS],
+        only_published: bool,
+        skip_validation_failures: bool,
+    ):
+        """A transformer that validates the models and records any validation errors.
 
-    This transformer checks if the record is not published and records that information.
-    It also catches any validation errors and records them in a dictionary.
-    """
+        This transformer
+        - checks if the record is not published and if not, records the line number.
+        - catches any validation errors and records them in a dictionary.
+        - optionally skips unpublished records before validation
+        - optionally skips validation failures and continues processing the rest of the records.
 
-    def __init__(self, model: type[BASE_MODELS], only_published: bool):
-        """Initialize the class."""
+        Args:
+            model: The Pydantic model class to use for validation.
+            only_published: Whether to only include published records.
+            skip_validation_failures: Whether to skip validation failures.
+        """
         super().__init__(model)
         self.validation_errors: dict[int, ModelValidationErrorRecord] = {}
         self.line_record_not_published: set[int] = set()
         self.only_published = only_published
+        self.skip_validation_failures = skip_validation_failures
 
     def __call__(self, value: tuple[int, str]) -> tuple[int, BASE_MODELS | None]:
         """Transform an indexed string into a pydantic BaseModel instance, and record any validation errors."""
@@ -68,7 +85,12 @@ class ValidModels(PydanticTransformer[BASE_MODELS]):
                 data=text,
                 error_messages=[err["msg"] for err in e.errors()],
             )
-            return None
+            if not self.skip_validation_failures:
+                return None
+            logger.exception(
+                f"Validation error for model {self.model.__name__} at line {index}:{text} {e}"
+            )
+            raise e
 
 
 def localize_string_dict(string_dict: LocalizedString | None, lang: Lang = "en") -> str:
@@ -102,18 +124,24 @@ class LocalizationTransformer(PydanticTransformer[BASE_MODELS]):
         model: type[BASE_MODELS],
         localized_fields: list[str],
         only_published: bool,
+        skip_validation_failures: bool,
         lang: Lang = "en",
     ):
-        """A transformer that localizes the string fields in the model before validation.
+        """A transformer that localizes and validates the models and records any validation errors.
 
-        Does not support nested localization (i.e. localized fields that are themselves
-        dictionaries containing localized strings).
+        This transformer
+        - checks if the record is not published and if not, records the line number.
+        - json.loads the text and localizes any specified fields in the model.
+        - catches any validation errors and records them in a dictionary.
+        - optionally skips unpublished records before validation
+        - optionally skips validation failures and continues processing the rest of the records.
 
         Args:
             model: The Pydantic model class to use for validation.
+            only_published: Whether to only include published records.
+            skip_validation_failures: Whether to skip validation failures.
             localized_fields: A list of field names in the model that should be localized.
             lang: The language code to use for localization (default is "en" for English).
-            only_published: Whether to only include published records (default is True).
         """
         super().__init__(model)
         self.localized_fields = localized_fields
@@ -121,6 +149,7 @@ class LocalizationTransformer(PydanticTransformer[BASE_MODELS]):
         self.only_published = only_published
         self.validation_errors: dict[int, ModelValidationErrorRecord] = {}
         self.line_record_not_published: set[int] = set()
+        self.skip_validation_failures = skip_validation_failures
 
     def _inspect_string(self, index: int, text: str) -> str:
         """Inspect the string before model creation.
@@ -136,7 +165,21 @@ class LocalizationTransformer(PydanticTransformer[BASE_MODELS]):
         if self.only_published and index in self.line_record_not_published:
             return None
         json_dict = self._transform_dict(index, text)
-        return self.model.model_validate(json_dict)
+        try:
+            return self.model.model_validate(json_dict)
+        except ValidationError as e:
+            self.validation_errors[index] = ModelValidationErrorRecord(
+                model=self.model.__name__,
+                line_number=index,
+                data=text,
+                error_messages=[err["msg"] for err in e.errors()],
+            )
+            if not self.skip_validation_failures:
+                return None
+            logger.exception(
+                f"Validation error for model {self.model.__name__} at line {index}:{text} {e}"
+            )
+            raise e
 
     def _transform_dict(self, index: int, text: str) -> dict[str, Any]:
         """Convert the text to a dictionary, after localizing any specified fields."""

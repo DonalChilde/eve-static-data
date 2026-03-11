@@ -13,7 +13,7 @@ from eve_static_data.helpers.sde_info import load_sde_info
 from eve_static_data.models.dataset_filenames import SdeDatasetFiles
 from eve_static_data.models.pydantic.records import LOOKUP as pydantic_model_lookup
 from eve_static_data.sde_type_sigs import get_sde_type_sigs
-from eve_static_data.transformers import ModelValidationErrorRecord, ValidModels
+from eve_static_data.transformers import ModelLoader, ModelValidationErrorRecord
 
 logger = logging.getLogger(__name__)
 
@@ -69,7 +69,9 @@ def validate_dataset_records(
             error_messages=[msg],
         )
         return stats
-    transformer = ValidModels(model=model, only_published=False)
+    transformer = ModelLoader(
+        model=model, only_published=False, skip_validation_failures=True
+    )
     for index, record in read_jsonl_file(file_path, transformer=transformer):
         stats.total_records = index
         if record is None:

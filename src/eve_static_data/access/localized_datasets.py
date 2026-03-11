@@ -9,13 +9,20 @@ from eve_static_data.models.type_defs import Lang
 
 
 def ancestries_localized(
-    sde_path: Path, lang: Lang, only_published: bool = True
+    sde_path: Path,
+    lang: Lang,
+    only_published: bool = True,
+    skip_validation_failures: bool = False,
 ) -> LDS.AncestriesLocalizedDataset:
     """Load the ancestries localized dataset for the specified language."""
     sde_info = load_sde_info(sde_path)
-    model = LPM.AncestriesLocalized
+
     records = LPM.read_records(
-        sde_path, model, only_published=only_published, lang=lang
+        sde_path,
+        LPM.AncestriesLocalized,
+        only_published=only_published,
+        lang=lang,
+        skip_validation_failures=skip_validation_failures,
     )
     records_dict = {record.key: record for _, record in records if record is not None}
     dataset = LDS.AncestriesLocalizedDataset(
@@ -28,13 +35,19 @@ def ancestries_localized(
 
 
 def categories_localized(
-    sde_path: Path, lang: Lang, only_published: bool = True
+    sde_path: Path,
+    lang: Lang,
+    only_published: bool = True,
+    skip_validation_failures: bool = False,
 ) -> LDS.CategoriesLocalizedDataset:
     """Load the categories localized dataset for the specified language."""
     sde_info = load_sde_info(sde_path)
-    model = LPM.CategoriesLocalized
     records = LPM.read_records(
-        sde_path, model, only_published=only_published, lang=lang
+        sde_path,
+        LPM.CategoriesLocalized,
+        only_published=only_published,
+        lang=lang,
+        skip_validation_failures=skip_validation_failures,
     )
     records_dict = {record.key: record for _, record in records if record is not None}
     dataset = LDS.CategoriesLocalizedDataset(
@@ -47,13 +60,19 @@ def categories_localized(
 
 
 def groups_localized(
-    sde_path: Path, lang: Lang, only_published: bool = True
+    sde_path: Path,
+    lang: Lang,
+    only_published: bool = True,
+    skip_validation_failures: bool = False,
 ) -> LDS.GroupsLocalizedDataset:
     """Load the groups localized dataset for the specified language."""
     sde_info = load_sde_info(sde_path)
-    model = LPM.GroupsLocalized
     records = LPM.read_records(
-        sde_path, model, only_published=only_published, lang=lang
+        sde_path,
+        LPM.GroupsLocalized,
+        only_published=only_published,
+        lang=lang,
+        skip_validation_failures=skip_validation_failures,
     )
     records_dict = {record.key: record for _, record in records if record is not None}
     dataset = LDS.GroupsLocalizedDataset(
@@ -66,13 +85,19 @@ def groups_localized(
 
 
 def map_regions_localized(
-    sde_path: Path, lang: Lang, only_published: bool = True
+    sde_path: Path,
+    lang: Lang,
+    only_published: bool = True,
+    skip_validation_failures: bool = False,
 ) -> LDS.MapRegionsLocalizedDataset:
     """Load the map regions localized dataset for the specified language."""
     sde_info = load_sde_info(sde_path)
-    model = LPM.MapRegionsLocalized
     records = LPM.read_records(
-        sde_path, model, only_published=only_published, lang=lang
+        sde_path,
+        LPM.MapRegionsLocalized,
+        only_published=only_published,
+        lang=lang,
+        skip_validation_failures=skip_validation_failures,
     )
     records_dict = {record.key: record for _, record in records if record is not None}
     dataset = LDS.MapRegionsLocalizedDataset(
@@ -85,13 +110,19 @@ def map_regions_localized(
 
 
 def map_solar_systems_localized(
-    sde_path: Path, lang: Lang, only_published: bool = True
+    sde_path: Path,
+    lang: Lang,
+    only_published: bool = True,
+    skip_validation_failures: bool = False,
 ) -> LDS.MapSolarSystemsLocalizedDataset:
     """Load the map solar systems localized dataset for the specified language."""
     sde_info = load_sde_info(sde_path)
-    model = LPM.MapSolarSystemsLocalized
     records = LPM.read_records(
-        sde_path, model, only_published=only_published, lang=lang
+        sde_path,
+        LPM.MapSolarSystemsLocalized,
+        only_published=only_published,
+        lang=lang,
+        skip_validation_failures=skip_validation_failures,
     )
     records_dict = {record.key: record for _, record in records if record is not None}
     dataset = LDS.MapSolarSystemsLocalizedDataset(
@@ -104,13 +135,19 @@ def map_solar_systems_localized(
 
 
 def market_groups_localized(
-    sde_path: Path, lang: Lang, only_published: bool = True
+    sde_path: Path,
+    lang: Lang,
+    only_published: bool = True,
+    skip_validation_failures: bool = False,
 ) -> LDS.MarketGroupsLocalizedDataset:
     """Load the market groups localized dataset for the specified language."""
     sde_info = load_sde_info(sde_path)
-    model = LPM.MarketGroupsLocalized
     records = LPM.read_records(
-        sde_path, model, only_published=only_published, lang=lang
+        sde_path,
+        LPM.MarketGroupsLocalized,
+        only_published=only_published,
+        lang=lang,
+        skip_validation_failures=skip_validation_failures,
     )
     records_dict = {record.key: record for _, record in records if record is not None}
     dataset = LDS.MarketGroupsLocalizedDataset(
@@ -123,13 +160,19 @@ def market_groups_localized(
 
 
 def meta_groups_localized(
-    sde_path: Path, lang: Lang, only_published: bool = True
+    sde_path: Path,
+    lang: Lang,
+    only_published: bool = True,
+    skip_validation_failures: bool = False,
 ) -> LDS.MetaGroupsLocalizedDataset:
     """Load the meta groups localized dataset for the specified language."""
     sde_info = load_sde_info(sde_path)
-    model = LPM.MetaGroupsLocalized
     records = LPM.read_records(
-        sde_path, model, only_published=only_published, lang=lang
+        sde_path,
+        LPM.MetaGroupsLocalized,
+        only_published=only_published,
+        lang=lang,
+        skip_validation_failures=skip_validation_failures,
     )
     records_dict = {record.key: record for _, record in records if record is not None}
     dataset = LDS.MetaGroupsLocalizedDataset(
@@ -142,13 +185,19 @@ def meta_groups_localized(
 
 
 def eve_types_localized(
-    sde_path: Path, lang: Lang, only_published: bool = True
+    sde_path: Path,
+    lang: Lang,
+    only_published: bool = True,
+    skip_validation_failures: bool = False,
 ) -> LDS.EveTypesLocalizedDataset:
     """Load the eve types localized dataset for the specified language."""
     sde_info = load_sde_info(sde_path)
-    model = LPM.EveTypesLocalized
     records = LPM.read_records(
-        sde_path, model, only_published=only_published, lang=lang
+        sde_path,
+        LPM.EveTypesLocalized,
+        only_published=only_published,
+        lang=lang,
+        skip_validation_failures=skip_validation_failures,
     )
     records_dict = {record.key: record for _, record in records if record is not None}
     dataset = LDS.EveTypesLocalizedDataset(

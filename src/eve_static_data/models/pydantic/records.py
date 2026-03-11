@@ -20,7 +20,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from eve_static_data.helpers.jsonl_reader import read_jsonl_file
 from eve_static_data.models.dataset_filenames import SdeDatasetFiles
-from eve_static_data.transformers import ValidModels
+from eve_static_data.transformers import ModelLoader
 
 # ------------------------------------------------------------------------------
 # Common Pydantic model definitions.
@@ -1233,13 +1233,14 @@ def get_model_for_dataset_file(dataset_file: SdeDatasetFiles) -> type[SdeDataset
 
 
 def get_transformer[T: SdeDatasetRecord](
-    model: type[T], only_published: bool
-) -> ValidModels[T]:
+    model: type[T], only_published: bool, skip_validation_failures: bool
+) -> ModelLoader[T]:
     """Get the transformer for a given model type.
 
     Args:
         model: The pydantic model class to build a transformer for.
         only_published: Whether to only include published records.
+        skip_validation_failures: Whether to skip records that fail validation.
 
     Returns:
         A ValidModels transformer bound to the concrete model type T.
@@ -1247,7 +1248,11 @@ def get_transformer[T: SdeDatasetRecord](
     Raises:
         ValueError: If no model is registered for the given dataset file.
     """
-    return ValidModels(model=model, only_published=only_published)
+    return ModelLoader(
+        model=model,
+        only_published=only_published,
+        skip_validation_failures=skip_validation_failures,
+    )
 
 
 def get_dataset_file_for_model[T: SdeDatasetRecord](
@@ -1271,7 +1276,7 @@ def get_dataset_file_for_model[T: SdeDatasetRecord](
 
 
 def read_records[T: SdeDatasetRecord](
-    sde_path: Path, model: type[T], only_published: bool
+    sde_path: Path, model: type[T], only_published: bool, skip_validation_failures: bool
 ) -> Iterator[tuple[int, T | None]]:
     """Read typed records from the SDE dataset file for a given model.
 
@@ -1279,6 +1284,7 @@ def read_records[T: SdeDatasetRecord](
         sde_path: Path to the root SDE directory.
         model: The pydantic model class used to parse each record.
         only_published: Whether to only include published records.
+        skip_validation_failures: Whether to skip records that fail validation.
 
     Yields:
         Tuples of (line_number, parsed_record_or_none) for each JSONL line.
@@ -1287,6 +1293,10 @@ def read_records[T: SdeDatasetRecord](
         ValueError: If no dataset file is registered for the given model.
     """
     dataset_file = get_dataset_file_for_model(model)
-    transformer = get_transformer(model, only_published=only_published)
+    transformer = get_transformer(
+        model,
+        only_published=only_published,
+        skip_validation_failures=skip_validation_failures,
+    )
     file_path = sde_path / dataset_file.as_jsonl()
     return read_jsonl_file(file_path, transformer)
