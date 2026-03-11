@@ -1,4 +1,4 @@
-"""Functions for loading localized datasets."""
+"""Functions for loading localized datasets from an unpacked SDE directory."""
 
 from pathlib import Path
 

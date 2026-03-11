@@ -1,4 +1,4 @@
-"""loaders for derived datasets."""
+"""A Lazy loader for derived datasets."""
 
 from pathlib import Path
 
@@ -10,10 +10,16 @@ from eve_static_data.models.derived.system_names import SystemNames
 
 
 class DerivedLazyLoader:
-    """A class for lazily loading derived datasets for a specific build number."""
-
     def __init__(self, input_dir: Path, localized: str = "en"):
-        """Initialize the loader with the input directory and localization."""
+        """A class for lazily loading derived datasets.
+
+        Assumes that the derived datasets have already been generated and are stored in
+        the specified input directory with the default file names.
+
+        Args:
+            input_dir: The directory where the derived datasets are stored.
+            localized: The localization used by the datasets (default: "en").
+        """
         self.input_dir = input_dir
         self.localized = localized
 
@@ -28,7 +34,8 @@ class DerivedLazyLoader:
         if self._market_paths is None:
             file_name = DerivedDatasetFiles.MARKET_PATHS.localized(self.localized)
             dataset_path = self.input_dir / file_name
-            self._market_paths = MarketPathsDataset.load_from_disk(dataset_path)
+            with open(dataset_path, "rb") as f:
+                self._market_paths = MarketPathsDataset.model_validate(f.read())
         return self._market_paths
 
     def normalized_eve_types(self) -> NormalizedEveTypesDataset:
@@ -38,9 +45,10 @@ class DerivedLazyLoader:
                 self.localized
             )
             dataset_path = self.input_dir / file_name
-            self._normalized_eve_types = NormalizedEveTypesDataset.load_from_disk(
-                dataset_path
-            )
+            with open(dataset_path, "rb") as f:
+                self._normalized_eve_types = NormalizedEveTypesDataset.model_validate(
+                    f.read()
+                )
         return self._normalized_eve_types
 
     def normalized_eve_types_published(self) -> NormalizedEveTypesDataset:
@@ -50,9 +58,10 @@ class DerivedLazyLoader:
                 self.localized
             )
             dataset_path = self.input_dir / file_name
-            self._normalized_eve_types_published = (
-                NormalizedEveTypesDataset.load_from_disk(dataset_path)
-            )
+            with open(dataset_path, "rb") as f:
+                self._normalized_eve_types_published = (
+                    NormalizedEveTypesDataset.model_validate(f.read())
+                )
         return self._normalized_eve_types_published
 
     def region_names(self) -> RegionNames:
@@ -60,7 +69,8 @@ class DerivedLazyLoader:
         if self._region_names is None:
             file_name = DerivedDatasetFiles.REGION_NAMES.localized(self.localized)
             dataset_path = self.input_dir / file_name
-            self._region_names = RegionNames.load_from_disk(dataset_path)
+            with open(dataset_path, "rb") as f:
+                self._region_names = RegionNames.model_validate(f.read())
         return self._region_names
 
     def system_names(self) -> SystemNames:
@@ -68,5 +78,6 @@ class DerivedLazyLoader:
         if self._system_names is None:
             file_name = DerivedDatasetFiles.SYSTEM_NAMES.localized(self.localized)
             dataset_path = self.input_dir / file_name
-            self._system_names = SystemNames.load_from_disk(dataset_path)
+            with open(dataset_path, "rb") as f:
+                self._system_names = SystemNames.model_validate(f.read())
         return self._system_names
