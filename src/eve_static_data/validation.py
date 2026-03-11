@@ -13,7 +13,7 @@ from eve_static_data.helpers.sde_info import load_sde_info
 from eve_static_data.models.dataset_filenames import SdeDatasetFiles
 from eve_static_data.models.pydantic.records import LOOKUP as pydantic_model_lookup
 from eve_static_data.sde_type_sigs import get_sde_type_sigs
-from eve_static_data.transformers_2 import ModelValidationErrorRecord, ValidModels
+from eve_static_data.transformers import ModelValidationErrorRecord, ValidModels
 
 logger = logging.getLogger(__name__)
 

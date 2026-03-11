@@ -20,7 +20,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from eve_static_data.helpers.jsonl_reader import read_jsonl_file
 from eve_static_data.models.dataset_filenames import SdeDatasetFiles
-from eve_static_data.transformers_2 import ValidModels
+from eve_static_data.transformers import ValidModels
 
 # ------------------------------------------------------------------------------
 # Common Pydantic model definitions.
@@ -1278,6 +1278,7 @@ def read_records[T: SdeDatasetRecord](
     Args:
         sde_path: Path to the root SDE directory.
         model: The pydantic model class used to parse each record.
+        only_published: Whether to only include published records.
 
     Yields:
         Tuples of (line_number, parsed_record_or_none) for each JSONL line.

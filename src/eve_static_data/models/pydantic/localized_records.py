@@ -7,7 +7,7 @@ from eve_static_data.helpers.jsonl_reader import read_jsonl_file
 from eve_static_data.models.dataset_filenames import SdeDatasetFiles
 from eve_static_data.models.pydantic import records as PM
 from eve_static_data.models.type_defs import Lang
-from eve_static_data.transformers_2 import LocalizationTransformer
+from eve_static_data.transformers import LocalizationTransformer
 
 
 class LocalizableRecord(PM.SdeDatasetRecord):

@@ -1,148 +1,148 @@
-# import json
-# import logging
-# from dataclasses import dataclass
-# from typing import Any
+import json
+import logging
+from dataclasses import dataclass
+from typing import Any
 
-# from pydantic import ValidationError
+from pydantic import ValidationError
 
-# from eve_static_data.helpers.pydantic.jsonl_record import (
-#     BASE_MODELS,
-#     TransformerProtocol,
-# )
-# from eve_static_data.models.type_defs import Lang, LocalizedString
+from eve_static_data.helpers.jsonl_reader import BASE_MODELS, PydanticTransformer
+from eve_static_data.models.type_defs import Lang, LocalizedString
 
-# logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
-# @dataclass(slots=True)
-# class ModelValidationErrorRecord:
-#     model: str
-#     line_number: int
-#     data: str
-#     error_messages: list[str]
+@dataclass(slots=True)
+class ModelValidationErrorRecord:
+    model: str
+    line_number: int
+    data: str
+    error_messages: list[str]
 
 
-# def is_published_false(text: str) -> bool:
-#     """Check if the text contains "published": false.
+def is_published_false(text: str) -> bool:
+    """Check if the text contains "published": false.
 
-#     This is used to identify records that are not published.
-#     Unpublished records fail validation more often.
-#     """
-#     return '"published": false' in text
-
-
-# class ValidModels(TransformerProtocol):
-#     """A transformer that validates the models and records any validation errors.
-
-#     This transformer checks if the record is not published and records that information.
-#     It also catches any validation errors and records them in a dictionary.
-#     """
-
-#     def __init__(self):
-#         """Initialize the class."""
-#         self.validation_errors: dict[int, ModelValidationErrorRecord] = {}
-#         self.not_published: list[int] = []
-
-#     def transform(
-#         self, value: tuple[int, str], model: type[BASE_MODELS]
-#     ) -> BASE_MODELS | None:
-#         """Transform an indexed string into a pydantic BaseModel instance, and record any validation errors."""
-#         index, text = value
-#         try:
-#             text = self._inspect_string(index, text)
-#             return self._text_to_model(index, text, model)
-#         except ValidationError as e:
-#             if index not in self.validation_errors:
-#                 self.validation_errors[index] = ModelValidationErrorRecord(
-#                     model=model.__name__,
-#                     line_number=index,
-#                     data=text,
-#                     error_messages=[str(e)],
-#                 )
-#             else:
-#                 self.validation_errors[index].error_messages.append(str(e))
-#             logger.exception(
-#                 "Validation error parsing line %d: %s in class %s",
-#                 index,
-#                 e,
-#                 model.__name__,
-#             )
-#         except Exception as e:
-#             if index not in self.validation_errors:
-#                 self.validation_errors[index] = ModelValidationErrorRecord(
-#                     model=model.__name__,
-#                     line_number=index,
-#                     data=text,
-#                     error_messages=[str(e)],
-#                 )
-#             else:
-#                 self.validation_errors[index].error_messages.append(str(e))
-#             logger.exception(
-#                 "Unexpected error parsing line %d: %s in class %s",
-#                 index,
-#                 e,
-#                 model.__name__,
-#             )
-#             return None
-
-#     def _inspect_string(self, index: int, text: str) -> str:
-#         """Inspect the string before model creation.
-
-#         Check if the record is not published and record that information.
-#         """
-#         if is_published_false(text):
-#             self.not_published.append(index)
-#         return text
-
-#     def _text_to_model(
-#         self, index: int, text: str, model: type[BASE_MODELS]
-#     ) -> BASE_MODELS:
-#         """Convert the text to a model instance."""
-#         return model.model_validate_json(text)
+    This is used to identify records that are not published.
+    Unpublished records fail validation more often.
+    """
+    return '"published": false' in text
 
 
-# def localize_string_dict(string_dict: LocalizedString | None, lang: Lang = "en") -> str:
-#     """Extract the localized string from a LocalizedString.
+class ValidModels(PydanticTransformer[BASE_MODELS]):
+    """A transformer that validates the models and records any validation errors.
 
-#     Args:
-#         string_dict: The LocalizedString to extract from.
-#         lang: The language code to extract (default is "en" for English).
+    This transformer checks if the record is not published and records that information.
+    It also catches any validation errors and records them in a dictionary.
+    """
 
-#     Returns:
-#         The localized string for the specified language, OR:
-#         - "TRANSLATIONS_NOT_PRESENT" if the input string_dict is None (indicating that the translations are not present in the dataset).
-#         - "NOT_TRANSLATED" if the specified language is not found in the string_dict (indicating that the translation for that language is not provided).
-#     """
-#     if string_dict is None:
-#         return "TRANSLATIONS_NOT_PRESENT"
-#     if lang not in string_dict:
-#         logger.warning(
-#             f"Localized string for '{lang=}' not found. Available languages: {list(string_dict.keys())}"
-#         )
-#         return "NOT_TRANSLATED"
-#     return string_dict[lang]
+    def __init__(self, model: type[BASE_MODELS], only_published: bool):
+        """Initialize the class."""
+        super().__init__(model)
+        self.validation_errors: dict[int, ModelValidationErrorRecord] = {}
+        self.line_record_not_published: set[int] = set()
+        self.only_published = only_published
+
+    def __call__(self, value: tuple[int, str]) -> tuple[int, BASE_MODELS | None]:
+        """Transform an indexed string into a pydantic BaseModel instance, and record any validation errors."""
+        return super().__call__(value)
+
+    def _inspect_string(self, index: int, text: str) -> str:
+        """Inspect the string before model creation.
+
+        Check if the record is not published and record that information.
+        """
+        if is_published_false(text):
+            self.line_record_not_published.add(index)
+        return text
+
+    def _text_to_model(self, index: int, text: str) -> BASE_MODELS | None:
+        """Convert the text to a model instance."""
+        if self.only_published and index in self.line_record_not_published:
+            return None
+        try:
+            return self.model.model_validate_json(text)
+        except ValidationError as e:
+            self.validation_errors[index] = ModelValidationErrorRecord(
+                model=self.model.__name__,
+                line_number=index,
+                data=text,
+                error_messages=[err["msg"] for err in e.errors()],
+            )
+            return None
 
 
-# class LocalizationTransformer(ValidModels):
-#     """A transformer that validates the models and records any validation errors, and also checks for missing localizations."""
+def localize_string_dict(string_dict: LocalizedString | None, lang: Lang = "en") -> str:
+    """Extract the localized string from a LocalizedString.
 
-#     def __init__(self, localized_fields: list[str], lang: Lang = "en"):
-#         """Initialize the class."""
-#         super().__init__()
-#         self.localized_fields = localized_fields
-#         self.lang: Lang = lang
+    Args:
+        string_dict: The LocalizedString to extract from.
+        lang: The language code to extract (default is "en" for English).
 
-#     def _text_to_model(
-#         self, index: int, text: str, model: type[BASE_MODELS]
-#     ) -> BASE_MODELS:
-#         """Convert the text to a model instance, after localizing any specified fields."""
-#         json_dict = self._transform_dict(index, text)
-#         return model.model_validate(json_dict)
+    Returns:
+        The localized string for the specified language, OR:
+        - "TRANSLATIONS_NOT_PRESENT" if the input string_dict is None (indicating that the translations are not present in the dataset).
+        - "NOT_TRANSLATED" if the specified language is not found in the string_dict (indicating that the translation for that language is not provided).
+    """
+    if string_dict is None:
+        logger.warning(
+            "Localized string dictionary is None, indicating that translations are not present in the dataset."
+        )
+        return "TRANSLATIONS_NOT_PRESENT"
+    if lang not in string_dict:
+        logger.warning(
+            f"Localized string for '{lang=}' not found. Available languages: {list(string_dict.keys())}"
+        )
+        return "NOT_TRANSLATED"
+    return string_dict[lang]
 
-#     def _transform_dict(self, index: int, text: str) -> dict[str, Any]:
-#         """Convert the text to a dictionary, after localizing any specified fields."""
-#         json_dict = json.loads(text)
-#         for field in self.localized_fields:
-#             if field in json_dict:
-#                 json_dict[field] = localize_string_dict(json_dict[field], self.lang)
-#         return json_dict
+
+class LocalizationTransformer(PydanticTransformer[BASE_MODELS]):
+    def __init__(
+        self,
+        model: type[BASE_MODELS],
+        localized_fields: list[str],
+        only_published: bool,
+        lang: Lang = "en",
+    ):
+        """A transformer that localizes the string fields in the model before validation.
+
+        Does not support nested localization (i.e. localized fields that are themselves
+        dictionaries containing localized strings).
+
+        Args:
+            model: The Pydantic model class to use for validation.
+            localized_fields: A list of field names in the model that should be localized.
+            lang: The language code to use for localization (default is "en" for English).
+            only_published: Whether to only include published records (default is True).
+        """
+        super().__init__(model)
+        self.localized_fields = localized_fields
+        self.lang: Lang = lang
+        self.only_published = only_published
+        self.validation_errors: dict[int, ModelValidationErrorRecord] = {}
+        self.line_record_not_published: set[int] = set()
+
+    def _inspect_string(self, index: int, text: str) -> str:
+        """Inspect the string before model creation.
+
+        Check if the record is not published and record that information.
+        """
+        if is_published_false(text):
+            self.line_record_not_published.add(index)
+        return text
+
+    def _text_to_model(self, index: int, text: str) -> BASE_MODELS | None:
+        """Convert the text to a model instance, after localizing any specified fields."""
+        if self.only_published and index in self.line_record_not_published:
+            return None
+        json_dict = self._transform_dict(index, text)
+        return self.model.model_validate(json_dict)
+
+    def _transform_dict(self, index: int, text: str) -> dict[str, Any]:
+        """Convert the text to a dictionary, after localizing any specified fields."""
+        json_dict = json.loads(text)
+        for field in self.localized_fields:
+            field_dict = json_dict.get(field)
+            localized_field = localize_string_dict(field_dict, self.lang)
+            json_dict[field] = localized_field
+        return json_dict
