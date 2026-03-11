@@ -7,7 +7,17 @@
 
 eve-static-data provides a cli to check the status of the latest release of the EVE Online Static Data dataset. It supports downloading, expanding, and iterating over the various files in the dataset.
 
-Provides both TypedDict, and Pydantic models for SDE data.
+### CLI commands for downloading and processing SDE.
+
+### Provides Pydantic models for SDE data.
+
+### Provides localized datasets.
+
+### Validation report, structure information.
+
+### Derived datasets for easy use.
+
+### Easy access functions for programatic usage.
 
 TODO - More complete instructions and examples as the program evolves.
 
@@ -34,14 +44,14 @@ To run with uv:
 
 ```bash
 # run eve-static-data without installing
-uvx --from git+https://github.com/DonalChilde/eve-static-data@main eve-static-data
+uvx --from git+https://github.com/DonalChilde/eve-static-data@main esd
 
 # OR
 
 # Install to Path
 uv tool install --from git+https://github.com/DonalChilde/eve-static-data@main eve-static-data
 # and run
-eve-static-data ARGS
+esd ARGS
 ```
 
 ## Development
@@ -67,20 +77,7 @@ eve-static-data = { git = "https://github.com/DonalChilde/eve-static-data", bran
 
 ### ruff settings for formatting and linting
 
-```toml
-[tool.ruff.lint]
-select = ["B", "UP", "D", "DOC", "FIX", "I", "F401"]
-# non-imperative-mood (D401)
-ignore = ["D401", "D101"]
-# extend-select = ["I"]
-
-[tool.ruff.lint.pydocstyle]
-convention = "google"
-
-[tool.ruff.format]
-docstring-code-format = true
-docstring-code-line-length = 88
-```
+See pyproject.toml file
 
 ## Contributing
 
