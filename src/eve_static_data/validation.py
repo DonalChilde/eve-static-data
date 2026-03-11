@@ -7,12 +7,13 @@ from time import perf_counter
 
 from pydantic import BaseModel
 
+from eve_static_data.helpers.jsonl_reader import read_jsonl_file
 from eve_static_data.helpers.pydantic.save_to_disk import BaseModelToDisk
 from eve_static_data.helpers.sde_info import load_sde_info
 from eve_static_data.models.dataset_filenames import SdeDatasetFiles
 from eve_static_data.models.pydantic.records import LOOKUP as pydantic_model_lookup
 from eve_static_data.sde_type_sigs import get_sde_type_sigs
-from eve_static_data.transformers import ModelValidationErrorRecord, ValidModels
+from eve_static_data.transformers_2 import ModelValidationErrorRecord, ValidModels
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +28,7 @@ class DatasetStats(BaseModel):
     invalid_records: int
     error_records: dict[int, ModelValidationErrorRecord]
     published_records_with_errors: list[int] = []
-    not_published_records: list[int]
+    line_record_not_published: set[int]
 
 
 class SDEValidationResult(BaseModelToDisk):
@@ -51,7 +52,7 @@ def validate_dataset_records(
         total_records=0,
         invalid_records=0,
         error_records={},
-        not_published_records=[],
+        line_record_not_published=set(),
         published_records_with_errors=[],
     )
 
@@ -68,15 +69,15 @@ def validate_dataset_records(
             error_messages=[msg],
         )
         return stats
-    transformer = ValidModels()
-    for index, record in model.transform(file_path, transformer):
+    transformer = ValidModels(model=model, only_published=False)
+    for index, record in read_jsonl_file(file_path, transformer=transformer):
         stats.total_records = index
         if record is None:
             stats.invalid_records += 1
     stats.error_records = transformer.validation_errors
-    stats.not_published_records = transformer.not_published
+    stats.line_record_not_published = transformer.line_record_not_published
     stats.published_records_with_errors = list(
-        set(stats.error_records.keys()) - set(stats.not_published_records)
+        set(stats.error_records.keys()) - stats.line_record_not_published
     )
 
     return stats

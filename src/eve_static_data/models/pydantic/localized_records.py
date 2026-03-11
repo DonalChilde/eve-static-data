@@ -1,17 +1,21 @@
 """Models for localized records in the EVE Static Data Export (SDE)."""
 
+from collections.abc import Iterator
+from pathlib import Path
+
+from eve_static_data.helpers.jsonl_reader import read_jsonl_file
 from eve_static_data.models.dataset_filenames import SdeDatasetFiles
 from eve_static_data.models.pydantic import records as PM
 from eve_static_data.models.type_defs import Lang
-from eve_static_data.transformers import LocalizationTransformer
+from eve_static_data.transformers_2 import LocalizationTransformer
 
 
 class LocalizableRecord(PM.SdeDatasetRecord):
     """A record that can be localized to multiple languages."""
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
         raise NotImplementedError("This method should be implemented by subclasses.")
 
 
@@ -22,11 +26,9 @@ class AncestriesLocalized(LocalizableRecord, PM.Ancestries):
     description: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(
-            localized_fields=["name", "description"], lang=lang
-        )
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"name", "description"}
 
 
 class BloodlinesLocalized(LocalizableRecord, PM.Bloodlines):
@@ -36,11 +38,9 @@ class BloodlinesLocalized(LocalizableRecord, PM.Bloodlines):
     description: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(
-            localized_fields=["name", "description"], lang=lang
-        )
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"name", "description"}
 
 
 class CategoriesLocalized(LocalizableRecord, PM.Categories):
@@ -49,9 +49,9 @@ class CategoriesLocalized(LocalizableRecord, PM.Categories):
     name: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(localized_fields=["name"], lang=lang)
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"name"}
 
 
 class CertificatesLocalized(LocalizableRecord, PM.Certificates):
@@ -61,11 +61,9 @@ class CertificatesLocalized(LocalizableRecord, PM.Certificates):
     description: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(
-            localized_fields=["name", "description"], lang=lang
-        )
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"name", "description"}
 
 
 class CharacterAttributesLocalized(LocalizableRecord, PM.CharacterAttributes):
@@ -74,9 +72,9 @@ class CharacterAttributesLocalized(LocalizableRecord, PM.CharacterAttributes):
     name: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(localized_fields=["name"], lang=lang)
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"name"}
 
 
 class CorporationActivitiesLocalized(LocalizableRecord, PM.CorporationActivities):
@@ -85,9 +83,9 @@ class CorporationActivitiesLocalized(LocalizableRecord, PM.CorporationActivities
     name: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(localized_fields=["name"], lang=lang)
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"name"}
 
 
 class DebuffCollectionsLocalized(LocalizableRecord, PM.DebuffCollections):
@@ -96,9 +94,9 @@ class DebuffCollectionsLocalized(LocalizableRecord, PM.DebuffCollections):
     displayName: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(localized_fields=["displayName"], lang=lang)
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"displayName"}
 
 
 class DogmaAttributesLocalized(LocalizableRecord, PM.DogmaAttributes):
@@ -109,12 +107,9 @@ class DogmaAttributesLocalized(LocalizableRecord, PM.DogmaAttributes):
     tooltipTitle: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(
-            localized_fields=["displayName", "tooltipDescription", "tooltipTitle"],
-            lang=lang,
-        )
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"displayName", "tooltipDescription", "tooltipTitle"}
 
 
 class DogmaEffectsLocalized(LocalizableRecord, PM.DogmaEffects):
@@ -124,11 +119,9 @@ class DogmaEffectsLocalized(LocalizableRecord, PM.DogmaEffects):
     description: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(
-            localized_fields=["displayName", "description"], lang=lang
-        )
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"displayName", "description"}
 
 
 class DogmaUnitsLocalized(LocalizableRecord, PM.DogmaUnits):
@@ -138,11 +131,9 @@ class DogmaUnitsLocalized(LocalizableRecord, PM.DogmaUnits):
     description: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(
-            localized_fields=["displayName", "description"], lang=lang
-        )
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"displayName", "description"}
 
 
 class FactionsLocalized(LocalizableRecord, PM.Factions):
@@ -153,11 +144,9 @@ class FactionsLocalized(LocalizableRecord, PM.Factions):
     shortDescription: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(
-            localized_fields=["name", "description", "shortDescription"], lang=lang
-        )
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"name", "description", "shortDescription"}
 
 
 class GroupsLocalized(LocalizableRecord, PM.Groups):
@@ -166,9 +155,9 @@ class GroupsLocalized(LocalizableRecord, PM.Groups):
     name: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(localized_fields=["name"], lang=lang)
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"name"}
 
 
 class LandmarksLocalized(LocalizableRecord, PM.Landmarks):
@@ -178,11 +167,9 @@ class LandmarksLocalized(LocalizableRecord, PM.Landmarks):
     description: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(
-            localized_fields=["name", "description"], lang=lang
-        )
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"name", "description"}
 
 
 class MapAsteroidBeltsLocalized(LocalizableRecord, PM.MapAsteroidBelts):
@@ -191,9 +178,9 @@ class MapAsteroidBeltsLocalized(LocalizableRecord, PM.MapAsteroidBelts):
     uniqueName: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(localized_fields=["uniqueName"], lang=lang)
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"uniqueName"}
 
 
 class MapConstellationsLocalized(LocalizableRecord, PM.MapConstellations):
@@ -202,9 +189,9 @@ class MapConstellationsLocalized(LocalizableRecord, PM.MapConstellations):
     name: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(localized_fields=["name"], lang=lang)
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"name"}
 
 
 class MapMoonsLocalized(LocalizableRecord, PM.MapMoons):
@@ -213,9 +200,9 @@ class MapMoonsLocalized(LocalizableRecord, PM.MapMoons):
     uniqueName: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(localized_fields=["uniqueName"], lang=lang)
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"uniqueName"}
 
 
 class MapPlanetsLocalized(LocalizableRecord, PM.MapPlanets):
@@ -224,9 +211,9 @@ class MapPlanetsLocalized(LocalizableRecord, PM.MapPlanets):
     uniqueName: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(localized_fields=["uniqueName"], lang=lang)
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"uniqueName"}
 
 
 class MapRegionsLocalized(LocalizableRecord, PM.MapRegions):
@@ -236,11 +223,9 @@ class MapRegionsLocalized(LocalizableRecord, PM.MapRegions):
     description: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(
-            localized_fields=["name", "description"], lang=lang
-        )
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"name", "description"}
 
 
 class MapSolarSystemsLocalized(LocalizableRecord, PM.MapSolarSystems):
@@ -249,9 +234,9 @@ class MapSolarSystemsLocalized(LocalizableRecord, PM.MapSolarSystems):
     name: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(localized_fields=["name"], lang=lang)
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"name"}
 
 
 class MarketGroupsLocalized(LocalizableRecord, PM.MarketGroups):
@@ -261,11 +246,9 @@ class MarketGroupsLocalized(LocalizableRecord, PM.MarketGroups):
     description: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(
-            localized_fields=["name", "description"], lang=lang
-        )
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"name", "description"}
 
 
 class MetaGroupsLocalized(LocalizableRecord, PM.MetaGroups):
@@ -275,11 +258,9 @@ class MetaGroupsLocalized(LocalizableRecord, PM.MetaGroups):
     description: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(
-            localized_fields=["name", "description"], lang=lang
-        )
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"name", "description"}
 
 
 class NpcCharactersLocalized(LocalizableRecord, PM.NpcCharacters):
@@ -288,9 +269,9 @@ class NpcCharactersLocalized(LocalizableRecord, PM.NpcCharacters):
     name: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(localized_fields=["name"], lang=lang)
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"name"}
 
 
 class NpcCorporationDivisionsLocalized(LocalizableRecord, PM.NpcCorporationDivisions):
@@ -301,11 +282,9 @@ class NpcCorporationDivisionsLocalized(LocalizableRecord, PM.NpcCorporationDivis
     leaderTypeName: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(
-            localized_fields=["name", "description", "leaderTypeName"], lang=lang
-        )
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"name", "description", "leaderTypeName"}
 
 
 class NpcCorporationsLocalized(LocalizableRecord, PM.NpcCorporations):
@@ -315,11 +294,9 @@ class NpcCorporationsLocalized(LocalizableRecord, PM.NpcCorporations):
     description: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(
-            localized_fields=["name", "description"], lang=lang
-        )
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"name", "description"}
 
 
 class PlanetSchematicsLocalized(LocalizableRecord, PM.PlanetSchematics):
@@ -328,9 +305,9 @@ class PlanetSchematicsLocalized(LocalizableRecord, PM.PlanetSchematics):
     name: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(localized_fields=["name"], lang=lang)
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"name"}
 
 
 class RacesLocalized(LocalizableRecord, PM.Races):
@@ -340,11 +317,9 @@ class RacesLocalized(LocalizableRecord, PM.Races):
     description: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(
-            localized_fields=["name", "description"], lang=lang
-        )
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"name", "description"}
 
 
 class SkinMaterialsLocalized(LocalizableRecord, PM.SkinMaterials):
@@ -353,9 +328,9 @@ class SkinMaterialsLocalized(LocalizableRecord, PM.SkinMaterials):
     displayName: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(localized_fields=["displayName"], lang=lang)
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"displayName"}
 
 
 class SkinsLocalized(LocalizableRecord, PM.Skins):
@@ -364,9 +339,9 @@ class SkinsLocalized(LocalizableRecord, PM.Skins):
     skinDescription: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(localized_fields=["skinDescription"], lang=lang)
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"skinDescription"}
 
 
 class StationOperationsLocalized(LocalizableRecord, PM.StationOperations):
@@ -376,11 +351,9 @@ class StationOperationsLocalized(LocalizableRecord, PM.StationOperations):
     description: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(
-            localized_fields=["operationName", "description"], lang=lang
-        )
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"operationName", "description"}
 
 
 class StationServicesLocalized(LocalizableRecord, PM.StationServices):
@@ -390,11 +363,9 @@ class StationServicesLocalized(LocalizableRecord, PM.StationServices):
     description: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(
-            localized_fields=["serviceName", "description"], lang=lang
-        )
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"serviceName", "description"}
 
 
 # NOTE the TypeBonus model is not localized yet, because the nested classes have LocalizedStrings,
@@ -408,11 +379,9 @@ class EveTypesLocalized(LocalizableRecord, PM.EveTypes):
     description: str  # type: ignore
 
     @classmethod
-    def get_transformer(cls, lang: Lang) -> LocalizationTransformer:
-        """Get a transformer for this record class and the specified language."""
-        return LocalizationTransformer(
-            localized_fields=["name", "description"], lang=lang
-        )
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"name", "description"}
 
 
 LOOKUP: dict[SdeDatasetFiles, type[LocalizableRecord]] = {
@@ -445,5 +414,44 @@ LOOKUP: dict[SdeDatasetFiles, type[LocalizableRecord]] = {
     SdeDatasetFiles.SKINS: SkinsLocalized,
     SdeDatasetFiles.STATION_OPERATIONS: StationOperationsLocalized,
     SdeDatasetFiles.STATION_SERVICES: StationServicesLocalized,
-    SdeDatasetFiles.TYPE_BONUS: EveTypesLocalized,
+    SdeDatasetFiles.TYPES: EveTypesLocalized,
 }
+
+
+def get_model_for_dataset(dataset: SdeDatasetFiles) -> type[LocalizableRecord]:
+    """Get the model class for a given dataset."""
+    model = LOOKUP.get(dataset, None)
+    if model is None:
+        raise ValueError(f"No model found for dataset {dataset.value}")
+    return model
+
+
+def get_transformer[T: LocalizableRecord](
+    model: type[T], lang: Lang, only_published: bool
+) -> LocalizationTransformer[T]:
+    """Get the transformer for a given model."""
+    localizer = LocalizationTransformer(
+        model=model,
+        localized_fields=list(model.localized_fields()),
+        lang=lang,
+        only_published=only_published,
+    )
+    return localizer
+
+
+def get_dataset_file_for_model[T: LocalizableRecord](model: type[T]) -> SdeDatasetFiles:
+    """Get the dataset file for a given model."""
+    for dataset_file, model_class in LOOKUP.items():
+        if model_class == model:
+            return dataset_file
+    raise ValueError(f"No dataset file found for model {model.__name__}")
+
+
+def read_records[T: LocalizableRecord](
+    sde_path: Path, model: type[T], only_published: bool, lang: Lang
+) -> Iterator[tuple[int, T | None]]:
+    """Read records of type T from the appropriate JSONL file in the SDE path."""
+    dataset_file = get_dataset_file_for_model(model)
+    transformer = get_transformer(model, lang=lang, only_published=only_published)
+    file_path = sde_path / dataset_file.as_jsonl()
+    return read_jsonl_file(file_path, transformer)

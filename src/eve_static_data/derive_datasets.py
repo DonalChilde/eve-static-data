@@ -5,16 +5,14 @@ from copy import deepcopy
 from pathlib import Path
 from time import perf_counter
 
-from eve_static_data.helpers.sde_info import load_sde_info
+from eve_static_data.access import localized_datasets as LDA
 from eve_static_data.models.dataset_filenames import (
     DerivedDatasetFiles,
-    SdeDatasetFiles,
 )
 from eve_static_data.models.derived.market_path import MarketPathsDataset
 from eve_static_data.models.derived.normalized_eve_type import NormalizedEveTypesDataset
 from eve_static_data.models.derived.region_names import RegionNames
 from eve_static_data.models.derived.system_names import SystemNames
-from eve_static_data.models.pydantic import localized_datasets as LDS
 from eve_static_data.models.type_defs import Lang
 
 logger = logging.getLogger(__name__)
@@ -39,65 +37,24 @@ def generate_derived_datasets(
     if output_path.is_file():
         raise ValueError(f"Output path {output_path} is a file, expected a directory.")
     start = perf_counter()
-    sde_info = load_sde_info(input_path)
 
     # Load localized datasets needed to create the derived datasets.
-    categories_file = input_path / SdeDatasetFiles.CATEGORIES.as_jsonl()
-    categories_localier = LDS.CategoriesLocalizedDataset.get_localizer(lang)
-    categories_dataset = LDS.CategoriesLocalizedDataset.from_jsonl_file(
-        file_path=categories_file,
-        build_number=sde_info.get("buildNumber"),
-        release_date=sde_info.get("releaseDate"),
-        localizer=categories_localier,
+
+    categories_dataset = LDA.categories_localized(input_path, lang, only_published=True)
+    groups_dataset = LDA.groups_localized(input_path, lang, only_published=True)
+    map_regions_dataset = LDA.map_regions_localized(
+        input_path, lang, only_published=True
     )
-    groups_file = input_path / SdeDatasetFiles.GROUPS.as_jsonl()
-    groups_localizer = LDS.GroupsLocalizedDataset.get_localizer(lang)
-    groups_dataset = LDS.GroupsLocalizedDataset.from_jsonl_file(
-        file_path=groups_file,
-        build_number=sde_info.get("buildNumber"),
-        release_date=sde_info.get("releaseDate"),
-        localizer=groups_localizer,
+    map_solarsystem_dataset = LDA.map_solar_systems_localized(
+        input_path, lang, only_published=True
     )
-    map_regions_file = input_path / SdeDatasetFiles.MAP_REGIONS.as_jsonl()
-    map_regions_localizer = LDS.MapRegionsLocalizedDataset.get_localizer(lang)
-    map_regions_dataset = LDS.MapRegionsLocalizedDataset.from_jsonl_file(
-        file_path=map_regions_file,
-        build_number=sde_info.get("buildNumber"),
-        release_date=sde_info.get("releaseDate"),
-        localizer=map_regions_localizer,
+    market_groups_dataset = LDA.market_groups_localized(
+        input_path, lang, only_published=True
     )
-    map_solarsystem_file = input_path / SdeDatasetFiles.MAP_SOLAR_SYSTEMS.as_jsonl()
-    map_solarsystem_localizer = LDS.MapSolarSystemsLocalizedDataset.get_localizer(lang)
-    map_solarsystem_dataset = LDS.MapSolarSystemsLocalizedDataset.from_jsonl_file(
-        file_path=map_solarsystem_file,
-        build_number=sde_info.get("buildNumber"),
-        release_date=sde_info.get("releaseDate"),
-        localizer=map_solarsystem_localizer,
+    meta_groups_dataset = LDA.meta_groups_localized(
+        input_path, lang, only_published=True
     )
-    market_groups_file = input_path / SdeDatasetFiles.MARKET_GROUPS.as_jsonl()
-    market_groups_localizer = LDS.MarketGroupsLocalizedDataset.get_localizer(lang)
-    market_groups_dataset = LDS.MarketGroupsLocalizedDataset.from_jsonl_file(
-        file_path=market_groups_file,
-        build_number=sde_info.get("buildNumber"),
-        release_date=sde_info.get("releaseDate"),
-        localizer=market_groups_localizer,
-    )
-    meta_groups_file = input_path / SdeDatasetFiles.META_GROUPS.as_jsonl()
-    meta_groups_localizer = LDS.MetaGroupsLocalizedDataset.get_localizer(lang)
-    meta_groups_dataset = LDS.MetaGroupsLocalizedDataset.from_jsonl_file(
-        file_path=meta_groups_file,
-        build_number=sde_info.get("buildNumber"),
-        release_date=sde_info.get("releaseDate"),
-        localizer=meta_groups_localizer,
-    )
-    eve_types_file = input_path / SdeDatasetFiles.TYPES.as_jsonl()
-    eve_types_localizer = LDS.EveTypesLocalizedDataset.get_localizer(lang)
-    eve_types_dataset = LDS.EveTypesLocalizedDataset.from_jsonl_file(
-        file_path=eve_types_file,
-        build_number=sde_info.get("buildNumber"),
-        release_date=sde_info.get("releaseDate"),
-        localizer=eve_types_localizer,
-    )
+    eve_types_dataset = LDA.eve_types_localized(input_path, lang, only_published=True)
 
     # MarketPathsDataset
     market_paths_dataset = MarketPathsDataset.from_dataset(market_groups_dataset)

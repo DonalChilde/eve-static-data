@@ -12,12 +12,15 @@ missing in a given record. In the pydantic models, the field is defined as optio
 and will be set to `None` if it is missing in the data.
 """
 
+from collections.abc import Iterator
+from pathlib import Path
 from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from eve_static_data.helpers.pydantic.jsonl_record import JsonlRecord
+from eve_static_data.helpers.jsonl_reader import read_jsonl_file
 from eve_static_data.models.dataset_filenames import SdeDatasetFiles
+from eve_static_data.transformers_2 import ValidModels
 
 # ------------------------------------------------------------------------------
 # Common Pydantic model definitions.
@@ -82,7 +85,7 @@ class Position2D(BaseModel):
 # ------------------------------------------------------------------------------
 
 
-class SdeDatasetRecord(JsonlRecord):
+class SdeDatasetRecord(BaseModel):
     """Base model for all SDE datasets."""
 
     model_config = ConfigDict(serialize_by_alias=True)
@@ -1210,3 +1213,79 @@ LOOKUP: dict[SdeDatasetFiles, type[SdeDatasetRecord]] = {
     SdeDatasetFiles.TYPE_MATERIALS: TypeMaterials,
     SdeDatasetFiles.TYPES: EveTypes,
 }
+
+
+def get_model_for_dataset_file(dataset_file: SdeDatasetFiles) -> type[SdeDatasetRecord]:
+    """Get the pydantic model class for a given SDE dataset file.
+
+    Args:
+        dataset_file: The SdeDatasetFiles enum member representing the dataset file.
+
+    Returns:
+        The pydantic model class associated with the given dataset file.
+
+    Raises:
+        ValueError: If no model is registered for the given dataset file.
+    """
+    if dataset_file in LOOKUP:
+        return LOOKUP[dataset_file]
+    raise ValueError(f"No model found for dataset file: {dataset_file}")
+
+
+def get_transformer[T: SdeDatasetRecord](
+    model: type[T], only_published: bool
+) -> ValidModels[T]:
+    """Get the transformer for a given model type.
+
+    Args:
+        model: The pydantic model class to build a transformer for.
+        only_published: Whether to only include published records.
+
+    Returns:
+        A ValidModels transformer bound to the concrete model type T.
+
+    Raises:
+        ValueError: If no model is registered for the given dataset file.
+    """
+    return ValidModels(model=model, only_published=only_published)
+
+
+def get_dataset_file_for_model[T: SdeDatasetRecord](
+    model: type[T],
+) -> SdeDatasetFiles:
+    """Get the corresponding SDE dataset file for a given model.
+
+    Args:
+        model: The pydantic model class to look up.
+
+    Returns:
+        The SdeDatasetFiles entry associated with the given model.
+
+    Raises:
+        ValueError: If no dataset file is registered for the given model.
+    """
+    for dataset_file, model_cls in LOOKUP.items():
+        if model_cls is model:
+            return dataset_file
+    raise ValueError(f"No dataset file found for model: {model}")
+
+
+def read_records[T: SdeDatasetRecord](
+    sde_path: Path, model: type[T], only_published: bool
+) -> Iterator[tuple[int, T | None]]:
+    """Read typed records from the SDE dataset file for a given model.
+
+    Args:
+        sde_path: Path to the root SDE directory.
+        model: The pydantic model class used to parse each record.
+
+    Yields:
+        Tuples of (line_number, parsed_record_or_none) for each JSONL line.
+
+    Raises:
+        ValueError: If no dataset file is registered for the given model.
+    """
+    dataset_file = get_dataset_file_for_model(model)
+    transformer = get_transformer(model, only_published=only_published)
+    file_path = sde_path / dataset_file.as_jsonl()
+    return read_jsonl_file(file_path, transformer)
