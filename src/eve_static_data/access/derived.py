@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from eve_static_data.models.datasets.sde_dataset_files import DerivedDatasetFiles
+from eve_static_data.models.dataset_filenames import DerivedDatasetFiles
 from eve_static_data.models.derived.market_path import MarketPathsDataset
 from eve_static_data.models.derived.normalized_eve_type import NormalizedEveTypesDataset
 from eve_static_data.models.derived.region_names import RegionNames

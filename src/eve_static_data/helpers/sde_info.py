@@ -1,3 +1,5 @@
+"""Functions for loading SDE info from a given input path or SDE zip file."""
+
 import json
 import zipfile
 from pathlib import Path

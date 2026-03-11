@@ -11,6 +11,12 @@ logger = logging.getLogger(__name__)
 
 BASE_MODELS = TypeVar("BASE_MODELS", bound=BaseModel)
 
+# TODO abstract this out to a jsonl reader function that takes a transformer and returns
+# an iterable of records. Provide a json transformer. Support pydantic transformers.
+# Transformer should be able to skip records by returning None.
+# transformer sig should be generic callable that takes an indexed string and returns an instance of the model or None.
+# in examples show simple function, and callable class for more complex transformations.
+
 
 class TransformerProtocol(Protocol):
     def transform(

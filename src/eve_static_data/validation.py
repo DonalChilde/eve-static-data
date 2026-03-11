@@ -17,15 +17,6 @@ from eve_static_data.transformers import ModelValidationErrorRecord, ValidModels
 logger = logging.getLogger(__name__)
 
 
-# class DatasetValidationRecord(BaseModel):
-#     """A record of a validation error for a dataset."""
-
-#     file_path: Path
-#     line_number: int
-#     data: dict[str, Any]
-#     error_message: str
-
-
 class DatasetStats(BaseModel):
     """Statistics about a dataset."""
 
