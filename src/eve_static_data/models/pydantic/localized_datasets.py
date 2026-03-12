@@ -44,6 +44,10 @@ class MetaGroupsLocalizedDataset(SdeDatasetLocalized):
     records: dict[int, LPM.MetaGroupsLocalized]
 
 
+class MercenaryTacticalOperationsLocalizedDataset(SdeDatasetLocalized):
+    records: dict[int, LPM.MercenaryTacticalOperationsLocalized]
+
+
 class EveTypesLocalizedDataset(SdeDatasetLocalized):
     records: dict[int, LPM.EveTypesLocalized]
 
@@ -56,5 +60,6 @@ LOOKUP: dict[SdeDatasetFiles, type[SdeDatasetLocalized]] = {
     SdeDatasetFiles.MAP_SOLAR_SYSTEMS: MapSolarSystemsLocalizedDataset,
     SdeDatasetFiles.MARKET_GROUPS: MarketGroupsLocalizedDataset,
     SdeDatasetFiles.META_GROUPS: MetaGroupsLocalizedDataset,
+    SdeDatasetFiles.MERCENARY_TACTICAL_OPERATIONS: MercenaryTacticalOperationsLocalizedDataset,
     SdeDatasetFiles.TYPES: EveTypesLocalizedDataset,
 }

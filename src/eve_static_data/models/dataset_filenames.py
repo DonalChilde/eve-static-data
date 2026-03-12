@@ -38,6 +38,7 @@ class SdeDatasetFiles(StrEnum):
     MARKET_GROUPS = "marketGroups"
     MASTERIES = "masteries"
     META_GROUPS = "metaGroups"
+    MERCENARY_TACTICAL_OPERATIONS = "mercenaryTacticalOperations"
     NPC_CHARACTERS = "npcCharacters"
     NPC_CORPORATION_DIVISIONS = "npcCorporationDivisions"
     NPC_CORPORATIONS = "npcCorporations"

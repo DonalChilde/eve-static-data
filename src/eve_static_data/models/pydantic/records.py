@@ -745,6 +745,17 @@ class MetaGroups(SdeDatasetRecord):
     description: LocalizedString | None = None
 
 
+class MercenaryTacticalOperations(SdeDatasetRecord):
+    """Model for the mercenaryTacticalOperations.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    anarchy_impact: int
+    development_impact: int
+    infomorph_bonus: int
+    name: LocalizedString
+    description: LocalizedString | None = None
+
+
 class NpcCharacters_Skill(BaseModel):
     """Nested model for the npcCharacters.jsonl SDE file."""
 
@@ -1193,6 +1204,7 @@ LOOKUP: dict[SdeDatasetFiles, type[SdeDatasetRecord]] = {
     SdeDatasetFiles.MARKET_GROUPS: MarketGroups,
     SdeDatasetFiles.MASTERIES: Masteries,
     SdeDatasetFiles.META_GROUPS: MetaGroups,
+    SdeDatasetFiles.MERCENARY_TACTICAL_OPERATIONS: MercenaryTacticalOperations,
     SdeDatasetFiles.NPC_CHARACTERS: NpcCharacters,
     SdeDatasetFiles.NPC_CORPORATION_DIVISIONS: NpcCorporationDivisions,
     SdeDatasetFiles.NPC_CORPORATIONS: NpcCorporations,

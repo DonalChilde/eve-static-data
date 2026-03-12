@@ -162,6 +162,10 @@ class MetaGroupsDataset(SdeDataset):
     records: dict[int, PM.MetaGroups]
 
 
+class MercenaryTacticalOperationsDataset(SdeDataset):
+    records: dict[int, PM.MercenaryTacticalOperations]
+
+
 class NpcCharactersDataset(SdeDataset):
     records: dict[int, PM.NpcCharacters]
 
@@ -277,6 +281,7 @@ LOOKUP: dict[SdeDatasetFiles, type[SdeDataset]] = {
     SdeDatasetFiles.MARKET_GROUPS: MarketGroupsDataset,
     SdeDatasetFiles.MASTERIES: MasteriesDataset,
     SdeDatasetFiles.META_GROUPS: MetaGroupsDataset,
+    SdeDatasetFiles.MERCENARY_TACTICAL_OPERATIONS: MercenaryTacticalOperationsDataset,
     SdeDatasetFiles.NPC_CHARACTERS: NpcCharactersDataset,
     SdeDatasetFiles.NPC_CORPORATION_DIVISIONS: NpcCorporationDivisionsDataset,
     SdeDatasetFiles.NPC_CORPORATIONS: NpcCorporationsDataset,

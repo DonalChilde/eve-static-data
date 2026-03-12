@@ -732,6 +732,26 @@ def meta_groups(
     return dataset
 
 
+def mercenary_tactical_operations(
+    sde_path: Path, only_published: bool = True, skip_validation_failures: bool = False
+) -> PD.MercenaryTacticalOperationsDataset:
+    """Load the mercenary tactical operations dataset."""
+    sde_info = load_sde_info(sde_path)
+    records = PM.read_records(
+        sde_path,
+        PM.MercenaryTacticalOperations,
+        only_published=only_published,
+        skip_validation_failures=skip_validation_failures,
+    )
+    records_dict = {record.key: record for _, record in records if record is not None}
+    dataset = PD.MercenaryTacticalOperationsDataset(
+        build_number=sde_info.get("buildNumber"),
+        release_date=sde_info.get("releaseDate"),
+        records=records_dict,
+    )
+    return dataset
+
+
 def npc_characters(
     sde_path: Path, only_published: bool = True, skip_validation_failures: bool = False
 ) -> PD.NpcCharactersDataset:

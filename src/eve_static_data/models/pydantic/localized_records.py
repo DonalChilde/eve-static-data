@@ -263,6 +263,20 @@ class MetaGroupsLocalized(LocalizableRecord, PM.MetaGroups):
         return {"name", "description"}
 
 
+class MercenaryTacticalOperationsLocalized(
+    LocalizableRecord, PM.MercenaryTacticalOperations
+):
+    """MercenaryTacticalOperations model with localized fields."""
+
+    name: str  # type: ignore
+    description: str  # type: ignore
+
+    @classmethod
+    def localized_fields(cls) -> set[str]:
+        """Get a set of field names that should be localized."""
+        return {"name", "description"}
+
+
 class NpcCharactersLocalized(LocalizableRecord, PM.NpcCharacters):
     """NpcCharacters model with localized fields."""
 
@@ -406,6 +420,7 @@ LOOKUP: dict[SdeDatasetFiles, type[LocalizableRecord]] = {
     SdeDatasetFiles.MAP_SOLAR_SYSTEMS: MapSolarSystemsLocalized,
     SdeDatasetFiles.MARKET_GROUPS: MarketGroupsLocalized,
     SdeDatasetFiles.META_GROUPS: MetaGroupsLocalized,
+    SdeDatasetFiles.MERCENARY_TACTICAL_OPERATIONS: MercenaryTacticalOperationsLocalized,
     SdeDatasetFiles.NPC_CHARACTERS: NpcCharactersLocalized,
     SdeDatasetFiles.NPC_CORPORATION_DIVISIONS: NpcCorporationDivisionsLocalized,
     SdeDatasetFiles.NPC_CORPORATIONS: NpcCorporationsLocalized,
