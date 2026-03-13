@@ -432,6 +432,8 @@ LOOKUP: dict[SdeDatasetFiles, type[LocalizableRecord]] = {
     SdeDatasetFiles.TYPES: EveTypesLocalized,
 }
 
+REVERSE: dict[str, SdeDatasetFiles] = {v.__name__: k for k, v in LOOKUP.items()}
+
 
 def get_model_for_dataset(dataset: SdeDatasetFiles) -> type[LocalizableRecord]:
     """Get the model class for a given dataset."""
@@ -457,10 +459,10 @@ def get_transformer[T: LocalizableRecord](
 
 def get_dataset_file_for_model[T: LocalizableRecord](model: type[T]) -> SdeDatasetFiles:
     """Get the dataset file for a given model."""
-    for dataset_file, model_class in LOOKUP.items():
-        if model_class == model:
-            return dataset_file
-    raise ValueError(f"No dataset file found for model {model.__name__}")
+    dataset_file = REVERSE.get(model.__name__, None)
+    if dataset_file is None:
+        raise ValueError(f"No dataset file found for model {model.__name__}")
+    return dataset_file
 
 
 def read_records[T: LocalizableRecord](

@@ -1225,6 +1225,9 @@ LOOKUP: dict[SdeDatasetFiles, type[SdeDatasetRecord]] = {
     SdeDatasetFiles.TYPE_MATERIALS: TypeMaterials,
     SdeDatasetFiles.TYPES: EveTypes,
 }
+REVERSE: dict[str, SdeDatasetFiles] = {
+    model.__name__: dataset_file for dataset_file, model in LOOKUP.items()
+}
 
 
 def get_model_for_dataset_file(dataset_file: SdeDatasetFiles) -> type[SdeDatasetRecord]:
@@ -1281,10 +1284,10 @@ def get_dataset_file_for_model[T: SdeDatasetRecord](
     Raises:
         ValueError: If no dataset file is registered for the given model.
     """
-    for dataset_file, model_cls in LOOKUP.items():
-        if model_cls is model:
-            return dataset_file
-    raise ValueError(f"No dataset file found for model: {model}")
+    dataset_file = REVERSE.get(model.__name__, None)
+    if dataset_file is None:
+        raise ValueError(f"No dataset file found for model: {model}")
+    return dataset_file
 
 
 def read_records[T: SdeDatasetRecord](

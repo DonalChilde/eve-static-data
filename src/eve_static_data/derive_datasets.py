@@ -1,7 +1,6 @@
 """Generate derived datasets for a specific build number."""
 
 import logging
-from copy import deepcopy
 from pathlib import Path
 from time import perf_counter
 
