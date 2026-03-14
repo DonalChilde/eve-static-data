@@ -77,6 +77,15 @@ def datasets(
             file_okay=False,
         ),
     ],
+    datasets: Annotated[
+        list[SdeDatasetFiles] | None,
+        typer.Option(
+            "-d",
+            "--datasets",
+            help="The one or more datasets to export. If not provided, all datasets will be exported.",
+            show_default=True,
+        ),
+    ] = None,
     overwrite: Annotated[
         bool,
         typer.Option(
