@@ -32,7 +32,7 @@ def latest(
         ),
     ] = None,
 ):
-    """Show information about the latest available SDE data."""
+    """Fetch and show information about the latest available SDE data."""
     console = Console()
     console.print("[bold green]Latest SDE Information[/bold green]")
     settings = ctx.obj[SETTINGS_KEY]
@@ -52,7 +52,7 @@ def latest(
 
 
 @app.command()
-def changelog(
+def schema_changelog(
     ctx: typer.Context,
     file_out: Annotated[
         Path | None,
@@ -64,7 +64,7 @@ def changelog(
         ),
     ] = None,
 ):
-    """Show the changelog for the SDE schema."""
+    """Fetch and show the changelog for the SDE schema."""
     console = Console()
     console.print("[bold green]SDE Schema Changelog[/bold green]")
     settings = ctx.obj[SETTINGS_KEY]
@@ -106,7 +106,7 @@ def data_changelog(
         ),
     ] = None,
 ):
-    """Show the changelog for the SDE data.
+    """Fetch and show the changelog for the SDE data.
 
     Note the changelog for the SDE data is different from the changelog for the SDE schema.
     The SDE data changelog tracks changes in the actual data, while the SDE schema changelog
@@ -196,16 +196,20 @@ def download_sde(
     latest_info = asyncio.run(
         network.current_sde_info(url=settings.sde_latest_info_url)
     )
+    release_date = "Unknown"
     # Resolve latest build number if needed, because `latest` causes a 403 error.
     if build_number is None:
         build_number = latest_info.get("buildNumber")
+        release_date = latest_info.get("releaseDate")
         if not build_number:
             console.print(
                 "[bold red]Error:[/bold red] Could not resolve latest build number."
             )
             console.print(latest_info)
             raise typer.Exit(code=1)
-        console.print(f"Resolved latest build number to: {build_number}")
+        console.print(
+            f"Resolved latest build number to: {build_number} - {release_date}"
+        )
 
     url = AD.sde_download_url(
         settings.sde_download_url_template, build_number=build_number, variant=variant
@@ -213,17 +217,18 @@ def download_sde(
     output_filename = AD.sde_data_filename(
         settings.sde_data_filename_template, build_number=build_number, variant=variant
     )
-    output_path = output_dir / output_filename
+
     console.print(f"Downloading SDE data.")
     console.print(f"URL: {url}")
-    console.print(f"Output path: {output_path}")
+    console.print(f"Output path: {output_dir / output_filename}")
     try:
         asyncio.run(
             network.download_sde_to_file(
                 url_template_str=settings.sde_download_url_template,
                 build_number=build_number,
                 variant=variant,
-                output_path=output_path,
+                output_path=output_dir,
+                file_name=output_filename,
                 overwrite=overwrite,
             )
         )

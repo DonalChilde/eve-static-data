@@ -6,20 +6,23 @@ from pathlib import Path
 import typer
 
 from eve_static_data import __app_name__, __version__
+from eve_static_data.cli.config_info import app as config_info_app
 from eve_static_data.cli.helpers import SETTINGS_KEY, create_esd_settings
-
-# from eve_static_data.cli.sde_dev import app as sde_dev_app
-from eve_static_data.cli.sde_io import app as sde_io_app
+from eve_static_data.cli.sde_export import app as sde_export_app
 from eve_static_data.cli.sde_network import app as sde_network_app
+from eve_static_data.cli.sde_unpack import app as sde_unpack_app
+from eve_static_data.cli.sde_validate import app as sde_validate_app
 from eve_static_data.logging_config import setup_logging
 from eve_static_data.settings import get_settings
 
 logger = logging.getLogger(__name__)
 
 app = typer.Typer(no_args_is_help=True)
-app.add_typer(sde_network_app, name="network", help="SDE internet related commands.")
-# app.add_typer(sde_dev_app, name="dev", help="SDE development commands.")
-app.add_typer(sde_io_app, name="io", help="SDE import/export related commands.")
+app.add_typer(sde_network_app)
+app.add_typer(sde_unpack_app)
+app.add_typer(sde_validate_app)
+app.add_typer(sde_export_app, name="export", help="Commands for exporting SDE data.")
+app.add_typer(config_info_app)
 
 
 @app.callback(invoke_without_command=True)

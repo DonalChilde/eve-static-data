@@ -32,6 +32,7 @@ class SdeLatestInfo(TypedDict):
 async def download_sde_to_file(
     build_number: int,
     output_path: Path,
+    file_name: str | None = None,
     url_template_str: str = SDE_URL_TEMPLATE,
     variant: Literal["jsonl", "yaml"] = "jsonl",
     overwrite: bool = False,
@@ -41,15 +42,18 @@ async def download_sde_to_file(
     Args:
         build_number: The build number of the SDE to download.
         output_path: The directory to save the downloaded SDE file to.
-        url_template_str: The URL template to download the SDE data file. build-number can be any valid build number. variant can be jsonl or yaml
+        file_name: The name of the file to save the SDE data to. If not provided, the
+            file name will be extracted from the URL.
+        url_template_str: The URL template to download the SDE data file.
         variant: The variant of the SDE data to download, either "jsonl" or "yaml". Defaults to "jsonl".
         overwrite: Whether to overwrite the output file if it already exists. Defaults to False.
     """
     url = Template(url_template_str).substitute(
         build_number=build_number, variant=variant
     )
-    # get the filename from the url
-    file_name = url.split("/")[-1]
+    # get the filename from the url if not provided
+    if file_name is None:
+        file_name = url.split("/")[-1]
     file_path = output_path / file_name
     user_agent = USER_AGENT
     headers = {"User-Agent": user_agent}

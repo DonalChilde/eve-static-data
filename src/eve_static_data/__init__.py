@@ -16,3 +16,5 @@ NAMESPACE = "pfmsoft"
 APPLICATION_NAME = "esi-static-data"
 DEFAULT_APP_DIR = Path(get_app_dir(f"{NAMESPACE}-{APPLICATION_NAME}"))
 USER_AGENT = f"{__app_name__}/{__version__} (+{__url__})"
+AFTER_BUILD_NUMBER: int = 0
+RELEASE_DATE: str = "Set Me"
