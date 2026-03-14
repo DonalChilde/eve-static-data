@@ -6,11 +6,14 @@ from typing import Annotated
 import typer
 from rich.console import Console
 
+from eve_static_data.models.dataset_filenames import SdeDatasetFiles
 from eve_static_data.models.type_defs import Lang, LangEnum
 
 app = typer.Typer(no_args_is_help=True)
 
 # STUBS
+# TODO make a dispatcher for the export commands that can call the appropriate export
+# functions based on the command and options, maybe SDESdeDatasetFiles? or something like that.
 
 
 @app.command()
