@@ -7,15 +7,14 @@ from time import perf_counter
 
 from pydantic import BaseModel
 from rich.console import Console
-from whenever import Instant
 
 from eve_static_data.helpers.jsonl_reader import read_jsonl_file
 from eve_static_data.helpers.pydantic.save_to_disk import BaseModelToDisk
+from eve_static_data.helpers.save_text_file import save_text_file
 from eve_static_data.helpers.sde_info import SdeInfo, load_sde_info
 from eve_static_data.models.dataset_filenames import SdeDatasetFiles
 from eve_static_data.models.pydantic.records import LOOKUP as pydantic_model_lookup
 from eve_static_data.network import (
-    DATA_CHANGES_URL_TEMPLATE,
     get_sde_data_changes,
     get_sde_schema_changelog,
 )
@@ -484,22 +483,3 @@ def optional_printer(message: str, console: Console | None = None) -> None:
     """Print a message to the console if a console is provided, otherwise do nothing."""
     if console is not None:
         console.print(message)
-
-
-def save_text_file(
-    text: str, output_path: Path, file_name: str, overwrite: bool = False
-) -> Path:
-    """Save text to a file, optionally overwriting if it exists."""
-    output_file = output_path / file_name
-    if output_file.exists() and not overwrite:
-        logger.warning(
-            f"File {output_file} already exists and overwrite is False. Skipping."
-        )
-        raise FileExistsError(
-            f"File {output_file} already exists and overwrite is False."
-        )
-    output_file.parent.mkdir(parents=True, exist_ok=True)
-    with output_file.open("w", encoding="utf-8") as f:
-        f.write(text)
-    logger.info(f"Saved text file to {output_file}")
-    return output_file
