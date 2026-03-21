@@ -690,7 +690,9 @@ def write_directory_markdown(
     """
     inspection = inspect_jsonl_directory(directory_path)
     markdown = generate_directory_markdown(inspection)
-    Path(output_path).write_text(markdown, encoding="utf-8")
+    output = Path(output_path)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(markdown, encoding="utf-8")
     return inspection
 
 
@@ -1027,7 +1029,9 @@ def _save_json(data: Any, path: str | Path) -> None:
         data: Object to serialize.
         path: Output file path.
     """
-    Path(path).write_text(json.dumps(data, indent=2), encoding="utf-8")
+    output = Path(path)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(json.dumps(data, indent=2), encoding="utf-8")
 
 
 def _load_directory_inspection(path: str | Path) -> DirectoryInspection:
@@ -1094,7 +1098,9 @@ def main() -> None:
         if args.output_json:
             _save_json(result, args.output_json)
         if args.output_md:
-            Path(args.output_md).write_text(
+            output_md = Path(args.output_md)
+            output_md.parent.mkdir(parents=True, exist_ok=True)
+            output_md.write_text(
                 generate_directory_markdown(result),
                 encoding="utf-8",
             )
@@ -1109,7 +1115,9 @@ def main() -> None:
     if args.output_json:
         _save_json(result, args.output_json)
     if args.output_md:
-        Path(args.output_md).write_text(
+        output_md = Path(args.output_md)
+        output_md.parent.mkdir(parents=True, exist_ok=True)
+        output_md.write_text(
             generate_comparison_markdown(result),
             encoding="utf-8",
         )
