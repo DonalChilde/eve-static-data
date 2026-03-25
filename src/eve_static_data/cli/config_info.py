@@ -7,7 +7,7 @@ from rich.console import Console
 from rich.text import Text
 
 from eve_static_data import AFTER_BUILD_NUMBER, RELEASE_DATE, __app_name__, __version__
-from eve_static_data.cli.helpers import SETTINGS_KEY, ESDSettings
+from eve_static_data.cli.helpers import SETTINGS_KEY, EsdCliSettings
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -26,5 +26,5 @@ def settings(ctx: typer.Context):
     console = Console()
     console.rule(Text("Eve Static Data CLI Settings", style="bold cyan"))
     settings = ctx.obj[SETTINGS_KEY]
-    settings = cast(ESDSettings, settings)
+    settings = cast(EsdCliSettings, settings)
     console.print(settings)

@@ -13,7 +13,7 @@ from rich.console import Console
 from yaml import safe_dump
 
 from eve_static_data import network
-from eve_static_data.cli.helpers import SETTINGS_KEY, ESDSettings
+from eve_static_data.cli.helpers import SETTINGS_KEY, EsdCliSettings
 from eve_static_data.helpers import app_data as AD
 
 app = typer.Typer(no_args_is_help=True)
@@ -36,7 +36,7 @@ def latest(
     console = Console()
     console.print("[bold green]Latest SDE Information[/bold green]")
     settings = ctx.obj[SETTINGS_KEY]
-    settings = cast(ESDSettings, settings)
+    settings = cast(EsdCliSettings, settings)
     info = asyncio.run(network.current_sde_info(url=settings.sde_latest_info_url))
     console.print(info)
     if file_out:
@@ -68,7 +68,7 @@ def schema_changelog(
     console = Console()
     console.print("[bold green]SDE Schema Changelog[/bold green]")
     settings = ctx.obj[SETTINGS_KEY]
-    settings = cast(ESDSettings, settings)
+    settings = cast(EsdCliSettings, settings)
     changelog = asyncio.run(
         network.get_sde_schema_changelog(url=settings.sde_schema_changelog_url)
     )
@@ -118,7 +118,7 @@ def data_changelog(
     console = Console()
     console.print("[bold green]SDE Data Changelog[/bold green]")
     settings = ctx.obj[SETTINGS_KEY]
-    settings = cast(ESDSettings, settings)
+    settings = cast(EsdCliSettings, settings)
     if build_number is None:
         console.print("No build number provided, resolving latest build number...")
 
@@ -192,7 +192,7 @@ def download_sde(
     console = Console()
     console.print("[bold green]Downloading SDE Data...[/bold green]")
     settings = ctx.obj[SETTINGS_KEY]
-    settings = cast(ESDSettings, settings)
+    settings = cast(EsdCliSettings, settings)
     latest_info = asyncio.run(
         network.current_sde_info(url=settings.sde_latest_info_url)
     )
