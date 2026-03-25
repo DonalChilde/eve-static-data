@@ -8,12 +8,83 @@ For best performance, generate these once, and save them to disk.
 from pathlib import Path
 
 from eve_static_data.access import localized_datasets as LDA
-from eve_static_data.access import sde_datasets as SDA
 from eve_static_data.models.derived.market_path import MarketPathsDataset
 from eve_static_data.models.derived.normalized_eve_type import NormalizedEveTypesDataset
 from eve_static_data.models.derived.region_names import RegionNames
 from eve_static_data.models.derived.system_names import SystemNames
 from eve_static_data.models.type_defs import Lang
+
+
+class DerivedDatasetLoader:
+    """Loader for derived datasets."""
+
+    def __init__(
+        self,
+        sde_path: Path,
+    ):
+        """Loader for derived datasets.
+
+        Args:
+            sde_path: Path to the unpacked SDE directory.
+
+        """
+        self.sde_path = sde_path
+
+    def market_paths(
+        self,
+        lang: Lang = "en",
+        only_published: bool = True,
+        skip_validation_failures: bool = False,
+    ) -> MarketPathsDataset:
+        """Load the market paths dataset for the specified language."""
+        return market_paths(
+            self.sde_path,
+            lang,
+            only_published=only_published,
+            skip_validation_failures=skip_validation_failures,
+        )
+
+    def normalized_eve_types(
+        self,
+        lang: Lang = "en",
+        only_published: bool = True,
+        skip_validation_failures: bool = False,
+    ) -> NormalizedEveTypesDataset:
+        """Load the normalized eve types dataset for the specified language."""
+        return normalized_eve_types(
+            self.sde_path,
+            lang,
+            only_published=only_published,
+            skip_validation_failures=skip_validation_failures,
+        )
+
+    def region_names(
+        self,
+        lang: Lang = "en",
+        only_published: bool = True,
+        skip_validation_failures: bool = False,
+    ) -> RegionNames:
+        """Load the region names dataset for the specified language."""
+        return region_names(
+            self.sde_path,
+            lang,
+            only_published=only_published,
+            skip_validation_failures=skip_validation_failures,
+        )
+
+    def system_names(
+        self,
+        lang: Lang = "en",
+        only_published: bool = True,
+        skip_validation_failures: bool = False,
+    ) -> SystemNames:
+        """Load the system names dataset for the specified language."""
+        return system_names(
+            self.sde_path,
+            lang,
+            only_published=only_published,
+            skip_validation_failures=skip_validation_failures,
+        )
 
 
 def market_paths(
