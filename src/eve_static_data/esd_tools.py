@@ -1,4 +1,4 @@
-# """Implementation of the ESDTools protocol."""
+"""Implementation of the EsdTools."""
 
 
 class EsdTools:
