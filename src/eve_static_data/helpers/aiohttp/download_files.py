@@ -20,6 +20,60 @@ logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 
 
+# Refactor plan: stream downloads to disk instead of buffering the full response.
+
+# Goals:
+
+# Avoid loading the entire response body into memory for large SDE archives.
+# Make the final write atomic by replacing the destination only after a full successful download.
+# Keep current overwrite semantics and error reporting behavior.
+# Planned steps:
+
+# Keep the existing path validation at the start of download_bytes_to_file.
+
+# Reject directory targets.
+# Reject existing files when overwrite is False.
+# Ensure the parent directory exists.
+# Replace the full-body read path.
+
+# Remove the await response.read() call.
+# Iterate over response.content in fixed-size chunks.
+# Write each chunk directly to a temporary file.
+# Create the temporary file in the destination directory.
+
+# Use a temp file under file_path.parent, not the system temp directory.
+# This keeps the final replace on the same filesystem.
+# Finalize writes safely.
+
+# Flush and close the temp file after the stream completes.
+# Promote the temp file to the final path with an atomic replace operation.
+# Only replace the destination after the full download succeeds.
+# Add robust cleanup.
+
+# If the request or file write fails, close and delete the temp file.
+# Log cleanup failures separately without hiding the original exception.
+# Preserve function behavior.
+
+# Still call response.raise_for_status() before writing output.
+# Still return response headers.
+# Keep logging around start/end timing, but avoid per-chunk logging.
+# Optional follow-up improvements.
+
+# Choose and document a chunk size suitable for large archives.
+# Consider fsync if stronger durability guarantees are needed.
+# Add tests for overwrite=False, partial-failure cleanup, and successful replacement.
+# Short version:
+
+# TODO: Refactor download_bytes_to_file to stream response chunks to a temp file in file_path.parent, then atomically replace the destination on success. Remove the full in-memory response read, preserve overwrite checks, and guarantee temp-file cleanup on failure.
+
+# Test plan:
+
+# Successful large-file download writes in chunks and returns headers.
+# Existing target with overwrite=False fails before network write.
+# Failed download leaves no partial destination file behind.
+# Temp file is created in the destination directory and cleaned up on error.
+
+
 async def download_bytes_to_file(
     url: str,
     file_path: Path,
