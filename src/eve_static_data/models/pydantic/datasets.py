@@ -138,6 +138,10 @@ class MapRegionsDataset(SdeDataset):
     records: dict[int, PM.MapRegions]
 
 
+class MapSecondarySunsDataset(SdeDataset):
+    records: dict[int, PM.MapSecondarySuns]
+
+
 class MapSolarSystemsDataset(SdeDataset):
     records: dict[int, PM.MapSolarSystems]
 
@@ -275,6 +279,7 @@ LOOKUP: dict[SdeDatasetFiles, type[SdeDataset]] = {
     SdeDatasetFiles.MAP_MOONS: MapMoonsDataset,
     SdeDatasetFiles.MAP_PLANETS: MapPlanetsDataset,
     SdeDatasetFiles.MAP_REGIONS: MapRegionsDataset,
+    SdeDatasetFiles.MAP_SECONDARY_SUNS: MapSecondarySunsDataset,
     SdeDatasetFiles.MAP_SOLAR_SYSTEMS: MapSolarSystemsDataset,
     SdeDatasetFiles.MAP_STARGATES: MapStargatesDataset,
     SdeDatasetFiles.MAP_STARS: MapStarsDataset,

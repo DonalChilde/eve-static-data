@@ -32,6 +32,7 @@ class SdeDatasetFiles(StrEnum):
     MAP_MOONS = "mapMoons"
     MAP_PLANETS = "mapPlanets"
     MAP_REGIONS = "mapRegions"
+    MAP_SECONDARY_SUNS = "mapSecondarySuns"
     MAP_SOLAR_SYSTEMS = "mapSolarSystems"
     MAP_STARGATES = "mapStargates"
     MAP_STARS = "mapStars"
@@ -89,6 +90,9 @@ class SdeDatasetFiles(StrEnum):
         naming convention for datasets.
         """
         return f"{self.value}-dataset.json"
+
+
+# TODO unifiy function naming conventions. Add published to above?
 
 
 class DerivedDatasetFiles(StrEnum):

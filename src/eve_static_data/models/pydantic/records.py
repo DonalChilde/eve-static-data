@@ -643,6 +643,16 @@ class MapRegions(SdeDatasetRecord):
     wormholeClassID: int | None = None
 
 
+class MapSecondarySuns(SdeDatasetRecord):
+    """Model for the mapSecondarySuns.jsonl SDE file."""
+
+    key: int = Field(..., alias="_key")
+    effectBeaconTypeID: int
+    position: Position
+    solarSystemID: int
+    typeID: int
+
+
 class MapSolarSystems(SdeDatasetRecord):
     """Model for the mapSolarSystems.jsonl SDE file."""
 
@@ -1198,6 +1208,7 @@ LOOKUP: dict[SdeDatasetFiles, type[SdeDatasetRecord]] = {
     SdeDatasetFiles.MAP_MOONS: MapMoons,
     SdeDatasetFiles.MAP_PLANETS: MapPlanets,
     SdeDatasetFiles.MAP_REGIONS: MapRegions,
+    SdeDatasetFiles.MAP_SECONDARY_SUNS: MapSecondarySuns,
     SdeDatasetFiles.MAP_SOLAR_SYSTEMS: MapSolarSystems,
     SdeDatasetFiles.MAP_STARGATES: MapStargates,
     SdeDatasetFiles.MAP_STARS: MapStars,

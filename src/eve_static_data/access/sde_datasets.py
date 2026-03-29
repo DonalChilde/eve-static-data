@@ -325,6 +325,16 @@ class SdeDatasetLoader:
             skip_validation_failures=skip_validation_failures,
         )
 
+    def map_secondary_suns(
+        self, only_published: bool = True, skip_validation_failures: bool = False
+    ) -> PD.MapSecondarySunsDataset:
+        """Load the map secondary suns dataset."""
+        return map_secondary_suns(
+            self.sde_path,
+            only_published=only_published,
+            skip_validation_failures=skip_validation_failures,
+        )
+
     def map_solar_systems(
         self, only_published: bool = True, skip_validation_failures: bool = False
     ) -> PD.MapSolarSystemsDataset:
@@ -1194,6 +1204,26 @@ def map_regions(
     )
     records_dict = {record.key: record for _, record in records if record is not None}
     dataset = PD.MapRegionsDataset(
+        build_number=sde_info.get("buildNumber"),
+        release_date=sde_info.get("releaseDate"),
+        records=records_dict,
+    )
+    return dataset
+
+
+def map_secondary_suns(
+    sde_path: Path, only_published: bool = True, skip_validation_failures: bool = False
+) -> PD.MapSecondarySunsDataset:
+    """Load the map secondary suns dataset."""
+    sde_info = load_sde_info(sde_path)
+    records = PM.read_records(
+        sde_path,
+        PM.MapSecondarySuns,
+        only_published=only_published,
+        skip_validation_failures=skip_validation_failures,
+    )
+    records_dict = {record.key: record for _, record in records if record is not None}
+    dataset = PD.MapSecondarySunsDataset(
         build_number=sde_info.get("buildNumber"),
         release_date=sde_info.get("releaseDate"),
         records=records_dict,
