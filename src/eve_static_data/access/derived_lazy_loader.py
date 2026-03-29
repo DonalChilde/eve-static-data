@@ -10,7 +10,9 @@ from eve_static_data.models.derived.system_names import SystemNames
 
 
 class DerivedLazyLoader:
-    def __init__(self, input_dir: Path, localized: str = "en"):
+    def __init__(
+        self, input_dir: Path, localized: str = "en", only_published: bool = True
+    ):
         """A class for lazily loading derived datasets.
 
         Assumes that the derived datasets have already been generated and are stored in
@@ -19,9 +21,11 @@ class DerivedLazyLoader:
         Args:
             input_dir: The directory where the derived datasets are stored.
             localized: The localization used by the datasets (default: "en").
+            only_published: Whether to load only published items from datasets (default: True).
         """
         self.input_dir = input_dir
         self.localized = localized
+        self.only_published = only_published
 
         self._market_paths: MarketPathsDataset | None = None
         self._normalized_eve_types: NormalizedEveTypesDataset | None = None
@@ -32,7 +36,9 @@ class DerivedLazyLoader:
     def market_paths(self) -> MarketPathsDataset:
         """Lazily load the market paths dataset."""
         if self._market_paths is None:
-            file_name = DerivedDatasetFiles.MARKET_PATHS.localized(self.localized)
+            file_name = DerivedDatasetFiles.MARKET_PATHS.localized_published(
+                self.localized, only_published=self.only_published
+            )
             dataset_path = self.input_dir / file_name
             with open(dataset_path, "rb") as f:
                 self._market_paths = MarketPathsDataset.model_validate(f.read())
@@ -41,8 +47,8 @@ class DerivedLazyLoader:
     def normalized_eve_types(self) -> NormalizedEveTypesDataset:
         """Lazily load the normalized EVE types dataset."""
         if self._normalized_eve_types is None:
-            file_name = DerivedDatasetFiles.NORMALIZED_EVE_TYPES.localized(
-                self.localized
+            file_name = DerivedDatasetFiles.NORMALIZED_EVE_TYPES.localized_published(
+                self.localized, only_published=self.only_published
             )
             dataset_path = self.input_dir / file_name
             with open(dataset_path, "rb") as f:
@@ -51,23 +57,12 @@ class DerivedLazyLoader:
                 )
         return self._normalized_eve_types
 
-    def normalized_eve_types_published(self) -> NormalizedEveTypesDataset:
-        """Lazily load the published normalized EVE types dataset."""
-        if self._normalized_eve_types_published is None:
-            file_name = DerivedDatasetFiles.NORMALIZED_EVE_TYPES_PUBLISHED.localized(
-                self.localized
-            )
-            dataset_path = self.input_dir / file_name
-            with open(dataset_path, "rb") as f:
-                self._normalized_eve_types_published = (
-                    NormalizedEveTypesDataset.model_validate(f.read())
-                )
-        return self._normalized_eve_types_published
-
     def region_names(self) -> RegionNames:
         """Lazily load the region names dataset."""
         if self._region_names is None:
-            file_name = DerivedDatasetFiles.REGION_NAMES.localized(self.localized)
+            file_name = DerivedDatasetFiles.REGION_NAMES.localized_published(
+                self.localized, only_published=self.only_published
+            )
             dataset_path = self.input_dir / file_name
             with open(dataset_path, "rb") as f:
                 self._region_names = RegionNames.model_validate(f.read())
@@ -76,7 +71,9 @@ class DerivedLazyLoader:
     def system_names(self) -> SystemNames:
         """Lazily load the system names dataset."""
         if self._system_names is None:
-            file_name = DerivedDatasetFiles.SYSTEM_NAMES.localized(self.localized)
+            file_name = DerivedDatasetFiles.SYSTEM_NAMES.localized_published(
+                self.localized, only_published=self.only_published
+            )
             dataset_path = self.input_dir / file_name
             with open(dataset_path, "rb") as f:
                 self._system_names = SystemNames.model_validate(f.read())

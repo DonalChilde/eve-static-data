@@ -5,86 +5,23 @@ Subsets or combinations of data in a more useful or quicker loading form.
 For best performance, generate these once, and save them to disk.
 """
 
+import logging
 from pathlib import Path
 
 from eve_static_data.access import localized_datasets as LDA
+from eve_static_data.models.dataset_filenames import (
+    DerivedDatasetFiles,
+    SdeDatasetFiles,
+)
 from eve_static_data.models.derived.market_path import MarketPathsDataset
 from eve_static_data.models.derived.normalized_eve_type import NormalizedEveTypesDataset
 from eve_static_data.models.derived.region_names import RegionNames
 from eve_static_data.models.derived.system_names import SystemNames
+from eve_static_data.models.pydantic.localized_datasets import SdeDatasetLocalized
+from eve_static_data.models.pydantic.records import SdeInfo
 from eve_static_data.models.type_defs import Lang
 
-
-class DerivedDatasetLoader:
-    """Loader for derived datasets."""
-
-    def __init__(
-        self,
-        sde_path: Path,
-    ):
-        """Loader for derived datasets.
-
-        Args:
-            sde_path: Path to the unpacked SDE directory.
-
-        """
-        self.sde_path = sde_path
-
-    def market_paths(
-        self,
-        lang: Lang = "en",
-        only_published: bool = True,
-        skip_validation_failures: bool = False,
-    ) -> MarketPathsDataset:
-        """Load the market paths dataset for the specified language."""
-        return market_paths(
-            self.sde_path,
-            lang,
-            only_published=only_published,
-            skip_validation_failures=skip_validation_failures,
-        )
-
-    def normalized_eve_types(
-        self,
-        lang: Lang = "en",
-        only_published: bool = True,
-        skip_validation_failures: bool = False,
-    ) -> NormalizedEveTypesDataset:
-        """Load the normalized eve types dataset for the specified language."""
-        return normalized_eve_types(
-            self.sde_path,
-            lang,
-            only_published=only_published,
-            skip_validation_failures=skip_validation_failures,
-        )
-
-    def region_names(
-        self,
-        lang: Lang = "en",
-        only_published: bool = True,
-        skip_validation_failures: bool = False,
-    ) -> RegionNames:
-        """Load the region names dataset for the specified language."""
-        return region_names(
-            self.sde_path,
-            lang,
-            only_published=only_published,
-            skip_validation_failures=skip_validation_failures,
-        )
-
-    def system_names(
-        self,
-        lang: Lang = "en",
-        only_published: bool = True,
-        skip_validation_failures: bool = False,
-    ) -> SystemNames:
-        """Load the system names dataset for the specified language."""
-        return system_names(
-            self.sde_path,
-            lang,
-            only_published=only_published,
-            skip_validation_failures=skip_validation_failures,
-        )
+logger = logging.getLogger(__name__)
 
 
 def market_paths(
@@ -183,3 +120,169 @@ def system_names(
     )
     system_names = SystemNames.from_datasets(map_solar_systems)
     return system_names
+
+
+class DerivedDatasetLoader:
+    def __init__(
+        self,
+        sde_path: Path,
+        derived_datasets_path: Path | None = None,
+    ):
+        """Loader for derived datasets.
+
+        Provides optional caching to file for dervied datsets, as some datasets can require
+        expensive processing to generate. If a derived dataset file exists for the current
+        SDE build, it will be loaded instead of being regenerated. If the file is missing
+        the dataset will be generated and saved to the specified path for future use.
+
+        Args:
+            sde_path: Path to the unpacked SDE directory.
+            derived_datasets_path: Optional path to the directory where derived datasets
+                are stored. If not provided, the derived datasets are rebuilt from the
+                sde on each load.
+
+        Raises:
+            ValueError: If the SDE info cannot be loaded from the SDE info file, or if the
+                loaded dataset's build number does not match the SDE build number.
+        """
+        self.sde_path = sde_path
+        self.derived_datasets_path = derived_datasets_path
+
+        sde_info_path = sde_path / SdeDatasetFiles.SDE_INFO.as_json()
+        try:
+            sde_text = sde_info_path.read_text()
+            sde_info_from_file = SdeInfo.model_validate(sde_text)
+            self.sde_info = sde_info_from_file
+        except Exception as e:
+            raise ValueError(
+                f"Failed to load SDE info from {sde_info_path}: {e}"
+            ) from e
+
+    def market_paths(
+        self,
+        lang: Lang = "en",
+        only_published: bool = True,
+        skip_validation_failures: bool = False,
+    ) -> MarketPathsDataset:
+        """Load the market paths dataset for the specified language."""
+        file_path, dataset = self._load_dataset_from_file(
+            MarketPathsDataset, lang, only_published=only_published
+        )
+        if dataset is not None:
+            return dataset
+        dataset = market_paths(
+            self.sde_path,
+            lang,
+            only_published=only_published,
+            skip_validation_failures=skip_validation_failures,
+        )
+        if file_path is not None:
+            self._save_dataset_to_file(file_path, dataset)
+
+        return dataset
+
+    def normalized_eve_types(
+        self,
+        lang: Lang = "en",
+        only_published: bool = True,
+        skip_validation_failures: bool = False,
+    ) -> NormalizedEveTypesDataset:
+        """Load the normalized eve types dataset for the specified language."""
+        file_path, dataset = self._load_dataset_from_file(
+            NormalizedEveTypesDataset, lang, only_published=only_published
+        )
+        if dataset is not None:
+            return dataset
+        dataset = normalized_eve_types(
+            self.sde_path,
+            lang,
+            only_published=only_published,
+            skip_validation_failures=skip_validation_failures,
+        )
+        if file_path is not None:
+            self._save_dataset_to_file(file_path, dataset)
+        return dataset
+
+    def region_names(
+        self,
+        lang: Lang = "en",
+        only_published: bool = True,
+        skip_validation_failures: bool = False,
+    ) -> RegionNames:
+        """Load the region names dataset for the specified language."""
+        file_path, dataset = self._load_dataset_from_file(
+            RegionNames, lang, only_published=only_published
+        )
+        if dataset is not None:
+            return dataset
+        dataset = region_names(
+            self.sde_path,
+            lang,
+            only_published=only_published,
+            skip_validation_failures=skip_validation_failures,
+        )
+        if file_path is not None:
+            self._save_dataset_to_file(file_path, dataset)
+        return dataset
+
+    def system_names(
+        self,
+        lang: Lang = "en",
+        only_published: bool = True,
+        skip_validation_failures: bool = False,
+    ) -> SystemNames:
+        """Load the system names dataset for the specified language."""
+        file_path, dataset = self._load_dataset_from_file(
+            SystemNames, lang, only_published=only_published
+        )
+        if dataset is not None:
+            return dataset
+        dataset = system_names(
+            self.sde_path,
+            lang,
+            only_published=only_published,
+            skip_validation_failures=skip_validation_failures,
+        )
+        if file_path is not None:
+            self._save_dataset_to_file(file_path, dataset)
+        return dataset
+
+    def _save_dataset_to_file(
+        self, file_path: Path, dataset: SdeDatasetLocalized
+    ) -> None:
+        """Save a derived dataset to a file."""
+        try:
+            file_path.parent.mkdir(parents=True, exist_ok=True)
+            file_path.write_text(dataset.model_dump_json(), encoding="utf-8")
+        except Exception as e:
+            logger.warning(
+                "Failed to save %s dataset to %s (%s).",
+                type(dataset).__name__,
+                file_path,
+                e,
+            )
+
+    def _load_dataset_from_file[T: SdeDatasetLocalized](
+        self, dataset_class: type[T], lang: Lang, only_published: bool = True
+    ) -> tuple[Path | None, T | None]:
+        """Load a derived dataset from a file, validating the SDE build number."""
+        if self.derived_datasets_path is None:
+            return None, None
+        file_name = DerivedDatasetFiles.MARKET_PATHS.localized_published(
+            lang, only_published=only_published
+        )
+        dataset_path = self.derived_datasets_path / file_name
+        if not dataset_path.exists():
+            return dataset_path, None
+        try:
+            dataset = dataset_class.model_validate_json(dataset_path.read_bytes())
+            if dataset.build_number != self.sde_info.buildNumber:
+                raise ValueError(
+                    f"Dataset build number {dataset.build_number} does not match "
+                    f"SDE build number {self.sde_info.buildNumber}"
+                )
+            return dataset_path, dataset
+        except Exception as e:
+            raise ValueError(
+                f"Failed to load {dataset_class.__name__} from {dataset_path}: {e}"
+            ) from e

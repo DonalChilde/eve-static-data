@@ -98,6 +98,7 @@ class DerivedDatasetFiles(StrEnum):
     REGION_NAMES = "region_names"
     SYSTEM_NAMES = "system_names"
 
-    def localized(self, lang: str) -> str:
+    def localized_published(self, lang: str, only_published: bool = False) -> str:
         """Return the filename for the localized version of this file name."""
-        return f"{self.value}-localized-{lang}.json"
+        suffix = "-published" if only_published else ""
+        return f"{self.value}-localized-{lang}{suffix}.json"

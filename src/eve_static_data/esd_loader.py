@@ -14,16 +14,22 @@ class ESDLoader:
     def __init__(
         self,
         sde_path: Path,
+        derived_datasets_path: Path | None = None,
     ):
         """Loader for ESD datasets.
 
         Args:
             sde_path: Path to the unpacked SDE directory.
+            derived_datasets_path: Optional path to the directory where derived datasets
+                are stored. If provided, the derived datasets will be loaded from this path
+                if available, and automatically saved to this path if regenerated. If not
+                provided, the derived datasets are rebuilt from the SDE on each load.
+
 
         """
         self._sde = SdeDatasetLoader(sde_path)
         self._localized = LocalizedDatasetLoader(sde_path)
-        self._derived = DerivedDatasetLoader(sde_path)
+        self._derived = DerivedDatasetLoader(sde_path, derived_datasets_path)
         self._sde_info: SdeInfoDataset | None = None
 
     @property
