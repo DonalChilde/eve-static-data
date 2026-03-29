@@ -9,6 +9,7 @@ import logging
 from pathlib import Path
 
 from eve_static_data.access import localized_datasets as LDA
+from eve_static_data.access.sde_datasets import sde_info as load_sde_info_2
 from eve_static_data.models.dataset_filenames import (
     DerivedDatasetFiles,
     SdeDatasetFiles,
@@ -54,6 +55,7 @@ def normalized_eve_types(
         only_published=only_published,
         skip_validation_failures=skip_validation_failures,
     )
+
     categories = LDA.categories_localized(
         sde_path,
         lang,
@@ -148,10 +150,9 @@ class DerivedDatasetLoader:
         self.sde_path = sde_path
         self.derived_datasets_path = derived_datasets_path
 
-        sde_info_path = sde_path / SdeDatasetFiles.SDE_INFO.as_json()
+        sde_info_path = sde_path / SdeDatasetFiles.SDE_INFO.as_jsonl()
         try:
-            sde_text = sde_info_path.read_text()
-            sde_info_from_file = SdeInfo.model_validate(sde_text)
+            sde_info_from_file = load_sde_info_2(sde_path)
             self.sde_info = sde_info_from_file
         except Exception as e:
             raise ValueError(
@@ -165,8 +166,12 @@ class DerivedDatasetLoader:
         skip_validation_failures: bool = False,
     ) -> MarketPathsDataset:
         """Load the market paths dataset for the specified language."""
+        file_name = DerivedDatasetFiles.MARKET_PATHS.localized_published(
+            lang, only_published=only_published
+        )
         file_path, dataset = self._load_dataset_from_file(
-            MarketPathsDataset, lang, only_published=only_published
+            file_name=file_name,
+            dataset_class=MarketPathsDataset,
         )
         if dataset is not None:
             return dataset
@@ -188,8 +193,12 @@ class DerivedDatasetLoader:
         skip_validation_failures: bool = False,
     ) -> NormalizedEveTypesDataset:
         """Load the normalized eve types dataset for the specified language."""
+        file_name = DerivedDatasetFiles.NORMALIZED_EVE_TYPES.localized_published(
+            lang, only_published=only_published
+        )
         file_path, dataset = self._load_dataset_from_file(
-            NormalizedEveTypesDataset, lang, only_published=only_published
+            file_name=file_name,
+            dataset_class=NormalizedEveTypesDataset,
         )
         if dataset is not None:
             return dataset
@@ -210,8 +219,12 @@ class DerivedDatasetLoader:
         skip_validation_failures: bool = False,
     ) -> RegionNames:
         """Load the region names dataset for the specified language."""
+        file_name = DerivedDatasetFiles.REGION_NAMES.localized_published(
+            lang, only_published=only_published
+        )
         file_path, dataset = self._load_dataset_from_file(
-            RegionNames, lang, only_published=only_published
+            file_name=file_name,
+            dataset_class=RegionNames,
         )
         if dataset is not None:
             return dataset
@@ -232,8 +245,12 @@ class DerivedDatasetLoader:
         skip_validation_failures: bool = False,
     ) -> SystemNames:
         """Load the system names dataset for the specified language."""
+        file_name = DerivedDatasetFiles.SYSTEM_NAMES.localized_published(
+            lang, only_published=only_published
+        )
         file_path, dataset = self._load_dataset_from_file(
-            SystemNames, lang, only_published=only_published
+            file_name=file_name,
+            dataset_class=SystemNames,
         )
         if dataset is not None:
             return dataset
@@ -263,23 +280,22 @@ class DerivedDatasetLoader:
             )
 
     def _load_dataset_from_file[T: SdeDatasetLocalized](
-        self, dataset_class: type[T], lang: Lang, only_published: bool = True
+        self,
+        file_name: str,
+        dataset_class: type[T],
     ) -> tuple[Path | None, T | None]:
         """Load a derived dataset from a file, validating the SDE build number."""
         if self.derived_datasets_path is None:
             return None, None
-        file_name = DerivedDatasetFiles.MARKET_PATHS.localized_published(
-            lang, only_published=only_published
-        )
         dataset_path = self.derived_datasets_path / file_name
-        if not dataset_path.exists():
+        if not dataset_path.is_file():
             return dataset_path, None
         try:
             dataset = dataset_class.model_validate_json(dataset_path.read_bytes())
-            if dataset.build_number != self.sde_info.buildNumber:
+            if dataset.build_number != self.sde_info.record.buildNumber:
                 raise ValueError(
                     f"Dataset build number {dataset.build_number} does not match "
-                    f"SDE build number {self.sde_info.buildNumber}"
+                    f"SDE build number {self.sde_info.record.buildNumber}"
                 )
             return dataset_path, dataset
         except Exception as e:

@@ -1528,8 +1528,8 @@ def sde_info(
             f"Expected exactly one record for the SDE info dataset, found {len(loaded_records)}."
         )
     dataset = PD.SdeInfoDataset(
-        build_number=sde_info_dict.get("buildNumber"),
-        release_date=sde_info_dict.get("releaseDate"),
+        build_number=loaded_records[0].buildNumber,
+        release_date=loaded_records[0].releaseDate,
         record=loaded_records[0],
     )
     return dataset

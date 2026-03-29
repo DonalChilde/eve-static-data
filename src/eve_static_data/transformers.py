@@ -85,7 +85,7 @@ class ModelLoader(PydanticTransformer[BASE_MODELS]):
                 data=text,
                 error_messages=[err["msg"] for err in e.errors()],
             )
-            if not self.skip_validation_failures:
+            if self.skip_validation_failures:
                 return None
             logger.exception(
                 f"Validation error for model {self.model.__name__} at line {index}:{text} {e}"

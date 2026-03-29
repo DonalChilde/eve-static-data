@@ -1,4 +1,4 @@
-"""SDE raw data CLI commands for eve-argus.
+"""SDE raw data CLI commands for esi-link.
 
 This module focuses on commands to work with the raw SDE data, such as downloading,
 checking for the current version, checking the changelog, and printing the data.

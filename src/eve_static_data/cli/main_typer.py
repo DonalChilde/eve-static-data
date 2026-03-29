@@ -1,4 +1,4 @@
-"""Main CLI Typer app for eve-argus."""
+"""Main CLI Typer app for esi-link."""
 
 import logging
 from pathlib import Path
