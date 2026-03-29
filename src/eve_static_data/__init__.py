@@ -10,7 +10,7 @@ from eve_static_data.esd_tools import EsdTools
 __author__ = "Chad Lowe"
 __author_email__ = "pfmsoft.dev@gmail.com"
 __app_name__ = "Eve Static Data"
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 __license__ = "MIT"
 __url__ = "https://github.com/DonalChilde/eve-static-data"
 __description__ = "A terminal interface for Eve Online Static Data downloading and use."
