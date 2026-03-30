@@ -93,7 +93,10 @@ class ModelLoader(PydanticTransformer[BASE_MODELS]):
             raise e
 
 
-def localize_string_dict(string_dict: LocalizedString | None, lang: Lang = "en") -> str:
+# TODO add model.name and field for error messages.
+def localize_string_dict(
+    string_dict: LocalizedString | None, model: str, field: str, lang: Lang = "en"
+) -> str:
     """Extract the localized string from a LocalizedString.
 
     Args:
@@ -107,12 +110,12 @@ def localize_string_dict(string_dict: LocalizedString | None, lang: Lang = "en")
     """
     if string_dict is None:
         logger.warning(
-            "Localized string dictionary is None, indicating that translations are not present in the dataset."
+            f"Localized string dictionary is None for model '{model}' and field '{field}', indicating that translations are not present in the dataset."
         )
         return "TRANSLATIONS_NOT_PRESENT"
     if lang not in string_dict:
         logger.warning(
-            f"Localized string for '{lang=}' not found. Available languages: {list(string_dict.keys())}"
+            f"Localized string for '{lang=}' not found for model '{model}' and field '{field}'. Available languages: {list(string_dict.keys())}"
         )
         return "NOT_TRANSLATED"
     return string_dict[lang]
@@ -186,6 +189,8 @@ class LocalizationTransformer(PydanticTransformer[BASE_MODELS]):
         json_dict = json.loads(text)
         for field in self.localized_fields:
             field_dict = json_dict.get(field)
-            localized_field = localize_string_dict(field_dict, self.lang)
+            localized_field = localize_string_dict(
+                field_dict, self.model.__name__, field, self.lang
+            )
             json_dict[field] = localized_field
         return json_dict
