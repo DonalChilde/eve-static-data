@@ -78,6 +78,9 @@ convention = "google"
 docstring-code-format = true
 docstring-code-line-length = 88
 
+[tool.uv]
+exclude-newer = "1 week"
+
 [tool.scriv]
 #version = "literal: pyproject.toml: project.version"
 version = "literal: src/eve_static_data/__init__.py: __version__"
