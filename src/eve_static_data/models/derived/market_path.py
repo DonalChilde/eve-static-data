@@ -18,11 +18,11 @@ class MarketPath(BaseModel):
     int_path: list[int]
     str_path: list[str]
 
-    def int_string_path(self, separator: str = "/") -> str:
+    def delimited_int_path(self, separator: str = "/") -> str:
         """Get the market path as a string of integers."""
         return separator.join(str(mg_id) for mg_id in self.int_path)
 
-    def str_string_path(self, separator: str = "/") -> str:
+    def delimited_str_path(self, separator: str = "/") -> str:
         """Get the market path as a string of names."""
         return separator.join(self.str_path)
 

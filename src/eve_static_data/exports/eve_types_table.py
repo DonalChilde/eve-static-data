@@ -53,6 +53,6 @@ def add_market_path(
         if eve_type.marketGroupID is not None:
             market_path = market_paths.records.get(eve_type.marketGroupID)
             dict_obj["market_path"] = (
-                market_path.str_string_path() if market_path is not None else ""
+                market_path.delimited_str_path() if market_path is not None else ""
             )
         yield dict_obj

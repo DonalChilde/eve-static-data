@@ -26,8 +26,8 @@ def make_paths_dicts(
     for market_group_id, market_path in market_paths.records.items():
         yield {
             "marketGroupID": market_group_id,
-            "market_path": market_path.str_string_path(separator=separator),
-            "market_path_ids": market_path.int_string_path(separator=separator),
+            "market_path": market_path.delimited_str_path(separator=separator),
+            "market_path_ids": market_path.delimited_int_path(separator=separator),
         }
 
 
