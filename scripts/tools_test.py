@@ -5,13 +5,13 @@
 import asyncio
 from pathlib import Path
 
-from eve_static_data.esd_tools import EsdTools
+from eve_static_data.sde_tools import SDETools
 
 DOWNLOAD_DIR = Path("~/tmp/tools_test").expanduser()
 
 
 def main() -> None:
-    esd_tools = EsdTools()
+    esd_tools = SDETools()
     try:
         sde_file, build_number = get_sde_file_path()
     except FileNotFoundError:
@@ -23,7 +23,7 @@ def main() -> None:
 
 
 def test_download(build_number: int) -> Path:
-    esd_tools = EsdTools()
+    esd_tools = SDETools()
     sde_file = asyncio.run(
         esd_tools.download(
             build_number=build_number, output_path=DOWNLOAD_DIR, overwrite=False
@@ -43,7 +43,7 @@ def get_sde_file_path() -> tuple[Path, int]:
 
 
 def test_process(sde_file: Path | None, build_number: int) -> None:
-    esd_tools = EsdTools()
+    esd_tools = SDETools()
 
     process_dir = DOWNLOAD_DIR / "processed"
     if sde_file is None:

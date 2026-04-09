@@ -4,8 +4,8 @@ from pathlib import Path
 
 from typer import get_app_dir
 
-from eve_static_data.esd_loader import ESDLoader
-from eve_static_data.esd_tools import EsdTools
+from eve_static_data.sde_loader import SDELoader
+from eve_static_data.sde_tools import SDETools
 
 __author__ = "Chad Lowe"
 __author_email__ = "pfmsoft.dev@gmail.com"
@@ -24,6 +24,6 @@ RELEASE_DATE: str = "2026-03-10"
 
 
 __all__ = [
-    "ESDLoader",
-    "EsdTools",
+    "SDELoader",
+    "SDETools",
 ]

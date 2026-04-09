@@ -1,15 +1,15 @@
 """Implementation of the EsdTools."""
 
 
-class EsdTools:
-    """Class for handling ESD tools static data."""
+class SDETools:
+    """Class for handling SDE tools static data."""
 
     def __init__(self):
-        """The EsdTools class for handling EVE Static Data."""
+        """The SDETools class for handling EVE Static Data."""
         pass
 
     # Tools include:
-    # - Downloading the ESD tools static data for a given build number.
+    # - Downloading the SDE tools static data for a given build number.
     # - Unpacking the downloaded static data.
     # - Validating the unpacked static data.
     # - see current cli functionality for more details on the above steps and the expected inputs and outputs of each step.

@@ -8,15 +8,15 @@ from eve_static_data.access.sde_datasets import SdeDatasetLoader
 from eve_static_data.models.pydantic.datasets import SdeInfoDataset
 
 
-class ESDLoader:
-    """Loader for ESD datasets."""
+class SDELoader:
+    """Loader for SDE datasets."""
 
     def __init__(
         self,
         sde_path: Path,
         derived_datasets_path: Path | None = None,
     ):
-        """Loader for ESD datasets.
+        """Loader for SDE datasets.
 
         Args:
             sde_path: Path to the unpacked SDE directory.
