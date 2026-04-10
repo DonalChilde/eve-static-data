@@ -303,11 +303,19 @@ def get_reaction_bom(
 
 def get_invention_boms(
     blueprints: BlueprintsDataset,
+    eve_types: EveTypesLocalizedDataset,
 ) -> dict[int, InventionBom]:
     """Returns a mapping of invented item type IDs to their corresponding InventionBom objects."""
     invention_boms: dict[int, InventionBom] = {}
-    for blueprint in blueprints.records.values():
+    for bp_type_id, blueprint in blueprints.records.items():
         if blueprint.activities.invention is not None:
+            blueprint_type_info = eve_types.records.get(bp_type_id)
+            if blueprint_type_info is None:
+                raise ValueError(
+                    f"Type ID {bp_type_id} not found in localized EVE types dataset."
+                )
+            if not blueprint_type_info.published:
+                continue
             for product in blueprint.activities.invention.products or []:
                 invention_bom = get_invention_bom(product.typeID, blueprint)
                 invention_boms[invention_bom.type_id] = invention_bom
@@ -327,6 +335,8 @@ def get_manufacturing_boms(
                 raise ValueError(
                     f"Type ID {bp_type_id} not found in localized EVE types dataset."
                 )
+            if not blueprint_type_info.published:
+                continue
             manufacturing_activity = blueprint.activities.manufacturing
             if manufacturing_activity.products is None:
                 raise ValueError(
@@ -355,6 +365,8 @@ def get_reaction_boms(
                 raise ValueError(
                     f"Type ID {bp_type_id} not found in localized EVE types dataset."
                 )
+            if not blueprint_type_info.published:
+                continue
             reaction_activity = blueprint.activities.reaction
             if reaction_activity.products is None:
                 raise ValueError(
