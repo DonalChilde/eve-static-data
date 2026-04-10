@@ -310,10 +310,9 @@ def get_invention_boms(
     for bp_type_id, blueprint in blueprints.records.items():
         if blueprint.activities.invention is not None:
             blueprint_type_info = eve_types.records.get(bp_type_id)
+            # Invention blueprints that are not published do not have valid invention data, so we skip them.
             if blueprint_type_info is None:
-                raise ValueError(
-                    f"Type ID {bp_type_id} not found in localized EVE types dataset."
-                )
+                continue
             if not blueprint_type_info.published:
                 continue
             for product in blueprint.activities.invention.products or []:
@@ -331,10 +330,9 @@ def get_manufacturing_boms(
     for bp_type_id, blueprint in blueprints.records.items():
         if blueprint.activities.manufacturing is not None:
             blueprint_type_info = eve_types.records.get(bp_type_id)
+            # Manufacturing blueprints that are not published do not have valid manufacturing data, so we skip them.
             if blueprint_type_info is None:
-                raise ValueError(
-                    f"Type ID {bp_type_id} not found in localized EVE types dataset."
-                )
+                continue
             if not blueprint_type_info.published:
                 continue
             manufacturing_activity = blueprint.activities.manufacturing
@@ -361,10 +359,9 @@ def get_reaction_boms(
     for bp_type_id, blueprint in blueprints.records.items():
         if blueprint.activities.reaction is not None:
             blueprint_type_info = eve_types.records.get(bp_type_id)
+            # Reaction blueprints that are not published do not have valid reaction data, so we skip them.
             if blueprint_type_info is None:
-                raise ValueError(
-                    f"Type ID {bp_type_id} not found in localized EVE types dataset."
-                )
+                continue
             if not blueprint_type_info.published:
                 continue
             reaction_activity = blueprint.activities.reaction
