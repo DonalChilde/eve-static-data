@@ -100,7 +100,7 @@ class BillsOfMaterialsDataset(SdeDataset):
         return cls(
             build_number=blueprints.build_number,
             release_date=blueprints.release_date,
-            invention_boms=get_invention_boms(blueprints),
+            invention_boms=get_invention_boms(blueprints, eve_types),
             manufacturing_boms=get_manufacturing_boms(blueprints, eve_types),
             reaction_boms=get_reaction_boms(blueprints, eve_types),
             pi_boms={},  # Placeholder for now.
