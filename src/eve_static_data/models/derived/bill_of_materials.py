@@ -133,22 +133,23 @@ def _manufacturing_result_type_id(blueprint_type_id: int, blueprint: Blueprints)
 
     Assumes that the blueprint has a manufacturing activity and that the manufacturing
     activity has exactly one product. If these assumptions are not met, a ValueError is raised.
+
+    return -1 if the blueprint does not have a manufacturing activity or if the
+    manufacturing activity does not have any products. Ancient Relics do this, and they
+    are not actually manufactured, only invented so this is a way to handle them without
+    special-casing them elsewhere.
     """
     if blueprint.activities.manufacturing is not None:
         manufacturing_activity = blueprint.activities.manufacturing
         if manufacturing_activity.products is None:
-            raise ValueError(
-                f"Manufacturing activity for blueprint type ID {blueprint_type_id} has no products."
-            )
+            return -1
         if len(manufacturing_activity.products) > 1:
             raise ValueError(
                 f"Manufacturing activity for blueprint type ID {blueprint_type_id} has multiple products."
             )
         for product in manufacturing_activity.products:
             return product.typeID
-    raise ValueError(
-        f"No manufacturing product found for blueprint type ID {blueprint_type_id}."
-    )
+    return -1
 
 
 def get_invention_bom(type_id: int, blueprint: Blueprints) -> InventionBom:
