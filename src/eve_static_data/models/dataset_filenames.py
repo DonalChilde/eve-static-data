@@ -98,9 +98,10 @@ class SdeDatasetFiles(StrEnum):
 class DerivedDatasetFiles(StrEnum):
     MARKET_PATHS = "market_paths"
     NORMALIZED_EVE_TYPES = "normalized_eve_types"
-    NORMALIZED_EVE_TYPES_PUBLISHED = "normalized_eve_types_published"
+    # NORMALIZED_EVE_TYPES_PUBLISHED = "normalized_eve_types_published"
     REGION_NAMES = "region_names"
     SYSTEM_NAMES = "system_names"
+    BILLS_OF_MATERIALS = "bills_of_materials"
 
     def localized_published(self, lang: str, only_published: bool = False) -> str:
         """Return the filename for the localized version of this file name."""

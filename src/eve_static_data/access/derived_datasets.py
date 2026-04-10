@@ -9,20 +9,44 @@ import logging
 from pathlib import Path
 
 from eve_static_data.access import localized_datasets as LDA
+from eve_static_data.access import sde_datasets as SDE
 from eve_static_data.access.sde_datasets import sde_info as load_sde_info_2
 from eve_static_data.models.dataset_filenames import (
     DerivedDatasetFiles,
     SdeDatasetFiles,
 )
+from eve_static_data.models.derived.bill_of_materials import (
+    BillsOfMaterialsDataset,
+)
 from eve_static_data.models.derived.market_path import MarketPathsDataset
 from eve_static_data.models.derived.normalized_eve_type import NormalizedEveTypesDataset
 from eve_static_data.models.derived.region_names import RegionNames
 from eve_static_data.models.derived.system_names import SystemNames
+from eve_static_data.models.pydantic.datasets import SdeDataset
 from eve_static_data.models.pydantic.localized_datasets import SdeDatasetLocalized
-from eve_static_data.models.pydantic.records import SdeInfo
 from eve_static_data.models.type_defs import Lang
 
 logger = logging.getLogger(__name__)
+
+
+def bill_of_materials(
+    sde_path: Path,
+    only_published: bool = True,
+    skip_validation_failures: bool = False,
+) -> BillsOfMaterialsDataset:
+    """Load the bill of materials dataset for the specified language."""
+    eve_types = LDA.eve_types_localized(
+        sde_path,
+        lang="en",
+        only_published=only_published,
+        skip_validation_failures=skip_validation_failures,
+    )
+    blueprints = SDE.blueprints(sde_path)
+    bill_of_materials = BillsOfMaterialsDataset.from_datasets(
+        blueprints=blueprints,
+        eve_types=eve_types,
+    )
+    return bill_of_materials
 
 
 def market_paths(
@@ -159,6 +183,31 @@ class DerivedDatasetLoader:
                 f"Failed to load SDE info from {sde_info_path}: {e}"
             ) from e
 
+    def bills_of_materials(
+        self,
+        lang: Lang = "en",
+        only_published: bool = True,
+        skip_validation_failures: bool = False,
+    ) -> BillsOfMaterialsDataset:
+        """Load the bill of materials dataset."""
+        file_name = DerivedDatasetFiles.BILLS_OF_MATERIALS.localized_published(
+            lang=lang, only_published=only_published
+        )
+        file_path, dataset = self._load_dataset_from_file(
+            file_name=file_name,
+            dataset_class=BillsOfMaterialsDataset,
+        )
+        if dataset is not None:
+            return dataset
+        dataset = bill_of_materials(
+            self.sde_path,
+            only_published=only_published,
+            skip_validation_failures=skip_validation_failures,
+        )
+        if file_path is not None:
+            self._save_dataset_to_file(file_path, dataset)
+        return dataset
+
     def market_paths(
         self,
         lang: Lang = "en",
@@ -265,7 +314,7 @@ class DerivedDatasetLoader:
         return dataset
 
     def _save_dataset_to_file(
-        self, file_path: Path, dataset: SdeDatasetLocalized
+        self, file_path: Path, dataset: SdeDatasetLocalized | SdeDataset
     ) -> None:
         """Save a derived dataset to a file."""
         try:
@@ -279,7 +328,7 @@ class DerivedDatasetLoader:
                 e,
             )
 
-    def _load_dataset_from_file[T: SdeDatasetLocalized](
+    def _load_dataset_from_file[T: SdeDatasetLocalized | SdeDataset](
         self,
         file_name: str,
         dataset_class: type[T],
