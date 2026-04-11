@@ -7,7 +7,6 @@ import typer
 
 from eve_static_data import __app_name__, __version__
 from eve_static_data.cli.config_info import app as config_info_app
-from eve_static_data.cli.helpers import SETTINGS_KEY, create_esd_settings
 from eve_static_data.cli.sde_export import app as sde_export_app
 from eve_static_data.cli.sde_network import app as sde_network_app
 from eve_static_data.cli.sde_unpack import app as sde_unpack_app
@@ -35,7 +34,6 @@ def default_options(
     network operations, development tools, and import/export functionality.
     """
     settings = get_settings()
-    setup_logging(log_dir=Path(settings.log_path))
+    setup_logging(log_dir=Path(settings.logging_directory))
     logger.info(f"Starting {__app_name__} v{__version__}")
-    app_config = create_esd_settings(settings)
-    ctx.obj = {SETTINGS_KEY: app_config}
+    ctx.obj = {"esd-settings": settings}

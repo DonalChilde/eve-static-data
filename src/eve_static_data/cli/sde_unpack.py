@@ -4,13 +4,14 @@ from typing import Annotated
 import typer
 from rich.console import Console
 
-from eve_static_data.helpers import sde_unpack
+from eve_static_data.cli.helpers import get_esd_settings_from_context
 
 app = typer.Typer(no_args_is_help=True)
 
 
 @app.command()
 def unpack(
+    ctx: typer.Context,
     sde_zip: Annotated[
         Path,
         typer.Argument(
@@ -43,8 +44,12 @@ def unpack(
     """Unpack the SDE data from a zip file."""
     console = Console()
     console.print("[bold green]Unpacking SDE Data[/bold green]")
+    settings = get_esd_settings_from_context(ctx)
+    sde_tools = settings.sde_tools()
     try:
-        sde_path, sde_info = sde_unpack.unpack(sde_zip, output_path, use_build_number)
+        sde_path, sde_info = sde_tools.unpack(
+            sde_zip, output_path, use_build_number=use_build_number
+        )
     except Exception as e:
         console.print(f"[bold red]Error:[/bold red] Failed to unpack SDE data: {e}")
         raise typer.Exit(code=1) from e

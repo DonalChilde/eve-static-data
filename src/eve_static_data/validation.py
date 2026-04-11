@@ -14,10 +14,7 @@ from eve_static_data.helpers.save_text_file import save_text_file
 from eve_static_data.helpers.sde_info import SdeInfo, load_sde_info
 from eve_static_data.models.dataset_filenames import SdeDatasetFiles
 from eve_static_data.models.pydantic.records import LOOKUP as pydantic_model_lookup
-from eve_static_data.network import (
-    get_sde_data_changes,
-    get_sde_schema_changelog,
-)
+from eve_static_data.sde_tools import SDETools
 from eve_static_data.sde_type_sigs import get_sde_type_sigs
 from eve_static_data.transformers import ModelLoader, ModelValidationErrorRecord
 
@@ -177,9 +174,8 @@ class FileCheckResult(BaseModel):
 async def validation_report(
     sde_path: Path,
     output_path: Path,
+    sde_tools: SDETools,
     console: Console | None = None,
-    data_changes_url_template: str | None = None,
-    schema_changes_url: str | None = None,
     overwrite: bool = False,
 ) -> None:
     """Run the SDE validation and print a report to the console."""
@@ -208,14 +204,15 @@ async def validation_report(
     msgs = await fetch_data_changes(
         build_number=build_number,
         output_path=output_path,
-        url_template=data_changes_url_template,
+        sde_tools=sde_tools,
         overwrite=overwrite,
         console=console,
     )
     messages.extend(msgs)
     msgs = await fetch_schema_changelog(
+        build_number=build_number,
         output_path=output_path,
-        url=schema_changes_url,
+        sde_tools=sde_tools,
         overwrite=overwrite,
         console=console,
     )
@@ -424,19 +421,17 @@ def save_sde_info_to_disk(
 
 async def fetch_schema_changelog(
     output_path: Path,
-    url: str | None = None,
+    build_number: int,
+    sde_tools: SDETools,
     overwrite: bool = False,
     console: Console | None = None,
 ) -> list[str]:
     """Fetch the schema changelog and save to a file."""
     messages: list[str] = []
-    msg = f"Fetching schema changelog{f' from {url}' if url else ''}..."
+    msg = f"Fetching schema changelog for build {build_number}..."
     optional_printer(msg, console=console)
     messages.append(msg)
-    if url is None:
-        changelog = await get_sde_schema_changelog()
-    else:
-        changelog = await get_sde_schema_changelog(url=url)
+    changelog = await sde_tools.fetch_schema_changelog(build_number=build_number)
     save_text_file(
         text=changelog,
         output_path=output_path,
@@ -452,21 +447,16 @@ async def fetch_schema_changelog(
 async def fetch_data_changes(
     build_number: int,
     output_path: Path,
-    url_template: str | None = None,
+    sde_tools: SDETools,
     overwrite: bool = False,
     console: Console | None = None,
 ) -> list[str]:
     """Fetch the data changes for a given build number and save to a file."""
     messages: list[str] = []
-    msg = f"Fetching data changes for build {build_number}{f' from {url_template}' if url_template else ''}..."
+    msg = f"Fetching data changes for build {build_number}..."
     optional_printer(msg, console=console)
     messages.append(msg)
-    if url_template is None:
-        changes = await get_sde_data_changes(build_number=build_number)
-    else:
-        changes = await get_sde_data_changes(
-            build_number=build_number, url_template=url_template
-        )
+    changes = await sde_tools.fetch_data_changes(build_number=build_number)
     save_text_file(
         text=changes,
         output_path=output_path,

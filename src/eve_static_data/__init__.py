@@ -4,9 +4,6 @@ from pathlib import Path
 
 from typer import get_app_dir
 
-from eve_static_data.sde_loader import SDELoader
-from eve_static_data.sde_tools import SDETools
-
 __author__ = "Chad Lowe"
 __author_email__ = "pfmsoft.dev@gmail.com"
 __app_name__ = "Eve Static Data"
@@ -21,7 +18,17 @@ DEFAULT_APP_DIR = Path(get_app_dir(f"{NAMESPACE}-{APPLICATION_NAME}"))
 USER_AGENT = f"{__app_name__}/{__version__} (+{__url__})"
 AFTER_BUILD_NUMBER: int = 3241024
 RELEASE_DATE: str = "2026-03-10"
-
+SDE_URL_TEMPLATE: str = "https://developers.eveonline.com/static-data/tranquility/eve-online-static-data-${build_number}-${variant}.zip"
+DATA_CHANGES_URL_TEMPLATE: str = "https://developers.eveonline.com/static-data/tranquility/changes/${build_number}.jsonl"
+SCHEMA_CHANGELOG_URL: str = (
+    "https://developers.eveonline.com/static-data/tranquility/schema-changelog.yaml"
+)
+LATEST_INFO_URL: str = (
+    "https://developers.eveonline.com/static-data/tranquility/latest.jsonl"
+)
+DATA_FILENAME_TEMPLATE: str = "eve-online-static-data-${build_number}-${variant}.zip"
+from eve_static_data.sde_loader import SDELoader
+from eve_static_data.sde_tools import SDETools
 
 __all__ = [
     "SDELoader",
