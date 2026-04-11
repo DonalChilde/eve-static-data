@@ -1,5 +1,6 @@
 """Settings module for Eve Argus."""
 
+from dataclasses import dataclass
 from pathlib import Path
 
 from pydantic import Field
@@ -10,8 +11,33 @@ from eve_static_data import DEFAULT_APP_DIR, __app_name__, __description__, __ve
 _app_env_prefix = "PFMSOFT_EVE_STATIC_DATA_"
 
 
-class EveStaticDataSettings(BaseSettings):
+@dataclass(slots=True)
+class EveStaticDataSettings:
     """Settings for Eve Static Data application."""
+
+    application_directory: Path = DEFAULT_APP_DIR
+    logging_directory: Path = DEFAULT_APP_DIR / "logs"
+    sde_directory: Path = DEFAULT_APP_DIR / "sde"
+    sde_latest_info_url: str = (
+        "https://developers.eveonline.com/static-data/tranquility/latest.jsonl"
+    )
+    sde_download_url_template: str = "https://developers.eveonline.com/static-data/tranquility/eve-online-static-data-${build_number}-${variant}.zip"
+    sde_data_changes_url_template: str = "https://developers.eveonline.com/static-data/tranquility/changes/${build_number}.jsonl"
+    sde_schema_changelog_url: str = (
+        "https://developers.eveonline.com/static-data/tranquility/schema-changelog.yaml"
+    )
+    sde_data_filename_template: str = (
+        "eve-online-static-data-${build_number}-${variant}.zip"
+    )
+
+
+class EveStaticDataSettingsPydantic(BaseSettings):
+    """Settings for Eve Static Data application.
+
+    This class is used to load settings from environment variables and .env files using
+    Pydantic. The get_settings function is then used to convert these settings to the
+    EveStaticDataSettings dataclass for use in the application.
+    """
 
     model_config = SettingsConfigDict(
         env_prefix=_app_env_prefix,
@@ -19,26 +45,18 @@ class EveStaticDataSettings(BaseSettings):
         env_file_encoding="utf-8",
     )
 
-    app_name: str = Field(
-        default=__app_name__, description="The name of the application."
-    )
-    version: str = Field(
-        default=__version__, description="The version of the application."
-    )
-    description: str = Field(
-        default=__description__,
-        description="A brief description of the application.",
-    )
-    app_dir: str = Field(
+    application_directory: str = Field(
         default=str(DEFAULT_APP_DIR),
         description="The application directory path.",
     )
-
-    @property
-    def log_path(self) -> Path:
-        """The directory where log files are stored."""
-        return Path(self.app_dir) / "logs"
-
+    sde_directory: str = Field(
+        default=str(DEFAULT_APP_DIR / "sde"),
+        description="The directory where the SDE data is stored.",
+    )
+    logging_directory: str = Field(
+        default=str(DEFAULT_APP_DIR / "logs"),
+        description="The directory where log files are stored.",
+    )
     sde_latest_info_url: str = Field(
         default="https://developers.eveonline.com/static-data/tranquility/latest.jsonl",
         description="The URL to get information about the latest SDE data.",
@@ -63,8 +81,19 @@ class EveStaticDataSettings(BaseSettings):
 
 def get_settings() -> EveStaticDataSettings:
     """Get the Eve Static Data settings."""
-    settings = EveStaticDataSettings()
+    pydantic_settings = EveStaticDataSettingsPydantic()
+    settings = EveStaticDataSettings(
+        application_directory=Path(pydantic_settings.application_directory),
+        logging_directory=Path(pydantic_settings.logging_directory),
+        sde_directory=Path(pydantic_settings.sde_directory),
+        sde_latest_info_url=pydantic_settings.sde_latest_info_url,
+        sde_download_url_template=pydantic_settings.sde_download_url_template,
+        sde_data_changes_url_template=pydantic_settings.sde_data_changes_url_template,
+        sde_schema_changelog_url=pydantic_settings.sde_schema_changelog_url,
+        sde_data_filename_template=pydantic_settings.sde_data_filename_template,
+    )
     # Ensure that the application directories exist.
-    Path(settings.app_dir).mkdir(parents=True, exist_ok=True)
-    Path(settings.log_path).mkdir(parents=True, exist_ok=True)
+    Path(settings.application_directory).mkdir(parents=True, exist_ok=True)
+    Path(settings.logging_directory).mkdir(parents=True, exist_ok=True)
+    Path(settings.sde_directory).mkdir(parents=True, exist_ok=True)
     return settings
