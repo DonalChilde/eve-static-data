@@ -48,7 +48,6 @@ def latest(
     settings = get_esd_settings_from_context(ctx)
     sde_tools = settings.sde_tools()
     info = asyncio.run(sde_tools.fetch_latest_sde_info())
-    console.print(info)
     if terminal:
         console.print(info)
     if file_out:
@@ -243,13 +242,16 @@ def download_sde(
         latest_info = asyncio.run(sde_tools.fetch_latest_sde_info())
         latest_info = json.loads(latest_info)
         build_number = latest_info.get("buildNumber")
+        release_date = latest_info.get("releaseDate")
         if not build_number:
             console.print(
                 "[bold red]Error:[/bold red] Could not resolve latest build number."
             )
             console.print(latest_info)
             raise typer.Exit(code=1)
-        console.print(f"Resolved latest build number to: {build_number}")
+        console.print(
+            f"Resolved latest build number to: {build_number}, released on {release_date}"
+        )
 
     console.print(f"Downloading SDE data.")
 

@@ -20,6 +20,8 @@ from eve_static_data.transformers import ModelLoader, ModelValidationErrorRecord
 
 logger = logging.getLogger(__name__)
 
+# TODO report when input sde build number is greater than app build number and schema changelog afterbuildnumber.
+
 
 class DatasetStats(BaseModel):
     """Statistics about a dataset."""
