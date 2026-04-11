@@ -3,7 +3,10 @@
 from dataclasses import dataclass
 from typing import Self
 
-from eve_static_data.models.pydantic.datasets import BlueprintsDataset, SdeDataset
+from eve_static_data.models.derived.published_blueprints import (
+    PublishedBlueprintsDataset,
+)
+from eve_static_data.models.pydantic.datasets import SdeDataset
 from eve_static_data.models.pydantic.localized_datasets import EveTypesLocalizedDataset
 from eve_static_data.models.pydantic.records import Blueprints
 
@@ -93,7 +96,7 @@ class BillsOfMaterialsDataset(SdeDataset):
     @classmethod
     def from_datasets(
         cls,
-        blueprints: BlueprintsDataset,
+        blueprints: PublishedBlueprintsDataset,
         eve_types: EveTypesLocalizedDataset,
     ) -> Self:
         """Create a BillsOfMaterials instance from the given datasets."""
@@ -303,7 +306,7 @@ def get_reaction_bom(
 
 
 def get_invention_boms(
-    blueprints: BlueprintsDataset,
+    blueprints: PublishedBlueprintsDataset,
     eve_types: EveTypesLocalizedDataset,
 ) -> dict[int, InventionBom]:
     """Returns a mapping of invented item type IDs to their corresponding InventionBom objects."""
@@ -323,7 +326,7 @@ def get_invention_boms(
 
 
 def get_manufacturing_boms(
-    blueprints: BlueprintsDataset,
+    blueprints: PublishedBlueprintsDataset,
     eve_types: EveTypesLocalizedDataset,
 ) -> dict[int, ManufacturingBom]:
     """Returns a mapping of manufactured item type IDs to their corresponding ManufacturingBom objects."""
@@ -352,7 +355,7 @@ def get_manufacturing_boms(
 
 
 def get_reaction_boms(
-    blueprints: BlueprintsDataset,
+    blueprints: PublishedBlueprintsDataset,
     eve_types: EveTypesLocalizedDataset,
 ) -> dict[int, ReactionBom]:
     """Returns a mapping of reaction product type IDs to their corresponding ReactionBom objects."""

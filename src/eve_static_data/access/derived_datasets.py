@@ -44,7 +44,12 @@ def bill_of_materials(
         only_published=only_published,
         skip_validation_failures=skip_validation_failures,
     )
-    blueprints = SDE.blueprints(sde_path)
+    blueprints = published_blueprints(
+        sde_path,
+        lang="en",
+        only_published=only_published,
+        skip_validation_failures=skip_validation_failures,
+    )
     bill_of_materials = BillsOfMaterialsDataset.from_datasets(
         blueprints=blueprints,
         eve_types=eve_types,
