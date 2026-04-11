@@ -43,6 +43,20 @@ class LocalizedDatasetLoader:
             skip_validation_failures=skip_validation_failures,
         )
 
+    def dogma_attributes(
+        self,
+        lang: Lang = "en",
+        only_published: bool = True,
+        skip_validation_failures: bool = False,
+    ) -> LDS.DogmaAttributesLocalizedDataset:
+        """Load the dogma attributes localized dataset for the specified language."""
+        return dogma_attributes_localized(
+            sde_path=self.sde_path,
+            lang=lang,
+            only_published=only_published,
+            skip_validation_failures=skip_validation_failures,
+        )
+
     def eve_types(
         self,
         lang: Lang = "en",
@@ -176,6 +190,31 @@ def categories_localized(
     )
     records_dict = {record.key: record for _, record in records if record is not None}
     dataset = LDS.CategoriesLocalizedDataset(
+        build_number=sde_info.get("buildNumber"),
+        release_date=sde_info.get("releaseDate"),
+        lang=lang,
+        records=records_dict,
+    )
+    return dataset
+
+
+def dogma_attributes_localized(
+    sde_path: Path,
+    lang: Lang,
+    only_published: bool = True,
+    skip_validation_failures: bool = False,
+) -> LDS.DogmaAttributesLocalizedDataset:
+    """Load the dogma attributes localized dataset for the specified language."""
+    sde_info = load_sde_info(sde_path)
+    records = LPM.read_records(
+        sde_path,
+        LPM.DogmaAttributesLocalized,
+        only_published=only_published,
+        lang=lang,
+        skip_validation_failures=skip_validation_failures,
+    )
+    records_dict = {record.key: record for _, record in records if record is not None}
+    dataset = LDS.DogmaAttributesLocalizedDataset(
         build_number=sde_info.get("buildNumber"),
         release_date=sde_info.get("releaseDate"),
         lang=lang,

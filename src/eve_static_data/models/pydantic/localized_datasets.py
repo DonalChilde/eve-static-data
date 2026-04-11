@@ -24,6 +24,10 @@ class CategoriesLocalizedDataset(SdeDatasetLocalized):
     records: dict[int, LPM.CategoriesLocalized]
 
 
+class DogmaAttributesLocalizedDataset(SdeDatasetLocalized):
+    records: dict[int, LPM.DogmaAttributesLocalized]
+
+
 class GroupsLocalizedDataset(SdeDatasetLocalized):
     records: dict[int, LPM.GroupsLocalized]
 
@@ -55,6 +59,7 @@ class EveTypesLocalizedDataset(SdeDatasetLocalized):
 LOOKUP: dict[SdeDatasetFiles, type[SdeDatasetLocalized]] = {
     SdeDatasetFiles.ANCESTRIES: AncestriesLocalizedDataset,
     SdeDatasetFiles.CATEGORIES: CategoriesLocalizedDataset,
+    SdeDatasetFiles.DOGMA_ATTRIBUTES: DogmaAttributesLocalizedDataset,
     SdeDatasetFiles.GROUPS: GroupsLocalizedDataset,
     SdeDatasetFiles.MAP_REGIONS: MapRegionsLocalizedDataset,
     SdeDatasetFiles.MAP_SOLAR_SYSTEMS: MapSolarSystemsLocalizedDataset,

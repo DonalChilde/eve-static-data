@@ -104,12 +104,18 @@ def normalized_eve_types(
         only_published=only_published,
         skip_validation_failures=skip_validation_failures,
     )
+    type_dogma = SDE.type_dogma(
+        sde_path,
+        only_published=only_published,
+        skip_validation_failures=skip_validation_failures,
+    )
     normalized_eve_types = NormalizedEveTypesDataset.from_datasets(
         eve_types_dataset=eve_types,
         categories_dataset=categories,
         groups_dataset=groups,
         meta_groups_dataset=meta_groups,
         market_groups_dataset=market_groups,
+        type_dogma_dataset=type_dogma,
     )
     return normalized_eve_types
 
