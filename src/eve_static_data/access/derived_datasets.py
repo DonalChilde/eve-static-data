@@ -20,6 +20,9 @@ from eve_static_data.models.derived.bill_of_materials import (
 )
 from eve_static_data.models.derived.market_path import MarketPathsDataset
 from eve_static_data.models.derived.normalized_eve_type import NormalizedEveTypesDataset
+from eve_static_data.models.derived.published_blueprints import (
+    PublishedBlueprintsDataset,
+)
 from eve_static_data.models.derived.region_names import RegionNames
 from eve_static_data.models.derived.system_names import SystemNames
 from eve_static_data.models.pydantic.datasets import SdeDataset
@@ -118,6 +121,27 @@ def normalized_eve_types(
         type_dogma_dataset=type_dogma,
     )
     return normalized_eve_types
+
+
+def published_blueprints(
+    sde_path: Path,
+    lang: Lang,
+    only_published: bool = True,
+    skip_validation_failures: bool = False,
+) -> PublishedBlueprintsDataset:
+    """Load the published blueprints dataset for the specified language."""
+    eve_types = LDA.eve_types_localized(
+        sde_path,
+        lang,
+        only_published=only_published,
+        skip_validation_failures=skip_validation_failures,
+    )
+    blueprints = SDE.blueprints(sde_path)
+    published_blueprints = PublishedBlueprintsDataset.from_datasets(
+        blueprints_dataset=blueprints,
+        eve_types_dataset=eve_types,
+    )
+    return published_blueprints
 
 
 def region_names(
@@ -258,6 +282,32 @@ class DerivedDatasetLoader:
         if dataset is not None:
             return dataset
         dataset = normalized_eve_types(
+            self.sde_path,
+            lang,
+            only_published=only_published,
+            skip_validation_failures=skip_validation_failures,
+        )
+        if file_path is not None:
+            self._save_dataset_to_file(file_path, dataset)
+        return dataset
+
+    def published_blueprints(
+        self,
+        lang: Lang = "en",
+        only_published: bool = True,
+        skip_validation_failures: bool = False,
+    ) -> PublishedBlueprintsDataset:
+        """Load the published blueprints dataset for the specified language."""
+        file_name = DerivedDatasetFiles.PUBLISHED_BLUEPRINTS.localized_published(
+            lang, only_published=only_published
+        )
+        file_path, dataset = self._load_dataset_from_file(
+            file_name=file_name,
+            dataset_class=PublishedBlueprintsDataset,
+        )
+        if dataset is not None:
+            return dataset
+        dataset = published_blueprints(
             self.sde_path,
             lang,
             only_published=only_published,
