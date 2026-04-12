@@ -25,25 +25,25 @@ class SDELoader:
                 if available, and automatically saved to this path if regenerated. If not
                 provided, the derived datasets are rebuilt from the SDE on each load.
 
+        Raises:
+            FileNotFoundError: If the SDE info dataset is not found in the provided SDE path.
+
 
         """
         self._sde = SdeDatasetLoader(sde_path)
         self._localized = LocalizedDatasetLoader(sde_path)
         self._derived = DerivedDatasetLoader(sde_path, derived_datasets_path)
-        self._sde_info: SdeInfoDataset | None = None
+        # will raise if the SDE info dataset is not present, which is desirable to fail early in that case
+        self._sde_info: SdeInfoDataset = self._sde.sde_info()
 
     @property
     def build_number(self) -> int:
         """Get the build number of the SDE."""
-        if self._sde_info is None:
-            self._sde_info = self.sde_datasets.sde_info()
         return self._sde_info.build_number
 
     @property
     def release_date(self) -> str:
         """Get the release date of the SDE."""
-        if self._sde_info is None:
-            self._sde_info = self.sde_datasets.sde_info()
         return self._sde_info.release_date
 
     @property

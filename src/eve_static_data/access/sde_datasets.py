@@ -1515,7 +1515,7 @@ def sde_info(
     sde_path: Path, only_published: bool = True, skip_validation_failures: bool = False
 ) -> PD.SdeInfoDataset:
     """Load the SDE info dataset."""
-    sde_info_dict = load_sde_info(sde_path)
+    sde_info = load_sde_info(sde_path)
     records = PM.read_records(
         sde_path,
         PM.SdeInfo,
@@ -1528,8 +1528,8 @@ def sde_info(
             f"Expected exactly one record for the SDE info dataset, found {len(loaded_records)}."
         )
     dataset = PD.SdeInfoDataset(
-        build_number=loaded_records[0].buildNumber,
-        release_date=loaded_records[0].releaseDate,
+        build_number=sde_info.get("buildNumber"),
+        release_date=sde_info.get("releaseDate"),
         record=loaded_records[0],
     )
     return dataset
