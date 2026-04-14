@@ -19,6 +19,7 @@ from eve_static_data.models.derived.bill_of_materials import (
     BillsOfMaterialsDataset,
 )
 from eve_static_data.models.derived.market_path import MarketPathsDataset
+from eve_static_data.models.derived.meta_level import TypesMetaLevelsDataset
 from eve_static_data.models.derived.normalized_eve_type import NormalizedEveTypesDataset
 from eve_static_data.models.derived.published_blueprints import (
     PublishedBlueprintsDataset,
@@ -72,6 +73,31 @@ def market_paths(
     )
     market_paths = MarketPathsDataset.from_dataset(market_groups)
     return market_paths
+
+
+def meta_levels(
+    sde_path: Path,
+    lang: Lang,
+    only_published: bool = True,
+    skip_validation_failures: bool = False,
+) -> TypesMetaLevelsDataset:
+    """Load the type meta levels dataset for the specified language."""
+    eve_types = LDA.eve_types_localized(
+        sde_path,
+        lang,
+        only_published=only_published,
+        skip_validation_failures=skip_validation_failures,
+    )
+    type_dogma = SDE.type_dogma(
+        sde_path,
+        only_published=only_published,
+        skip_validation_failures=skip_validation_failures,
+    )
+    meta_levels = TypesMetaLevelsDataset.from_datasets(
+        type_dogma_dataset=type_dogma,
+        eve_types_dataset=eve_types,
+    )
+    return meta_levels
 
 
 def normalized_eve_types(
@@ -267,7 +293,32 @@ class DerivedDatasetLoader:
         )
         if file_path is not None:
             self._save_dataset_to_file(file_path, dataset)
+        return dataset
 
+    def meta_levels(
+        self,
+        lang: Lang = "en",
+        only_published: bool = True,
+        skip_validation_failures: bool = False,
+    ) -> TypesMetaLevelsDataset:
+        """Load the type meta levels dataset for the specified language."""
+        file_name = DerivedDatasetFiles.TYPE_META_LEVELS.localized_published(
+            lang, only_published=only_published
+        )
+        file_path, dataset = self._load_dataset_from_file(
+            file_name=file_name,
+            dataset_class=TypesMetaLevelsDataset,
+        )
+        if dataset is not None:
+            return dataset
+        dataset = meta_levels(
+            self.sde_path,
+            lang,
+            only_published=only_published,
+            skip_validation_failures=skip_validation_failures,
+        )
+        if file_path is not None:
+            self._save_dataset_to_file(file_path, dataset)
         return dataset
 
     def normalized_eve_types(
