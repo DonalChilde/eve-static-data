@@ -46,6 +46,13 @@ class SDEValidationResult(BaseModelToDisk):
     dataset_stats: dict[str, DatasetStats] = {}
 
 
+def is_published(text: str) -> bool:
+    """Check if the text contains "published": false."""
+    if '"published": false' in text:
+        return False
+    return True
+
+
 # def validate_dataset_records(
 #     input_path: Path, dataset: SdeDatasetFiles, console: Console | None = None
 # ) -> DatasetStats:
@@ -342,20 +349,46 @@ def validate_records(
             error_messages=[msg],
         )
         return stats, messages
-    transformer = ModelLoader(
-        model=model, only_published=False, skip_validation_failures=True
-    )
-    for index, record in read_jsonl_file(file_path, transformer=transformer):
-        stats.total_records = index
-        if record is None:
-            stats.invalid_records += 1
-    stats.error_records = transformer.validation_errors
-    stats.line_record_not_published = transformer.line_record_not_published
+
+    # refactor this to remove unnecessary complication of transformer and read_jsonl_file.
+    # needs to:
+    # - read the file line by line
+    # - for each line, validate against the model and keep track of errors and counts.
+    # - determine if the record is published or not, in a way that doesn't require model validate.
+    with file_path.open() as f:
+        for index, line in enumerate(f, start=1):
+            stats.total_records = index
+            if not is_published(line):
+                stats.line_record_not_published.add(index)
+            try:
+                model.model_validate_json(line)
+            except Exception as e:
+                stats.invalid_records += 1
+                stats.error_records[index] = ModelValidationErrorRecord(
+                    model=model.__name__,
+                    line_number=index,
+                    data=line,
+                    error_messages=[str(e)],
+                )
+                logger.exception(
+                    f"Validation error for model {model.__name__} at line {index}:{line} {e}"
+                )
+    # transformer = ModelLoader(
+    #     model=model, only_published=False, skip_validation_failures=True
+    # )
+    # for index, record in read_jsonl_file(file_path, transformer=transformer):
+    #     stats.total_records = index
+    #     if not is_published(record):
+    #         stats.line_record_not_published.add(index)
+    #     if record is None:
+    #         stats.invalid_records += 1
+    # stats.error_records = transformer.validation_errors
+    # stats.line_record_not_published = transformer.line_record_not_published
     stats.published_records_with_errors = list(
         set(stats.error_records.keys()) - stats.line_record_not_published
     )
     stats.end = perf_counter()
-    msg = f"Finished validating dataset {dataset.value}. Total records: {stats.total_records}, Invalid records: {stats.invalid_records}, Invalid published records: {len(stats.published_records_with_errors)}, Time taken: {stats.end - stats.start:.6f} seconds."
+    msg = f"Finished validating dataset {dataset.value}. Total records: {stats.total_records},Published records: {stats.total_records - len(stats.line_record_not_published)}, Invalid records: {stats.invalid_records}, Invalid published records: {len(stats.published_records_with_errors)}, Time taken: {stats.end - stats.start:.6f} seconds."
     messages.append(msg)
     optional_printer(msg, console=console)
     return stats, messages

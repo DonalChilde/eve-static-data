@@ -33,6 +33,13 @@ def is_published_false(text: str) -> bool:
     return '"published": false' in text
 
 
+def is_published(text: str) -> bool:
+    """Check if the text contains "published": false."""
+    if '"published": false' in text:
+        return False
+    return True
+
+
 class ModelLoader(PydanticTransformer[BASE_MODELS]):
     def __init__(
         self,

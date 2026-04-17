@@ -7,7 +7,7 @@ from collections.abc import Iterator
 from pathlib import Path
 from typing import Protocol, TypeVar
 
-from pydantic import BaseModel
+from pydantic import BaseModel, TypeAdapter
 
 type JsonScalar = str | int | float | bool | None
 type JsonObject = dict[str, JsonValue]
@@ -131,3 +131,30 @@ def read_jsonl_file[T](
     for indexed_line in index_file_lines(file_path):
         transformed = transformer(indexed_line)
         yield transformed
+
+
+def read_records_from_file_type_adaptor[T](
+    file_path: Path, model: type[T]
+) -> Iterator[tuple[int, T]]:
+    """Read records from a JSONL file and convert them to dataclass instances."""
+    adapter = TypeAdapter(model)
+    with file_path.open() as f:
+        for index, line in enumerate(f):
+            try:
+                result: T = adapter.validate_json(line)
+            except Exception as e:
+                raise ValueError(f"Invalid data at line {index}: {line}:\n{e}") from e
+            yield index, result
+
+
+def read_records_from_file_base_model[BASE_MODELS: BaseModel](
+    file_path: Path, model: type[BASE_MODELS]
+) -> Iterator[tuple[int, BASE_MODELS]]:
+    """Read records from a JSONL file and convert them to Pydantic model instances."""
+    with file_path.open() as f:
+        for index, line in enumerate(f):
+            try:
+                result: BASE_MODELS = model.model_validate_json(line)
+            except Exception as e:
+                raise ValueError(f"Invalid data at line {index}: {line}:\n{e}") from e
+            yield index, result
