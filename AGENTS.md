@@ -23,6 +23,7 @@ project-name: "esi-auth"
 - For libraries or external dependencies, mention their usage and purpose in comments.
 - Use consistent naming conventions and follow language-specific best practices.
 - Write concise, efficient, and idiomatic code that is also easily understandable.
+- use red/green TDD.
 
 ## Code Style and Formatting
 
