@@ -1,0 +1,3 @@
+{"_key": 1, "name": {"de": "Landwirtschaft", "en": "Agriculture", "es": "Agricultura", "fr": "Agriculture", "ja": "農業", "ko": "농업", "ru": "Сельское хозяйство", "zh": "农业"}}
+{"_key": 2, "name": {"de": "Konstruktion", "en": "Construction", "es": "Construcción", "fr": "Construction", "ja": "建設", "ko": "건설", "ru": "Строительство", "zh": "建设"}}
+{"_key": 3, "name": {"de": "Bergbau", "en": "Mining", "es": "Minería", "fr": "Extraction minière", "ja": "採掘", "ko": "채굴", "ru": "Добыча полезных ископаемых", "zh": "采矿"}}

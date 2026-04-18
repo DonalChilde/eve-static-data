@@ -1,0 +1,3 @@
+{"_key": 0, "name": {"de": "#System", "en": "#System", "es": "#System", "fr": "#Système", "ja": "#システム", "ko": "#항성계", "ru": "#Система", "zh": "#星系"}, "published": false}
+{"_key": 1, "name": {"de": "Besitzer", "en": "Owner", "es": "Propietario", "fr": "Propriétaire", "ja": "所有者", "ko": "소유자", "ru": "Владелец", "zh": "拥有者"}, "published": false}
+{"_key": 2, "name": {"de": "Interstellar", "en": "Celestial", "es": "Celestial", "fr": "Céleste", "ja": "セレスチャル", "ko": "천체", "ru": "Небесное тело", "zh": "天体"}, "published": true}

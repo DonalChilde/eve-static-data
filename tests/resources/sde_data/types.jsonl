@@ -1,0 +1,3 @@
+{"_key": 0, "groupID": 0, "mass": 1.0, "name": {"de": "#System", "en": "#System", "es": "#System", "fr": "#Système", "ja": "#システム", "ko": "#항성계", "ru": "#Система", "zh": "#星系"}, "portionSize": 1, "published": false}
+{"_key": 2, "groupID": 2, "name": {"de": "Corporation", "en": "Corporation", "es": "Corporación", "fr": "Corporation", "ja": "コーポレーション", "ko": "코퍼레이션", "ru": "Corporation", "zh": "军团"}, "portionSize": 1, "published": false}
+{"_key": 3, "groupID": 3, "name": {"de": "Region", "en": "Region", "es": "Región", "fr": "Région", "ja": "リージョン", "ko": "지역", "ru": "Region", "zh": "星域"}, "portionSize": 1, "published": false, "volume": 1.0}
