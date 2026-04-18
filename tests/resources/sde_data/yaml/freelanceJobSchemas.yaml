@@ -1,0 +1,3106 @@
+1:
+  BoostShield:
+    contentTags:
+    - career_path_soldier_of_fortune
+    - activity_logistics
+    description:
+      de: "Verst\xE4rken Sie den Schild eines Kapselpiloten mit Schildfernboostern."
+      en: Remote boost a capsuleer's shield.
+      es: Impulso remoto al escudo de un capsulista.
+      fr: "Rechargez \xE0 distance le bouclier du vaisseau d'un capsulier."
+      ja: "\u30AB\u30D7\u30BB\u30E9\u306E\u30B7\u30FC\u30EB\u30C9\u3092\u30EA\u30E2\
+        \u30FC\u30C8\u30D6\u30FC\u30B9\u30C8"
+      ko: "\uCEA1\uC290\uB9AC\uC5B4\uB97C \uB300\uC0C1\uC73C\uB85C \uC6D0\uACA9 \uC2E4\
+        \uB4DC \uBD80\uC2A4\uD130\uB97C \uC0AC\uC6A9\uD569\uB2C8\uB2E4."
+      ru: "\u041F\u0440\u043E\u0432\u0435\u0434\u0438\u0442\u0435 \u0434\u0438\u0441\
+        \u0442\u0430\u043D\u0446\u0438\u043E\u043D\u043D\u044B\u0439 \u0440\u0435\u043C\
+        \u043E\u043D\u0442 \u0449\u0438\u0442\u043E\u0432 \u043A\u043E\u0440\u0430\
+        \u0431\u043B\u044F \u0434\u0440\u0443\u0433\u043E\u0433\u043E \u043A\u0430\
+        \u043F\u0441\u0443\u043B\u0451\u0440\u0430."
+      zh: "\u8FDC\u7A0B\u4E3A\u514B\u9686\u98DE\u884C\u5458\u8FDB\u884C\u62A4\u76FE\
+        \u56DE\u5145\u589E\u91CF\u3002"
+    iconID: shields
+    maxContributionsPerParticipant:
+      description:
+        de: "H\xF6chstmenge, die ein einzelner Teilnehmer zu diesem Auftrag beitragen\
+          \ kann."
+        en: Maximum amount a single participant can contribute to this job.
+        es: "La cantidad m\xE1xima con la que un solo participante puede contribuir\
+          \ a este trabajo."
+        fr: "Contribution maximale d'un seul participant \xE0 cette mission."
+        ja: "\u3053\u306E\u30B8\u30E7\u30D6\u306E\u53C2\u52A0\u8005\u306E\u500B\u3005\
+          \u4EBA\u304C\u8CA2\u732E\u3067\u304D\u308B\u6700\u5927\u984D\u3067\u3059\
+          \u3002"
+        ko: "\uD574\uB2F9 \uC784\uBB34\uC5D0 \uCC38\uC5EC\uD55C \uCEA1\uC290\uB9AC\
+          \uC5B4\uC758 \uCD5C\uB300 \uAE30\uC5EC \uC218\uCE58\uC785\uB2C8\uB2E4."
+        ru: "\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439\
+          \ \u043E\u0431\u044A\u0451\u043C \u043F\u043E\u043C\u043E\u0449\u0438 \u0434\
+          \u043B\u044F \u043E\u0434\u043D\u043E\u0433\u043E \u0438\u0441\u043F\u043E\
+          \u043B\u043D\u0438\u0442\u0435\u043B\u044F \u044D\u0442\u043E\u0433\u043E\
+          \ \u0437\u0430\u043A\u0430\u0437\u0430."
+        zh: "\u6BCF\u4E2A\u53C2\u4E0E\u8005\u53EF\u5BF9\u8BE5\u4EFB\u52A1\u505A\u51FA\
+          \u7684\u6700\u5927\u8D21\u732E\u3002"
+      iconID: personal
+      title:
+        de: Limit pro Beitragendem
+        en: Limit per Contributor
+        es: "L\xEDmite por contribuyente"
+        fr: Limite par contributeur
+        ja: "\u8CA2\u732E\u8005\u3042\u305F\u308A\u306E\u4E0A\u9650"
+        ko: "\uCC38\uC5EC\uC790 \uAE30\uC5EC \uC81C\uD55C"
+        ru: "\u041E\u0433\u0440\u0430\u043D\u0438\u0447\u0435\u043D\u0438\u0435 \u0434\
+          \u043B\u044F \u0443\u0447\u0430\u0441\u0442\u043D\u0438\u043A\u0430"
+        zh: "\u4E2A\u4EBA\u8D21\u732E\u9650\u5236"
+      unsetDescription:
+        de: "Beitragsh\xF6he eingeben (Optional)"
+        en: Type in contribution amount (Optional)
+        es: "Escribe la cantidad de contribuci\xF3n (opcional)"
+        fr: Tapez le montant de la contribution (facultatif)
+        ja: "\u8CA2\u732E\u91CF\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\
+          \uFF08\u4EFB\u610F\uFF09"
+        ko: "\uAE30\uC5EC\uB3C4 \uC785\uB825(\uC120\uD0DD\uC0AC\uD56D)"
+        ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0440\u0430\u0437\u043C\u0435\
+          \u0440 \u0432\u043A\u043B\u0430\u0434\u0430 (\u043D\u0435\u043E\u0431\u044F\
+          \u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E)"
+        zh: "\u8F93\u5165\u8D21\u732E\u503C\uFF08\u9009\u586B\uFF09"
+    parameters:
+      boosted_identity:
+        matcher:
+          acceptedValueTypes:
+          - character
+          - corporation
+          - alliance
+          - faction
+          description:
+            de: "Entweder der Kapselpilot, der das Schiff besitzt, das per Fernbooster\
+              \ verst\xE4rkt wird, oder eine Organisation, der er angeh\xF6rt (Corporation,\
+              \ Allianz, Fraktion)."
+            en: Either the capsuleer who must own the ship being remote boosted, or
+              an organization they must belong to (corporation, alliance, faction).
+            es: "O el capsulista que debe ser propietario de la nave que se potencia\
+              \ de forma remota, o una organizaci\xF3n a la que debe pertenecer (corporaci\xF3\
+              n, alianza, facci\xF3n)."
+            fr: "Soit le capsulier qui poss\xE8de le vaisseau recharg\xE9 \xE0 distance,\
+              \ soit une organisation \xE0 laquelle il doit appartenir (corporation,\
+              \ alliance, faction)."
+            ja: "\u30EA\u30E2\u30FC\u30C8\u30D6\u30FC\u30B9\u30C8\u3055\u308C\u3066\
+              \u3044\u308B\u8266\u8239\u3092\u6240\u6709\u3059\u308B\u30AB\u30D7\u30BB\
+              \u30E9\u304B\u3001\u305D\u306E\u30AB\u30D7\u30BB\u30E9\u304C\u6240\u5C5E\
+              \u3059\u308B\u7D44\u7E54\uFF08\u30B3\u30FC\u30DD\u30EC\u30FC\u30B7\u30E7\
+              \u30F3\u3001\u30A2\u30E9\u30A4\u30A2\u30F3\u30B9\u3001\u52E2\u529B\uFF09\
+              \u3002"
+            ko: "\uC6D0\uAC70\uB9AC\uC5D0\uC11C \uC2E4\uB4DC \uBD80\uC2A4\uD130\uB97C\
+              \ \uBC1B\uC744 \uC218 \uC788\uB294 \uD568\uC120\uC744 \uC18C\uC720\uD55C\
+              \ \uCEA1\uC290\uB9AC\uC5B4, \uB610\uB294 \uD574\uB2F9 \uCEA1\uC290\uB9AC\
+              \uC5B4\uAC00 \uC18C\uC18D\uB41C \uCF54\uD37C\uB808\uC774\uC158, \uC5BC\
+              \uB77C\uC774\uC5B8\uC2A4, \uD329\uC158\uC744 \uD45C\uC2DC\uD569\uB2C8\
+              \uB2E4."
+            ru: "\u041B\u0438\u0431\u043E \u043F\u0438\u043B\u043E\u0442 \u043A\u043E\
+              \u0440\u0430\u0431\u043B\u044F, \u043F\u043E\u0434\u0432\u0435\u0440\
+              \u0433\u0448\u0435\u0433\u043E\u0441\u044F \u0434\u0438\u0441\u0442\u0430\
+              \u043D\u0446\u0438\u043E\u043D\u043D\u043E\u0439 \u043D\u0430\u043A\u0430\
+              \u0447\u043A\u0435 \u0449\u0438\u0442\u043E\u0432, \u043B\u0438\u0431\
+              \u043E \u043E\u0431\u044A\u0435\u0434\u0438\u043D\u0435\u043D\u0438\u0435\
+              , \u0432 \u043A\u043E\u0442\u043E\u0440\u043E\u043C \u0441\u043E\u0441\
+              \u0442\u043E\u0438\u0442 \u044D\u0442\u043E\u0442 \u043A\u0430\u043F\
+              \u0441\u0443\u043B\u0451\u0440 (\u043A\u043E\u0440\u043F\u043E\u0440\
+              \u0430\u0446\u0438\u044F, \u0430\u043B\u044C\u044F\u043D\u0441, \u0444\
+              \u0440\u0430\u043A\u0446\u0438\u044F)."
+            zh: "\u53EF\u4EE5\u662F\u5FC5\u987B\u62E5\u6709\u8FDB\u884C\u8FDC\u7A0B\
+              \u589E\u91CF\u7684\u8230\u8239\u7684\u514B\u9686\u98DE\u884C\u5458\uFF0C\
+              \u4E5F\u53EF\u4EE5\u662F\u4ED6\u4EEC\u5FC5\u5B9A\u5728\u4E3A\u4E4B\u6548\
+              \u529B\u7684\u7684\u7EC4\u7EC7\uFF08\u519B\u56E2\u3001\u8054\u76DF\u3001\
+              \u52BF\u529B\uFF09\u3002"
+          iconID: pilot_or_organization
+          maxEntries: 10
+          optional: true
+          title:
+            de: Kapselpiloten oder Organisationen
+            en: Capsuleers or Organizations
+            es: Capsulistas u organizaciones
+            fr: Capsuliers ou organisations
+            ja: "\u30AB\u30D7\u30BB\u30E9\u307E\u305F\u306F\u7D44\u7E54"
+            ko: "\uCEA1\uC290\uB9AC\uC5B4 \uB610\uB294 \uB2E8\uCCB4"
+            ru: "\u041A\u0430\u043F\u0441\u0443\u043B\u0451\u0440\u044B \u0438\u043B\
+              \u0438 \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u0438"
+            zh: "\u514B\u9686\u98DE\u884C\u5458\u6216\u7EC4\u7EC7"
+          type: identity
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+      boosted_ship:
+        matcher:
+          acceptedValueTypes:
+          - ship_type
+          - ship_class
+          description:
+            de: "Der Schiffstyp, dessen Schild per Booster verst\xE4rkt werden muss."
+            en: The type of ship whose shield must be boosted.
+            es: El tipo de nave cuyo escudo se debe potenciar.
+            fr: "Le type de vaisseau dont le bouclier doit \xEAtre boost\xE9."
+            ja: "\u30B7\u30FC\u30EB\u30C9\u30D6\u30FC\u30B9\u30C8\u5BFE\u8C61\u3068\
+              \u306A\u308B\u8266\u8239\u306E\u30BF\u30A4\u30D7\u3002"
+            ko: "\uC2E4\uB4DC \uBD80\uC2A4\uD130\uB97C \uC0AC\uC6A9\uD574\uC57C \uD558\
+              \uB294 \uBAA9\uD45C \uD568\uC120\uC785\uB2C8\uB2E4."
+            ru: "\u0422\u0438\u043F \u043A\u043E\u0440\u0430\u0431\u043B\u044F, \u0449\
+              \u0438\u0442\u044B \u043A\u043E\u0442\u043E\u0440\u043E\u0433\u043E\
+              \ \u043D\u0443\u0436\u043D\u043E \u0432\u043E\u0441\u0441\u0442\u0430\
+              \u043D\u043E\u0432\u0438\u0442\u044C."
+            zh: "\u5FC5\u987B\u8FDB\u884C\u62A4\u76FE\u56DE\u5145\u589E\u91CF\u7684\
+              \u8230\u8239\u7C7B\u578B\u3002"
+          iconID: spaceship_command
+          maxEntries: 10
+          optional: true
+          title:
+            de: Schiffstypen oder -gruppen
+            en: Ship Types or Groups
+            es: Tipos o grupos de naves
+            fr: Types ou groupes de vaisseaux
+            ja: "\u8266\u8239\u30BF\u30A4\u30D7\u307E\u305F\u306F\u30B0\u30EB\u30FC\
+              \u30D7"
+            ko: "\uD568\uC120 \uC720\uD615 \uB610\uB294 \uADF8\uB8F9"
+            ru: "\u0422\u0438\u043F\u044B \u0438\u043B\u0438 \u0433\u0440\u0443\u043F\
+              \u043F\u044B \u043A\u043E\u0440\u0430\u0431\u043B\u0435\u0439"
+            zh: "\u8230\u8239\u7C7B\u578B\uFF08\u7EC4\uFF09"
+          type: ship_type
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+      location:
+        matcher:
+          acceptedValueTypes:
+          - solarsystem
+          - constellation
+          - region
+          description:
+            de: "Das Sonnensystem, in dem der Schild per Booster verst\xE4rkt werden\
+              \ muss."
+            en: The solar system in which the shield must be boosted.
+            es: El sistema solar en el que se debe potenciar el escudo.
+            fr: "Le syst\xE8me solaire dans lequel le bouclier doit \xEAtre recharg\xE9\
+              ."
+            ja: "\u30B7\u30FC\u30EB\u30C9\u30D6\u30FC\u30B9\u30C8\u306E\u5BFE\u8C61\
+              \u3068\u306A\u308B\u30BD\u30FC\u30E9\u30FC\u30B7\u30B9\u30C6\u30E0\u3002"
+            ko: "\uC2E4\uB4DC \uBD80\uC2A4\uD130 \uC784\uBB34\uB97C \uC9C4\uD589\uD560\
+              \ \uC218 \uC788\uB294 \uC131\uACC4\uC785\uB2C8\uB2E4."
+            ru: "\u0417\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u0441\u0438\u0441\
+              \u0442\u0435\u043C\u0430, \u0432\_\u043A\u043E\u0442\u043E\u0440\u043E\
+              \u0439 \u043D\u0443\u0436\u043D\u043E \u0432\u043E\u0441\u0441\u0442\
+              \u0430\u043D\u043E\u0432\u0438\u0442\u044C \u0449\u0438\u0442\u044B\
+              \ \u043A\u043E\u0440\u0430\u0431\u043B\u044F."
+            zh: "\u5FC5\u987B\u5728\u5176\u4E2D\u8FDB\u884C\u62A4\u76FE\u56DE\u5145\
+              \u589E\u91CF\u7684\u6052\u661F\u7CFB\u3002"
+          iconID: location
+          maxEntries: 10
+          optional: true
+          title:
+            de: Positionen
+            en: Locations
+            es: Ubicaciones
+            fr: Emplacements
+            ja: "\u4F4D\u7F6E"
+            ko: "\uC704\uCE58"
+            ru: "\u041E\u0431\u043B\u0430\u0441\u0442\u0438"
+            zh: "\u5730\u70B9"
+          type: location
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+    progressDescription:
+      de: HP wiederhergestellt
+      en: HP boosted
+      es: PV potenciados
+      fr: "PV boost\xE9s"
+      ja: "\u30D6\u30FC\u30B9\u30C8\u3057\u305FHP"
+      ko: "\uC99D\uD3ED\uD55C \uB0B4\uAD6C\uB3C4"
+      ru: "\u041F\u043E\u0432\u044B\u0448\u0435\u043D\u043E \u043F\u0440\u043E\u0447\
+        \u043D\u043E\u0441\u0442\u0438"
+      zh: "\u5DF2\u589E\u52A0HP"
+    rewardDescription:
+      de: Belohnung pro wiederhergestelltem HP
+      en: Reward per hit point boosted
+      es: "Retribuci\xF3n por punto de vida potenciado"
+      fr: "R\xE9compense par point de vie boost\xE9"
+      ja: "\u30D6\u30FC\u30B9\u30C8\u3057\u305FHP\u3042\u305F\u308A\u306E\u5831\u916C"
+      ko: "\uC99D\uD3ED\uD55C \uB0B4\uAD6C\uB3C4\uB2F9 \uBCF4\uC0C1"
+      ru: "\u041D\u0430\u0433\u0440\u0430\u0434\u0430 \u0437\u0430 \u0435\u0434. \u0443\
+        \u0432\u0435\u043B\u0438\u0447\u0435\u043D\u0438\u044F \u043F\u0440\u043E\u0447\
+        \u043D\u043E\u0441\u0442\u0438"
+      zh: "\u6BCF\u589E\u52A0\u4E00\u70B9\u751F\u547D\u503C\u7684\u5956\u52B1"
+    targetDescription:
+      de: "Ben\xF6tigte wiederhergestellte HP insgesamt"
+      en: Total hit points to be boosted
+      es: Puntos de vida totales que potenciar
+      fr: "Nombre total de points de vie \xE0 booster"
+      ja: "\u30D6\u30FC\u30B9\u30C8\u3059\u308B\u5408\u8A08HP"
+      ko: "\uC99D\uD3ED\uD560 \uCD1D \uB0B4\uAD6C\uB3C4"
+      ru: "\u041D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u0443\u0432\
+        \u0435\u043B\u0438\u0447\u0438\u0442\u044C \u0435\u0434. \u043F\u0440\u043E\
+        \u0447\u043D\u043E\u0441\u0442\u0438"
+      zh: "\u5F85\u589E\u52A0\u7684\u603B\u751F\u547D\u503C"
+    title:
+      de: Schildfernboost
+      en: Remote Boost Shield
+      es: Escudo potenciador remoto
+      fr: "Rechargez un bouclier \xE0 distance"
+      ja: "\u30B7\u30FC\u30EB\u30C9\u3092\u30EA\u30E2\u30FC\u30C8\u30D6\u30FC\u30B9\
+        \u30C8"
+      ko: "\uC6D0\uACA9 \uC2E4\uB4DC \uBD80\uC2A4\uD130"
+      ru: "\u0414\u0438\u0441\u0442\u0430\u043D\u0446\u0438\u043E\u043D\u043D\u044B\
+        \u0439 \u0440\u0435\u043C\u043E\u043D\u0442 \u0449\u0438\u0442\u043E\u0432"
+      zh: "\u8FDC\u7A0B\u62A4\u76FE\u56DE\u5145\u589E\u91CF"
+  CaptureFWComplex:
+    contentTags:
+    - career_path_soldier_of_fortune
+    - activity_combat
+    - feature_factional_warfare
+    description:
+      de: "Erobern Sie im Fraktionskrieg Komplexe f\xFCr Ihre Miliz."
+      en: Capture complexes for your militia in Factional Warfare.
+      es: Captura complejos para tu milicia en la guerra de facciones.
+      fr: Capturez des complexes pour votre milice dans la guerre de factions.
+      ja: "\u56FD\u5BB6\u9593\u6226\u4E89\u3067\u6240\u5C5E\u7FA9\u52C7\u5175\u306E\
+        \u305F\u3081\u306B\u8907\u5408\u65BD\u8A2D\u3092\u5360\u9818\u3059\u308B"
+      ko: "\uD329\uC158 \uC804\uC7C1\uC5D0\uC11C \uCEF4\uD50C\uB809\uC2A4\uB97C \uC810\
+        \uB839\uD569\uB2C8\uB2E4."
+      ru: "\u0417\u0430\u0445\u0432\u0430\u0442\u0438\u0442\u0435 \u043A\u043E\u043C\
+        \u043F\u043B\u0435\u043A\u0441\u044B \u0434\u043B\u044F \u0441\u0432\u043E\
+        \u0435\u0433\u043E \u043E\u043F\u043E\u043B\u0447\u0435\u043D\u0438\u044F\
+        \ \u0432 \u043C\u0435\u0436\u0433\u043E\u0441\u0443\u0434\u0430\u0440\u0441\
+        \u0442\u0432\u0435\u043D\u043D\u044B\u0445 \u0432\u043E\u0439\u043D\u0430\u0445\
+        ."
+      zh: "\u5728\u52BF\u529B\u6218\u4E89\u4E2D\u4E3A\u6240\u5C5E\u56FD\u6C11\u536B\
+        \u961F\u5360\u9886\u590D\u5408\u4F53\u3002"
+    iconID: attack_fw_complex
+    maxContributionsPerParticipant:
+      description:
+        de: "H\xF6chstmenge, die ein einzelner Teilnehmer zu diesem Auftrag beitragen\
+          \ kann."
+        en: Maximum amount a single participant can contribute to this job.
+        es: "La cantidad m\xE1xima con la que un solo participante puede contribuir\
+          \ a este trabajo."
+        fr: "Contribution maximale d'un seul participant \xE0 cette mission."
+        ja: "\u3053\u306E\u30B8\u30E7\u30D6\u306E\u53C2\u52A0\u8005\u306E\u500B\u3005\
+          \u4EBA\u304C\u8CA2\u732E\u3067\u304D\u308B\u6700\u5927\u984D\u3067\u3059\
+          \u3002"
+        ko: "\uD574\uB2F9 \uC784\uBB34\uC5D0 \uCC38\uC5EC\uD55C \uCEA1\uC290\uB9AC\
+          \uC5B4\uC758 \uCD5C\uB300 \uAE30\uC5EC \uC218\uCE58\uC785\uB2C8\uB2E4."
+        ru: "\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439\
+          \ \u043E\u0431\u044A\u0451\u043C \u043F\u043E\u043C\u043E\u0449\u0438 \u0434\
+          \u043B\u044F \u043E\u0434\u043D\u043E\u0433\u043E \u0438\u0441\u043F\u043E\
+          \u043B\u043D\u0438\u0442\u0435\u043B\u044F \u044D\u0442\u043E\u0433\u043E\
+          \ \u0437\u0430\u043A\u0430\u0437\u0430."
+        zh: "\u6BCF\u4E2A\u53C2\u4E0E\u8005\u53EF\u5BF9\u8BE5\u4EFB\u52A1\u505A\u51FA\
+          \u7684\u6700\u5927\u8D21\u732E\u3002"
+      iconID: personal
+      title:
+        de: Limit pro Beitragendem
+        en: Limit per Contributor
+        es: "L\xEDmite por contribuyente"
+        fr: Limite par contributeur
+        ja: "\u8CA2\u732E\u8005\u3042\u305F\u308A\u306E\u4E0A\u9650"
+        ko: "\uCC38\uC5EC\uC790 \uAE30\uC5EC \uC81C\uD55C"
+        ru: "\u041E\u0433\u0440\u0430\u043D\u0438\u0447\u0435\u043D\u0438\u0435 \u0434\
+          \u043B\u044F \u0443\u0447\u0430\u0441\u0442\u043D\u0438\u043A\u0430"
+        zh: "\u4E2A\u4EBA\u8D21\u732E\u9650\u5236"
+      unsetDescription:
+        de: "Beitragsh\xF6he eingeben (Optional)"
+        en: Type in contribution amount (Optional)
+        es: "Escribe la cantidad de contribuci\xF3n (opcional)"
+        fr: Tapez le montant de la contribution (facultatif)
+        ja: "\u8CA2\u732E\u91CF\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\
+          \uFF08\u4EFB\u610F\uFF09"
+        ko: "\uAE30\uC5EC\uB3C4 \uC785\uB825(\uC120\uD0DD\uC0AC\uD56D)"
+        ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0440\u0430\u0437\u043C\u0435\
+          \u0440 \u0432\u043A\u043B\u0430\u0434\u0430 (\u043D\u0435\u043E\u0431\u044F\
+          \u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E)"
+        zh: "\u8F93\u5165\u8D21\u732E\u503C\uFF08\u9009\u586B\uFF09"
+    parameters:
+      empire_faction:
+        matcher:
+          acceptedValueTypes:
+          - faction
+          description:
+            de: "Die Fraktion, f\xFCr die Sie Komplexe erobern m\xFCssen."
+            en: The faction you must capture complexes for.
+            es: "La facci\xF3n para la que debes capturar complejos."
+            fr: La faction pour laquelle vous devez capturer des complexes.
+            ja: "\u8907\u5408\u65BD\u8A2D\u3092\u3069\u306E\u52E2\u529B\u306E\u305F\
+              \u3081\u306B\u5360\u9818\u3059\u308B\u304B\u3002"
+            ko: "\uCEF4\uD50C\uB809\uC2A4 \uC810\uB839 \uC784\uBB34\uB97C \uC758\uB8B0\
+              \uD55C \uD329\uC158\uC785\uB2C8\uB2E4."
+            ru: "\u0424\u0440\u0430\u043A\u0446\u0438\u044F, \u0434\u043B\u044F \u043A\
+              \u043E\u0442\u043E\u0440\u043E\u0439 \u043D\u0443\u0436\u043D\u043E\
+              \ \u0437\u0430\u0445\u0432\u0430\u0442\u0438\u0442\u044C \u043A\u043E\
+              \u043C\u043F\u043B\u0435\u043A\u0441\u044B."
+            zh: "\u5FC5\u987B\u4E3A\u4E4B\u5360\u9886\u590D\u5408\u4F53\u7684\u52BF\
+              \u529B\u3002"
+          iconID: mining
+          maxEntries: 4
+          optional: true
+          title:
+            de: "Fraktion, f\xFCr die erobert wird"
+            en: Faction to capture for
+            es: "Facci\xF3n para la que capturar"
+            fr: Faction pour laquelle capturer
+            ja: "\u6B21\u306E\u52E2\u529B\u306E\u305F\u3081\u306B\u5360\u9818:"
+            ko: "\uC810\uB839\uD55C \uD329\uC158"
+            ru: "\u0414\u043B\u044F \u043A\u0430\u043A\u043E\u0439 \u0444\u0440\u0430\
+              \u043A\u0446\u0438\u0438 \u043D\u0443\u0436\u043D\u043E \u0437\u0430\
+              \u0445\u0432\u0430\u0442\u0438\u0442\u044C \u043E\u0431\u044A\u0435\u043A\
+              \u0442\u044B"
+            zh: "\u6548\u5FE0\u7684\u52BF\u529B"
+          type: empire_faction
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+      fw_complex_type:
+        matcher:
+          acceptedValueTypes:
+          - archetype
+          description:
+            de: Der Komplextyp, der erobert werden muss.
+            en: The type of complex that must be captured.
+            es: El tipo de complejo que se debe capturar.
+            fr: "Le type de complexe qui doit \xEAtre captur\xE9."
+            ja: "\u5360\u9818\u5BFE\u8C61\u3068\u306A\u308B\u8907\u5408\u65BD\u8A2D\
+              \u306E\u30BF\u30A4\u30D7\u3002"
+            ko: "\uC810\uB839 \uC784\uBB34\uC758 \uBAA9\uD45C \uCEF4\uD50C\uB809\uC2A4\
+              \uC785\uB2C8\uB2E4."
+            ru: "\u0422\u0438\u043F \u043A\u043E\u043C\u043F\u043B\u0435\u043A\u0441\
+              \u0430, \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u043D\u0443\u0436\
+              \u043D\u043E \u0437\u0430\u0445\u0432\u0430\u0442\u0438\u0442\u044C."
+            zh: "\u5FC5\u987B\u5360\u9886\u7684\u590D\u5408\u4F53\u7C7B\u578B\u3002"
+          iconID: fw_complex_type
+          maxEntries: 4
+          optional: true
+          title:
+            de: Komplextyp
+            en: Complex Type
+            es: Tipo de complejo
+            fr: Type de complexe
+            ja: "\u8907\u5408\u65BD\u8A2D\u306E\u30BF\u30A4\u30D7"
+            ko: "\uCEF4\uD50C\uB809\uC2A4 \uC885\uB958"
+            ru: "\u0422\u0438\u043F \u043A\u043E\u043C\u043F\u043B\u0435\u043A\u0441\
+              \u0430"
+            zh: "\u590D\u5408\u4F53\u7C7B\u578B"
+          type: factional_warfare_complex_type
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+      location:
+        matcher:
+          acceptedValueTypes:
+          - solarsystem
+          - constellation
+          - region
+          description:
+            de: "Systeme, Konstellationen oder Regionen, in denen die Komplexe erobert\
+              \ werden m\xFCssen."
+            en: Systems, Constellations, or Regions in which the complexes must be
+              captured.
+            es: Sistemas solares, constelaciones o regiones en los que deben capturarse
+              los complejos.
+            fr: "Syst\xE8mes, constellations ou r\xE9gions dans lesquels les complexes\
+              \ doivent \xEAtre captur\xE9s."
+            ja: "\u8907\u5408\u65BD\u8A2D\u5360\u9818\u306E\u5BFE\u8C61\u3068\u306A\
+              \u308B\u30B7\u30B9\u30C6\u30E0\u3001\u30B3\u30F3\u30B9\u30C6\u30EC\u30FC\
+              \u30B7\u30E7\u30F3\u3001\u30EA\u30FC\u30B8\u30E7\u30F3\u3002"
+            ko: "\uCEF4\uD50C\uB809\uC2A4 \uC810\uB839 \uC784\uBB34\uB97C \uC9C4\uD589\
+              \uD560 \uC218 \uC788\uB294 \uD56D\uC131\uACC4, \uC131\uC88C, \uC9C0\uC5ED\
+              \uC785\uB2C8\uB2E4."
+            ru: "\u0421\u0438\u0441\u0442\u0435\u043C\u044B, \u0441\u043E\u0437\u0432\
+              \u0435\u0437\u0434\u0438\u044F \u0438\u043B\u0438 \u0441\u0435\u043A\
+              \u0442\u043E\u0440\u0430, \u0432\_\u043A\u043E\u0442\u043E\u0440\u044B\
+              \u0445 \u043D\u0443\u0436\u043D\u043E \u0437\u0430\u0445\u0432\u0430\
+              \u0442\u044B\u0432\u0430\u0442\u044C \u043A\u043E\u043C\u043F\u043B\u0435\
+              \u043A\u0441\u044B."
+            zh: "\u5FC5\u987B\u5360\u9886\u5176\u5185\u90E8\u590D\u5408\u4F53\u7684\
+              \u661F\u7CFB\u3001\u661F\u5EA7\u6216\u661F\u57DF\u3002"
+          iconID: location
+          maxEntries: 10
+          optional: true
+          title:
+            de: Positionen
+            en: Locations
+            es: Ubicaciones
+            fr: Emplacements
+            ja: "\u4F4D\u7F6E"
+            ko: "\uC704\uCE58"
+            ru: "\u041E\u0431\u043B\u0430\u0441\u0442\u0438"
+            zh: "\u5730\u70B9"
+          type: location
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+    progressDescription:
+      de: Komplexe eingenommen
+      en: Complexes captured
+      es: Complejos capturados
+      fr: "Complexes captur\xE9s"
+      ja: "\u5360\u9818\u3057\u305F\u8907\u5408\u65BD\u8A2D"
+      ko: "\uC810\uB839\uD55C \uCEF4\uD50C\uB809\uC2A4"
+      ru: "\u0417\u0430\u0445\u0432\u0430\u0447\u0435\u043D\u043E \u043A\u043E\u043C\
+        \u043F\u043B\u0435\u043A\u0441\u043E\u0432"
+      zh: "\u5DF2\u5360\u9886\u590D\u5408\u4F53"
+    rewardDescription:
+      de: Belohnung pro erobertem Komplex
+      en: Reward per complex captured
+      es: "Retribuci\xF3n por complejo capturado"
+      fr: "R\xE9compense par complexe captur\xE9"
+      ja: "\u5360\u9818\u3057\u305F\u8907\u5408\u65BD\u8A2D\u3042\u305F\u308A\u306E\
+        \u5831\u916C"
+      ko: "\uC810\uB839\uD55C \uCEF4\uD50C\uB809\uC2A4\uB2F9 \uBCF4\uC0C1"
+      ru: "\u041D\u0430\u0433\u0440\u0430\u0434\u0430 \u0437\u0430 \u043A\u0430\u0436\
+        \u0434\u044B\u0439 \u0437\u0430\u0445\u0432\u0430\u0447\u0435\u043D\u043D\u044B\
+        \u0439 \u043A\u043E\u043C\u043F\u043B\u0435\u043A\u0441"
+      zh: "\u6BCF\u5360\u9886\u4E00\u5EA7\u590D\u5408\u4F53\u7684\u5956\u52B1"
+    targetDescription:
+      de: "Ben\xF6tigte eroberte Komplexe"
+      en: Number of complexes to be captured
+      es: "N\xFAmero de complejos que capturar"
+      fr: "Nombre de complexes \xE0 capturer"
+      ja: "\u5360\u9818\u3059\u308B\u8907\u5408\u65BD\u8A2D\u306E\u6570"
+      ko: "\uC810\uB839\uD560 \uCEF4\uD50C\uB809\uC2A4 \uC218"
+      ru: "\u041D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u0437\u0430\
+        \u0445\u0432\u0430\u0442\u0438\u0442\u044C \u043A\u043E\u043C\u043F\u043B\u0435\
+        \u043A\u0441\u043E\u0432"
+      zh: "\u5F85\u5360\u9886\u7684\u590D\u5408\u4F53\u6570\u91CF"
+    title:
+      de: Fraktionskrieg-Komplexe einnehmen
+      en: Capture Factional Warfare Complexes
+      es: Capturar complejos de guerra de facciones
+      fr: Capturez les complexes de guerre de factions
+      ja: "\u56FD\u5BB6\u9593\u6226\u4E89\u306E\u8907\u5408\u65BD\u8A2D\u3092\u5360\
+        \u9818\u3059\u308B"
+      ko: "\uD329\uC158 \uC804\uC7C1 \uCEF4\uD50C\uB809\uC2A4 \uC810\uB839"
+      ru: "\u0417\u0430\u0445\u0432\u0430\u0442 \u043A\u043E\u043C\u043F\u043B\u0435\
+        \u043A\u0441\u043E\u0432 \u0432 \u043C\u0435\u0436\u0433\u043E\u0441\u0443\
+        \u0434\u0430\u0440\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0445 \u0432\u043E\
+        \u0439\u043D\u0430\u0445"
+      zh: "\u5360\u9886\u52BF\u529B\u6218\u4E89\u590D\u5408\u4F53"
+  DamageShip:
+    contentTags:
+    - career_path_soldier_of_fortune
+    - activity_combat
+    description:
+      de: "F\xFCgen Sie den Schiffen, die von Kapselpiloten geflogen werden, Schaden\
+        \ zu."
+      en: Damage ships piloted by capsuleers.
+      es: "Da\xF1a las naves pilotadas por capsulistas."
+      fr: "Infligez des d\xE9g\xE2ts aux vaisseaux pilot\xE9s par des capsuliers."
+      ja: "\u30AB\u30D7\u30BB\u30E9\u306E\u64CD\u7E26\u3059\u308B\u8266\u8239\u306B\
+        \u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u308B\u3002"
+      ko: "\uCEA1\uC290\uB9AC\uC5B4 \uD568\uC120\uC744 \uACF5\uACA9\uD574 \uD53C\uD574\
+        \uB97C \uC785\uD788\uC138\uC694."
+      ru: "\u041D\u0430\u043D\u0435\u0441\u0442\u0438 \u0443\u0440\u043E\u043D \u043A\
+        \u043E\u0440\u0430\u0431\u043B\u044F\u043C, \u043A\u043E\u0442\u043E\u0440\
+        \u044B\u043C\u0438 \u0443\u043F\u0440\u0430\u0432\u043B\u044F\u044E\u0442\
+        \ \u043A\u0430\u043F\u0441\u0443\u043B\u0451\u0440\u044B."
+      zh: "\u7531\u514B\u9686\u98DE\u884C\u5458\u9A7E\u9A76\u7684\u4F24\u5BB3\u8230\
+        \u8239\u3002"
+    iconID: damage
+    maxContributionsPerParticipant:
+      description:
+        de: "H\xF6chstmenge, die ein einzelner Teilnehmer zu diesem Auftrag beitragen\
+          \ kann."
+        en: Maximum amount a single participant can contribute to this job.
+        es: "La cantidad m\xE1xima con la que un solo participante puede contribuir\
+          \ a este trabajo."
+        fr: "Contribution maximale d'un seul participant \xE0 cette mission."
+        ja: "\u3053\u306E\u30B8\u30E7\u30D6\u306E\u53C2\u52A0\u8005\u306E\u500B\u3005\
+          \u4EBA\u304C\u8CA2\u732E\u3067\u304D\u308B\u6700\u5927\u984D\u3067\u3059\
+          \u3002"
+        ko: "\uD574\uB2F9 \uC784\uBB34\uC5D0 \uCC38\uC5EC\uD55C \uCEA1\uC290\uB9AC\
+          \uC5B4\uC758 \uCD5C\uB300 \uAE30\uC5EC \uC218\uCE58\uC785\uB2C8\uB2E4."
+        ru: "\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439\
+          \ \u043E\u0431\u044A\u0451\u043C \u043F\u043E\u043C\u043E\u0449\u0438 \u0434\
+          \u043B\u044F \u043E\u0434\u043D\u043E\u0433\u043E \u0438\u0441\u043F\u043E\
+          \u043B\u043D\u0438\u0442\u0435\u043B\u044F \u044D\u0442\u043E\u0433\u043E\
+          \ \u0437\u0430\u043A\u0430\u0437\u0430."
+        zh: "\u6BCF\u4E2A\u53C2\u4E0E\u8005\u53EF\u5BF9\u8BE5\u4EFB\u52A1\u505A\u51FA\
+          \u7684\u6700\u5927\u8D21\u732E\u3002"
+      iconID: personal
+      title:
+        de: Limit pro Beitragendem
+        en: Limit per Contributor
+        es: "L\xEDmite por contribuyente"
+        fr: Limite par contributeur
+        ja: "\u8CA2\u732E\u8005\u3042\u305F\u308A\u306E\u4E0A\u9650"
+        ko: "\uCC38\uC5EC\uC790 \uAE30\uC5EC \uC81C\uD55C"
+        ru: "\u041E\u0433\u0440\u0430\u043D\u0438\u0447\u0435\u043D\u0438\u0435 \u0434\
+          \u043B\u044F \u0443\u0447\u0430\u0441\u0442\u043D\u0438\u043A\u0430"
+        zh: "\u4E2A\u4EBA\u8D21\u732E\u9650\u5236"
+      unsetDescription:
+        de: "Beitragsh\xF6he eingeben (Optional)"
+        en: Type in contribution amount (Optional)
+        es: "Escribe la cantidad de contribuci\xF3n (opcional)"
+        fr: Tapez le montant de la contribution (facultatif)
+        ja: "\u8CA2\u732E\u91CF\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\
+          \uFF08\u4EFB\u610F\uFF09"
+        ko: "\uAE30\uC5EC\uB3C4 \uC785\uB825(\uC120\uD0DD\uC0AC\uD56D)"
+        ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0440\u0430\u0437\u043C\u0435\
+          \u0440 \u0432\u043A\u043B\u0430\u0434\u0430 (\u043D\u0435\u043E\u0431\u044F\
+          \u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E)"
+        zh: "\u8F93\u5165\u8D21\u732E\u503C\uFF08\u9009\u586B\uFF09"
+    parameters:
+      damaged_identity:
+        matcher:
+          acceptedValueTypes:
+          - character
+          - corporation
+          - alliance
+          - faction
+          description:
+            de: "Entweder die Kapselpiloten, die die besch\xE4digten Schiffe steuern,\
+              \ oder die Corporations, die Allianzen oder die Fraktionen, denen die\
+              \ Piloten der besch\xE4digten Schiffe angeh\xF6ren."
+            en: "Either the capsuleers who must be piloting the ships being damaged,\
+              \ or the corporations, alliances, or factions to which the damaged ship\u2019\
+              s pilot must belong."
+            es: "O bien los capsulistas que deben pilotar las naves da\xF1adas, o\
+              \ bien las corporaciones, alianzas o facciones a las que debe pertenecer\
+              \ el piloto de la nave da\xF1ada."
+            fr: "Soit les capsuliers qui doivent piloter les vaisseaux endommag\xE9\
+              s, soit les corporations, alliances ou factions auxquelles le pilote\
+              \ du vaisseau endommag\xE9 doit appartenir."
+            ja: "\u640D\u50B7\u3092\u53D7\u3051\u3066\u3044\u308B\u8266\u8239\u3092\
+              \u64CD\u7E26\u3057\u3066\u3044\u308B\u30AB\u30D7\u30BB\u30E9\u3001\u3082\
+              \u3057\u304F\u306F\u640D\u50B7\u3092\u53D7\u3051\u305F\u8266\u8239\u306E\
+              \u30D1\u30A4\u30ED\u30C3\u30C8\u306E\u6240\u5C5E\u3059\u308B\u30B3\u30FC\
+              \u30DD\u30EC\u30FC\u30B7\u30E7\u30F3\u3001\u30A2\u30E9\u30A4\u30A2\u30F3\
+              \u30B9\u3001\u52E2\u529B\u3002"
+            ko: "\uACF5\uACA9\uB2F9\uD55C \uD568\uC120\uC744 \uC870\uC885\uD558\uACE0\
+              \ \uC788\uB358 \uCEA1\uC290\uB9AC\uC5B4, \uB610\uB294 \uD574\uB2F9 \uCEA1\
+              \uC290\uB9AC\uC5B4\uAC00 \uC18C\uC18D\uB41C \uCF54\uD37C\uB808\uC774\
+              \uC158, \uC5BC\uB77C\uC774\uC5B8\uC2A4, \uD329\uC158\uC744 \uD45C\uC2DC\
+              \uD569\uB2C8\uB2E4."
+            ru: "\u041D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u043F\
+              \u043E\u0432\u0440\u0435\u0434\u0438\u0442\u044C \u043A\u043E\u0440\u0430\
+              \u0431\u043B\u0438, \u043A\u043E\u0442\u043E\u0440\u044B\u043C\u0438\
+              \ \u0443\u043F\u0440\u0430\u0432\u043B\u044F\u044E\u0442 \u043A\u043E\
+              \u043D\u043A\u0440\u0435\u0442\u043D\u044B\u0435 \u043A\u0430\u043F\u0441\
+              \u0443\u043B\u0451\u0440\u044B, \u0438\u043B\u0438 \u0441\u0443\u0434\
+              \u0430, \u043F\u0440\u0438\u043D\u0430\u0434\u043B\u0435\u0436\u0430\
+              \u0449\u0438\u0435 \u043E\u043F\u0440\u0435\u0434\u0435\u043B\u0451\u043D\
+              \u043D\u044B\u043C \u043A\u043E\u0440\u043F\u043E\u0440\u0430\u0446\u0438\
+              \u044F\u043C, \u0430\u043B\u044C\u044F\u043D\u0441\u0430\u043C \u0438\
+              \u043B\u0438 \u0434\u0435\u0440\u0436\u0430\u0432\u0430\u043C."
+            zh: "\u53EF\u4EE5\u662F\u9A7E\u9A76\u6218\u635F\u8230\u8239\u7684\u514B\
+              \u9686\u98DE\u884C\u5458\uFF0C\u4E5F\u53EF\u4EE5\u662F\u6218\u635F\u8230\
+              \u8239\u98DE\u884C\u5458\u4E3A\u4E4B\u6548\u529B\u7684\u519B\u56E2\u3001\
+              \u8054\u76DF\u6216\u52BF\u529B\u3002"
+          iconID: pilot_or_organization
+          maxEntries: 10
+          optional: true
+          title:
+            de: Kapselpiloten oder Organisationen
+            en: Capsuleers or Organizations
+            es: Capsulistas u organizaciones
+            fr: Capsuliers ou organisations
+            ja: "\u30AB\u30D7\u30BB\u30E9\u307E\u305F\u306F\u7D44\u7E54"
+            ko: "\uCEA1\uC290\uB9AC\uC5B4 \uB610\uB294 \uB2E8\uCCB4"
+            ru: "\u041A\u0430\u043F\u0441\u0443\u043B\u0451\u0440\u044B \u0438\u043B\
+              \u0438 \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u0438"
+            zh: "\u514B\u9686\u98DE\u884C\u5458\u6216\u7EC4\u7EC7"
+          type: identity
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+      damaged_ship:
+        matcher:
+          acceptedValueTypes:
+          - ship_type
+          - ship_class
+          description:
+            de: "Die Typen oder Gruppen von Schiffen, denen Schaden zugef\xFCgt werden\
+              \ muss."
+            en: The types or groups of ships to which damage must be dealt.
+            es: "Los tipos o grupos de naves a los que debes infligir da\xF1o."
+            fr: "Les types ou groupes de vaisseaux qui doivent \xEAtre endommag\xE9\
+              s."
+            ja: "\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u308B\u3079\u304D\u8266\
+              \u8239\u306E\u30BF\u30A4\u30D7\u307E\u305F\u306F\u30B0\u30EB\u30FC\u30D7\
+              \u3002"
+            ko: "\uD568\uC120 \uD30C\uAD34 \uC784\uBB34\uC758 \uBAA9\uD45C \uD568\uC120\
+              \ \uC720\uD615 \uBC0F \uADF8\uB8F9\uC785\uB2C8\uB2E4."
+            ru: "\u0422\u0438\u043F\u044B \u0438\u043B\u0438 \u0433\u0440\u0443\u043F\
+              \u043F\u044B \u043A\u043E\u0440\u0430\u0431\u043B\u0435\u0439, \u043A\
+              \u043E\u0442\u043E\u0440\u044B\u043C \u043D\u0443\u0436\u043D\u043E\
+              \ \u043D\u0430\u043D\u0435\u0441\u0442\u0438 \u0443\u0440\u043E\u043D\
+              ."
+            zh: "\u5FC5\u987B\u53D7\u5230\u4F24\u5BB3\u7684\u8230\u8239\u7C7B\u578B\
+              \uFF08\u7EC4\uFF09\u3002"
+          iconID: spaceship_command
+          maxEntries: 10
+          optional: true
+          title:
+            de: Schiffstypen oder -gruppen
+            en: Ship Types or Groups
+            es: Tipos o grupos de naves
+            fr: Types ou groupes de vaisseaux
+            ja: "\u8266\u8239\u30BF\u30A4\u30D7\u307E\u305F\u306F\u30B0\u30EB\u30FC\
+              \u30D7"
+            ko: "\uD568\uC120 \uC720\uD615 \uB610\uB294 \uADF8\uB8F9"
+            ru: "\u0422\u0438\u043F\u044B \u0438\u043B\u0438 \u0433\u0440\u0443\u043F\
+              \u043F\u044B \u043A\u043E\u0440\u0430\u0431\u043B\u0435\u0439"
+            zh: "\u8230\u8239\u7C7B\u578B\uFF08\u7EC4\uFF09"
+          type: ship_type
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+      location:
+        matcher:
+          acceptedValueTypes:
+          - solarsystem
+          - constellation
+          - region
+          description:
+            de: Sonnensysteme, Konstellationen oder Regionen, in denen der Schaden
+              an Schiffen von Kapselpiloten verursacht werden muss.
+            en: Solar Systems, Constellations, or Regions in which the damage to capsuleer
+              ships must be dealt.
+            es: "Los sistemas solares, constelaciones o regiones en los que se debe\
+              \ tratar el da\xF1o a las naves de capsulistas."
+            fr: "Syst\xE8mes solaires, constellations ou r\xE9gions o\xF9 les vaisseaux\
+              \ des capsuliers doivent \xEAtre endommag\xE9s."
+            ja: "\u30AB\u30D7\u30BC\u30E9\u8266\u8239\u3078\u306E\u30C0\u30E1\u30FC\
+              \u30B8\u306E\u5BFE\u8C61\u3068\u306A\u308B\u30BD\u30FC\u30E9\u30FC\u30B7\
+              \u30B9\u30C6\u30E0\u3001\u30B3\u30F3\u30B9\u30C6\u30EC\u30FC\u30B7\u30E7\
+              \u30F3\u3001\u307E\u305F\u306F\u30EA\u30FC\u30B8\u30E7\u30F3\u3002"
+            ko: "\uCEA1\uC290\uB9AC\uC5B4 \uD568\uC120 \uD30C\uAD34 \uC784\uBB34\uB97C\
+              \ \uC9C4\uD589\uD560 \uC218 \uC788\uB294 \uD56D\uC131\uACC4, \uC131\uC88C\
+              , \uC9C0\uC5ED\uC785\uB2C8\uB2E4."
+            ru: "\u0417\u0432\u0451\u0437\u0434\u043D\u044B\u0435 \u0441\u0438\u0441\
+              \u0442\u0435\u043C\u044B, \u0441\u043E\u0437\u0432\u0435\u0437\u0434\
+              \u0438\u044F \u0438\u043B\u0438 \u0441\u0435\u043A\u0442\u043E\u0440\
+              \u0430, \u0432 \u043A\u043E\u0442\u043E\u0440\u044B\u0445 \u043D\u0443\
+              \u0436\u043D\u043E \u043F\u043E\u0432\u0440\u0435\u0434\u0438\u0442\u044C\
+              \ \u043A\u043E\u0440\u0430\u0431\u043B\u0438 \u043A\u0430\u043F\u0441\
+              \u0443\u043B\u0451\u0440\u043E\u0432."
+            zh: "\u5FC5\u987B\u5728\u5176\u4E2D\u5BF9\u514B\u9686\u98DE\u884C\u5458\
+              \u8230\u8239\u9020\u6210\u4F24\u5BB3\u7684\u6052\u661F\u7CFB\u3001\u661F\
+              \u5EA7\u6216\u661F\u57DF\u3002"
+          iconID: location
+          maxEntries: 10
+          optional: true
+          title:
+            de: Positionen
+            en: Locations
+            es: Ubicaciones
+            fr: Emplacements
+            ja: "\u4F4D\u7F6E"
+            ko: "\uC704\uCE58"
+            ru: "\u041E\u0431\u043B\u0430\u0441\u0442\u0438"
+            zh: "\u5730\u70B9"
+          type: location
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+    progressDescription:
+      de: Schaden verursacht
+      en: Damage dealt
+      es: "Da\xF1o infligido"
+      fr: "D\xE9g\xE2ts inflig\xE9s"
+      ja: "\u4E0E\u30C0\u30E1\u30FC\u30B8"
+      ko: "\uC785\uD78C \uD53C\uD574\uB7C9"
+      ru: "\u041D\u0430\u043D\u0435\u0441\u0435\u043D\u043E \u0443\u0440\u043E\u043D\
+        \u0430"
+      zh: "\u5DF2\u9020\u6210\u4F24\u5BB3"
+    rewardDescription:
+      de: Belohnung pro Schadenspunkt
+      en: Reward per point of damage
+      es: "Retribuci\xF3n por punto de da\xF1o"
+      fr: "R\xE9compense par point de d\xE9g\xE2ts"
+      ja: "\u30C0\u30E1\u30FC\u30B8\u30DD\u30A4\u30F3\u30C8\u3042\u305F\u308A\u306E\
+        \u5831\u916C"
+      ko: "\uC785\uD78C \uD53C\uD574\uB2F9 \uBCF4\uC0C1"
+      ru: "\u041D\u0430\u0433\u0440\u0430\u0434\u0430 \u0437\u0430 \u0435\u0434\u0438\
+        \u043D\u0438\u0446\u0443 \u0443\u0440\u043E\u043D\u0430"
+      zh: "\u6BCF\u9020\u6210\u4E00\u70B9\u4F24\u5BB3\u7684\u5956\u52B1"
+    targetDescription:
+      de: "Ben\xF6tigter Schaden insgesamt"
+      en: Total damage to be dealt
+      es: "Da\xF1o total infligido"
+      fr: "Nombre total de d\xE9g\xE2ts \xE0 infliger"
+      ja: "\u4E0E\u3048\u308B\u5408\u8A08\u30C0\u30E1\u30FC\u30B8"
+      ko: "\uC785\uD790 \uCD1D \uD53C\uD574\uB7C9"
+      ru: "\u041D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u043D\u0430\
+        \u043D\u0435\u0441\u0442\u0438 \u0443\u0440\u043E\u043D\u0430"
+      zh: "\u5C06\u4F1A\u9020\u6210\u7684\u603B\u4F24\u5BB3"
+    title:
+      de: "Kapselpiloten besch\xE4digen"
+      en: Damage Capsuleers
+      es: "Da\xF1a a los capsulistas"
+      fr: "Infligez des d\xE9g\xE2ts \xE0 des capsuliers"
+      ja: "\u30AB\u30D7\u30BB\u30E9\u306B\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\
+        \u308B"
+      ko: "\uCEA1\uC290\uB9AC\uC5B4 \uACA9\uD1F4"
+      ru: "\u041D\u0430\u043D\u0435\u0441\u0442\u0438 \u0443\u0440\u043E\u043D \u043A\
+        \u0430\u043F\u0441\u0443\u043B\u0451\u0440\u0430\u043C"
+      zh: "\u4F24\u5BB3\u514B\u9686\u98DE\u884C\u5458"
+  DefendFWComplex:
+    contentTags:
+    - career_path_soldier_of_fortune
+    - activity_combat
+    - feature_factional_warfare
+    description:
+      de: "Verteidigen Sie im Fraktionskrieg Komplexe f\xFCr Ihre Miliz."
+      en: Defend complexes for your militia in Factional Warfare.
+      es: Defiende complejos para tu milicia en la guerra de facciones.
+      fr: "D\xE9fendez des complexes pour votre milice dans la guerre de factions."
+      ja: "\u56FD\u5BB6\u9593\u6226\u4E89\u3067\u6240\u5C5E\u7FA9\u52C7\u5175\u306E\
+        \u305F\u3081\u306B\u8907\u5408\u65BD\u8A2D\u3092\u9632\u885B\u3059\u308B"
+      ko: "\uD329\uC158 \uC804\uC7C1\uC5D0\uC11C \uCEF4\uD50C\uB809\uC2A4\uB97C \uBC29\
+        \uC5B4\uD569\uB2C8\uB2E4."
+      ru: "\u0417\u0430\u0449\u0438\u0442\u0438\u0442\u0435 \u043A\u043E\u043C\u043F\
+        \u043B\u0435\u043A\u0441\u044B \u0434\u043B\u044F \u0441\u0432\u043E\u0435\
+        \u0433\u043E \u043E\u043F\u043E\u043B\u0447\u0435\u043D\u0438\u044F \u0432\
+        \ \u043C\u0435\u0436\u0433\u043E\u0441\u0443\u0434\u0430\u0440\u0441\u0442\
+        \u0432\u0435\u043D\u043D\u044B\u0445 \u0432\u043E\u0439\u043D\u0430\u0445."
+      zh: "\u5728\u52BF\u529B\u6218\u4E89\u4E2D\u4E3A\u6240\u5C5E\u56FD\u6C11\u536B\
+        \u961F\u5B88\u536B\u590D\u5408\u4F53\u3002"
+    iconID: defend_fw_complex
+    maxContributionsPerParticipant:
+      description:
+        de: "H\xF6chstmenge, die ein einzelner Teilnehmer zu diesem Auftrag beitragen\
+          \ kann."
+        en: Maximum amount a single participant can contribute to this job.
+        es: "La cantidad m\xE1xima con la que un solo participante puede contribuir\
+          \ a este trabajo."
+        fr: "Contribution maximale d'un seul participant \xE0 cette mission."
+        ja: "\u3053\u306E\u30B8\u30E7\u30D6\u306E\u53C2\u52A0\u8005\u306E\u500B\u3005\
+          \u4EBA\u304C\u8CA2\u732E\u3067\u304D\u308B\u6700\u5927\u984D\u3067\u3059\
+          \u3002"
+        ko: "\uD574\uB2F9 \uC784\uBB34\uC5D0 \uCC38\uC5EC\uD55C \uCEA1\uC290\uB9AC\
+          \uC5B4\uC758 \uCD5C\uB300 \uAE30\uC5EC \uC218\uCE58\uC785\uB2C8\uB2E4."
+        ru: "\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439\
+          \ \u043E\u0431\u044A\u0451\u043C \u043F\u043E\u043C\u043E\u0449\u0438 \u0434\
+          \u043B\u044F \u043E\u0434\u043D\u043E\u0433\u043E \u0438\u0441\u043F\u043E\
+          \u043B\u043D\u0438\u0442\u0435\u043B\u044F \u044D\u0442\u043E\u0433\u043E\
+          \ \u0437\u0430\u043A\u0430\u0437\u0430."
+        zh: "\u6BCF\u4E2A\u53C2\u4E0E\u8005\u53EF\u5BF9\u8BE5\u4EFB\u52A1\u505A\u51FA\
+          \u7684\u6700\u5927\u8D21\u732E\u3002"
+      iconID: personal
+      title:
+        de: Limit pro Beitragendem
+        en: Limit per Contributor
+        es: "L\xEDmite por contribuyente"
+        fr: Limite par contributeur
+        ja: "\u8CA2\u732E\u8005\u3042\u305F\u308A\u306E\u4E0A\u9650"
+        ko: "\uCC38\uC5EC\uC790 \uAE30\uC5EC \uC81C\uD55C"
+        ru: "\u041E\u0433\u0440\u0430\u043D\u0438\u0447\u0435\u043D\u0438\u0435 \u0434\
+          \u043B\u044F \u0443\u0447\u0430\u0441\u0442\u043D\u0438\u043A\u0430"
+        zh: "\u4E2A\u4EBA\u8D21\u732E\u9650\u5236"
+      unsetDescription:
+        de: "Beitragsh\xF6he eingeben (Optional)"
+        en: Type in contribution amount (Optional)
+        es: "Escribe la cantidad de contribuci\xF3n (opcional)"
+        fr: Tapez le montant de la contribution (facultatif)
+        ja: "\u8CA2\u732E\u91CF\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\
+          \uFF08\u4EFB\u610F\uFF09"
+        ko: "\uAE30\uC5EC\uB3C4 \uC785\uB825(\uC120\uD0DD\uC0AC\uD56D)"
+        ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0440\u0430\u0437\u043C\u0435\
+          \u0440 \u0432\u043A\u043B\u0430\u0434\u0430 (\u043D\u0435\u043E\u0431\u044F\
+          \u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E)"
+        zh: "\u8F93\u5165\u8D21\u732E\u503C\uFF08\u9009\u586B\uFF09"
+    parameters:
+      empire_faction:
+        matcher:
+          acceptedValueTypes:
+          - faction
+          description:
+            de: "Die Fraktion, deren Komplexe Sie verteidigen m\xFCssen."
+            en: The faction whose complexes you must defend.
+            es: "La facci\xF3n cuyos complejos debes defender."
+            fr: "La faction dont vous devez d\xE9fendre les complexes."
+            ja: "\u9632\u885B\u5BFE\u8C61\u3068\u306A\u308B\u8907\u5408\u65BD\u8A2D\
+              \u306E\u6240\u6709\u52E2\u529B\u3002"
+            ko: "\uBC29\uC5B4\uD560 \uCEF4\uD50C\uB809\uC2A4\uB97C \uBCF4\uC720\uD55C\
+              \ \uD329\uC158\uC785\uB2C8\uB2E4."
+            ru: "\u0414\u0435\u0440\u0436\u0430\u0432\u0430, \u0447\u044C\u0438 \u043A\
+              \u043E\u043C\u043F\u043B\u0435\u043A\u0441\u044B \u0432\u044B \u0434\
+              \u043E\u043B\u0436\u043D\u044B \u0437\u0430\u0449\u0438\u0442\u0438\u0442\
+              \u044C."
+            zh: "\u5FC5\u987B\u5B88\u536B\u5176\u590D\u5408\u4F53\u7684\u52BF\u529B\
+              \u3002"
+          iconID: mining
+          maxEntries: 4
+          optional: true
+          title:
+            de: Verteidigende Fraktion
+            en: Defending Faction
+            es: "Facci\xF3n defensora"
+            fr: "D\xE9fense de la faction"
+            ja: "\u9632\u885B\u52E2\u529B"
+            ko: "\uBC29\uC5B4 \uD329\uC158"
+            ru: "\u041E\u0431\u043E\u0440\u043E\u043D\u044F\u044E\u0449\u0430\u044F\
+              \u0441\u044F \u0444\u0440\u0430\u043A\u0446\u0438\u044F"
+            zh: "\u5B88\u536B\u52BF\u529B"
+          type: empire_faction
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+      fw_complex_type:
+        matcher:
+          acceptedValueTypes:
+          - archetype
+          description:
+            de: Der Komplextyp, der verteidigt werden muss.
+            en: The type of complex that must be defended.
+            es: El tipo de complejo que se debe defender.
+            fr: "Le type de complexe qui doit \xEAtre d\xE9fendu."
+            ja: "\u9632\u885B\u5BFE\u8C61\u3068\u306A\u308B\u8907\u5408\u65BD\u8A2D\
+              \u306E\u30BF\u30A4\u30D7\u3002"
+            ko: "\uBC29\uC5B4\uB97C \uC9C4\uD589\uD560 \uCEF4\uD50C\uB809\uC2A4\uC785\
+              \uB2C8\uB2E4."
+            ru: "\u0422\u0438\u043F \u043A\u043E\u043C\u043F\u043B\u0435\u043A\u0441\
+              \u0430, \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u043D\u0443\u0436\
+              \u043D\u043E \u0437\u0430\u0449\u0438\u0442\u0438\u0442\u044C."
+            zh: "\u5FC5\u987B\u5B88\u536B\u7684\u590D\u5408\u4F53\u7C7B\u578B\u3002"
+          iconID: fw_complex_type
+          maxEntries: 4
+          optional: true
+          title:
+            de: Komplextyp
+            en: Complex Type
+            es: Tipo de complejo
+            fr: Type de complexe
+            ja: "\u8907\u5408\u65BD\u8A2D\u306E\u30BF\u30A4\u30D7"
+            ko: "\uCEF4\uD50C\uB809\uC2A4 \uC885\uB958"
+            ru: "\u0422\u0438\u043F \u043A\u043E\u043C\u043F\u043B\u0435\u043A\u0441\
+              \u0430"
+            zh: "\u590D\u5408\u4F53\u7C7B\u578B"
+          type: factional_warfare_complex_type
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+      location:
+        matcher:
+          acceptedValueTypes:
+          - solarsystem
+          - constellation
+          - region
+          description:
+            de: "Systeme, Konstellationen oder Regionen, in denen die Komplexe verteidigt\
+              \ werden m\xFCssen."
+            en: Systems, Constellations, or Regions in which the complexes must be
+              defended.
+            es: Sistemas solares, constelaciones o regiones en los que deben defenderse
+              los complejos.
+            fr: "Syst\xE8mes, constellations ou r\xE9gions dans lesquels les complexes\
+              \ doivent \xEAtre d\xE9fendus."
+            ja: "\u8907\u5408\u65BD\u8A2D\u9632\u885B\u306E\u5BFE\u8C61\u3068\u306A\
+              \u308B\u30B7\u30B9\u30C6\u30E0\u3001\u30B3\u30F3\u30B9\u30C6\u30EC\u30FC\
+              \u30B7\u30E7\u30F3\u3001\u30EA\u30FC\u30B8\u30E7\u30F3\u3002"
+            ko: "\uCEF4\uD50C\uB809\uC2A4 \uBCF4\uD638 \uC784\uBB34\uB97C \uC9C4\uD589\
+              \uD560 \uC218 \uC788\uB294 \uD56D\uC131\uACC4, \uC131\uC88C, \uC9C0\uC5ED\
+              \uC785\uB2C8\uB2E4."
+            ru: "\u0421\u0438\u0441\u0442\u0435\u043C\u044B, \u0441\u043E\u0437\u0432\
+              \u0435\u0437\u0434\u0438\u044F \u0438\u043B\u0438 \u0441\u0435\u043A\
+              \u0442\u043E\u0440\u0430, \u0432\_\u043A\u043E\u0442\u043E\u0440\u044B\
+              \u0445 \u043D\u0443\u0436\u043D\u043E \u0437\u0430\u0449\u0438\u0449\
+              \u0430\u0442\u044C \u043A\u043E\u043C\u043F\u043B\u0435\u043A\u0441\u044B\
+              ."
+            zh: "\u5FC5\u987B\u4FDD\u536B\u5176\u5185\u90E8\u590D\u5408\u4F53\u7684\
+              \u661F\u7CFB\u3001\u661F\u5EA7\u6216\u661F\u57DF\u3002"
+          iconID: location
+          maxEntries: 10
+          optional: true
+          title:
+            de: Positionen
+            en: Locations
+            es: Ubicaciones
+            fr: Emplacements
+            ja: "\u4F4D\u7F6E"
+            ko: "\uC704\uCE58"
+            ru: "\u041E\u0431\u043B\u0430\u0441\u0442\u0438"
+            zh: "\u5730\u70B9"
+          type: location
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+    progressDescription:
+      de: Komplexe verteidigt
+      en: Complexes defended
+      es: Complejos defendidos
+      fr: "Complexes prot\xE9g\xE9s"
+      ja: "\u9632\u885B\u3057\u305F\u8907\u5408\u65BD\u8A2D"
+      ko: "\uBC29\uC5B4\uD55C \uCEF4\uD50C\uB809\uC2A4"
+      ru: "\u0417\u0430\u0449\u0438\u0449\u0435\u043D\u043E \u043A\u043E\u043C\u043F\
+        \u043B\u0435\u043A\u0441\u043E\u0432"
+      zh: "\u5DF2\u5B88\u536B\u590D\u5408\u4F53"
+    rewardDescription:
+      de: Belohnung pro verteidigtem Komplex
+      en: Reward per complex defended
+      es: "Retribuci\xF3n por complejo defendido"
+      fr: "R\xE9compense par complexe d\xE9fendu"
+      ja: "\u9632\u885B\u3057\u305F\u8907\u5408\u65BD\u8A2D\u3042\u305F\u308A\u306E\
+        \u5831\u916C"
+      ko: "\uBC29\uC5B4\uD55C \uCEF4\uD50C\uB809\uC2A4\uB2F9 \uBCF4\uC0C1"
+      ru: "\u041D\u0430\u0433\u0440\u0430\u0434\u0430 \u0437\u0430 \u043A\u0430\u0436\
+        \u0434\u044B\u0439 \u0437\u0430\u0449\u0438\u0449\u0451\u043D\u043D\u044B\u0439\
+        \ \u043A\u043E\u043C\u043F\u043B\u0435\u043A\u0441"
+      zh: "\u6BCF\u5B88\u536B\u4E00\u5EA7\u590D\u5408\u4F53\u7684\u5956\u52B1"
+    targetDescription:
+      de: "Ben\xF6tigte verteidigte Komplexe"
+      en: Number of complexes to be defended
+      es: "N\xFAmero de complejos que defender"
+      fr: "Nombre de complexes \xE0 d\xE9fendre"
+      ja: "\u9632\u885B\u3059\u308B\u8907\u5408\u65BD\u8A2D\u306E\u6570"
+      ko: "\uBC29\uC5B4\uD560 \uCEF4\uD50C\uB809\uC2A4 \uC218"
+      ru: "\u041D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u0437\u0430\
+        \u0449\u0438\u0442\u0438\u0442\u044C \u043A\u043E\u043C\u043F\u043B\u0435\u043A\
+        \u0441\u043E\u0432"
+      zh: "\u5F85\u5B88\u536B\u7684\u590D\u5408\u4F53\u6570\u91CF"
+    title:
+      de: Fraktionskrieg-Komplexe verteidigen
+      en: Defend Factional Warfare Complexes
+      es: Defender complejos de guerra de facciones
+      fr: "D\xE9fendez les complexes de guerre de factions"
+      ja: "\u56FD\u5BB6\u9593\u6226\u4E89\u306E\u8907\u5408\u65BD\u8A2D\u3092\u9632\
+        \u885B\u3059\u308B"
+      ko: "\uD329\uC158 \uC804\uC7C1 \uCEF4\uD50C\uB809\uC2A4 \uBC29\uC5B4"
+      ru: "\u0417\u0430\u0449\u0438\u0442\u0430 \u043A\u043E\u043C\u043F\u043B\u0435\
+        \u043A\u0441\u043E\u0432 \u0432 \u043C\u0435\u0436\u0433\u043E\u0441\u0443\
+        \u0434\u0430\u0440\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0445 \u0432\u043E\
+        \u0439\u043D\u0430\u0445"
+      zh: "\u5B88\u536B\u52BF\u529B\u6218\u4E89\u590D\u5408\u4F53"
+  DeliverItem:
+    contentTags:
+    - career_path_industrialist
+    - activity_hauling
+    description:
+      de: "Liefern Sie Gegenst\xE4nde eines bestimmten Typs oder einer Gruppe an eine\
+        \ angegebene Station."
+      en: Deliver items of a specific type or group to a designated station.
+      es: "Entrega objetos de un tipo o grupo espec\xEDfico a una estaci\xF3n designada."
+      fr: "Livrer des objets d'un type ou groupe sp\xE9cifique \xE0 la station indiqu\xE9\
+        e."
+      ja: "\u7279\u5B9A\u306E\u30BF\u30A4\u30D7\u304B\u30B0\u30EB\u30FC\u30D7\u306E\
+        \u30A2\u30A4\u30C6\u30E0\u3092\u6307\u5B9A\u30B9\u30C6\u30FC\u30B7\u30E7\u30F3\
+        \u306B\u914D\u9001\u3057\u3066\u304F\u3060\u3055\u3044\u3002"
+      ko: "\uC9C0\uC815\uB41C \uC815\uAC70\uC7A5\uC5D0 \uD2B9\uC815 \uC720\uD615 \uB610\
+        \uB294 \uADF8\uB8F9\uC758 \uC544\uC774\uD15C\uC744 \uBC30\uC1A1\uD558\uC2ED\
+        \uC2DC\uC624."
+      ru: "\u0414\u043E\u0441\u0442\u0430\u0432\u044C\u0442\u0435 \u043F\u0440\u0435\
+        \u0434\u043C\u0435\u0442\u044B \u043E\u043F\u0440\u0435\u0434\u0435\u043B\u0451\
+        \u043D\u043D\u043E\u0433\u043E \u0442\u0438\u043F\u0430 \u0438\u043B\u0438\
+        \ \u0433\u0440\u0443\u043F\u043F\u044B \u043D\u0430 \u0443\u043A\u0430\u0437\
+        \u0430\u043D\u043D\u0443\u044E \u0441\u0442\u0430\u043D\u0446\u0438\u044E."
+      zh: "\u5C06\u7279\u5B9A\u7C7B\u578B\u6216\u5206\u7EC4\u7684\u7269\u54C1\u8FD0\
+        \u9001\u5230\u6307\u5B9A\u7A7A\u95F4\u7AD9\u3002"
+    iconID: delivery
+    maxContributionsPerParticipant:
+      description:
+        de: "H\xF6chstmenge, die ein einzelner Teilnehmer zu diesem Auftrag beitragen\
+          \ kann."
+        en: Maximum amount a single participant can contribute to this job.
+        es: "La cantidad m\xE1xima con la que un solo participante puede contribuir\
+          \ a este trabajo."
+        fr: "Contribution maximale d'un seul participant \xE0 cette mission."
+        ja: "\u3053\u306E\u30B8\u30E7\u30D6\u306E\u53C2\u52A0\u8005\u306E\u500B\u3005\
+          \u4EBA\u304C\u8CA2\u732E\u3067\u304D\u308B\u6700\u5927\u984D\u3067\u3059\
+          \u3002"
+        ko: "\uD574\uB2F9 \uC784\uBB34\uC5D0 \uCC38\uC5EC\uD55C \uCEA1\uC290\uB9AC\
+          \uC5B4\uC758 \uCD5C\uB300 \uAE30\uC5EC \uC218\uCE58\uC785\uB2C8\uB2E4."
+        ru: "\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439\
+          \ \u043E\u0431\u044A\u0451\u043C \u043F\u043E\u043C\u043E\u0449\u0438 \u0434\
+          \u043B\u044F \u043E\u0434\u043D\u043E\u0433\u043E \u0438\u0441\u043F\u043E\
+          \u043B\u043D\u0438\u0442\u0435\u043B\u044F \u044D\u0442\u043E\u0433\u043E\
+          \ \u0437\u0430\u043A\u0430\u0437\u0430."
+        zh: "\u6BCF\u4E2A\u53C2\u4E0E\u8005\u53EF\u5BF9\u8BE5\u4EFB\u52A1\u505A\u51FA\
+          \u7684\u6700\u5927\u8D21\u732E\u3002"
+      iconID: personal
+      title:
+        de: Limit pro Beitragendem
+        en: Limit per Contributor
+        es: "L\xEDmite por contribuyente"
+        fr: Limite par contributeur
+        ja: "\u8CA2\u732E\u8005\u3042\u305F\u308A\u306E\u4E0A\u9650"
+        ko: "\uCC38\uC5EC\uC790 \uAE30\uC5EC \uC81C\uD55C"
+        ru: "\u041E\u0433\u0440\u0430\u043D\u0438\u0447\u0435\u043D\u0438\u0435 \u0434\
+          \u043B\u044F \u0443\u0447\u0430\u0441\u0442\u043D\u0438\u043A\u0430"
+        zh: "\u4E2A\u4EBA\u8D21\u732E\u9650\u5236"
+      unsetDescription:
+        de: "Beitragsh\xF6he eingeben (Optional)"
+        en: Type in contribution amount (Optional)
+        es: "Escribe la cantidad de contribuci\xF3n (opcional)"
+        fr: Tapez le montant de la contribution (facultatif)
+        ja: "\u8CA2\u732E\u91CF\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\
+          \uFF08\u4EFB\u610F\uFF09"
+        ko: "\uAE30\uC5EC\uB3C4 \uC785\uB825(\uC120\uD0DD\uC0AC\uD56D)"
+        ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0440\u0430\u0437\u043C\u0435\
+          \u0440 \u0432\u043A\u043B\u0430\u0434\u0430 (\u043D\u0435\u043E\u0431\u044F\
+          \u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E)"
+        zh: "\u8F93\u5165\u8D21\u732E\u503C\uFF08\u9009\u586B\uFF09"
+    parameters:
+      corporation_item_delivery:
+        itemDelivery:
+          deliveryLocation:
+            acceptedValueTypes:
+            - station
+            - structure
+            description:
+              de: "Das Corporationb\xFCro, in das die Gegenst\xE4nde geliefert werden\
+                \ m\xFCssen. Sie k\xF6nnen bis zu 10\_Orte ausw\xE4hlen."
+              en: 'The Corporation Office to which items must be delivered.
+
+
+                You can select up to 10 locations.'
+              es: "La oficina de la corporaci\xF3n a la que se deben entregar los\
+                \ objetos.\n\nPuedes seleccionar hasta 10 ubicaciones."
+              fr: "Le bureau de corporation o\xF9 les objets doivent \xEAtre livr\xE9\
+                s. Vous pouvez s\xE9lectionner jusqu'\xE0 10\_emplacements."
+              ja: "\u30A2\u30A4\u30C6\u30E0\u306E\u914D\u9001\u5148\u3067\u3042\u308B\
+                \u30B3\u30FC\u30DD\u30EC\u30FC\u30B7\u30E7\u30F3\u30AA\u30D5\u30A3\
+                \u30B9\u3002\n\n\u6700\u592710\u304B\u6240\u307E\u3067\u9078\u3079\
+                \u307E\u3059\u3002"
+              ko: "\uC544\uC774\uD15C\uC744 \uC804\uB2EC\uD574\uC57C \uD560 \uCF54\
+                \uD37C\uB808\uC774\uC158 \uC0AC\uBB34\uC2E4\uC785\uB2C8\uB2E4.\n\n\
+                \uCD5C\uB300 10\uAC1C \uC815\uAC70\uC7A5\uC744 \uC120\uD0DD\uD560\
+                \ \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+              ru: "\u041E\u0444\u0438\u0441 \u043A\u043E\u0440\u043F\u043E\u0440\u0430\
+                \u0446\u0438\u0438, \u0432\_\u043A\u043E\u0442\u043E\u0440\u044B\u0439\
+                \ \u043D\u0443\u0436\u043D\u043E \u0434\u043E\u0441\u0442\u0430\u0432\
+                \u0438\u0442\u044C \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u044B\
+                . \u041C\u043E\u0436\u043D\u043E \u0432\u044B\u0431\u0440\u0430\u0442\
+                \u044C \u0434\u043E 10\_\u043F\u0443\u043D\u043A\u0442\u043E\u0432\
+                \ \u043D\u0430\u0437\u043D\u0430\u0447\u0435\u043D\u0438\u044F."
+              zh: "\u7269\u54C1\u5FC5\u987B\u88AB\u8FD0\u9001\u5230\u7684\u519B\u56E2\
+                \u529E\u516C\u5BA4\u3002\u4F60\u6700\u591A\u53EF\u4EE5\u9009\u62E9\
+                10\u4E2A\u5730\u70B9\u3002"
+            iconID: location
+            maxEntries: 10
+            title:
+              de: Ziel
+              en: Destination
+              es: Destino
+              fr: Destination
+              ja: "\u76EE\u7684\u5730"
+              ko: "\uBAA9\uC801\uC9C0"
+              ru: "\u041F\u0443\u043D\u043A\u0442 \u043D\u0430\u0437\u043D\u0430\u0447\
+                \u0435\u043D\u0438\u044F"
+              zh: "\u76EE\u7684\u5730"
+            unsetDescription:
+              de: Namen eingeben
+              en: Type in name
+              es: Escribe un nombre
+              fr: Saisir le nom
+              ja: "\u540D\u524D\u3092\u5165\u529B"
+              ko: "\uC774\uB984 \uC785\uB825"
+              ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+                \u0430\u043D\u0438\u0435"
+              zh: "\u8F93\u5165\u540D\u79F0"
+          description:
+            de: Der Typ des Gegenstands oder die Gegenstandsgruppe, die geliefert
+              werden soll
+            en: The type of item or item group to be delivered
+            es: El tipo de objeto o grupo de objetos que se entrega.
+            fr: "Le type ou groupe d'objet \xE0 livrer"
+            ja: "\u914D\u9001\u3055\u308C\u308B\u3079\u304D\u30A2\u30A4\u30C6\u30E0\
+              \u306E\u30BF\u30A4\u30D7\u307E\u305F\u306F\u30B0\u30EB\u30FC\u30D7\u3002"
+            ko: "\uC804\uB2EC\uD574\uC57C \uD560 \uC544\uC774\uD15C \uB610\uB294 \uC544\
+              \uC774\uD15C \uADF8\uB8F9\uC785\uB2C8\uB2E4."
+            ru: "\u0422\u0438\u043F \u0438\u043B\u0438 \u0433\u0440\u0443\u043F\u043F\
+              \u0430 \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432 \u043D\
+              \u0430 \u0434\u043E\u0441\u0442\u0430\u0432\u043A\u0443"
+            zh: "\u8981\u8FD0\u9001\u7684\u7269\u54C1\u7C7B\u578B\u6216\u7269\u54C1\
+              \u5206\u7EC4"
+          iconID: inventory
+          inventoryType:
+            acceptedValueTypes:
+            - item_type
+            - item_group
+            description:
+              de: Der Typ des Gegenstands oder die Gegenstandsgruppe, die geliefert
+                werden soll
+              en: The type of item or item group to be delivered
+              es: El tipo de objeto o grupo de objetos que se entrega.
+              fr: "Le type ou groupe d'objet \xE0 livrer"
+              ja: "\u914D\u9001\u3055\u308C\u308B\u3079\u304D\u30A2\u30A4\u30C6\u30E0\
+                \u306E\u30BF\u30A4\u30D7\u307E\u305F\u306F\u30B0\u30EB\u30FC\u30D7\
+                \u3002"
+              ko: "\uC804\uB2EC\uD574\uC57C \uD560 \uC544\uC774\uD15C \uB610\uB294\
+                \ \uC544\uC774\uD15C \uADF8\uB8F9\uC785\uB2C8\uB2E4."
+              ru: "\u0422\u0438\u043F \u0438\u043B\u0438 \u0433\u0440\u0443\u043F\u043F\
+                \u0430 \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432 \u043D\
+                \u0430 \u0434\u043E\u0441\u0442\u0430\u0432\u043A\u0443"
+              zh: "\u8981\u8FD0\u9001\u7684\u7269\u54C1\u7C7B\u578B\u6216\u7269\u54C1\
+                \u5206\u7EC4"
+            iconID: inventory
+            title:
+              de: Gegenstandstyp oder -gruppe
+              en: Item Type or Group
+              es: Tipo o grupo de objetos
+              fr: Type ou groupe d'objet
+              ja: "\u30A2\u30A4\u30C6\u30E0\u306E\u30BF\u30A4\u30D7\u307E\u305F\u306F\
+                \u30B0\u30EB\u30FC\u30D7"
+              ko: "\uC544\uC774\uD15C \uC720\uD615 \uB610\uB294 \uADF8\uB8F9"
+              ru: "\u0422\u0438\u043F \u0438\u043B\u0438 \u0433\u0440\u0443\u043F\u043F\
+                \u0430 \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432"
+              zh: "\u7269\u54C1\u7C7B\u578B\uFF08\u7EC4\uFF09"
+            unsetDescription:
+              de: Namen eingeben
+              en: Type in name
+              es: Escribe un nombre
+              fr: Saisir le nom
+              ja: "\u540D\u524D\u3092\u5165\u529B"
+              ko: "\uC774\uB984 \uC785\uB825"
+              ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+                \u0430\u043D\u0438\u0435"
+              zh: "\u8F93\u5165\u540D\u79F0"
+          title:
+            de: Gegenstandstyp oder -gruppe
+            en: Item Type or Group
+            es: Tipo o grupo de objetos
+            fr: Type ou groupe d'objet
+            ja: "\u30A2\u30A4\u30C6\u30E0\u306E\u30BF\u30A4\u30D7\u307E\u305F\u306F\
+              \u30B0\u30EB\u30FC\u30D7"
+            ko: "\uC544\uC774\uD15C \uC720\uD615 \uB610\uB294 \uADF8\uB8F9"
+            ru: "\u0422\u0438\u043F \u0438\u043B\u0438 \u0433\u0440\u0443\u043F\u043F\
+              \u0430 \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432"
+            zh: "\u7269\u54C1\u7C7B\u578B\uFF08\u7EC4\uFF09"
+    progressDescription:
+      de: "Gegenst\xE4nde geliefert"
+      en: Items delivered
+      es: Objetos entregados
+      fr: "Objets livr\xE9s"
+      ja: "\u914D\u9001\u3057\u305F\u30A2\u30A4\u30C6\u30E0"
+      ko: "\uBC30\uC1A1\uB41C \uC544\uC774\uD15C"
+      ru: "\u0414\u043E\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u043E \u043F\u0440\
+        \u0435\u0434\u043C\u0435\u0442\u043E\u0432"
+      zh: "\u7269\u54C1\u5DF2\u9012\u9001"
+    rewardDescription:
+      de: Belohnung pro geliefertem Gegenstand
+      en: Reward per item delivered
+      es: "Retribuci\xF3n por objeto entregado"
+      fr: "R\xE9compense par objet livr\xE9"
+      ja: "\u914D\u9001\u3057\u305F\u30A2\u30A4\u30C6\u30E0\u3042\u305F\u308A\u306E\
+        \u5831\u916C"
+      ko: "\uC804\uB2EC\uD55C \uC544\uC774\uD15C\uB2F9 \uBCF4\uC0C1"
+      ru: "\u041D\u0430\u0433\u0440\u0430\u0434\u0430 \u0437\u0430 \u043A\u0430\u0436\
+        \u0434\u044B\u0439 \u0434\u043E\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u043D\
+        \u044B\u0439 \u043F\u0440\u0435\u0434\u043C\u0435\u0442"
+      zh: "\u6BCF\u8FD0\u9001\u4E00\u4EF6\u7269\u54C1\u7684\u5956\u52B1"
+    targetDescription:
+      de: "Ben\xF6tigte gelieferte Gegenst\xE4nde"
+      en: Number of items to be delivered
+      es: "N\xFAmero de objetos que entregar"
+      fr: "Nombre d'objets \xE0 livrer"
+      ja: "\u914D\u9001\u3059\u308B\u30A2\u30A4\u30C6\u30E0\u6570"
+      ko: "\uC804\uB2EC\uD560 \uCD1D \uC544\uC774\uD15C \uC218\uB7C9"
+      ru: "\u041D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u0434\u043E\
+        \u0441\u0442\u0430\u0432\u0438\u0442\u044C \u043F\u0440\u0435\u0434\u043C\u0435\
+        \u0442\u043E\u0432"
+      zh: "\u5F85\u8FD0\u9001\u7684\u7269\u54C1\u6570\u91CF"
+    title:
+      de: Liefern
+      en: Deliver
+      es: Entregar
+      fr: Livrer
+      ja: "\u914D\u9001"
+      ko: "\uBC30\uC1A1"
+      ru: "\u0414\u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C"
+      zh: "\u8FD0\u9001"
+  KillCapsuleer:
+    contentTags:
+    - career_path_soldier_of_fortune
+    - activity_combat
+    description:
+      de: "Zerst\xF6ren Sie Schiffe, die von Kapselpiloten geflogen werden."
+      en: Destroy ships piloted by capsuleers.
+      es: Destruye naves pilotadas por capsulistas.
+      fr: "D\xE9truisez les vaisseaux pilot\xE9s par des capsuliers."
+      ja: "\u30AB\u30D7\u30BB\u30E9\u304C\u64CD\u7E26\u3059\u308B\u8266\u8239\u3092\
+        \u6483\u589C\u3059\u308B\u3002"
+      ko: "\uCEA1\uC290\uB9AC\uC5B4\uAC00 \uD0D1\uC2B9\uD55C \uD568\uC120\uC744 \uD30C\
+        \uAD34\uD569\uB2C8\uB2E4."
+      ru: "\u0423\u043D\u0438\u0447\u0442\u043E\u0436\u044C\u0442\u0435 \u043A\u043E\
+        \u0440\u0430\u0431\u043B\u0438 \u043A\u0430\u043F\u0441\u0443\u043B\u0451\u0440\
+        \u043E\u0432."
+      zh: "\u6467\u6BC1\u7531\u514B\u9686\u98DE\u884C\u5458\u9A7E\u9A76\u7684\u8230\
+        \u8239\u3002"
+    iconID: skull
+    maxContributionsPerParticipant:
+      description:
+        de: "H\xF6chstmenge, die ein einzelner Teilnehmer zu diesem Auftrag beitragen\
+          \ kann."
+        en: Maximum amount a single participant can contribute to this job.
+        es: "La cantidad m\xE1xima con la que un solo participante puede contribuir\
+          \ a este trabajo."
+        fr: "Contribution maximale d'un seul participant \xE0 cette mission."
+        ja: "\u3053\u306E\u30B8\u30E7\u30D6\u306E\u53C2\u52A0\u8005\u306E\u500B\u3005\
+          \u4EBA\u304C\u8CA2\u732E\u3067\u304D\u308B\u6700\u5927\u984D\u3067\u3059\
+          \u3002"
+        ko: "\uD574\uB2F9 \uC784\uBB34\uC5D0 \uCC38\uC5EC\uD55C \uCEA1\uC290\uB9AC\
+          \uC5B4\uC758 \uCD5C\uB300 \uAE30\uC5EC \uC218\uCE58\uC785\uB2C8\uB2E4."
+        ru: "\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439\
+          \ \u043E\u0431\u044A\u0451\u043C \u043F\u043E\u043C\u043E\u0449\u0438 \u0434\
+          \u043B\u044F \u043E\u0434\u043D\u043E\u0433\u043E \u0438\u0441\u043F\u043E\
+          \u043B\u043D\u0438\u0442\u0435\u043B\u044F \u044D\u0442\u043E\u0433\u043E\
+          \ \u0437\u0430\u043A\u0430\u0437\u0430."
+        zh: "\u6BCF\u4E2A\u53C2\u4E0E\u8005\u53EF\u5BF9\u8BE5\u4EFB\u52A1\u505A\u51FA\
+          \u7684\u6700\u5927\u8D21\u732E\u3002"
+      iconID: personal
+      title:
+        de: Limit pro Beitragendem
+        en: Limit per Contributor
+        es: "L\xEDmite por contribuyente"
+        fr: Limite par contributeur
+        ja: "\u8CA2\u732E\u8005\u3042\u305F\u308A\u306E\u4E0A\u9650"
+        ko: "\uCC38\uC5EC\uC790 \uAE30\uC5EC \uC81C\uD55C"
+        ru: "\u041E\u0433\u0440\u0430\u043D\u0438\u0447\u0435\u043D\u0438\u0435 \u0434\
+          \u043B\u044F \u0443\u0447\u0430\u0441\u0442\u043D\u0438\u043A\u0430"
+        zh: "\u4E2A\u4EBA\u8D21\u732E\u9650\u5236"
+      unsetDescription:
+        de: "Beitragsh\xF6he eingeben (Optional)"
+        en: Type in contribution amount (Optional)
+        es: "Escribe la cantidad de contribuci\xF3n (opcional)"
+        fr: Tapez le montant de la contribution (facultatif)
+        ja: "\u8CA2\u732E\u91CF\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\
+          \uFF08\u4EFB\u610F\uFF09"
+        ko: "\uAE30\uC5EC\uB3C4 \uC785\uB825(\uC120\uD0DD\uC0AC\uD56D)"
+        ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0440\u0430\u0437\u043C\u0435\
+          \u0440 \u0432\u043A\u043B\u0430\u0434\u0430 (\u043D\u0435\u043E\u0431\u044F\
+          \u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E)"
+        zh: "\u8F93\u5165\u8D21\u732E\u503C\uFF08\u9009\u586B\uFF09"
+    parameters:
+      destroyed_identity:
+        matcher:
+          acceptedValueTypes:
+          - character
+          - corporation
+          - alliance
+          - faction
+          description:
+            de: "Entweder die Kapselpiloten, die die zerst\xF6rten Schiffe besitzen,\
+              \ oder die Organisationen, denen sie angeh\xF6ren (Corporation, Allianz,\
+              \ Fraktion)."
+            en: Either the capsuleers who must own the destroyed ships, or the organizations
+              they must belong to (corporation, alliance, faction).
+            es: "O los capsulistas que deben ser propietarios de las naves destruidas,\
+              \ o las organizaciones a las que deben pertenecer (corporaci\xF3n, alianza,\
+              \ facci\xF3n)."
+            fr: "Soit les capsuliers qui poss\xE8dent les vaisseaux d\xE9truits, soit\
+              \ les organisations auxquelles ils doivent appartenir (corporation,\
+              \ alliance, faction)."
+            ja: "\u6483\u589C\u3055\u308C\u305F\u8266\u8239\u3092\u6240\u6709\u3059\
+              \u308B\u30AB\u30D7\u30BB\u30E9\u304B\u3001\u305D\u306E\u30AB\u30D7\u30BB\
+              \u30E9\u304C\u6240\u5C5E\u3059\u308B\u7D44\u7E54\uFF08\u30B3\u30FC\u30DD\
+              \u30EC\u30FC\u30B7\u30E7\u30F3\u3001\u30A2\u30E9\u30A4\u30A2\u30F3\u30B9\
+              \u3001\u52E2\u529B\uFF09\u3002"
+            ko: "\uD30C\uAD34\uB41C \uD568\uC120\uC744 \uC18C\uC720\uD55C \uCEA1\uC290\
+              \uB9AC\uC5B4, \uB610\uB294 \uD574\uB2F9 \uCEA1\uC290\uB9AC\uC5B4\uAC00\
+              \ \uC18C\uC18D\uB41C \uCF54\uD37C\uB808\uC774\uC158, \uC5BC\uB77C\uC774\
+              \uC5B8\uC2A4, \uD329\uC158\uC744 \uD45C\uC2DC\uD569\uB2C8\uB2E4."
+            ru: "\u041B\u0438\u0431\u043E \u043A\u0430\u043F\u0441\u0443\u043B\u0451\
+              \u0440\u044B, \u0432\u043B\u0430\u0434\u0435\u044E\u0449\u0438\u0435\
+              \ \u0440\u0430\u0437\u0440\u0443\u0448\u0435\u043D\u043D\u044B\u043C\
+              \u0438 \u043A\u043E\u0440\u0430\u0431\u043B\u044F\u043C\u0438, \u043B\
+              \u0438\u0431\u043E \u043E\u0431\u044A\u0435\u0434\u0438\u043D\u0435\u043D\
+              \u0438\u044F, \u0432 \u043A\u043E\u0442\u043E\u0440\u044B\u0445 \u0441\
+              \u043E\u0441\u0442\u043E\u044F\u0442 \u044D\u0442\u0438 \u043F\u0438\
+              \u043B\u043E\u0442\u044B (\u043A\u043E\u0440\u043F\u043E\u0440\u0430\
+              \u0446\u0438\u044F, \u0430\u043B\u044C\u044F\u043D\u0441, \u0434\u0435\
+              \u0440\u0436\u0430\u0432\u0430)."
+            zh: "\u53EF\u4EE5\u662F\u62E5\u6709\u6218\u635F\u8230\u8239\u7684\u514B\
+              \u9686\u98DE\u884C\u5458\uFF0C\u4E5F\u53EF\u4EE5\u662F\u4ED6\u4EEC\u4E3A\
+              \u4E4B\u6548\u529B\u7684\u7EC4\u7EC7\uFF08\u519B\u56E2\u3001\u8054\u76DF\
+              \u3001\u52BF\u529B\uFF09\u3002"
+          iconID: pilot_or_organization
+          maxEntries: 10
+          optional: true
+          title:
+            de: Kapselpiloten oder Organisationen
+            en: Capsuleers or Organizations
+            es: Capsulistas u organizaciones
+            fr: Capsuliers ou organisations
+            ja: "\u30AB\u30D7\u30BB\u30E9\u307E\u305F\u306F\u7D44\u7E54"
+            ko: "\uCEA1\uC290\uB9AC\uC5B4 \uB610\uB294 \uB2E8\uCCB4"
+            ru: "\u041A\u0430\u043F\u0441\u0443\u043B\u0451\u0440\u044B \u0438\u043B\
+              \u0438 \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u0438"
+            zh: "\u514B\u9686\u98DE\u884C\u5458\u6216\u7EC4\u7EC7"
+          type: identity
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+      destroyed_ship:
+        matcher:
+          acceptedValueTypes:
+          - ship_type
+          - ship_class
+          description:
+            de: "Die Typen oder Gruppen von Schiffen, die zerst\xF6rt werden m\xFC\
+              ssen."
+            en: The types or groups of ships that must be destroyed.
+            es: Tipos o grupos de naves que deben destruirse.
+            fr: "Les types ou groupes de vaisseaux \xE0 d\xE9truire."
+            ja: "\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u308B\u3079\u304D\u8266\
+              \u8239\u306E\u30BF\u30A4\u30D7\u307E\u305F\u306F\u30B0\u30EB\u30FC\u30D7\
+              \u3002"
+            ko: "\uD568\uC120 \uD30C\uAD34 \uC784\uBB34\uC758 \uBAA9\uD45C \uD568\uC120\
+              \uC758 \uC720\uD615 \uBC0F \uADF8\uB8F9\uC785\uB2C8\uB2E4."
+            ru: "\u0422\u0438\u043F\u044B \u0438\u043B\u0438 \u0433\u0440\u0443\u043F\
+              \u043F\u044B \u043A\u043E\u0440\u0430\u0431\u043B\u0435\u0439, \u043A\
+              \u043E\u0442\u043E\u0440\u044B\u0435 \u043D\u0443\u0436\u043D\u043E\
+              \ \u0443\u043D\u0438\u0447\u0442\u043E\u0436\u0438\u0442\u044C."
+            zh: "\u5FC5\u987B\u51FB\u6BC1\u7684\u8230\u8239\u7C7B\u578B\uFF08\u7EC4\
+              \uFF09\u3002"
+          iconID: spaceship_command
+          maxEntries: 10
+          optional: true
+          title:
+            de: Schiffstypen oder -gruppen
+            en: Ship Types or Groups
+            es: Tipos o grupos de naves
+            fr: Types ou groupes de vaisseaux
+            ja: "\u8266\u8239\u30BF\u30A4\u30D7\u307E\u305F\u306F\u30B0\u30EB\u30FC\
+              \u30D7"
+            ko: "\uD568\uC120 \uC720\uD615 \uB610\uB294 \uADF8\uB8F9"
+            ru: "\u0422\u0438\u043F\u044B \u0438\u043B\u0438 \u0433\u0440\u0443\u043F\
+              \u043F\u044B \u043A\u043E\u0440\u0430\u0431\u043B\u0435\u0439"
+            zh: "\u8230\u8239\u7C7B\u578B\uFF08\u7EC4\uFF09"
+          type: ship_type
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+      location:
+        matcher:
+          acceptedValueTypes:
+          - solarsystem
+          - constellation
+          - region
+          description:
+            de: Sonnensysteme, Konstellationen oder Regionen, in denen der Schaden
+              an Schiffen von Kapselpiloten verursacht werden muss.
+            en: Solar Systems, Constellations, or Regions in which the damage to capsuleer
+              ships must be dealt.
+            es: "Los sistemas solares, constelaciones o regiones en los que se debe\
+              \ tratar el da\xF1o a las naves de capsulistas."
+            fr: "Syst\xE8mes solaires, constellations ou r\xE9gions o\xF9 les vaisseaux\
+              \ des capsuliers doivent \xEAtre endommag\xE9s."
+            ja: "\u30AB\u30D7\u30BC\u30E9\u8266\u8239\u3078\u306E\u30C0\u30E1\u30FC\
+              \u30B8\u306E\u5BFE\u8C61\u3068\u306A\u308B\u30BD\u30FC\u30E9\u30FC\u30B7\
+              \u30B9\u30C6\u30E0\u3001\u30B3\u30F3\u30B9\u30C6\u30EC\u30FC\u30B7\u30E7\
+              \u30F3\u3001\u307E\u305F\u306F\u30EA\u30FC\u30B8\u30E7\u30F3\u3002"
+            ko: "\uCEA1\uC290\uB9AC\uC5B4 \uD568\uC120 \uD30C\uAD34 \uC784\uBB34\uB97C\
+              \ \uC9C4\uD589\uD560 \uC218 \uC788\uB294 \uD56D\uC131\uACC4, \uC131\uC88C\
+              , \uC9C0\uC5ED\uC785\uB2C8\uB2E4."
+            ru: "\u0417\u0432\u0451\u0437\u0434\u043D\u044B\u0435 \u0441\u0438\u0441\
+              \u0442\u0435\u043C\u044B, \u0441\u043E\u0437\u0432\u0435\u0437\u0434\
+              \u0438\u044F \u0438\u043B\u0438 \u0441\u0435\u043A\u0442\u043E\u0440\
+              \u0430, \u0432 \u043A\u043E\u0442\u043E\u0440\u044B\u0445 \u043D\u0443\
+              \u0436\u043D\u043E \u043F\u043E\u0432\u0440\u0435\u0434\u0438\u0442\u044C\
+              \ \u043A\u043E\u0440\u0430\u0431\u043B\u0438 \u043A\u0430\u043F\u0441\
+              \u0443\u043B\u0451\u0440\u043E\u0432."
+            zh: "\u5FC5\u987B\u5728\u5176\u4E2D\u5BF9\u514B\u9686\u98DE\u884C\u5458\
+              \u8230\u8239\u9020\u6210\u4F24\u5BB3\u7684\u6052\u661F\u7CFB\u3001\u661F\
+              \u5EA7\u6216\u661F\u57DF\u3002"
+          iconID: location
+          maxEntries: 10
+          optional: true
+          title:
+            de: Positionen
+            en: Locations
+            es: Ubicaciones
+            fr: Emplacements
+            ja: "\u4F4D\u7F6E"
+            ko: "\uC704\uCE58"
+            ru: "\u041E\u0431\u043B\u0430\u0441\u0442\u0438"
+            zh: "\u5730\u70B9"
+          type: location
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+    progressDescription:
+      de: Kapselpiloten vernichtet
+      en: Capsuleers destroyed
+      es: Capsulistas destruidos
+      fr: "Capsuliers d\xE9truits"
+      ja: "\u6483\u7834\u3057\u305F\u30AB\u30D7\u30BB\u30E9"
+      ko: "\uCC98\uCE58\uD55C \uCEA1\uC290\uB9AC\uC5B4"
+      ru: "\u0423\u043D\u0438\u0447\u0442\u043E\u0436\u0435\u043D\u043E \u043A\u0430\
+        \u043F\u0441\u0443\u043B\u0451\u0440\u043E\u0432"
+      zh: "\u5DF2\u6467\u6BC1\u514B\u9686\u98DE\u884C\u5458"
+    rewardDescription:
+      de: Belohnung pro Abschuss
+      en: Reward per kill
+      es: "Retribuci\xF3n por muerte"
+      fr: "R\xE9compense par \xE9limination"
+      ja: "\u6483\u589C\u3042\u305F\u308A\u306E\u5831\u916C"
+      ko: "\uCC98\uCE58\uB2F9 \uBCF4\uC0C1"
+      ru: "\u041D\u0430\u0433\u0440\u0430\u0434\u0430 \u0437\u0430 \u043A\u0430\u0436\
+        \u0434\u043E\u0435 \u0443\u0431\u0438\u0439\u0441\u0442\u0432\u043E"
+      zh: "\u6BCF\u51FB\u6740\u4E00\u540D\u654C\u4EBA\u7684\u5956\u52B1"
+    targetDescription:
+      de: "Ben\xF6tigte abgeschossene Kapselpiloten"
+      en: Number of capsuleers to be killed
+      es: "N\xFAmero de capsulistas a los que matar"
+      fr: "Nombre de capsuliers \xE0 \xE9liminer"
+      ja: "\u6483\u589C\u3059\u308B\u30AB\u30D7\u30BB\u30E9\u306E\u6570"
+      ko: "\uCC98\uCE58\uD560 \uCD1D \uCEA1\uC290\uB9AC\uC5B4 \uC218"
+      ru: "\u041D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u0443\u0431\
+        \u0438\u0442\u044C \u043A\u0430\u043F\u0441\u0443\u043B\u0451\u0440\u043E\u0432"
+      zh: "\u5F85\u51FB\u6740\u7684\u514B\u9686\u98DE\u884C\u5458\u6570\u91CF"
+    title:
+      de: "Kapselpilotenschiff zerst\xF6ren"
+      en: "Destroy Capsuleer\u2019s Ship"
+      es: Destruir la nave de un capsulista
+      fr: "D\xE9truisez un vaisseau de capsulier"
+      ja: "\u30AB\u30D7\u30BB\u30E9\u306E\u8266\u8239\u3092\u6483\u589C\u3059\u308B"
+      ko: "\uCEA1\uC290\uB9AC\uC5B4 \uD568\uC120 \uD30C\uAD34"
+      ru: "\u0423\u043D\u0438\u0447\u0442\u043E\u0436\u0435\u043D\u0438\u0435 \u043A\
+        \u043E\u0440\u0430\u0431\u043B\u044F \u043A\u0430\u043F\u0441\u0443\u043B\u0451\
+        \u0440\u0430"
+      zh: "\u6467\u6BC1\u514B\u9686\u98DE\u884C\u5458\u7684\u8230\u8239"
+  KillNPC:
+    contentTags:
+    - career_path_enforcer
+    - activity_combat
+    description:
+      de: "Zerst\xF6ren Sie Schiffe, die von Nicht-Kapselpiloten geflogen werden."
+      en: Destroy ships piloted by non-capsuleers.
+      es: Destruye naves pilotadas por no capsulistas.
+      fr: "D\xE9truisez les vaisseaux pilot\xE9s par des non-capsuliers."
+      ja: "\u975E\u30AB\u30D7\u30BB\u30E9\u306E\u64CD\u7E26\u3059\u308B\u8266\u8239\
+        \u3092\u6483\u589C\u3059\u308B\u3002"
+      ko: "NPC\uAC00 \uC6B4\uD589\uD558\uB294 \uD568\uC120\uC744 \uD30C\uAD34\uD558\
+        \uC138\uC694."
+      ru: "\u0423\u043D\u0438\u0447\u0442\u043E\u0436\u0438\u0442\u044C \u043A\u043E\
+        \u0440\u0430\u0431\u043B\u0438, \u043A\u043E\u0442\u043E\u0440\u044B\u043C\
+        \u0438 \u0443\u043F\u0440\u0430\u0432\u043B\u044F\u044E\u0442 \u043D\u0435\
+        \u0438\u0433\u0440\u043E\u0432\u044B\u0435 \u043F\u0435\u0440\u0441\u043E\u043D\
+        \u0430\u0436\u0438."
+      zh: "\u6467\u6BC1\u7531\u975E\u514B\u9686\u98DE\u884C\u5458\u9A7E\u9A76\u7684\
+        \u8230\u8239\u3002"
+    iconID: skull
+    maxContributionsPerParticipant:
+      description:
+        de: "H\xF6chstmenge, die ein einzelner Teilnehmer zu diesem Auftrag beitragen\
+          \ kann."
+        en: Maximum amount a single participant can contribute to this job.
+        es: "La cantidad m\xE1xima con la que un solo participante puede contribuir\
+          \ a este trabajo."
+        fr: "Contribution maximale d'un seul participant \xE0 cette mission."
+        ja: "\u3053\u306E\u30B8\u30E7\u30D6\u306E\u53C2\u52A0\u8005\u306E\u500B\u3005\
+          \u4EBA\u304C\u8CA2\u732E\u3067\u304D\u308B\u6700\u5927\u984D\u3067\u3059\
+          \u3002"
+        ko: "\uD574\uB2F9 \uC784\uBB34\uC5D0 \uCC38\uC5EC\uD55C \uCEA1\uC290\uB9AC\
+          \uC5B4\uC758 \uCD5C\uB300 \uAE30\uC5EC \uC218\uCE58\uC785\uB2C8\uB2E4."
+        ru: "\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439\
+          \ \u043E\u0431\u044A\u0451\u043C \u043F\u043E\u043C\u043E\u0449\u0438 \u0434\
+          \u043B\u044F \u043E\u0434\u043D\u043E\u0433\u043E \u0438\u0441\u043F\u043E\
+          \u043B\u043D\u0438\u0442\u0435\u043B\u044F \u044D\u0442\u043E\u0433\u043E\
+          \ \u0437\u0430\u043A\u0430\u0437\u0430."
+        zh: "\u6BCF\u4E2A\u53C2\u4E0E\u8005\u53EF\u5BF9\u8BE5\u4EFB\u52A1\u505A\u51FA\
+          \u7684\u6700\u5927\u8D21\u732E\u3002"
+      iconID: personal
+      title:
+        de: Limit pro Beitragendem
+        en: Limit per Contributor
+        es: "L\xEDmite por contribuyente"
+        fr: Limite par contributeur
+        ja: "\u8CA2\u732E\u8005\u3042\u305F\u308A\u306E\u4E0A\u9650"
+        ko: "\uCC38\uC5EC\uC790 \uAE30\uC5EC \uC81C\uD55C"
+        ru: "\u041E\u0433\u0440\u0430\u043D\u0438\u0447\u0435\u043D\u0438\u0435 \u0434\
+          \u043B\u044F \u0443\u0447\u0430\u0441\u0442\u043D\u0438\u043A\u0430"
+        zh: "\u4E2A\u4EBA\u8D21\u732E\u9650\u5236"
+      unsetDescription:
+        de: "Beitragsh\xF6he eingeben (Optional)"
+        en: Type in contribution amount (Optional)
+        es: "Escribe la cantidad de contribuci\xF3n (opcional)"
+        fr: Tapez le montant de la contribution (facultatif)
+        ja: "\u8CA2\u732E\u91CF\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\
+          \uFF08\u4EFB\u610F\uFF09"
+        ko: "\uAE30\uC5EC\uB3C4 \uC785\uB825(\uC120\uD0DD\uC0AC\uD56D)"
+        ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0440\u0430\u0437\u043C\u0435\
+          \u0440 \u0432\u043A\u043B\u0430\u0434\u0430 (\u043D\u0435\u043E\u0431\u044F\
+          \u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E)"
+        zh: "\u8F93\u5165\u8D21\u732E\u503C\uFF08\u9009\u586B\uFF09"
+    parameters:
+      location:
+        matcher:
+          acceptedValueTypes:
+          - solarsystem
+          - constellation
+          - region
+          description:
+            de: "Systeme, Konstellationen oder Regionen, in denen die Schiffe zerst\xF6\
+              rt werden m\xFCssen."
+            en: Systems, Constellations, or Regions in which the ships must be destroyed.
+            es: Sistemas, constelaciones o regiones en los que deben destruirse las
+              naves.
+            fr: "Syst\xE8mes, constellations ou r\xE9gions o\xF9 les vaisseaux doivent\
+              \ \xEAtre d\xE9truits."
+            ja: "\u8266\u8239\u6483\u589C\u306E\u5BFE\u8C61\u3068\u306A\u308B\u30B7\
+              \u30B9\u30C6\u30E0\u3001\u30B3\u30F3\u30B9\u30C6\u30EC\u30FC\u30B7\u30E7\
+              \u30F3\u3001\u30EA\u30FC\u30B8\u30E7\u30F3\u3002"
+            ko: "\uD568\uC120 \uD30C\uAD34 \uC784\uBB34\uB97C \uC9C4\uD589\uD560 \uC218\
+              \ \uC788\uB294 \uD56D\uC131\uACC4, \uC131\uC88C, \uC9C0\uC5ED\uC785\uB2C8\
+              \uB2E4."
+            ru: "\u0421\u0438\u0441\u0442\u0435\u043C\u044B, \u0441\u043E\u0437\u0432\
+              \u0435\u0437\u0434\u0438\u044F \u0438\u043B\u0438 \u0441\u0435\u043A\
+              \u0442\u043E\u0440\u0430, \u0432\_\u043A\u043E\u0442\u043E\u0440\u044B\
+              \u0445 \u043D\u0443\u0436\u043D\u043E \u0443\u043D\u0438\u0447\u0442\
+              \u043E\u0436\u0430\u0442\u044C \u043A\u043E\u0440\u0430\u0431\u043B\u0438\
+              ."
+            zh: "\u5FC5\u987B\u51FB\u6BC1\u5176\u5185\u90E8\u8230\u8239\u7684\u661F\
+              \u7CFB\u3001\u661F\u5EA7\u6216\u661F\u57DF\u3002"
+          iconID: location
+          maxEntries: 10
+          optional: true
+          title:
+            de: Positionen
+            en: Locations
+            es: Ubicaciones
+            fr: Emplacements
+            ja: "\u4F4D\u7F6E"
+            ko: "\uC704\uCE58"
+            ru: "\u041E\u0431\u043B\u0430\u0441\u0442\u0438"
+            zh: "\u5730\u70B9"
+          type: location
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+    progressDescription:
+      de: Nicht-Kapselpiloten vernichtet
+      en: Non-Capsuleers destroyed
+      es: No capsulistas destruidos
+      fr: "Non-capsuliers d\xE9truits"
+      ja: "\u6483\u7834\u3057\u305F\u975E\u30AB\u30D7\u30BB\u30E9"
+      ko: "\uCC98\uCE58\uD55C NPC"
+      ru: "\u0423\u043D\u0438\u0447\u0442\u043E\u0436\u0435\u043D\u043E NPC"
+      zh: "\u5DF2\u6467\u6BC1\u975E\u514B\u9686\u98DE\u884C\u5458"
+    rewardDescription:
+      de: Belohnung pro Abschuss
+      en: Reward per kill
+      es: "Retribuci\xF3n por muerte"
+      fr: "R\xE9compense par \xE9limination"
+      ja: "\u6483\u589C\u3042\u305F\u308A\u306E\u5831\u916C"
+      ko: "\uCC98\uCE58\uB2F9 \uBCF4\uC0C1"
+      ru: "\u041D\u0430\u0433\u0440\u0430\u0434\u0430 \u0437\u0430 \u043A\u0430\u0436\
+        \u0434\u043E\u0435 \u0443\u0431\u0438\u0439\u0441\u0442\u0432\u043E"
+      zh: "\u6BCF\u51FB\u6740\u4E00\u540D\u654C\u4EBA\u7684\u5956\u52B1"
+    targetDescription:
+      de: "Ben\xF6tigte abgeschossene Nicht-Kapselpiloten"
+      en: Number of non-capsuleers to be killed
+      es: "N\xFAmero de no capsulistas a los que matar"
+      fr: "Nombre de non-capsuliers \xE0 \xE9liminer"
+      ja: "\u6483\u589C\u3059\u308B\u975E\u30AB\u30D7\u30BB\u30E9\u306E\u6570"
+      ko: "\uCC98\uCE58\uD560 NPC \uC218"
+      ru: "\u041D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u0443\u0431\
+        \u0438\u0442\u044C NPC"
+      zh: "\u5F85\u51FB\u6740\u7684\u975E\u514B\u9686\u98DE\u884C\u5458\u6570\u91CF"
+    title:
+      de: "Nicht-Kapselpiloten zerst\xF6ren"
+      en: Destroy Non-Capsuleers
+      es: Destruye a los no capsulistas
+      fr: "D\xE9truisez des non-capsuliers"
+      ja: "\u975E\u30AB\u30D7\u30BB\u30E9\u3092\u6483\u7834"
+      ko: "NPC \uD568\uC120 \uD30C\uAD34"
+      ru: "\u0423\u043D\u0438\u0447\u0442\u043E\u0436\u0438\u0442\u044C \u043D\u0435\
+        \u0438\u0433\u0440\u043E\u0432\u044B\u0445 \u043F\u0435\u0440\u0441\u043E\u043D\
+        \u0430\u0436\u0435\u0439"
+      zh: "\u6B7C\u706D\u975E\u514B\u9686\u98DE\u884C\u5458"
+  MineOre:
+    contentTags:
+    - career_path_industrialist
+    - activity_mining
+    description:
+      de: Bauen Sie Rohmaterialien ab.
+      en: Mine raw materials.
+      es: Extrae materias primas.
+      fr: "Extraire des mat\xE9riaux bruts."
+      ja: "\u539F\u6599\u3092\u63A1\u6398\u3057\u307E\u3057\u3087\u3046\u3002"
+      ko: "\uC6D0\uC7AC\uB8CC\uB97C \uCC44\uAD74\uD558\uC138\uC694."
+      ru: "\u0414\u043E\u0431\u0443\u0434\u044C\u0442\u0435 \u0441\u044B\u0440\u044C\
+        \u0451."
+      zh: "\u5F00\u91C7\u539F\u6750\u6599\u3002"
+    iconID: mining
+    maxContributionsPerParticipant:
+      description:
+        de: "H\xF6chstmenge, die ein einzelner Teilnehmer zu diesem Auftrag beitragen\
+          \ kann."
+        en: Maximum amount a single participant can contribute to this job.
+        es: "La cantidad m\xE1xima con la que un solo participante puede contribuir\
+          \ a este trabajo."
+        fr: "Contribution maximale d'un seul participant \xE0 cette mission."
+        ja: "\u3053\u306E\u30B8\u30E7\u30D6\u306E\u53C2\u52A0\u8005\u306E\u500B\u3005\
+          \u4EBA\u304C\u8CA2\u732E\u3067\u304D\u308B\u6700\u5927\u984D\u3067\u3059\
+          \u3002"
+        ko: "\uD574\uB2F9 \uC784\uBB34\uC5D0 \uCC38\uC5EC\uD55C \uCEA1\uC290\uB9AC\
+          \uC5B4\uC758 \uCD5C\uB300 \uAE30\uC5EC \uC218\uCE58\uC785\uB2C8\uB2E4."
+        ru: "\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439\
+          \ \u043E\u0431\u044A\u0451\u043C \u043F\u043E\u043C\u043E\u0449\u0438 \u0434\
+          \u043B\u044F \u043E\u0434\u043D\u043E\u0433\u043E \u0438\u0441\u043F\u043E\
+          \u043B\u043D\u0438\u0442\u0435\u043B\u044F \u044D\u0442\u043E\u0433\u043E\
+          \ \u0437\u0430\u043A\u0430\u0437\u0430."
+        zh: "\u6BCF\u4E2A\u53C2\u4E0E\u8005\u53EF\u5BF9\u8BE5\u4EFB\u52A1\u505A\u51FA\
+          \u7684\u6700\u5927\u8D21\u732E\u3002"
+      iconID: personal
+      title:
+        de: Limit pro Beitragendem
+        en: Limit per Contributor
+        es: "L\xEDmite por contribuyente"
+        fr: Limite par contributeur
+        ja: "\u8CA2\u732E\u8005\u3042\u305F\u308A\u306E\u4E0A\u9650"
+        ko: "\uCC38\uC5EC\uC790 \uAE30\uC5EC \uC81C\uD55C"
+        ru: "\u041E\u0433\u0440\u0430\u043D\u0438\u0447\u0435\u043D\u0438\u0435 \u0434\
+          \u043B\u044F \u0443\u0447\u0430\u0441\u0442\u043D\u0438\u043A\u0430"
+        zh: "\u4E2A\u4EBA\u8D21\u732E\u9650\u5236"
+      unsetDescription:
+        de: "Beitragsh\xF6he eingeben (Optional)"
+        en: Type in contribution amount (Optional)
+        es: "Escribe la cantidad de contribuci\xF3n (opcional)"
+        fr: Tapez le montant de la contribution (facultatif)
+        ja: "\u8CA2\u732E\u91CF\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\
+          \uFF08\u4EFB\u610F\uFF09"
+        ko: "\uAE30\uC5EC\uB3C4 \uC785\uB825(\uC120\uD0DD\uC0AC\uD56D)"
+        ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0440\u0430\u0437\u043C\u0435\
+          \u0440 \u0432\u043A\u043B\u0430\u0434\u0430 (\u043D\u0435\u043E\u0431\u044F\
+          \u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E)"
+        zh: "\u8F93\u5165\u8D21\u732E\u503C\uFF08\u9009\u586B\uFF09"
+    parameters:
+      location:
+        matcher:
+          acceptedValueTypes:
+          - solarsystem
+          - constellation
+          - region
+          description:
+            de: "Sonnensysteme, Konstellationen oder Regionen, in denen die Materialien\
+              \ abgebaut werden m\xFCssen."
+            en: Solar Systems, Constellations, or Regions in which the materials must
+              be mined.
+            es: Sistemas solares, constelaciones o regiones en los que deben extraerse
+              los materiales.
+            fr: "Syst\xE8mes solaires, constellations ou r\xE9gions o\xF9 les mat\xE9\
+              riaux doivent \xEAtre exploit\xE9s."
+            ja: "\u8CC7\u6E90\u63A1\u6398\u306E\u5BFE\u8C61\u3068\u306A\u308B\u30BD\
+              \u30FC\u30E9\u30FC\u30B7\u30B9\u30C6\u30E0\u3001\u30B3\u30F3\u30B9\u30C6\
+              \u30EC\u30FC\u30B7\u30E7\u30F3\u3001\u307E\u305F\u306F\u30EA\u30FC\u30B8\
+              \u30E7\u30F3\u3002"
+            ko: "\uC790\uC6D0 \uCC44\uC9D1 \uC784\uBB34\uB97C \uC9C4\uD589\uD560 \uC218\
+              \ \uC788\uB294 \uD56D\uC131\uACC4, \uC131\uC88C, \uC9C0\uC5ED\uC785\uB2C8\
+              \uB2E4."
+            ru: "\u0417\u0432\u0451\u0437\u0434\u043D\u044B\u0435 \u0441\u0438\u0441\
+              \u0442\u0435\u043C\u044B, \u0441\u043E\u0437\u0432\u0435\u0437\u0434\
+              \u0438\u044F \u0438\u043B\u0438 \u0441\u0435\u043A\u0442\u043E\u0440\
+              \u0430, \u0432 \u043A\u043E\u0442\u043E\u0440\u044B\u0445 \u043D\u0443\
+              \u0436\u043D\u043E \u0434\u043E\u0431\u044B\u0442\u044C \u043C\u0430\
+              \u0442\u0435\u0440\u0438\u0430\u043B\u044B."
+            zh: "\u5FC5\u987B\u5728\u5176\u4E2D\u5F00\u91C7\u6750\u6599\u7684\u6052\
+              \u661F\u7CFB\u3001\u661F\u5EA7\u6216\u661F\u57DF\u3002"
+          iconID: location
+          maxEntries: 10
+          optional: true
+          title:
+            de: Positionen
+            en: Locations
+            es: Ubicaciones
+            fr: Emplacements
+            ja: "\u4F4D\u7F6E"
+            ko: "\uC704\uCE58"
+            ru: "\u041E\u0431\u043B\u0430\u0441\u0442\u0438"
+            zh: "\u5730\u70B9"
+          type: location
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+      ore:
+        matcher:
+          acceptedValueTypes:
+          - ore_type
+          - ore_group
+          description:
+            de: "Die Typen oder Gruppen von Erz- oder Eisprodukten, die abgebaut werden\
+              \ m\xFCssen."
+            en: The types or groups of ore or ice products to be mined.
+            es: Los tipos o grupos de mena o productos de hielo que debes extraer.
+            fr: "Les types ou groupes de minerai ou de produit de glace qui doivent\
+              \ \xEAtre extraits."
+            ja: "\u63A1\u6398\u3059\u308B\u9271\u7269\u307E\u305F\u306F\u30A2\u30A4\
+              \u30B9\u306E\u7A2E\u985E\u3002"
+            ko: "\uCC44\uAD74 \uC784\uBB34\uC758 \uBAA9\uD45C \uAD11\uBB3C \uBC0F\
+              \ \uC544\uC774\uC2A4\uC758 \uC720\uD615\uACFC \uADF8\uB8F9\uC785\uB2C8\
+              \uB2E4."
+            ru: "\u0422\u0438\u043F\u044B/\u0433\u0440\u0443\u043F\u043F\u044B \u0440\
+              \u0443\u0434\u044B \u0438\u043B\u0438 \u043B\u044C\u0434\u0430 \u0434\
+              \u043B\u044F \u0434\u043E\u0431\u044B\u0447\u0438."
+            zh: "\u8981\u5F00\u91C7\u7684\u77FF\u77F3\u6216\u51B0\u77FF\u4EA7\u7269\
+              \u7684\u7C7B\u578B\uFF08\u7EC4\uFF09\u3002"
+          iconID: mining
+          maxEntries: 10
+          optional: true
+          title:
+            de: Materialtypen oder -gruppen
+            en: Material Types or Groups
+            es: Tipos o grupos de materiales
+            fr: "Types ou groupes de mat\xE9riaux"
+            ja: "\u8CC7\u6E90\u30BF\u30A4\u30D7\u307E\u305F\u306F\u30B0\u30EB\u30FC\
+              \u30D7"
+            ko: "\uC790\uC6D0 \uC720\uD615 \uBC0F \uADF8\uB8F9"
+            ru: "\u0422\u0438\u043F\u044B \u0438\u043B\u0438 \u0433\u0440\u0443\u043F\
+              \u043F\u044B \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u043E\u0432"
+            zh: "\u6750\u6599\u7C7B\u578B\uFF08\u7EC4\uFF09"
+          type: mineable_ore_type
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+    progressDescription:
+      de: Abgebaute Materialien
+      en: Materials mined
+      es: "Materiales extra\xEDdos"
+      fr: "Mat\xE9riaux extraits"
+      ja: "\u63A1\u6398\u3057\u305F\u8CC7\u6E90"
+      ko: "\uCC44\uAD74\uD55C \uC790\uC6D0"
+      ru: "\u0414\u043E\u0431\u044B\u0442\u043E \u043C\u0430\u0442\u0435\u0440\u0438\
+        \u0430\u043B\u043E\u0432"
+      zh: "\u5DF2\u5F00\u91C7\u6750\u6599"
+    rewardDescription:
+      de: Belohnung pro Einheit
+      en: Reward per unit
+      es: "Retribuci\xF3n por unidad"
+      fr: "R\xE9compense par unit\xE9"
+      ja: "\u30E6\u30CB\u30C3\u30C8\u3042\u305F\u308A\u306E\u5831\u916C"
+      ko: "\uC218\uB7C9\uB2F9 \uBCF4\uC0C1"
+      ru: "\u041D\u0430\u0433\u0440\u0430\u0434\u0430 \u0437\u0430 \u0435\u0434\u0438\
+        \u043D\u0438\u0446\u0443"
+      zh: "\u6BCF\u5355\u4F4D\u7684\u5956\u52B1"
+    targetDescription:
+      de: "Ben\xF6tigte abgebaute Materialeinheiten"
+      en: Units of material to be mined
+      es: Unidades de material que extraer
+      fr: "Unit\xE9s de mat\xE9riau \xE0 extraire"
+      ja: "\u63A1\u6398\u3059\u308B\u8CC7\u6E90\u306E\u30E6\u30CB\u30C3\u30C8\u6570"
+      ko: "\uCC44\uAD74\uD560 \uCD1D \uC790\uC6D0 \uC591"
+      ru: "\u041D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u0434\u043E\
+        \u0431\u044B\u0442\u044C \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u043E\
+        \u0432"
+      zh: "\u5F85\u5F00\u91C7\u7684\u6750\u6599\u5355\u4F4D"
+    title:
+      de: Materialien abbauen
+      en: Mine Materials
+      es: Extrae materiales
+      fr: "Exploitez des mat\xE9riaux"
+      ja: "\u8CC7\u6E90\u306E\u63A1\u6398"
+      ko: "\uC790\uC6D0 \uCC44\uAD74"
+      ru: "\u0414\u043E\u0431\u044B\u0442\u044C \u043C\u0430\u0442\u0435\u0440\u0438\
+        \u0430\u043B\u044B"
+      zh: "\u5F00\u91C7\u6750\u6599"
+  RepairArmor:
+    contentTags:
+    - career_path_soldier_of_fortune
+    - activity_logistics
+    description:
+      de: "F\xFChren Sie eine Fernreparatur an der Panzerung eines Kapselpiloten durch."
+      en: Remote repair a capsuleer's armor.
+      es: Repara el blindaje de un capsulista a distancia.
+      fr: "R\xE9parez \xE0 distance le blindage du vaisseau d'un capsulier."
+      ja: "\u30AB\u30D7\u30BB\u30E9\u306E\u30A2\u30FC\u30DE\u30FC\u3092\u30EA\u30E2\
+        \u30FC\u30C8\u30EA\u30DA\u30A2\u3059\u308B\u3002"
+      ko: "\uCEA1\uC290\uB9AC\uC5B4\uC758 \uC7A5\uAC11\uC744 \uC6D0\uACA9\uC73C\uB85C\
+        \ \uC218\uB9AC\uD569\uB2C8\uB2E4."
+      ru: "\u041F\u0440\u043E\u0432\u0435\u0434\u0438\u0442\u0435 \u0434\u0438\u0441\
+        \u0442\u0430\u043D\u0446\u0438\u043E\u043D\u043D\u044B\u0439 \u0440\u0435\u043C\
+        \u043E\u043D\u0442 \u0431\u0440\u043E\u043D\u0438 \u043A\u043E\u0440\u0430\
+        \u0431\u043B\u044F \u0434\u0440\u0443\u0433\u043E\u0433\u043E \u043A\u0430\
+        \u043F\u0441\u0443\u043B\u0451\u0440\u0430."
+      zh: "\u8FDC\u7A0B\u7EF4\u4FEE\u514B\u9686\u98DE\u884C\u5458\u7684\u88C5\u7532\
+        \u3002"
+    iconID: armor
+    maxContributionsPerParticipant:
+      description:
+        de: "H\xF6chstmenge, die ein einzelner Teilnehmer zu diesem Auftrag beitragen\
+          \ kann."
+        en: Maximum amount a single participant can contribute to this job.
+        es: "La cantidad m\xE1xima con la que un solo participante puede contribuir\
+          \ a este trabajo."
+        fr: "Contribution maximale d'un seul participant \xE0 cette mission."
+        ja: "\u3053\u306E\u30B8\u30E7\u30D6\u306E\u53C2\u52A0\u8005\u306E\u500B\u3005\
+          \u4EBA\u304C\u8CA2\u732E\u3067\u304D\u308B\u6700\u5927\u984D\u3067\u3059\
+          \u3002"
+        ko: "\uD574\uB2F9 \uC784\uBB34\uC5D0 \uCC38\uC5EC\uD55C \uCEA1\uC290\uB9AC\
+          \uC5B4\uC758 \uCD5C\uB300 \uAE30\uC5EC \uC218\uCE58\uC785\uB2C8\uB2E4."
+        ru: "\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439\
+          \ \u043E\u0431\u044A\u0451\u043C \u043F\u043E\u043C\u043E\u0449\u0438 \u0434\
+          \u043B\u044F \u043E\u0434\u043D\u043E\u0433\u043E \u0438\u0441\u043F\u043E\
+          \u043B\u043D\u0438\u0442\u0435\u043B\u044F \u044D\u0442\u043E\u0433\u043E\
+          \ \u0437\u0430\u043A\u0430\u0437\u0430."
+        zh: "\u6BCF\u4E2A\u53C2\u4E0E\u8005\u53EF\u5BF9\u8BE5\u4EFB\u52A1\u505A\u51FA\
+          \u7684\u6700\u5927\u8D21\u732E\u3002"
+      iconID: personal
+      title:
+        de: Limit pro Beitragendem
+        en: Limit per Contributor
+        es: "L\xEDmite por contribuyente"
+        fr: Limite par contributeur
+        ja: "\u8CA2\u732E\u8005\u3042\u305F\u308A\u306E\u4E0A\u9650"
+        ko: "\uCC38\uC5EC\uC790 \uAE30\uC5EC \uC81C\uD55C"
+        ru: "\u041E\u0433\u0440\u0430\u043D\u0438\u0447\u0435\u043D\u0438\u0435 \u0434\
+          \u043B\u044F \u0443\u0447\u0430\u0441\u0442\u043D\u0438\u043A\u0430"
+        zh: "\u4E2A\u4EBA\u8D21\u732E\u9650\u5236"
+      unsetDescription:
+        de: "Beitragsh\xF6he eingeben (Optional)"
+        en: Type in contribution amount (Optional)
+        es: "Escribe la cantidad de contribuci\xF3n (opcional)"
+        fr: Tapez le montant de la contribution (facultatif)
+        ja: "\u8CA2\u732E\u91CF\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\
+          \uFF08\u4EFB\u610F\uFF09"
+        ko: "\uAE30\uC5EC\uB3C4 \uC785\uB825(\uC120\uD0DD\uC0AC\uD56D)"
+        ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0440\u0430\u0437\u043C\u0435\
+          \u0440 \u0432\u043A\u043B\u0430\u0434\u0430 (\u043D\u0435\u043E\u0431\u044F\
+          \u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E)"
+        zh: "\u8F93\u5165\u8D21\u732E\u503C\uFF08\u9009\u586B\uFF09"
+    parameters:
+      location:
+        matcher:
+          acceptedValueTypes:
+          - solarsystem
+          - constellation
+          - region
+          description:
+            de: Das Sonnensystem, in dem die Panzerung repariert werden muss.
+            en: The solar system in which the armor must be repaired.
+            es: El sistema solar en el que se debe reparar el blindaje.
+            fr: "Le syst\xE8me solaire dans lequel le blindage doit \xEAtre r\xE9\
+              par\xE9."
+            ja: "\u30A2\u30FC\u30DE\u30FC\u30EA\u30DA\u30A2\u306E\u5BFE\u8C61\u3068\
+              \u306A\u308B\u30BD\u30FC\u30E9\u30FC\u30B7\u30B9\u30C6\u30E0\u3002"
+            ko: "\uC7A5\uAC11 \uC218\uB9AC \uC784\uBB34\uB97C \uC9C4\uD589\uD560 \uC218\
+              \ \uC788\uB294 \uC131\uACC4\uC785\uB2C8\uB2E4."
+            ru: "\u0417\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u0441\u0438\u0441\
+              \u0442\u0435\u043C\u0430, \u0432\_\u043A\u043E\u0442\u043E\u0440\u043E\
+              \u0439 \u043D\u0443\u0436\u043D\u043E \u043F\u043E\u0447\u0438\u043D\
+              \u0438\u0442\u044C \u0431\u0440\u043E\u043D\u044E \u043A\u043E\u0440\
+              \u0430\u0431\u043B\u044F."
+            zh: "\u5FC5\u987B\u5728\u5176\u4E2D\u8FDB\u884C\u88C5\u7532\u4FEE\u7406\
+              \u7684\u6052\u661F\u7CFB"
+          iconID: location
+          maxEntries: 10
+          optional: true
+          title:
+            de: Positionen
+            en: Locations
+            es: Ubicaciones
+            fr: Emplacements
+            ja: "\u4F4D\u7F6E"
+            ko: "\uC704\uCE58"
+            ru: "\u041E\u0431\u043B\u0430\u0441\u0442\u0438"
+            zh: "\u5730\u70B9"
+          type: location
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+      repaired_identity:
+        matcher:
+          acceptedValueTypes:
+          - character
+          - corporation
+          - alliance
+          - faction
+          description:
+            de: "Entweder der Kapselpilot, der das Schiff besitzt, das per Fernreparatur\
+              \ repariert wird, oder eine Organisation, der er angeh\xF6rt (Corporation,\
+              \ Allianz, Fraktion)."
+            en: Either the capsuleer who must own the ship being remote repaired,
+              or an organization they must belong to (corporation, alliance, faction).
+            es: "O el capsulista que debe ser propietario de la nave que se repara\
+              \ de forma remota, o una organizaci\xF3n a la que debe pertenecer (corporaci\xF3\
+              n, alianza, facci\xF3n)."
+            fr: "Soit le capsulier qui poss\xE8de le vaisseau r\xE9par\xE9 \xE0 distance,\
+              \ soit une organisation \xE0 laquelle il doit appartenir (corporation,\
+              \ alliance, faction)."
+            ja: "\u30EA\u30E2\u30FC\u30C8\u30EA\u30DA\u30A2\u3055\u308C\u3066\u3044\
+              \u308B\u8266\u8239\u3092\u6240\u6709\u3059\u308B\u30AB\u30D7\u30BB\u30E9\
+              \u304B\u3001\u305D\u306E\u30AB\u30D7\u30BB\u30E9\u304C\u6240\u5C5E\u3059\
+              \u308B\u7D44\u7E54\uFF08\u30B3\u30FC\u30DD\u30EC\u30FC\u30B7\u30E7\u30F3\
+              \u3001\u30A2\u30E9\u30A4\u30A2\u30F3\u30B9\u3001\u52E2\u529B\uFF09\u3002"
+            ko: "\uC6D0\uAC70\uB9AC\uC5D0\uC11C \uC7A5\uAC11 \uC218\uB9AC\uB97C \uBC1B\
+              \uC744 \uC218 \uC788\uB294 \uD568\uC120\uC744 \uC18C\uC720\uD55C \uCEA1\
+              \uC290\uB9AC\uC5B4, \uB610\uB294 \uD574\uB2F9 \uCEA1\uC290\uB9AC\uC5B4\
+              \uAC00 \uC18C\uC18D\uB41C \uCF54\uD37C\uB808\uC774\uC158, \uC5BC\uB77C\
+              \uC774\uC5B8\uC2A4, \uD329\uC158\uC744 \uD45C\uC2DC\uD569\uB2C8\uB2E4\
+              ."
+            ru: "\u041B\u0438\u0431\u043E \u043F\u0438\u043B\u043E\u0442 \u043A\u043E\
+              \u0440\u0430\u0431\u043B\u044F, \u043F\u043E\u0434\u0432\u0435\u0440\
+              \u0433\u0448\u0435\u0433\u043E\u0441\u044F \u0434\u0438\u0441\u0442\u0430\
+              \u043D\u0446\u0438\u043E\u043D\u043D\u043E\u043C\u0443 \u0440\u0435\u043C\
+              \u043E\u043D\u0442\u0443 \u0431\u0440\u043E\u043D\u0438, \u043B\u0438\
+              \u0431\u043E \u043E\u0431\u044A\u0435\u0434\u0438\u043D\u0435\u043D\u0438\
+              \u0435, \u0432 \u043A\u043E\u0442\u043E\u0440\u043E\u043C \u0441\u043E\
+              \u0441\u0442\u043E\u0438\u0442 \u044D\u0442\u043E\u0442 \u043A\u0430\
+              \u043F\u0441\u0443\u043B\u0451\u0440 (\u043A\u043E\u0440\u043F\u043E\
+              \u0440\u0430\u0446\u0438\u044F, \u0430\u043B\u044C\u044F\u043D\u0441\
+              , \u0444\u0440\u0430\u043A\u0446\u0438\u044F)."
+            zh: "\u53EF\u4EE5\u662F\u5FC5\u987B\u62E5\u6709\u8FDB\u884C\u8FDC\u7A0B\
+              \u7EF4\u4FEE\u7684\u8230\u8239\u7684\u514B\u9686\u98DE\u884C\u5458\uFF0C\
+              \u4E5F\u53EF\u4EE5\u662F\u4ED6\u4EEC\u5FC5\u5B9A\u5728\u4E3A\u4E4B\u6548\
+              \u529B\u7684\u7EC4\u7EC7\uFF08\u519B\u56E2\u3001\u8054\u76DF\u3001\u52BF\
+              \u529B\uFF09\u3002"
+          iconID: pilot_or_organization
+          maxEntries: 10
+          optional: true
+          title:
+            de: Kapselpiloten oder Organisationen
+            en: Capsuleers or Organizations
+            es: Capsulistas u organizaciones
+            fr: Capsuliers ou organisations
+            ja: "\u30AB\u30D7\u30BB\u30E9\u307E\u305F\u306F\u7D44\u7E54"
+            ko: "\uCEA1\uC290\uB9AC\uC5B4 \uB610\uB294 \uB2E8\uCCB4"
+            ru: "\u041A\u0430\u043F\u0441\u0443\u043B\u0451\u0440\u044B \u0438\u043B\
+              \u0438 \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u0438"
+            zh: "\u514B\u9686\u98DE\u884C\u5458\u6216\u7EC4\u7EC7"
+          type: identity
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+      repaired_ship:
+        matcher:
+          acceptedValueTypes:
+          - ship_type
+          - ship_class
+          description:
+            de: Der Schiffstyp, dessen Panzerung repariert werden muss.
+            en: The type of ship whose armor must be repaired.
+            es: El tipo de nave cuyo blindaje debe repararse.
+            fr: "Le type de vaisseau dont le blindage doit \xEAtre r\xE9par\xE9."
+            ja: "\u30A2\u30FC\u30DE\u30FC\u306E\u30EA\u30DA\u30A2\u5BFE\u8C61\u3068\
+              \u306A\u308B\u8266\u8239\u306E\u30BF\u30A4\u30D7\u3002"
+            ko: "\uC7A5\uAC11 \uC218\uB9AC\uAC00 \uD544\uC694\uD55C \uD568\uC120\uC785\
+              \uB2C8\uB2E4."
+            ru: "\u0422\u0438\u043F \u043A\u043E\u0440\u0430\u0431\u043B\u044F, \u0431\
+              \u0440\u043E\u043D\u044E \u043A\u043E\u0442\u043E\u0440\u043E\u0433\u043E\
+              \ \u043D\u0443\u0436\u043D\u043E \u043F\u043E\u0447\u0438\u043D\u0438\
+              \u0442\u044C."
+            zh: "\u5FC5\u987B\u4FEE\u7406\u88C5\u7532\u7684\u8230\u8239\u7C7B\u578B\
+              \u3002"
+          iconID: spaceship_command
+          maxEntries: 10
+          optional: true
+          title:
+            de: Schiffstypen oder -gruppen
+            en: Ship Types or Groups
+            es: Tipos o grupos de naves
+            fr: Types ou groupes de vaisseaux
+            ja: "\u8266\u8239\u30BF\u30A4\u30D7\u307E\u305F\u306F\u30B0\u30EB\u30FC\
+              \u30D7"
+            ko: "\uD568\uC120 \uC720\uD615 \uB610\uB294 \uADF8\uB8F9"
+            ru: "\u0422\u0438\u043F\u044B \u0438\u043B\u0438 \u0433\u0440\u0443\u043F\
+              \u043F\u044B \u043A\u043E\u0440\u0430\u0431\u043B\u0435\u0439"
+            zh: "\u8230\u8239\u7C7B\u578B\uFF08\u7EC4\uFF09"
+          type: ship_type
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+    progressDescription:
+      de: HP repariert
+      en: HP repaired
+      es: PV reparados
+      fr: "PV r\xE9par\xE9s"
+      ja: "\u30EA\u30DA\u30A2\u3057\u305FHP"
+      ko: "\uC218\uB9AC\uD55C \uB0B4\uAD6C\uB3C4"
+      ru: "\u0412\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\
+        \u043E \u043F\u0440\u043E\u0447\u043D\u043E\u0441\u0442\u0438"
+      zh: "\u5DF2\u6062\u590DHP"
+    rewardDescription:
+      de: Belohnung pro repariertem HP
+      en: Reward per hit point repaired
+      es: "Retribuci\xF3n por punto de vida reparado"
+      fr: "R\xE9compense par point de vie r\xE9par\xE9"
+      ja: "\u30EA\u30DA\u30A2\u3057\u305FHP\u3042\u305F\u308A\u306E\u5831\u916C"
+      ko: "\uD68C\uBCF5\uD55C \uB0B4\uAD6C\uB3C4\uB2F9 \uBCF4\uC0C1"
+      ru: "\u041D\u0430\u0433\u0440\u0430\u0434\u0430 \u0437\u0430 \u0435\u0434. \u0432\
+        \u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u044F\
+        \ \u043F\u0440\u043E\u0447\u043D\u043E\u0441\u0442\u0438"
+      zh: "\u6BCF\u6062\u590D\u4E00\u70B9\u751F\u547D\u503C\u7684\u5956\u52B1"
+    targetDescription:
+      de: "Ben\xF6tigte reparierte HP insgesamt"
+      en: Total hit points to be repaired
+      es: Puntos de vida totales que reparar
+      fr: "Nombre total de points de vie \xE0 r\xE9parer"
+      ja: "\u30EA\u30DA\u30A2\u3059\u308B\u5408\u8A08HP"
+      ko: "\uC218\uB9AC\uD560 \uCD1D \uB0B4\uAD6C\uB3C4"
+      ru: "\u041D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u0432\u043E\
+        \u0441\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C \u0435\u0434\
+        . \u043F\u0440\u043E\u0447\u043D\u043E\u0441\u0442\u0438"
+      zh: "\u5F85\u6062\u590D\u7684\u603B\u751F\u547D\u503C"
+    title:
+      de: Fernreparatur von Panzerung
+      en: Remote Repair Armor
+      es: "Reparaci\xF3n de blindaje remota"
+      fr: "R\xE9paration \xE0 distance du blindage"
+      ja: "\u30A2\u30FC\u30DE\u30FC\u3092\u30EA\u30E2\u30FC\u30C8\u30EA\u30DA\u30A2"
+      ko: "\uC6D0\uACA9 \uC7A5\uAC11 \uC218\uB9AC"
+      ru: "\u0414\u0438\u0441\u0442\u0430\u043D\u0446\u0438\u043E\u043D\u043D\u044B\
+        \u0439 \u0440\u0435\u043C\u043E\u043D\u0442 \u0431\u0440\u043E\u043D\u0438"
+      zh: "\u8FDC\u7A0B\u7EF4\u4FEE\u88C5\u7532"
+  ShipInsurance:
+    contentTags:
+    - career_path_soldier_of_fortune
+    - activity_combat
+    - activity_fleet
+    - activity_logistics
+    contributionMultiplier:
+      defaultValue: 1
+      description:
+        de: "Der Prozentsatz des Wertes des Schiffs plus der verlorenen Ausr\xFCstung,\
+          \ der entsch\xE4digt wird. Dadurch kann die Entsch\xE4digung entweder h\xF6\
+          her oder niedriger sein als der verlorene Wert. Sie kann zwischen {min_value}\_\
+          % und {max_value}\_% des Abschussbericht-Verlustwerts festgelegt werden.\
+          \ Der Wert des verlorenen Schiffs und der Ausr\xFCstung wird um diesen Prozentsatz\
+          \ angepasst, bevor die Deckungsgrenze pro Verlust und die Deckungsgrenze\
+          \ pro Teilnehmer angewendet werden."
+        en: 'The percentage of the value of the ship plus fitting lost that will be
+          compensated. This allows compensation to be either higher or lower than
+          the value lost. It can be set between {min_value}% and {max_value}% of the
+          Kill Report loss value.
+
+
+          The value of the lost ship and fitting is modified by this percentage before
+          the Coverage limit per loss and Coverage limit per participant are applied.'
+        es: "El porcentaje del valor de la nave y el equipamiento perdido que se compensar\xE1\
+          . Esto permite que la compensaci\xF3n sea mayor o menor que el valor perdido.\
+          \ Puede establecerse entre el {min_value}\_% y el {max_value}\_% del valor\
+          \ de p\xE9rdida del informe de muertes.\n\nEl valor de la nave perdida y\
+          \ su equipamiento se modifica en este porcentaje antes de que se apliquen\
+          \ el l\xEDmite de cobertura por p\xE9rdida y el l\xEDmite de cobertura por\
+          \ participante."
+        fr: "Le pourcentage de la valeur du vaisseau et du montage perdu qui sera\
+          \ compens\xE9. Cela permet d'obtenir une indemnit\xE9 sup\xE9rieure ou inf\xE9\
+          rieure \xE0 la valeur perdue. Elle peut \xEAtre fix\xE9e entre {min_value}\_\
+          % et {max_value}\_% de la valeur de perte du rapport de victime. La valeur\
+          \ du vaisseau et du montage perdus est modifi\xE9e par ce pourcentage avant\
+          \ l'application de la limite de couverture par perte et de la limite de\
+          \ couverture par participant."
+        ja: "\u88DC\u511F\u3055\u308C\u308B\u8266\u8239\u3068\u88C5\u5099\u306E\u4FA1\
+          \u5024\u306E\u5272\u5408\u3067\u3059\u3002\u30AD\u30EB\u30EC\u30DD\u30FC\
+          \u30C8\u306B\u8A18\u8F09\u3055\u308C\u3066\u3044\u308B\u640D\u5931\u984D\
+          \u306E{min_value}%\u304B\u3089{max_value}%\u3092\u8A2D\u5B9A\u3057\u3001\
+          \u640D\u5931\u984D\u306B\u5BFE\u3059\u308B\u88DC\u511F\u984D\u306E\u591A\
+          \u5BE1\u3092\u6C7A\u3081\u3089\u308C\u307E\u3059\u3002\n\n\u55AA\u5931\u3057\
+          \u305F\u8266\u8239\u3068\u88C5\u5099\u306E\u4FA1\u5024\u306F\u30011\u4EF6\
+          \u3042\u305F\u308A\u306E\u88DC\u511F\u9650\u5EA6\u984D\u3068\u53C2\u52A0\
+          \u80051\u540D\u3042\u305F\u308A\u306E\u88DC\u511F\u9650\u5EA6\u984D\u304C\
+          \u9069\u7528\u3055\u308C\u308B\u524D\u306B\u3001\u3053\u306E\u5272\u5408\
+          \u306B\u3088\u308B\u88DC\u6B63\u3092\u53D7\u3051\u307E\u3059\u3002"
+        ko: "\uD568\uC120 \uBC0F \uD53C\uD305\uC758 \uD53C\uD574 \uAE08\uC561\uC5D0\
+          \ \uB300\uD574 \uC9C0\uAE09\uB418\uB294 \uBCF4\uC0C1\uC561\uC758 \uBE44\uC728\
+          \uC785\uB2C8\uB2E4. \uBCF4\uC0C1 \uBE44\uC728\uC740 \uCD5C\uC18C {min_value}%\uC5D0\
+          \uC11C \uCD5C\uB300 {max_value}%\uAE4C\uC9C0 \uC124\uC815\uD560 \uC218 \uC788\
+          \uC2B5\uB2C8\uB2E4. \uBCF4\uC0C1\uC561\uC740 \uBCF4\uC0C1 \uBE44\uC728\uC5D0\
+          \ \uB530\uB77C \uD0AC \uAE30\uB85D\uC5D0 \uBA85\uC2DC\uB41C \uD53C\uD574\
+          \ \uAE08\uC561\uC744 \uBCF4\uC815\uD558\uC5EC \uC9C0\uAE09\uB429\uB2C8\uB2E4\
+          .\n\n\uD568\uC120 \uBC0F \uD53C\uD305\uC758 \uD53C\uD574 \uAE08\uC561\uC5D0\
+          \ \uB300\uD574 \uC9C0\uAE09\uB418\uB294 \uBCF4\uC0C1\uC561\uC740 \uBCF4\uC0C1\
+          \ \uBE44\uC728\uC744 \uC6B0\uC120 \uC801\uC6A9\uD558\uACE0 \uD568\uC120\uB2F9\
+          \ \uBCF4\uC0C1 \uD55C\uB3C4 \uBC0F \uCC38\uC5EC\uC790\uB2F9 \uBCF4\uC0C1\
+          \ \uD55C\uB3C4\uB97C \uC801\uC6A9\uD574 \uCD5C\uC885 \uC0B0\uC815\uB429\uB2C8\
+          \uB2E4."
+        ru: "\u041F\u0440\u043E\u0446\u0435\u043D\u0442 \u043E\u0442 \u0441\u0442\u043E\
+          \u0438\u043C\u043E\u0441\u0442\u0438 \u043A\u043E\u0440\u0430\u0431\u043B\
+          \u044F \u0438 \u0443\u0442\u0440\u0430\u0447\u0435\u043D\u043D\u043E\u0439\
+          \ \u043E\u0441\u043D\u0430\u0441\u0442\u043A\u0438, \u043A\u043E\u0442\u043E\
+          \u0440\u044B\u0439 \u0431\u0443\u0434\u0435\u0442 \u0432\u043E\u0437\u043C\
+          \u0435\u0449\u0451\u043D. \u042D\u0442\u043E \u043F\u043E\u0437\u0432\u043E\
+          \u043B\u044F\u0435\u0442 \u043D\u0430\u0437\u043D\u0430\u0447\u0438\u0442\
+          \u044C \u043A\u043E\u043C\u043F\u0435\u043D\u0441\u0430\u0446\u0438\u044E\
+          \ \u0431\u043E\u043B\u044C\u0448\u0435 \u0438\u043B\u0438 \u043C\u0435\u043D\
+          \u044C\u0448\u0435 \u0440\u0435\u0430\u043B\u044C\u043D\u044B\u0445 \u0443\
+          \u0431\u044B\u0442\u043A\u043E\u0432. \u0421\u0443\u043C\u043C\u0443 \u043A\
+          \u043E\u043C\u043F\u0435\u043D\u0441\u0430\u0446\u0438\u0438 \u043C\u043E\
+          \u0436\u043D\u043E \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\
+          \u044C \u0432\_\u0440\u0430\u0437\u043C\u0435\u0440\u0435 \u043E\u0442 {min_value}\
+          \ \u0434\u043E {max_value}% \u043E\u0442 \u0443\u0431\u044B\u0442\u043A\u043E\
+          \u0432, \u0437\u0430\u0444\u0438\u043A\u0441\u0438\u0440\u043E\u0432\u0430\
+          \u043D\u043D\u044B\u0445 \u0432\_\u043E\u0442\u0447\u0451\u0442\u0430\u0445\
+          \ \u043E\_\u0431\u043E\u044F\u0445. \u042D\u0442\u043E\u0442 \u043F\u0440\
+          \u043E\u0446\u0435\u043D\u0442 \u043F\u0440\u0438\u043C\u0435\u043D\u044F\
+          \u0435\u0442\u0441\u044F \u043A\_\u0441\u0442\u043E\u0438\u043C\u043E\u0441\
+          \u0442\u0438 \u043F\u043E\u0442\u0435\u0440\u044F\u043D\u043D\u043E\u0433\
+          \u043E \u043A\u043E\u0440\u0430\u0431\u043B\u044F \u0432\u043C\u0435\u0441\
+          \u0442\u0435 \u0441\_\u043E\u0441\u043D\u0430\u0441\u0442\u043A\u043E\u0439\
+          \ \u0434\u043E \u0442\u043E\u0433\u043E, \u043A\u0430\u043A \u0431\u0443\
+          \u0434\u0443\u0442 \u0437\u0430\u0434\u0435\u0439\u0441\u0442\u0432\u043E\
+          \u0432\u0430\u043D\u044B \u043B\u0438\u043C\u0438\u0442 \u0432\u043E\u0437\
+          \u043C\u0435\u0449\u0435\u043D\u0438\u044F \u0437\u0430 \u043F\u043E\u0442\
+          \u0435\u0440\u044E \u0438\_\u043B\u0438\u043C\u0438\u0442 \u0432\u043E\u0437\
+          \u043C\u0435\u0449\u0435\u043D\u0438\u044F \u0437\u0430 \u0443\u0447\u0430\
+          \u0441\u0442\u043D\u0438\u043A\u0430."
+        zh: "\u5C06\u6309\u8230\u8239\u53CA\u5176\u7EC4\u4EF6\u635F\u5931\u4EF7\u503C\
+          \u7684\u767E\u5206\u6BD4\u8FDB\u884C\u8D54\u507F\u3002\u8FD9\u6837\uFF0C\
+          \u8D54\u507F\u91D1\u989D\u53EF\u9AD8\u4E8E\u6216\u4F4E\u4E8E\u635F\u5931\
+          \u4EF7\u503C\u3002\u8D54\u507F\u8303\u56F4\u53EF\u4ECB\u4E8E\u51FB\u6740\
+          \u62A5\u544A\u635F\u5931\u503C\u7684{min_value}%\u5230{max_value}%\u3002\
+          \u6309\u6B64\u767E\u5206\u6BD4\u4FEE\u6539\u8230\u8239\u53CA\u5176\u7EC4\
+          \u4EF6\u7684\u635F\u5931\u4EF7\u503C\uFF0C\u7136\u540E\u518D\u5E94\u7528\
+          \u6BCF\u4F4D\u53C2\u4E0E\u8005\u548C\u6BCF\u6B21\u635F\u5931\u5BF9\u5E94\
+          \u7684\u627F\u4FDD\u9650\u989D\u3002"
+      iconID: isk
+      maxValue: 2
+      minValue: 0.1
+      title:
+        de: "Abdeckungsprozentsatz ({min_value}\u2013{max_value}\_%)"
+        en: Coverage percentage ({min_value} - {max_value}%)
+        es: "Porcentaje de cobertura ({min_value}-{max_value}\_%)"
+        fr: "Pourcentage de couverture ({min_value}\_-\_{max_value}\_%)"
+        ja: "\u88DC\u511F\u5272\u5408\uFF08{min_value} - {max_value}%\uFF09"
+        ko: "\uBCF4\uC0C1 \uBE44\uC728 ({min_value} - {max_value}%)"
+        ru: "\u0421\u0442\u0440\u0430\u0445\u043E\u0432\u043E\u0435 \u0432\u043E\u0437\
+          \u043C\u0435\u0449\u0435\u043D\u0438\u0435 ({min_value} \u2013 {max_value}%)"
+        zh: "\u627F\u4FDD\u6BD4\u4F8B({min_value} - {max_value}%)"
+      unsetDescription:
+        de: Geben Sie den Prozentsatz ein (optional)
+        en: Type in the percentage (Optional)
+        es: Escribe el porcentaje (opcional)
+        fr: Saisir le pourcentage (facultatif)
+        ja: "\u30D1\u30FC\u30BB\u30F3\u30C8\u3092\u5165\u529B\u3057\u3066\u304F\u3060\
+          \u3055\u3044\uFF08\u4EFB\u610F\uFF09"
+        ko: "\uD37C\uC13C\uD2B8 \uBE44\uC728 \uC785\uB825(\uC120\uD0DD\uC0AC\uD56D\
+          )"
+        ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043F\u0440\u043E\u0446\u0435\
+          \u043D\u0442 (\u043D\u0435\u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\
+          \u044C\u043D\u043E)"
+        zh: "\u8F93\u5165\u767E\u5206\u6BD4\uFF08\u9009\u586B\uFF09"
+    description:
+      de: "Erhalten Sie ISK-Entsch\xE4digung f\xFCr den Verlust eines Schiffs, basierend\
+        \ auf dem im Abschussbericht festgehaltenen Marktwert des Schiffs und seiner\
+        \ Ausr\xFCstung.<br><br>Dieses Projekt bietet eine zus\xE4tzliche Versicherung,\
+        \ die von der Corporation f\xFCr die verlorenen Schiffe ihrer Mitglieder bezahlt\
+        \ wird. Es funktioniert zus\xE4tzlich zu der Schiffsversicherung, die Kapselpiloten\
+        \ in Stationen selbst erwerben k\xF6nnen."
+      en: Receive ISK compensation for losing a ship, based on the Kill Report market
+        value of the ship and its fitting.<br><br>This project provides an additional
+        insurance paid by the corporation for the ships lost by its members. It works
+        in addition to the ship insurance that capsuleers can purchase themselves
+        in stations.
+      es: "Recibe una compensaci\xF3n en ISK por la p\xE9rdida de una nave, en funci\xF3\
+        n del valor de mercado de la nave y su equipamiento seg\xFAn el informe de\
+        \ muertes.<br><br>Este proyecto proporciona un seguro adicional pagado por\
+        \ la corporaci\xF3n por las naves perdidas por sus miembros. Complementa al\
+        \ seguro de naves que los capsulistas pueden comprar por s\xED mismos en las\
+        \ estaciones."
+      fr: "Recevez une compensation en ISK pour la perte d'un vaisseau, bas\xE9e sur\
+        \ la valeur marchande du rapport de victime du vaisseau et de son montage.<br><br>Ce\
+        \ projet offre une assurance suppl\xE9mentaire financ\xE9e par la corporation\
+        \ pour les vaisseaux perdus par ses membres. Il fonctionne en compl\xE9ment\
+        \ de l'assurance du vaisseau que les capsuliers peuvent acqu\xE9rir eux-m\xEA\
+        mes dans les stations."
+      ja: "\u8266\u8239\u3092\u55AA\u5931\u3057\u305F\u5834\u5408\u3001\u30AD\u30EB\
+        \u30EC\u30DD\u30FC\u30C8\u306B\u8A18\u8F09\u3055\u308C\u3066\u3044\u308B\u8266\
+        \u8239\u3068\u305D\u306E\u88C5\u5099\u306E\u5E02\u5834\u4FA1\u683C\u306B\u57FA\
+        \u3065\u304D\u3001ISK\u306E\u88DC\u511F\u91D1\u3092\u53D7\u3051\u53D6\u308B\
+        \u3053\u3068\u304C\u3067\u304D\u307E\u3059\u3002<br><br>\u3053\u306E\u30D7\
+        \u30ED\u30B8\u30A7\u30AF\u30C8\u306B\u3088\u308A\u3001\u30E1\u30F3\u30D0\u30FC\
+        \u3068\u306A\u3063\u3066\u3044\u308B\u30AB\u30D7\u30BB\u30E9\u304C\u55AA\u5931\
+        \u3057\u305F\u8266\u8239\u306B\u5BFE\u3057\u3001\u30B3\u30FC\u30DD\u30EC\u30FC\
+        \u30B7\u30E7\u30F3\u304B\u3089\u8FFD\u52A0\u306E\u4FDD\u967A\u91D1\u3092\u652F\
+        \u6255\u3046\u3053\u3068\u304C\u3067\u304D\u307E\u3059\u3002\u307E\u305F\u3053\
+        \u306E\u4FDD\u967A\u306F\u3001\u30AB\u30D7\u30BB\u30E9\u304C\u30B9\u30C6\u30FC\
+        \u30B7\u30E7\u30F3\u3067\u81EA\u767A\u7684\u306B\u52A0\u5165\u3067\u304D\u308B\
+        \u8266\u8239\u4FDD\u967A\u3068\u306F\u5225\u306B\u9069\u7528\u3055\u308C\u307E\
+        \u3059\u3002"
+      ko: "\uD568\uC120\uC774 \uD30C\uAD34\uB418\uBA74 \uD0AC \uAE30\uB85D\uC5D0 \uBA85\
+        \uC2DC\uB41C \uD568\uC120\uACFC \uD53C\uD305\uC758 \uAC70\uB798\uC18C \uC2DC\
+        \uC138\uC5D0 \uB530\uB77C ISK \uBCF4\uC0C1\uC561\uC774 \uC9C0\uAE09\uB429\uB2C8\
+        \uB2E4.<br><br>\uD574\uB2F9 \uD504\uB85C\uC81D\uD2B8\uC5D0 \uCC38\uC5EC\uD55C\
+        \ \uBA64\uBC84\uC758 \uD568\uC120\uC774 \uD30C\uAD34\uB418\uBA74 \uCF54\uD37C\
+        \uB808\uC774\uC158\uC774 \uBCF4\uC0C1\uC561\uC744 \uC9C0\uAE09\uD569\uB2C8\
+        \uB2E4. \uD574\uB2F9 \uBCF4\uC0C1\uC740 \uCEA1\uC290\uB9AC\uC5B4\uAC00 \uC815\
+        \uAC70\uC7A5\uC5D0\uC11C \uAC1C\uC778\uC801\uC73C\uB85C \uAC00\uC785\uD558\
+        \uB294 \uBCF4\uD5D8\uACFC \uBCC4\uAC1C \uBCF4\uC0C1\uC73C\uB85C \uBCF4\uC0C1\
+        \uC561\uC744 \uC911\uBCF5\uC73C\uB85C \uBC1B\uC744 \uC218 \uC788\uC2B5\uB2C8\
+        \uB2E4."
+      ru: "\u041F\u043E\u043B\u0443\u0447\u0430\u0439\u0442\u0435 \u043A\u043E\u043C\
+        \u043F\u0435\u043D\u0441\u0430\u0446\u0438\u044E \u0432 ISK \u0437\u0430 \u043F\
+        \u043E\u0442\u0435\u0440\u044E \u043A\u043E\u0440\u0430\u0431\u043B\u044F\
+        \ \u043D\u0430 \u043E\u0441\u043D\u043E\u0432\u0430\u043D\u0438\u0438 \u043E\
+        \u0442\u0447\u0451\u0442\u043E\u0432 \u043E \u0431\u043E\u044F\u0445, \u0438\
+        \u0441\u0445\u043E\u0434\u044F \u0438\u0437 \u0440\u044B\u043D\u043E\u0447\
+        \u043D\u043E\u0439 \u0441\u0442\u043E\u0438\u043C\u043E\u0441\u0442\u0438\
+        \ \u0441\u0443\u0434\u043D\u0430 \u0438 \u0435\u0433\u043E \u043E\u0441\u043D\
+        \u0430\u0441\u0442\u043A\u0438.<br><br>\u0412 \u0440\u0430\u043C\u043A\u0430\
+        \u0445 \u044D\u0442\u043E\u0433\u043E \u043F\u0440\u043E\u0435\u043A\u0442\
+        \u0430 \u043A\u043E\u0440\u043F\u043E\u0440\u0430\u0446\u0438\u044F \u043C\
+        \u043E\u0436\u0435\u0442 \u043F\u0440\u0435\u0434\u043E\u0441\u0442\u0430\u0432\
+        \u0438\u0442\u044C \u0443\u0447\u0430\u0441\u0442\u043D\u0438\u043A\u0430\u043C\
+        \ \u0434\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\
+        \u0443\u044E \u0441\u0442\u0440\u0430\u0445\u043E\u0432\u0443\u044E \u0432\
+        \u044B\u043F\u043B\u0430\u0442\u0443 \u0437\u0430 \u0443\u0442\u0440\u0430\
+        \u0447\u0435\u043D\u043D\u044B\u0435 \u043A\u043E\u0440\u0430\u0431\u043B\u0438\
+        . \u042D\u0442\u0430 \u0441\u0443\u043C\u043C\u0430 \u0432\u044B\u043F\u043B\
+        \u0430\u0447\u0438\u0432\u0430\u0435\u0442\u0441\u044F \u043E\u0442\u0434\u0435\
+        \u043B\u044C\u043D\u043E \u043E\u0442 \u0432\u043E\u0437\u043C\u0435\u0449\
+        \u0435\u043D\u0438\u044F \u043F\u043E \u0441\u0442\u0440\u0430\u0445\u043E\
+        \u0432\u043A\u0435, \u043A\u043E\u0442\u043E\u0440\u0443\u044E \u043A\u0430\
+        \u043F\u0441\u0443\u043B\u0451\u0440\u044B \u043C\u043E\u0433\u0443\u0442\
+        \ \u043F\u0440\u0438\u043E\u0431\u0440\u0435\u0441\u0442\u0438 \u043D\u0430\
+        \ \u0441\u0442\u0430\u043D\u0446\u0438\u044F\u0445."
+      zh: "\u6839\u636E\u51FB\u6740\u62A5\u544A\u4E2D\u8230\u8239\u53CA\u5176\u7EC4\
+        \u4EF6\u7684\u5E02\u573A\u4EF7\u503C\uFF0C\u83B7\u5F97\u635F\u5931\u8230\u8239\
+        \u7684\u661F\u5E01\u8D54\u507F\u3002<br><br>\u8BE5\u8BA1\u5212\u63D0\u4F9B\
+        \u4E86\u4E00\u9879\u7531\u519B\u56E2\u627F\u62C5\u7684\u9644\u52A0\u4FDD\u9669\
+        \uFF0C\u53EF\u5BF9\u6210\u5458\u635F\u5931\u7684\u8230\u8239\u8FDB\u884C\u8D54\
+        \u507F\u3002\u9664\u4E86\u514B\u9686\u98DE\u884C\u5458\u5728\u7A7A\u95F4\u7AD9\
+        \u5185\u81EA\u884C\u8D2D\u4E70\u7684\u8230\u8239\u4FDD\u9669\u5916\uFF0C\u8FD9\
+        \u79CD\u9644\u52A0\u4FDD\u9669\u4E5F\u80FD\u8FDB\u884C\u8D54\u507F\u3002"
+    iconID: ship_insurance
+    maxContributionsPerParticipant:
+      description:
+        de: "Maximale Entsch\xE4digung f\xFCr diesen Auftrag pro Teilnehmer. Wenn\
+          \ der Verlust h\xF6her bewertet wird als das verbleibende Deckungslimit,\
+          \ wird die Entsch\xE4digung bis zum verbleibenden Wert gew\xE4hrt."
+        en: 'Maximum compensation from this job per participant.
+
+
+          If the loss is valued higher than the remaining coverage limit, compensation
+          will be provided up to the value remaining.'
+        es: "Compensaci\xF3n m\xE1xima de este trabajo por participante.\n\nSi el\
+          \ valor de la p\xE9rdida es superior al l\xEDmite de cobertura restante,\
+          \ se proporcionar\xE1 una indemnizaci\xF3n hasta el valor restante."
+        fr: "Compensation maximale par participant pour cette mission. Si la perte\
+          \ d\xE9passe la limite de couverture restante, la compensation sera vers\xE9\
+          e jusqu'au plafond."
+        ja: "\u3053\u306E\u30B8\u30E7\u30D6\u306B\u95A2\u3059\u308B\u3001\u53C2\u52A0\
+          \u80051\u540D\u3042\u305F\u308A\u306E\u88DC\u511F\u9650\u5EA6\u984D\u3067\
+          \u3059\u3002\n\n\u640D\u5931\u984D\u304C\u6B8B\u308A\u306E\u88DC\u511F\u9650\
+          \u5EA6\u984D\u3088\u308A\u3082\u5927\u304D\u3044\u5834\u5408\u3001\u88DC\
+          \u511F\u306F\u305D\u306E\u6B8B\u984D\u3092\u4E0A\u9650\u3068\u3057\u3066\
+          \u884C\u308F\u308C\u307E\u3059\u3002"
+        ko: "\uC784\uBB34 \uC218\uD589 \uC911 \uBC1C\uC0DD\uD55C \uD53C\uD574\uC5D0\
+          \ \uB300\uD574 \uCF54\uD37C\uB808\uC774\uC158\uC774 \uCC38\uC5EC\uC790\uC5D0\
+          \uAC8C \uC9C0\uAE09\uD558\uB294 \uCD5C\uB300 \uBCF4\uC0C1\uC561\uC785\uB2C8\
+          \uB2E4.\n\n\uD53C\uD574 \uAE08\uC561\uC774 \uC794\uC5EC \uBCF4\uC0C1 \uD55C\
+          \uB3C4\uB97C \uCD08\uACFC\uD558\uBA74 \uBCF4\uC0C1 \uD55C\uB3C4 \uAE08\uC561\
+          \uB9CC \uC9C0\uAE09\uB429\uB2C8\uB2E4."
+        ru: "\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u0430\u044F\
+          \ \u043A\u043E\u043C\u043F\u0435\u043D\u0441\u0430\u0446\u0438\u044F \u0437\
+          \u0430 \u0443\u0447\u0430\u0441\u0442\u043D\u0438\u043A\u0430 \u0434\u043B\
+          \u044F \u044D\u0442\u043E\u0433\u043E \u0437\u0430\u043A\u0430\u0437\u0430\
+          \ \u0415\u0441\u043B\u0438 \u043F\u043E\u0442\u0435\u0440\u044F \u043E\u0446\
+          \u0435\u043D\u0438\u0432\u0430\u0435\u0442\u0441\u044F \u0432 \u0441\u0443\
+          \u043C\u043C\u0443, \u043F\u0440\u0435\u0432\u044B\u0448\u0430\u044E\u0449\
+          \u0443\u044E \u043B\u0438\u043C\u0438\u0442 \u0432\u043E\u0437\u043C\u0435\
+          \u0449\u0435\u043D\u0438\u044F, \u043A\u043E\u043C\u043F\u0435\u043D\u0441\
+          \u0430\u0446\u0438\u044F \u0431\u0443\u0434\u0435\u0442 \u043F\u0440\u0435\
+          \u0434\u043E\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u0430 \u0432 \u0440\
+          \u0430\u0437\u043C\u0435\u0440\u0435 \u043E\u0441\u0442\u0430\u0432\u0448\
+          \u0435\u0439\u0441\u044F \u0441\u0442\u043E\u0438\u043C\u043E\u0441\u0442\
+          \u0438."
+        zh: "\u6BCF\u4E2A\u53C2\u4E0E\u8005\u53EF\u4ECE\u8FD9\u9879\u4EFB\u52A1\u4E2D\
+          \u83B7\u5F97\u7684\u6700\u9AD8\u8D54\u507F\u3002\u5982\u679C\u635F\u5931\
+          \u4EF7\u503C\u9AD8\u4E8E\u5269\u4F59\u627F\u4FDD\u9650\u989D\uFF0C\u5219\
+          \u8D54\u507F\u91D1\u989D\u5C06\u4E0D\u8D85\u8FC7\u5269\u4F59\u4EF7\u503C\
+          \u3002"
+      iconID: isk
+      title:
+        de: Deckungslimit pro Teilnehmer
+        en: Coverage limit per participant
+        es: "L\xEDmite de cobertura por participante"
+        fr: Limite de couverture par participant
+        ja: "\u53C2\u52A0\u80051\u540D\u3042\u305F\u308A\u306E\u88DC\u511F\u9650\u5EA6\
+          \u984D"
+        ko: "\uCC38\uC5EC\uC790\uB2F9 \uBCF4\uC0C1 \uD55C\uB3C4"
+        ru: "\u041B\u0438\u043C\u0438\u0442 \u0432\u043E\u0437\u043C\u0435\u0449\u0435\
+          \u043D\u0438\u044F \u0437\u0430 \u0443\u0447\u0430\u0441\u0442\u043D\u0438\
+          \u043A\u0430"
+        zh: "\u6BCF\u4F4D\u53C2\u4E0E\u8005\u7684\u627F\u4FDD\u9650\u989D"
+      unsetDescription:
+        de: Limit eingeben (optional)
+        en: Type in the limit (Optional)
+        es: "Escribe el l\xEDmite (opcional)"
+        fr: Saisir la limite (Facultatif)
+        ja: "\u6700\u5927\u4EBA\u6570\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\
+          \u3044\uFF08\u4EFB\u610F\uFF09"
+        ko: "\uCC38\uC5EC\uC790 \uC81C\uD55C \uC785\uB825(\uC120\uD0DD\uC0AC\uD56D\
+          )"
+        ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043E\u0433\u0440\u0430\u043D\
+          \u0438\u0447\u0435\u043D\u0438\u0435 (\u043D\u0435\u043E\u0431\u044F\u0437\
+          \u0430\u0442\u0435\u043B\u044C\u043D\u043E)"
+        zh: "\u8F93\u5165\u9650\u5236\u6761\u4EF6\uFF08\u9009\u586B\uFF09"
+    maxProgressPerContribution:
+      description:
+        de: "Maximale Entsch\xE4digung pro einzelnem Verlust. Wenn der Verlust h\xF6\
+          her bewertet wird als das verbleibende Deckungslimit, wird die Entsch\xE4\
+          digung bis zum verbleibenden Wert gew\xE4hrt."
+        en: 'Maximum compensation per single loss.
+
+
+          If the loss is valued higher than the remaining coverage limit, compensation
+          will be provided up to the value remaining.'
+        es: "Compensaci\xF3n m\xE1xima por una sola p\xE9rdida.\n\nSi el valor de\
+          \ la p\xE9rdida es superior al l\xEDmite de cobertura restante, se proporcionar\xE1\
+          \ una indemnizaci\xF3n hasta el valor restante."
+        fr: "Indemnit\xE9 maximale par perte unique. Si la perte d\xE9passe la limite\
+          \ de couverture restante, la compensation sera vers\xE9e jusqu'au plafond."
+        ja: "\u55AA\u59311\u4EF6\u3042\u305F\u308A\u306E\u6700\u5927\u88DC\u511F\u984D\
+          \u3067\u3059\u3002\n\n\u640D\u5931\u984D\u304C\u6B8B\u308A\u306E\u88DC\u511F\
+          \u9650\u5EA6\u984D\u3088\u308A\u3082\u5927\u304D\u3044\u5834\u5408\u3001\
+          \u88DC\u511F\u306F\u305D\u306E\u6B8B\u984D\u3092\u4E0A\u9650\u3068\u3057\
+          \u3066\u884C\u308F\u308C\u307E\u3059\u3002"
+        ko: "\uD568\uC120\uC774 \uD55C \uB300 \uD30C\uAD34\uB418\uC5C8\uC744 \uB54C\
+          \ \uBCF4\uC0C1\uBC1B\uC744 \uC218 \uC788\uB294 \uCD5C\uB300 \uAE08\uC561\
+          \uC785\uB2C8\uB2E4.\n\n\uD53C\uD574 \uAE08\uC561\uC774 \uC794\uC5EC \uBCF4\
+          \uC0C1 \uD55C\uB3C4\uB97C \uCD08\uACFC\uD558\uBA74 \uBCF4\uC0C1 \uD55C\uB3C4\
+          \ \uAE08\uC561\uB9CC \uC9C0\uAE09\uB429\uB2C8\uB2E4."
+        ru: "\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u0430\u044F\
+          \ \u043A\u043E\u043C\u043F\u0435\u043D\u0441\u0430\u0446\u0438\u044F \u0437\
+          \u0430 \u043E\u0434\u043D\u0443 \u043F\u043E\u0442\u0435\u0440\u044E. \u0415\
+          \u0441\u043B\u0438 \u043F\u043E\u0442\u0435\u0440\u044F \u043E\u0446\u0435\
+          \u043D\u0438\u0432\u0430\u0435\u0442\u0441\u044F \u0432 \u0441\u0443\u043C\
+          \u043C\u0443, \u043F\u0440\u0435\u0432\u044B\u0448\u0430\u044E\u0449\u0443\
+          \u044E \u043B\u0438\u043C\u0438\u0442 \u0432\u043E\u0437\u043C\u0435\u0449\
+          \u0435\u043D\u0438\u044F, \u043A\u043E\u043C\u043F\u0435\u043D\u0441\u0430\
+          \u0446\u0438\u044F \u0431\u0443\u0434\u0435\u0442 \u043F\u0440\u0435\u0434\
+          \u043E\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u0430 \u0432 \u0440\u0430\
+          \u0437\u043C\u0435\u0440\u0435 \u043E\u0441\u0442\u0430\u0432\u0448\u0435\
+          \u0439\u0441\u044F \u0441\u0442\u043E\u0438\u043C\u043E\u0441\u0442\u0438\
+          ."
+        zh: "\u5355\u6B21\u635F\u5931\u53EF\u83B7\u5F97\u7684\u6700\u9AD8\u8D54\u507F\
+          \u3002\u5982\u679C\u635F\u5931\u4EF7\u503C\u9AD8\u4E8E\u5269\u4F59\u627F\
+          \u4FDD\u9650\u989D\uFF0C\u5219\u8D54\u507F\u91D1\u989D\u5C06\u4E0D\u8D85\
+          \u8FC7\u5269\u4F59\u4EF7\u503C\u3002"
+      iconID: isk
+      title:
+        de: Deckungslimit pro Verlust
+        en: Coverage limit per loss
+        es: "L\xEDmite de cobertura por p\xE9rdida"
+        fr: Limite de compensation par perte
+        ja: "\u55AA\u59311\u4EF6\u3042\u305F\u308A\u306E\u88DC\u511F\u9650\u5EA6\u984D"
+        ko: "\uD568\uC120\uB2F9 \uBCF4\uC0C1 \uD55C\uB3C4"
+        ru: "\u041B\u0438\u043C\u0438\u0442 \u0432\u043E\u0437\u043C\u0435\u0449\u0435\
+          \u043D\u0438\u044F \u0437\u0430 \u043F\u043E\u0442\u0435\u0440\u044E"
+        zh: "\u6BCF\u6B21\u635F\u5931\u7684\u627F\u4FDD\u9650\u989D"
+      unsetDescription:
+        de: Limit eingeben (optional)
+        en: Type in the limit (Optional)
+        es: "Escribe el l\xEDmite (opcional)"
+        fr: Saisir la limite (Facultatif)
+        ja: "\u6700\u5927\u4EBA\u6570\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\
+          \u3044\uFF08\u4EFB\u610F\uFF09"
+        ko: "\uCC38\uC5EC\uC790 \uC81C\uD55C \uC785\uB825(\uC120\uD0DD\uC0AC\uD56D\
+          )"
+        ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043E\u0433\u0440\u0430\u043D\
+          \u0438\u0447\u0435\u043D\u0438\u0435 (\u043D\u0435\u043E\u0431\u044F\u0437\
+          \u0430\u0442\u0435\u043B\u044C\u043D\u043E)"
+        zh: "\u8F93\u5165\u9650\u5236\u6761\u4EF6\uFF08\u9009\u586B\uFF09"
+    parameters:
+      attacker_identity:
+        matcher:
+          acceptedValueTypes:
+          - character
+          - corporation
+          - alliance
+          - faction
+          description:
+            de: "Die Kapselpiloten oder Organisationen, die f\xFCr die Zerst\xF6rung\
+              \ des Schiffes verantwortlich sind."
+            en: Capsuleers or organizations responsible for the destruction of the
+              ship.
+            es: "Los capsulistas o las organizaciones responsables de la destrucci\xF3\
+              n de la nave."
+            fr: Les capsuliers ou les organisations responsables de la destruction
+              du vaisseau.
+            ja: "\u8266\u8239\u3092\u7834\u58CA\u3057\u305F\u30AB\u30D7\u30BB\u30E9\
+              \u304B\u7D44\u7E54\u3067\u3059\u3002"
+            ko: "\uD568\uC120\uC744 \uD30C\uAD34\uD55C \uCEA1\uC290\uB9AC\uC5B4 \uB610\
+              \uB294 \uCEA1\uC290\uB9AC\uC5B4 \uB2E8\uCCB4\uC785\uB2C8\uB2E4."
+            ru: "\u041A\u0430\u043F\u0441\u0443\u043B\u0451\u0440\u044B \u0438\u043B\
+              \u0438 \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u0438\
+              , \u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0435\u043D\u043D\
+              \u044B\u0435 \u0437\u0430 \u0443\u043D\u0438\u0447\u0442\u043E\u0436\
+              \u0435\u043D\u0438\u0435 \u043A\u043E\u0440\u0430\u0431\u043B\u044F."
+            zh: "\u8D1F\u8D23\u6467\u6BC1\u8230\u8239\u7684\u514B\u9686\u98DE\u884C\
+              \u5458\u6216\u7EC4\u7EC7\u3002"
+          iconID: pilot_or_organization
+          maxEntries: 10
+          optional: true
+          title:
+            de: Kapselpiloten oder Organisationen
+            en: Capsuleers or Organizations
+            es: Capsulistas u organizaciones
+            fr: Capsuliers ou organisations
+            ja: "\u30AB\u30D7\u30BB\u30E9\u307E\u305F\u306F\u7D44\u7E54"
+            ko: "\uCEA1\uC290\uB9AC\uC5B4 \uB610\uB294 \uB2E8\uCCB4"
+            ru: "\u041A\u0430\u043F\u0441\u0443\u043B\u0451\u0440\u044B \u0438\u043B\
+              \u0438 \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u0438"
+            zh: "\u514B\u9686\u98DE\u884C\u5458\u6216\u7EC4\u7EC7"
+          type: identity
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+      cover_implants:
+        boolean:
+          choiceLabel:
+            de: Implantate bei Kapselverlust abdecken
+            en: Cover Implants on Capsule loss
+            es: "Cubrir implantes en la p\xE9rdida de c\xE1psulas"
+            fr: Couvrir les implants en cas de perte de capsule
+            ja: "\u30AB\u30D7\u30BB\u30EB\u6483\u589C\u6642\u306E\u30A4\u30F3\u30D7\
+              \u30E9\u30F3\u30C8\u306E\u88DC\u511F"
+            ko: "\uCEA1\uC290 \uD30C\uAD34 \uC2DC \uC784\uD50C\uB780\uD2B8 \uBCF4\uC0C1"
+            ru: "\u0412\u043E\u0437\u043C\u0435\u0449\u0430\u0442\u044C \u0441\u0442\
+              \u043E\u0438\u043C\u043E\u0441\u0442\u044C \u0438\u043C\u043F\u043B\u0430\
+              \u043D\u0442\u043E\u0432 \u043F\u0440\u0438 \u043F\u043E\u0442\u0435\
+              \u0440\u0435 \u043A\u0430\u043F\u0441\u0443\u043B\u044B"
+            zh: "\u8BA1\u5165\u592A\u7A7A\u8231\u635F\u5931\u7684\u690D\u5165\u4F53"
+          default: false
+          description:
+            de: "Die Deckung umfasst Implantate, die verloren gehen, wenn eine Kapsel\
+              \ zerst\xF6rt wird. Damit Implantate abgedeckt werden, d\xFCrfen entweder\
+              \ keine Schiffstypen oder Gruppen angegeben werden oder die Kapselgruppe\
+              \ muss in den angegebenen Schiffstypen oder Gruppen enthalten sein.\
+              \ Wenn die Kapselgruppe aufgelistet ist, werden alle Kapselverluste\
+              \ abgedeckt, unabh\xE4ngig davon, welcher Art von Schiffsverlust sie\
+              \ folgen."
+            en: 'Coverage will include implants lost when a capsule is destroyed.
+
+
+              For implants to be covered either no ship types or groups must be specified
+              or the Capsule group must be included in specified ship types or groups.
+
+
+              If the Capsule group is listed, all Capsule losses will be covered regardless
+              of which type of ship loss they follow.'
+            es: "La cobertura incluir\xE1 implantes perdidos cuando se destruye una\
+              \ c\xE1psula.\n\nPara que los implantes est\xE9n cubiertos, no se deben\
+              \ especificar tipos o grupos de naves o el grupo de c\xE1psula debe\
+              \ estar incluido en tipos o grupos de naves espec\xEDficos.\n\nSi se\
+              \ incluye el grupo de c\xE1psula, se cubrir\xE1n todas las p\xE9rdidas\
+              \ de c\xE1psulas, independientemente del tipo de p\xE9rdida de nave\
+              \ que sigan."
+            fr: "La couverture inclura les implants perdus lorsqu'une capsule est\
+              \ d\xE9truite. Pour que les implants soient couverts, aucun type de\
+              \ vaisseau ou groupe ne doit \xEAtre sp\xE9cifi\xE9, ou le groupe Capsule\
+              \ doit \xEAtre inclus dans les types de vaisseaux ou groupes sp\xE9\
+              cifi\xE9s. Si le groupe Capsule est list\xE9, toutes les pertes de capsule\
+              \ seront couvertes, quel que soit le type de perte de vaisseau qu'elles\
+              \ suivent."
+            ja: "\u30AB\u30D7\u30BB\u30EB\u304C\u6483\u589C\u3055\u308C\u305F\u969B\
+              \u3001\u5931\u3063\u305F\u30A4\u30F3\u30D7\u30E9\u30F3\u30C8\u3082\u88DC\
+              \u511F\u3055\u308C\u307E\u3059\u3002\n\n\u30A4\u30F3\u30D7\u30E9\u30F3\
+              \u30C8\u3092\u88DC\u511F\u306E\u5BFE\u8C61\u3068\u3059\u308B\u306B\u306F\
+              \u3001\u300C\u8266\u8239\u30BF\u30A4\u30D7\u307E\u305F\u306F\u30B0\u30EB\
+              \u30FC\u30D7\u300D\u304C\u6307\u5B9A\u3055\u308C\u3066\u3044\u306A\u3044\
+              \u304B\u3001\u6307\u5B9A\u3055\u308C\u3066\u3044\u308B\u300C\u8266\u8239\
+              \u30BF\u30A4\u30D7\u307E\u305F\u306F\u30B0\u30EB\u30FC\u30D7\u300D\u306B\
+              \u30AB\u30D7\u30BB\u30EB\u304C\u30B0\u30EB\u30FC\u30D7\u3068\u3057\u3066\
+              \u542B\u307E\u308C\u3066\u3044\u308B\u5FC5\u8981\u304C\u3042\u308A\u307E\
+              \u3059\u3002\n\n\u30AB\u30D7\u30BB\u30EB\u304C\u30B0\u30EB\u30FC\u30D7\
+              \u3068\u3057\u3066\u542B\u307E\u308C\u3066\u3044\u308B\u5834\u5408\u3001\
+              \u55AA\u5931\u3057\u305F\u8266\u8239\u306E\u30BF\u30A4\u30D7\u3092\u554F\
+              \u308F\u305A\u3001\u5168\u3066\u306E\u30AB\u30D7\u30BB\u30EB\u306E\u55AA\
+              \u5931\u304C\u88DC\u511F\u306E\u5BFE\u8C61\u3068\u306A\u308A\u307E\u3059\
+              \u3002"
+            ko: "\uCEA1\uC290\uACFC \uD568\uAED8 \uD30C\uAD34\uB41C \uC784\uD50C\uB780\
+              \uD2B8\uB3C4 \uBCF4\uC0C1\uD569\uB2C8\uB2E4.\n\n\uBCF4\uC0C1 \uB300\uC0C1\
+              \uC5D0 \uD2B9\uC815 \uD568\uC120 \uB610\uB294 \uD569\uC120 \uC720\uD615\
+              \uC744 \uC9C0\uC815\uD558\uC9C0 \uC54A\uC73C\uBA74 \uC784\uD50C\uB780\
+              \uD2B8 \uBCF4\uC0C1\uC561\uC774 \uC9C0\uAE09\uB429\uB2C8\uB2E4. \uB610\
+              \uB294 \uBCF4\uC0C1 \uB300\uC0C1\uC5D0 \uD2B9\uC815 \uD568\uC120 \uBC0F\
+              \ \uD568\uC120 \uC720\uD615\uC744 \uC9C0\uC815\uD558\uACE0 \uC9C0\uC815\
+              \uB41C \uBCF4\uC0C1 \uB300\uC0C1\uC5D0 \uCEA1\uC290\uC744 \uD3EC\uD568\
+              \uD558\uBA74 \uC784\uD50C\uB780\uD2B8 \uBCF4\uC0C1\uC561\uC774 \uC9C0\
+              \uAE09\uB429\uB2C8\uB2E4.\n\n\uBCF4\uC0C1 \uB300\uC0C1\uC5D0 \uCEA1\uC290\
+              \ \uC720\uD615\uC744 \uC9C0\uC815\uD558\uBA74 \uD30C\uAD34\uB41C \uD568\
+              \uC120 \uC720\uD615\uACFC \uAD00\uACC4 \uC5C6\uC774 \uCEA1\uC290 \uD30C\
+              \uAD34\uC5D0 \uB300\uD55C \uBCF4\uC0C1\uC561\uC774 \uC9C0\uAE09\uB429\
+              \uB2C8\uB2E4."
+            ru: "\u0412 \u0441\u0443\u043C\u043C\u0443 \u043A\u043E\u043C\u043F\u0435\
+              \u043D\u0441\u0430\u0446\u0438\u0438 \u0432\u043E\u0439\u0434\u0451\u0442\
+              \ \u0441\u0442\u043E\u0438\u043C\u043E\u0441\u0442\u044C \u0438\u043C\
+              \u043F\u043B\u0430\u043D\u0442\u043E\u0432, \u0443\u0442\u0440\u0430\
+              \u0447\u0435\u043D\u043D\u044B\u0445 \u043F\u0440\u0438 \u0443\u043D\
+              \u0438\u0447\u0442\u043E\u0436\u0435\u043D\u0438\u0438 \u043A\u0430\u043F\
+              \u0441\u0443\u043B\u044B. \u0427\u0442\u043E\u0431\u044B \u0432\u043A\
+              \u043B\u044E\u0447\u0438\u0442\u044C \u0432 \u043A\u043E\u043C\u043F\
+              \u0435\u043D\u0441\u0430\u0446\u0438\u044E \u0441\u0442\u043E\u0438\u043C\
+              \u043E\u0441\u0442\u044C \u0438\u043C\u043F\u043B\u0430\u043D\u0442\u043E\
+              \u0432, \u043D\u0443\u0436\u043D\u043E \u043B\u0438\u0431\u043E \u0432\
+              \u043E\u043E\u0431\u0449\u0435 \u043D\u0435 \u0443\u043A\u0430\u0437\
+              \u044B\u0432\u0430\u0442\u044C \u0442\u0438\u043F\u044B \u0438 \u0433\
+              \u0440\u0443\u043F\u043F\u044B \u043A\u043E\u0440\u0430\u0431\u043B\u0435\
+              \u0439, \u043B\u0438\u0431\u043E \u0434\u043E\u0431\u0430\u0432\u0438\
+              \u0442\u044C \u0432 \u043F\u0435\u0440\u0435\u0447\u0435\u043D\u044C\
+              \ \u0433\u0440\u0443\u043F\u043F\u0443 \xAB\u043A\u0430\u043F\u0441\u0443\
+              \u043B\u044B\xBB. \u0415\u0441\u043B\u0438 \u0433\u0440\u0443\u043F\u043F\
+              \u0430 \xAB\u043A\u0430\u043F\u0441\u0443\u043B\u044B\xBB \u0434\u043E\
+              \u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u0432 \u043F\u0435\u0440\
+              \u0435\u0447\u0435\u043D\u044C, \u043A\u043E\u043C\u043F\u0435\u043D\
+              \u0441\u0430\u0446\u0438\u044F \u0431\u0443\u0434\u0435\u0442 \u0432\
+              \u044B\u043F\u043B\u0430\u0447\u0438\u0432\u0430\u0442\u044C\u0441\u044F\
+              \ \u0437\u0430 \u043F\u043E\u0442\u0435\u0440\u044E \u043B\u044E\u0431\
+              \u044B\u0445 \u043A\u0430\u043F\u0441\u0443\u043B \u0432\u043D\u0435\
+              \ \u0437\u0430\u0432\u0438\u0441\u0438\u043C\u043E\u0441\u0442\u0438\
+              \ \u043E\u0442 \u0442\u043E\u0433\u043E, \u043A \u043A\u0430\u043A\u043E\
+              \u043C\u0443 \u043A\u043E\u0440\u0430\u0431\u043B\u044E \u043E\u043D\
+              \u0438 \u0431\u044B\u043B\u0438 \u043F\u043E\u0434\u043A\u043B\u044E\
+              \u0447\u0435\u043D\u044B."
+            zh: "\u627F\u4FDD\u8303\u56F4\u5C06\u5305\u62EC\u6467\u6BC1\u592A\u7A7A\
+              \u8231\u65F6\u9020\u6210\u7684\u690D\u5165\u4F53\u635F\u5931\u3002\u5F85\
+              \u627F\u4FDD\u7684\u690D\u5165\u4F53\u9700\u6EE1\u8DB3\u4EE5\u4E0B\u8981\
+              \u6C42\uFF1A\u8981\u4E48\u4E0D\u6307\u5B9A\u8230\u8239\u7C7B\u578B\u6216\
+              \u7FA4\u7EC4\uFF0C\u8981\u4E48\u5728\u6307\u5B9A\u8230\u8239\u7C7B\u578B\
+              \u548C\u7FA4\u7EC4\u540E\uFF0C\u5176\u4E2D\u5FC5\u987B\u5305\u542B\u592A\
+              \u7A7A\u8231\u7FA4\u7EC4\u3002\u5982\u5DF2\u5217\u660E\u592A\u7A7A\u8231\
+              \u7FA4\u7EC4\uFF0C\u5219\u6240\u6709\u592A\u7A7A\u8231\u635F\u5931\u90FD\
+              \u5C06\u7EB3\u5165\u627F\u4FDD\u8303\u56F4\uFF0C\u4E0D\u9650\u635F\u5931\
+              \u8230\u8239\u7684\u7C7B\u578B\u3002"
+          iconID: person
+          optionFalse:
+            description:
+              de: "Alle \u2013 Implantatverluste bei Kapselverlust nicht abgedeckt"
+              en: Any - implants losses not covered on capsule loss
+              es: "Cualquiera: p\xE9rdidas de implantes no cubiertas por p\xE9rdida\
+                \ de c\xE1psula"
+              fr: N'importe lequel - Pertes d'implants non couvertes en cas de destruction
+                de la capsule
+              ja: "\u4E0D\u554F - \u30AB\u30D7\u30BB\u30EB\u6483\u589C\u6642\u3001\
+                \u30A4\u30F3\u30D7\u30E9\u30F3\u30C8\u306E\u55AA\u5931\u306F\u88DC\
+                \u511F\u3055\u308C\u307E\u305B\u3093"
+              ko: "\uBAA8\uB450 - \uCEA1\uC290 \uD30C\uAD34 \uC2DC \uD30C\uAD34\uB41C\
+                \ \uC784\uD50C\uB780\uD2B8\uC5D0 \uB300\uD55C \uBCF4\uC0C1\uC744 \uC9C0\
+                \uAE09\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
+              ru: "\u041B\u044E\u0431.: \u043F\u0440\u0438 \u043F\u043E\u0442\u0435\
+                \u0440\u0435 \u043A\u0430\u043F\u0441\u0443\u043B\u044B \u043D\u0435\
+                \ \u043A\u043E\u043C\u043F\u0435\u043D\u0441\u0438\u0440\u0443\u0435\
+                \u0442\u0441\u044F \u0441\u0442\u043E\u0438\u043C\u043E\u0441\u0442\
+                \u044C \u0443\u0442\u0440\u0430\u0447\u0435\u043D\u043D\u044B\u0445\
+                \ \u0438\u043C\u043F\u043B\u0430\u043D\u0442\u043E\u0432"
+              zh: "\u4EFB\u610F\u8D54\u507F - \u690D\u5165\u4F53\u635F\u5931\u672A\
+                \u8BA1\u5165\u592A\u7A7A\u8231\u635F\u5931"
+            title:
+              de: "Alle \u2013 Implantatverluste bei Kapselverlust nicht abgedeckt"
+              en: Any - implants losses not covered on capsule loss
+              es: "Cualquiera: p\xE9rdidas de implantes no cubiertas por p\xE9rdida\
+                \ de c\xE1psula"
+              fr: N'importe lequel - Pertes d'implants non couvertes en cas de destruction
+                de la capsule
+              ja: "\u4E0D\u554F - \u30AB\u30D7\u30BB\u30EB\u6483\u589C\u6642\u3001\
+                \u30A4\u30F3\u30D7\u30E9\u30F3\u30C8\u306E\u55AA\u5931\u306F\u88DC\
+                \u511F\u3055\u308C\u307E\u305B\u3093"
+              ko: "\uBAA8\uB450 - \uCEA1\uC290 \uD30C\uAD34 \uC2DC \uD30C\uAD34\uB41C\
+                \ \uC784\uD50C\uB780\uD2B8\uC5D0 \uB300\uD55C \uBCF4\uC0C1\uC744 \uC9C0\
+                \uAE09\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
+              ru: "\u041B\u044E\u0431.: \u043F\u0440\u0438 \u043F\u043E\u0442\u0435\
+                \u0440\u0435 \u043A\u0430\u043F\u0441\u0443\u043B\u044B \u043D\u0435\
+                \ \u043A\u043E\u043C\u043F\u0435\u043D\u0441\u0438\u0440\u0443\u0435\
+                \u0442\u0441\u044F \u0441\u0442\u043E\u0438\u043C\u043E\u0441\u0442\
+                \u044C \u0443\u0442\u0440\u0430\u0447\u0435\u043D\u043D\u044B\u0445\
+                \ \u0438\u043C\u043F\u043B\u0430\u043D\u0442\u043E\u0432"
+              zh: "\u4EFB\u610F\u8D54\u507F - \u690D\u5165\u4F53\u635F\u5931\u672A\
+                \u8BA1\u5165\u592A\u7A7A\u8231\u635F\u5931"
+          optionTrue:
+            description:
+              de: "Alle \u2013 Implantatverluste bei Kapselverlust abgedeckt"
+              en: Any - implants losses covered on capsule loss
+              es: "Cualquiera: p\xE9rdidas de implantes cubiertas por p\xE9rdida de\
+                \ c\xE1psula"
+              fr: N'importe lequel - Pertes d'implants couvertes en cas de destruction
+                de la capsule
+              ja: "\u4E0D\u554F - \u30AB\u30D7\u30BB\u30EB\u6483\u589C\u6642\u3001\
+                \u30A4\u30F3\u30D7\u30E9\u30F3\u30C8\u306E\u55AA\u5931\u306F\u88DC\
+                \u511F\u3055\u308C\u307E\u3059"
+              ko: "\uBAA8\uB450 - \uCEA1\uC290 \uD30C\uAD34 \uC2DC \uC784\uD50C\uB780\
+                \uD2B8\uC5D0 \uB300\uD55C \uBCF4\uC0C1\uC744 \uC9C0\uAE09\uD569\uB2C8\
+                \uB2E4."
+              ru: "\u041B\u044E\u0431.: \u043F\u0440\u0438 \u043F\u043E\u0442\u0435\
+                \u0440\u0435 \u043A\u0430\u043F\u0441\u0443\u043B\u044B \u043A\u043E\
+                \u043C\u043F\u0435\u043D\u0441\u0438\u0440\u0443\u0435\u0442\u0441\
+                \u044F \u0441\u0442\u043E\u0438\u043C\u043E\u0441\u0442\u044C \u0443\
+                \u0442\u0440\u0430\u0447\u0435\u043D\u043D\u044B\u0445 \u0438\u043C\
+                \u043F\u043B\u0430\u043D\u0442\u043E\u0432"
+              zh: "\u4EFB\u610F\u8D54\u507F - \u690D\u5165\u4F53\u635F\u5931\u8BA1\
+                \u5165\u592A\u7A7A\u8231\u635F\u5931"
+            title:
+              de: "Alle \u2013 Implantatverluste bei Kapselverlust abgedeckt"
+              en: Any - implants losses covered on capsule loss
+              es: "Cualquiera: p\xE9rdidas de implantes cubiertas por p\xE9rdida de\
+                \ c\xE1psula"
+              fr: N'importe lequel - Pertes d'implants couvertes en cas de destruction
+                de la capsule
+              ja: "\u4E0D\u554F - \u30AB\u30D7\u30BB\u30EB\u6483\u589C\u6642\u3001\
+                \u30A4\u30F3\u30D7\u30E9\u30F3\u30C8\u306E\u55AA\u5931\u306F\u88DC\
+                \u511F\u3055\u308C\u307E\u3059"
+              ko: "\uBAA8\uB450 - \uCEA1\uC290 \uD30C\uAD34 \uC2DC \uC784\uD50C\uB780\
+                \uD2B8\uC5D0 \uB300\uD55C \uBCF4\uC0C1\uC744 \uC9C0\uAE09\uD569\uB2C8\
+                \uB2E4."
+              ru: "\u041B\u044E\u0431.: \u043F\u0440\u0438 \u043F\u043E\u0442\u0435\
+                \u0440\u0435 \u043A\u0430\u043F\u0441\u0443\u043B\u044B \u043A\u043E\
+                \u043C\u043F\u0435\u043D\u0441\u0438\u0440\u0443\u0435\u0442\u0441\
+                \u044F \u0441\u0442\u043E\u0438\u043C\u043E\u0441\u0442\u044C \u0443\
+                \u0442\u0440\u0430\u0447\u0435\u043D\u043D\u044B\u0445 \u0438\u043C\
+                \u043F\u043B\u0430\u043D\u0442\u043E\u0432"
+              zh: "\u4EFB\u610F\u8D54\u507F - \u690D\u5165\u4F53\u635F\u5931\u8BA1\
+                \u5165\u592A\u7A7A\u8231\u635F\u5931"
+          title:
+            de: Implantate bei Kapselverlust abdecken
+            en: Cover Implants on Capsule loss
+            es: "Cubrir implantes en la p\xE9rdida de c\xE1psulas"
+            fr: Couvrir les implants en cas de perte de capsule
+            ja: "\u30AB\u30D7\u30BB\u30EB\u6483\u589C\u6642\u306E\u30A4\u30F3\u30D7\
+              \u30E9\u30F3\u30C8\u306E\u88DC\u511F"
+            ko: "\uCEA1\uC290 \uD30C\uAD34 \uC2DC \uC784\uD50C\uB780\uD2B8 \uBCF4\uC0C1"
+            ru: "\u0412\u043E\u0437\u043C\u0435\u0449\u0430\u0442\u044C \u0441\u0442\
+              \u043E\u0438\u043C\u043E\u0441\u0442\u044C \u0438\u043C\u043F\u043B\u0430\
+              \u043D\u0442\u043E\u0432 \u043F\u0440\u0438 \u043F\u043E\u0442\u0435\
+              \u0440\u0435 \u043A\u0430\u043F\u0441\u0443\u043B\u044B"
+            zh: "\u8BA1\u5165\u592A\u7A7A\u8231\u635F\u5931\u7684\u690D\u5165\u4F53"
+      location:
+        matcher:
+          acceptedValueTypes:
+          - solarsystem
+          - constellation
+          - region
+          description:
+            de: Die Sonnensysteme, Konstellationen oder Regionen, in denen der Verlust
+              stattfinden muss.
+            en: Solar Systems, Constellations, or Regions in which the loss must take
+              place.
+            es: "Sistemas solares, constelaciones o regiones en los que debe producirse\
+              \ la p\xE9rdida."
+            fr: "Syst\xE8mes solaires, constellations ou r\xE9gions o\xF9 la perte\
+              \ doit se produire."
+            ja: "\u640D\u5931\u304C\u767A\u751F\u3059\u308B\u5FC5\u8981\u304C\u3042\
+              \u308B\u30BD\u30FC\u30E9\u30FC\u30B7\u30B9\u30C6\u30E0\u3001\u30B3\u30F3\
+              \u30B9\u30C6\u30EC\u30FC\u30B7\u30E7\u30F3\u3001\u30EA\u30FC\u30B8\u30E7\
+              \u30F3\u3067\u3059\u3002"
+            ko: "\uD568\uC120\uC774 \uD30C\uAD34\uB41C \uD56D\uC131\uACC4, \uC131\uC88C\
+              , \uC9C0\uC5ED\uC785\uB2C8\uB2E4."
+            ru: "\u0417\u0432\u0451\u0437\u0434\u043D\u044B\u0435 \u0441\u0438\u0441\
+              \u0442\u0435\u043C\u044B, \u0441\u043E\u0437\u0432\u0435\u0437\u0434\
+              \u0438\u044F \u0438 \u0441\u0435\u043A\u0442\u043E\u0440\u0430, \u0433\
+              \u0434\u0435 \u0434\u043E\u043B\u0436\u043D\u0430 \u043F\u0440\u043E\
+              \u0438\u0437\u043E\u0439\u0442\u0438 \u043F\u043E\u0442\u0435\u0440\u044F\
+              ."
+            zh: "\u53D1\u751F\u635F\u5931\u7684\u9650\u5B9A\u6052\u661F\u7CFB\u3001\
+              \u661F\u5EA7\u6216\u661F\u57DF\u3002"
+          iconID: location
+          maxEntries: 10
+          optional: true
+          title:
+            de: Positionen
+            en: Locations
+            es: Ubicaciones
+            fr: Emplacements
+            ja: "\u4F4D\u7F6E"
+            ko: "\uC704\uCE58"
+            ru: "\u041E\u0431\u043B\u0430\u0441\u0442\u0438"
+            zh: "\u5730\u70B9"
+          type: location
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+      require_capsuleer_involvement:
+        boolean:
+          choiceLabel:
+            de: Kapselpilotenbeteiligung voraussetzen?
+            en: Require Capsuleer Involvement?
+            es: "\xBFRequiere la implicaci\xF3n del capsulista?"
+            fr: "N\xE9cessite l'implication des capsuliers\_?"
+            ja: "\u30AB\u30D7\u30BB\u30E9\u306E\u95A2\u4E0E\u304C\u5FC5\u8981\u304B\
+              \u3069\u3046\u304B\u3092\u8A2D\u5B9A\u3057\u307E\u3059\u3002"
+            ko: "\uCEA1\uC290\uB9AC\uC5B4 \uC804\uD22C \uC870\uAC74"
+            ru: "\u0422\u0440\u0435\u0431\u0443\u0435\u0442\u0441\u044F \u043B\u0438\
+              \ \u0432\u043C\u0435\u0448\u0430\u0442\u0435\u043B\u044C\u0441\u0442\
+              \u0432\u043E \u0434\u0440\u0443\u0433\u043E\u0433\u043E \u043A\u0430\
+              \u043F\u0441\u0443\u043B\u0451\u0440\u0430?"
+            zh: "\u662F\u5426\u9700\u8981\u514B\u9686\u98DE\u884C\u5458\u53C2\u4E0E\
+              \uFF1F"
+          default: false
+          description:
+            de: "Verlangen, dass ein anderer Kapselpilot an der Zerst\xF6rung des\
+              \ Schiffes beteiligt sein muss."
+            en: Require that another capsuleer be involved in the destruction of the
+              ship.
+            es: "Requiere que otro capsulista est\xE9 implicado en la destrucci\xF3\
+              n de la nave."
+            fr: "N\xE9cessite qu'un autre capsulier soit impliqu\xE9 dans la destruction\
+              \ du vaisseau."
+            ja: "\u8266\u8239\u306E\u6483\u589C\u306B\u3001\u4ED6\u306E\u30AB\u30D7\
+              \u30BB\u30E9\u304C\u95A2\u4E0E\u3057\u3066\u3044\u308B\u5FC5\u8981\u304C\
+              \u3042\u308A\u307E\u3059\u3002"
+            ko: "\uCEA1\uC290\uB9AC\uC5B4 \uC804\uD22C\uB85C \uBC1C\uC0DD\uD55C \uD53C\
+              \uD574\uB9CC \uBCF4\uC0C1\uD569\uB2C8\uB2E4."
+            ru: "\u0422\u0440\u0435\u0431\u0443\u0435\u0442\u0441\u044F, \u0447\u0442\
+              \u043E\u0431\u044B \u0434\u0440\u0443\u0433\u043E\u0439 \u043A\u0430\
+              \u043F\u0441\u0443\u043B\u0451\u0440 \u043F\u0440\u0438\u043D\u044F\u043B\
+              \ \u0443\u0447\u0430\u0441\u0442\u0438\u0435 \u0432 \u0443\u043D\u0438\
+              \u0447\u0442\u043E\u0436\u0435\u043D\u0438\u0438 \u043A\u043E\u0440\u0430\
+              \u0431\u043B\u044F."
+            zh: "\u9700\u8981\u53E6\u4E00\u540D\u514B\u9686\u98DE\u884C\u5458\u53C2\
+              \u4E0E\u6467\u6BC1\u8230\u8239\u3002"
+          iconID: person
+          optionFalse:
+            description:
+              de: "Nicht erforderlich\_\u2013 deckt Verluste ab, unabh\xE4ngig von\
+                \ der Beteiligung eines Kapselpilot-Angreifers"
+              en: Unrequired - covers losses regardless of capsuleer attacker involvement
+              es: "No requerido: cubre las p\xE9rdidas independientemente de la implicaci\xF3\
+                n del capsulista atacante"
+              fr: "Non requis\_- Couvre les pertes, quelle que soit la participation\
+                \ des attaquants capsuliers"
+              ja: "\u4E0D\u8981 - \u30AB\u30D7\u30BB\u30E9\u306E\u653B\u6483\u8005\
+                \u304C\u95A2\u4E0E\u3057\u3066\u3044\u308B\u304B\u3069\u3046\u304B\
+                \u306B\u95A2\u308F\u3089\u305A\u640D\u5931\u304C\u88DC\u511F\u3055\
+                \u308C\u307E\u3059"
+              ko: "\uC870\uAC74 \uC5C6\uC74C - \uCEA1\uC290\uB9AC\uC5B4 \uC804\uD22C\
+                \ \uC678\uC758 \uD53C\uD574\uB3C4 \uBCF4\uC0C1\uD569\uB2C8\uB2E4."
+              ru: "\u041D\u0435 \u0442\u0440\u0435\u0431\u0443\u0435\u0442\u0441\u044F\
+                : \u043F\u043E\u043A\u0440\u044B\u0432\u0430\u0435\u0442 \u043F\u043E\
+                \u0442\u0435\u0440\u0438 \u0432\u043D\u0435 \u0437\u0430\u0432\u0438\
+                \u0441\u0438\u043C\u043E\u0441\u0442\u0438 \u043E\u0442 \u0443\u0447\
+                \u0430\u0441\u0442\u0438\u044F \u043A\u0430\u043F\u0441\u0443\u043B\
+                \u0451\u0440\u0430-\u0430\u0433\u0440\u0435\u0441\u0441\u043E\u0440\
+                \u0430"
+              zh: "\u975E\u5FC5\u8981\u8D54\u507F - \u65E0\u8BBA\u514B\u9686\u98DE\
+                \u884C\u5458\u662F\u5426\u4F5C\u4E3A\u8FDB\u653B\u65B9\u53C2\u4E0E\
+                \u5176\u4E2D\uFF0C\u90FD\u80FD\u83B7\u5F97\u635F\u5931\u8D54\u507F"
+            title:
+              de: "Nicht erforderlich\_\u2013 deckt Verluste ab, unabh\xE4ngig von\
+                \ der Beteiligung eines Kapselpilot-Angreifers"
+              en: Unrequired - covers losses regardless of capsuleer attacker involvement
+              es: "No requerido: cubre las p\xE9rdidas independientemente de la implicaci\xF3\
+                n del capsulista atacante"
+              fr: "Non requis\_- Couvre les pertes, quelle que soit la participation\
+                \ des attaquants capsuliers"
+              ja: "\u4E0D\u8981 - \u30AB\u30D7\u30BB\u30E9\u306E\u653B\u6483\u8005\
+                \u304C\u95A2\u4E0E\u3057\u3066\u3044\u308B\u304B\u3069\u3046\u304B\
+                \u306B\u95A2\u308F\u3089\u305A\u640D\u5931\u304C\u88DC\u511F\u3055\
+                \u308C\u307E\u3059"
+              ko: "\uC870\uAC74 \uC5C6\uC74C - \uCEA1\uC290\uB9AC\uC5B4 \uC804\uD22C\
+                \ \uC678\uC758 \uD53C\uD574\uB3C4 \uBCF4\uC0C1\uD569\uB2C8\uB2E4."
+              ru: "\u041D\u0435 \u0442\u0440\u0435\u0431\u0443\u0435\u0442\u0441\u044F\
+                : \u043F\u043E\u043A\u0440\u044B\u0432\u0430\u0435\u0442 \u043F\u043E\
+                \u0442\u0435\u0440\u0438 \u0432\u043D\u0435 \u0437\u0430\u0432\u0438\
+                \u0441\u0438\u043C\u043E\u0441\u0442\u0438 \u043E\u0442 \u0443\u0447\
+                \u0430\u0441\u0442\u0438\u044F \u043A\u0430\u043F\u0441\u0443\u043B\
+                \u0451\u0440\u0430-\u0430\u0433\u0440\u0435\u0441\u0441\u043E\u0440\
+                \u0430"
+              zh: "\u975E\u5FC5\u8981\u8D54\u507F - \u65E0\u8BBA\u514B\u9686\u98DE\
+                \u884C\u5458\u662F\u5426\u4F5C\u4E3A\u8FDB\u653B\u65B9\u53C2\u4E0E\
+                \u5176\u4E2D\uFF0C\u90FD\u80FD\u83B7\u5F97\u635F\u5931\u8D54\u507F"
+          optionTrue:
+            description:
+              de: "Erforderlich\_\u2013 deckt nur Verluste ab, an denen ein Kapselpilot-Angreifer\
+                \ beteiligt war"
+              en: Required - only covers losses that involved a capsuleer attacker
+              es: "Requerido: solo cubre las p\xE9rdidas que implican a un atacante\
+                \ capsulista"
+              fr: "Requis\_: couvre uniquement les pertes impliquant un attaquant\
+                \ capsulier"
+              ja: "\u5FC5\u8981 - \u30AB\u30D7\u30BB\u30E9\u306E\u653B\u6483\u8005\
+                \u304C\u95A2\u4E0E\u3057\u3066\u3044\u308B\u5834\u5408\u306E\u307F\
+                \u640D\u5931\u304C\u88DC\u511F\u3055\u308C\u307E\u3059\u3002"
+              ko: "\uC870\uAC74 \uC788\uC74C - \uCEA1\uC290\uB9AC\uC5B4 \uC804\uD22C\
+                \uB85C \uBC1C\uC0DD\uD55C \uD53C\uD574\uB9CC \uBCF4\uC0C1\uD569\uB2C8\
+                \uB2E4."
+              ru: "\u0422\u0440\u0435\u0431\u0443\u0435\u0442\u0441\u044F: \u043F\u043E\
+                \u043A\u0440\u044B\u0432\u0430\u0435\u0442 \u0442\u043E\u043B\u044C\
+                \u043A\u043E \u043F\u043E\u0442\u0435\u0440\u0438, \u0441\u0432\u044F\
+                \u0437\u0430\u043D\u043D\u044B\u0435 \u0441 \u043A\u0430\u043F\u0441\
+                \u0443\u043B\u0451\u0440\u043E\u043C-\u0430\u0433\u0440\u0435\u0441\
+                \u0441\u043E\u0440\u043E\u043C"
+              zh: "\u5FC5\u8981\u8D54\u507F - \u53EA\u8D54\u507F\u514B\u9686\u98DE\
+                \u884C\u5458\u4F5C\u4E3A\u8FDB\u653B\u65B9\u906D\u53D7\u7684\u635F\
+                \u5931"
+            title:
+              de: "Erforderlich\_\u2013 deckt nur Verluste ab, an denen ein Kapselpilot-Angreifer\
+                \ beteiligt war"
+              en: Required - only covers losses that involved a capsuleer attacker
+              es: "Requerido: solo cubre las p\xE9rdidas que implican a un atacante\
+                \ capsulista"
+              fr: "Requis\_: couvre uniquement les pertes impliquant un attaquant\
+                \ capsulier"
+              ja: "\u5FC5\u8981 - \u30AB\u30D7\u30BB\u30E9\u306E\u653B\u6483\u8005\
+                \u304C\u95A2\u4E0E\u3057\u3066\u3044\u308B\u5834\u5408\u306E\u307F\
+                \u640D\u5931\u304C\u88DC\u511F\u3055\u308C\u307E\u3059\u3002"
+              ko: "\uC870\uAC74 \uC788\uC74C - \uCEA1\uC290\uB9AC\uC5B4 \uC804\uD22C\
+                \uB85C \uBC1C\uC0DD\uD55C \uD53C\uD574\uB9CC \uBCF4\uC0C1\uD569\uB2C8\
+                \uB2E4."
+              ru: "\u0422\u0440\u0435\u0431\u0443\u0435\u0442\u0441\u044F: \u043F\u043E\
+                \u043A\u0440\u044B\u0432\u0430\u0435\u0442 \u0442\u043E\u043B\u044C\
+                \u043A\u043E \u043F\u043E\u0442\u0435\u0440\u0438, \u0441\u0432\u044F\
+                \u0437\u0430\u043D\u043D\u044B\u0435 \u0441 \u043A\u0430\u043F\u0441\
+                \u0443\u043B\u0451\u0440\u043E\u043C-\u0430\u0433\u0440\u0435\u0441\
+                \u0441\u043E\u0440\u043E\u043C"
+              zh: "\u5FC5\u8981\u8D54\u507F - \u53EA\u8D54\u507F\u514B\u9686\u98DE\
+                \u884C\u5458\u4F5C\u4E3A\u8FDB\u653B\u65B9\u906D\u53D7\u7684\u635F\
+                \u5931"
+          title:
+            de: Kapselpilotenbeteiligung voraussetzen?
+            en: Require Capsuleer Involvement?
+            es: "\xBFRequiere la implicaci\xF3n del capsulista?"
+            fr: "N\xE9cessite l'implication des capsuliers\_?"
+            ja: "\u30AB\u30D7\u30BB\u30E9\u306E\u95A2\u4E0E\u304C\u5FC5\u8981\u304B\
+              \u3069\u3046\u304B\u3092\u8A2D\u5B9A\u3057\u307E\u3059\u3002"
+            ko: "\uCEA1\uC290\uB9AC\uC5B4 \uC804\uD22C \uC870\uAC74"
+            ru: "\u0422\u0440\u0435\u0431\u0443\u0435\u0442\u0441\u044F \u043B\u0438\
+              \ \u0432\u043C\u0435\u0448\u0430\u0442\u0435\u043B\u044C\u0441\u0442\
+              \u0432\u043E \u0434\u0440\u0443\u0433\u043E\u0433\u043E \u043A\u0430\
+              \u043F\u0441\u0443\u043B\u0451\u0440\u0430?"
+            zh: "\u662F\u5426\u9700\u8981\u514B\u9686\u98DE\u884C\u5458\u53C2\u4E0E\
+              \uFF1F"
+      victim_ship:
+        matcher:
+          acceptedValueTypes:
+          - ship_type
+          - ship_class
+          description:
+            de: Typen oder Gruppen von Schiffen, die von diesem Projekt abgedeckt
+              werden. Bei leerem Feld sind alle Schiffstypen abgedeckt.
+            en: Types or Groups of ships that are covered by this project. If empty,
+              all ship types are covered.
+            es: "Tipos o grupos de naves que cubre este proyecto. Si est\xE1 vac\xED\
+              o, se cubren todos los tipos de naves."
+            fr: Types ou groupes de vaisseaux couverts par ce projet. Si vide, tous
+              les types de vaisseaux sont couverts.
+            ja: "\u3053\u306E\u30D7\u30ED\u30B8\u30A7\u30AF\u30C8\u3067\u88DC\u511F\
+              \u3055\u308C\u308B\u8266\u8239\u306E\u30BF\u30A4\u30D7\u307E\u305F\u306F\
+              \u30B0\u30EB\u30FC\u30D7\u3067\u3059\u3002\u7A7A\u6B04\u306E\u5834\u5408\
+              \u3001\u3042\u3089\u3086\u308B\u30BF\u30A4\u30D7\u306E\u8266\u8239\u304C\
+              \u88DC\u511F\u306E\u5BFE\u8C61\u3068\u306A\u308A\u307E\u3059\u3002"
+            ko: "\uD574\uB2F9 \uD504\uB85C\uC81D\uD2B8\uC5D0\uC11C \uBCF4\uC0C1\uD560\
+              \ \uC218 \uC788\uB294 \uD568\uC120 \uC720\uD615 \uBC0F \uADF8\uB8F9\uC785\
+              \uB2C8\uB2E4. \uC124\uC815\uD558\uC9C0 \uC54A\uC73C\uBA74 \uBAA8\uB4E0\
+              \ \uD568\uC120 \uD53C\uD574\uC5D0 \uBCF4\uC0C1\uC744 \uC9C0\uAE09\uD569\
+              \uB2C8\uB2E4."
+            ru: "\u0422\u0438\u043F\u044B \u0438\u043B\u0438 \u0433\u0440\u0443\u043F\
+              \u043F\u044B \u043A\u043E\u0440\u0430\u0431\u043B\u0435\u0439, \u043A\
+              \u043E\u0442\u043E\u0440\u044B\u0435 \u043E\u0445\u0432\u0430\u0442\u044B\
+              \u0432\u0430\u0435\u0442 \u044D\u0442\u043E\u0442 \u043F\u0440\u043E\
+              \u0435\u043A\u0442. \u0415\u0441\u043B\u0438 \u043E\u0441\u0442\u0430\
+              \u0432\u0438\u0442\u044C \u0441\u0442\u0440\u043E\u043A\u0443 \u043F\
+              \u0443\u0441\u0442\u043E\u0439, \u043F\u0440\u043E\u0435\u043A\u0442\
+              \ \u0431\u0443\u0434\u0435\u0442 \u043E\u0445\u0432\u0430\u0442\u044B\
+              \u0432\u0430\u0442\u044C \u0432\u0441\u0435 \u043A\u043E\u0440\u0430\
+              \u0431\u043B\u0438."
+            zh: "\u672C\u8BA1\u5212\u627F\u4FDD\u7684\u8230\u8239\u7C7B\u578B\u6216\
+              \u7FA4\u7EC4\u3002\u5982\u672A\u8BBE\u7F6E\uFF0C\u5219\u627F\u4FDD\u6240\
+              \u6709\u8230\u8239\u7C7B\u578B\u3002"
+          iconID: spaceship_command
+          maxEntries: 10
+          optional: true
+          title:
+            de: Schiffstypen oder -gruppen
+            en: Ship Types or Groups
+            es: Tipos o grupos de naves
+            fr: Types ou groupes de vaisseaux
+            ja: "\u8266\u8239\u30BF\u30A4\u30D7\u307E\u305F\u306F\u30B0\u30EB\u30FC\
+              \u30D7"
+            ko: "\uD568\uC120 \uC720\uD615 \uB610\uB294 \uADF8\uB8F9"
+            ru: "\u0422\u0438\u043F\u044B \u0438\u043B\u0438 \u0433\u0440\u0443\u043F\
+              \u043F\u044B \u043A\u043E\u0440\u0430\u0431\u043B\u0435\u0439"
+            zh: "\u8230\u8239\u7C7B\u578B\uFF08\u7EC4\uFF09"
+          type: ship_type
+          unsetDescription:
+            de: Namen eingeben
+            en: Type in name
+            es: Escribe un nombre
+            fr: Saisir le nom
+            ja: "\u540D\u524D\u3092\u5165\u529B"
+            ko: "\uC774\uB984 \uC785\uB825"
+            ru: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\
+              \u0430\u043D\u0438\u0435"
+            zh: "\u8F93\u5165\u540D\u79F0"
+    progressDescription:
+      de: "Entsch\xE4digt"
+      en: Compensated
+      es: "Compensaci\xF3n"
+      fr: "Indemnis\xE9"
+      ja: "\u88DC\u511F\u6E08\u307F"
+      ko: "\uBCF4\uC0C1 \uC9C0\uAE09 \uC644\uB8CC"
+      ru: "\u041A\u043E\u043C\u043F\u0435\u043D\u0441\u0430\u0446\u0438\u044F \u0432\
+        \u044B\u043F\u043B\u0430\u0447\u0435\u043D\u0430"
+      zh: "\u5DF2\u8D54\u507F"
+    rewardDescription:
+      de: "Deckungsverh\xE4ltnis"
+      en: Coverage Ratio
+      es: Tasa de cobertura
+      fr: Taux de couverture
+      ja: "\u88DC\u511F\u7387"
+      ko: "\uBCF4\uC0C1 \uBE44\uC728"
+      ru: "\u041A\u043E\u044D\u0444\u0444\u0438\u0446\u0438\u0435\u043D\u0442 \u043F\
+        \u043E\u043A\u0440\u044B\u0442\u0438\u044F"
+      zh: "\u627F\u4FDD\u7387"
+    targetDescription:
+      de: Gesamte ISK-Zuweisung
+      en: Total ISK Allocation
+      es: "Asignaci\xF3n total de ISK"
+      fr: Allocation totale d'ISK
+      ja: "\u5408\u8A08ISK\u5272\u308A\u5F53\u3066\u984D"
+      ko: "\uC9C0\uAE09 ISK \uD569\uACC4"
+      ru: "\u041E\u0431\u0449\u0430\u044F \u0441\u0443\u043C\u043C\u0430 \u0432 ISK"
+      zh: "\u661F\u5E01\u5206\u914D\u603B\u989D"
+    title:
+      de: "Versicherung f\xFCr Schiffe"
+      en: Ship Insurance
+      es: Seguro de la nave
+      fr: Assurance de vaisseau
+      ja: "\u8266\u8239\u4FDD\u967A"
+      ko: "\uD568\uC120 \uBCF4\uD5D8"
+      ru: "\u0421\u0442\u0440\u0430\u0445\u043E\u0432\u0430\u043D\u0438\u0435 \u043A\
+        \u043E\u0440\u0430\u0431\u043B\u0435\u0439"
+      zh: "\u8230\u8239\u4FDD\u9669"

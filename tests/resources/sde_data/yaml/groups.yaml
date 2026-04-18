@@ -1,0 +1,96 @@
+0:
+  anchorable: false
+  anchored: false
+  categoryID: 0
+  fittableNonSingleton: false
+  name:
+    de: '#System'
+    en: '#System'
+    es: '#System'
+    fr: "#Syst\xE8me"
+    ja: "#\u30B7\u30B9\u30C6\u30E0"
+    ko: "#\uD56D\uC131\uACC4"
+    ru: "#\u0421\u0438\u0441\u0442\u0435\u043C\u0430"
+    zh: "#\u661F\u7CFB"
+  published: false
+  useBasePrice: false
+0:
+  anchorable: false
+  anchored: false
+  categoryID: 0
+  fittableNonSingleton: false
+  name:
+    de: '#System'
+    en: '#System'
+    es: '#System'
+    fr: "#Syst\xE8me"
+    ja: "#\u30B7\u30B9\u30C6\u30E0"
+    ko: "#\uD56D\uC131\uACC4"
+    ru: "#\u0421\u0438\u0441\u0442\u0435\u043C\u0430"
+    zh: "#\u661F\u7CFB"
+  published: false
+  useBasePrice: false
+1:
+  anchorable: false
+  anchored: false
+  categoryID: 1
+  fittableNonSingleton: false
+  name:
+    de: Charakter
+    en: Character
+    es: Personaje
+    fr: Personnage
+    ja: "\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC"
+    ko: "\uCE90\uB9AD\uD130"
+    ru: "\u041F\u0435\u0440\u0441\u043E\u043D\u0430\u0436"
+    zh: "\u4EBA\u7269\u89D2\u8272"
+  published: false
+  useBasePrice: false
+0:
+  anchorable: false
+  anchored: false
+  categoryID: 0
+  fittableNonSingleton: false
+  name:
+    de: '#System'
+    en: '#System'
+    es: '#System'
+    fr: "#Syst\xE8me"
+    ja: "#\u30B7\u30B9\u30C6\u30E0"
+    ko: "#\uD56D\uC131\uACC4"
+    ru: "#\u0421\u0438\u0441\u0442\u0435\u043C\u0430"
+    zh: "#\u661F\u7CFB"
+  published: false
+  useBasePrice: false
+1:
+  anchorable: false
+  anchored: false
+  categoryID: 1
+  fittableNonSingleton: false
+  name:
+    de: Charakter
+    en: Character
+    es: Personaje
+    fr: Personnage
+    ja: "\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC"
+    ko: "\uCE90\uB9AD\uD130"
+    ru: "\u041F\u0435\u0440\u0441\u043E\u043D\u0430\u0436"
+    zh: "\u4EBA\u7269\u89D2\u8272"
+  published: false
+  useBasePrice: false
+2:
+  anchorable: false
+  anchored: false
+  categoryID: 1
+  fittableNonSingleton: false
+  name:
+    de: Corporation
+    en: Corporation
+    es: "Corporaci\xF3n"
+    fr: Corporation
+    ja: "\u30B3\u30FC\u30DD\u30EC\u30FC\u30B7\u30E7\u30F3"
+    ko: "\uCF54\uD37C\uB808\uC774\uC158"
+    ru: "\u041A\u043E\u0440\u043F\u043E\u0440\u0430\u0446\u0438\u044F"
+    zh: "\u519B\u56E2"
+  published: false
+  useBasePrice: false

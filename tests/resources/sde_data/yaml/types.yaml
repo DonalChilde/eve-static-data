@@ -1,0 +1,82 @@
+0:
+  groupID: 0
+  mass: 1.0
+  name:
+    de: '#System'
+    en: '#System'
+    es: '#System'
+    fr: "#Syst\xE8me"
+    ja: "#\u30B7\u30B9\u30C6\u30E0"
+    ko: "#\uD56D\uC131\uACC4"
+    ru: "#\u0421\u0438\u0441\u0442\u0435\u043C\u0430"
+    zh: "#\u661F\u7CFB"
+  portionSize: 1
+  published: false
+0:
+  groupID: 0
+  mass: 1.0
+  name:
+    de: '#System'
+    en: '#System'
+    es: '#System'
+    fr: "#Syst\xE8me"
+    ja: "#\u30B7\u30B9\u30C6\u30E0"
+    ko: "#\uD56D\uC131\uACC4"
+    ru: "#\u0421\u0438\u0441\u0442\u0435\u043C\u0430"
+    zh: "#\u661F\u7CFB"
+  portionSize: 1
+  published: false
+2:
+  groupID: 2
+  name:
+    de: Corporation
+    en: Corporation
+    es: "Corporaci\xF3n"
+    fr: Corporation
+    ja: "\u30B3\u30FC\u30DD\u30EC\u30FC\u30B7\u30E7\u30F3"
+    ko: "\uCF54\uD37C\uB808\uC774\uC158"
+    ru: Corporation
+    zh: "\u519B\u56E2"
+  portionSize: 1
+  published: false
+0:
+  groupID: 0
+  mass: 1.0
+  name:
+    de: '#System'
+    en: '#System'
+    es: '#System'
+    fr: "#Syst\xE8me"
+    ja: "#\u30B7\u30B9\u30C6\u30E0"
+    ko: "#\uD56D\uC131\uACC4"
+    ru: "#\u0421\u0438\u0441\u0442\u0435\u043C\u0430"
+    zh: "#\u661F\u7CFB"
+  portionSize: 1
+  published: false
+2:
+  groupID: 2
+  name:
+    de: Corporation
+    en: Corporation
+    es: "Corporaci\xF3n"
+    fr: Corporation
+    ja: "\u30B3\u30FC\u30DD\u30EC\u30FC\u30B7\u30E7\u30F3"
+    ko: "\uCF54\uD37C\uB808\uC774\uC158"
+    ru: Corporation
+    zh: "\u519B\u56E2"
+  portionSize: 1
+  published: false
+3:
+  groupID: 3
+  name:
+    de: Region
+    en: Region
+    es: "Regi\xF3n"
+    fr: "R\xE9gion"
+    ja: "\u30EA\u30FC\u30B8\u30E7\u30F3"
+    ko: "\uC9C0\uC5ED"
+    ru: Region
+    zh: "\u661F\u57DF"
+  portionSize: 1
+  published: false
+  volume: 1.0

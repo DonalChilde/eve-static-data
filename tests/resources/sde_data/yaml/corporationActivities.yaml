@@ -1,0 +1,64 @@
+1:
+  name:
+    de: Landwirtschaft
+    en: Agriculture
+    es: Agricultura
+    fr: Agriculture
+    ja: "\u8FB2\u696D"
+    ko: "\uB18D\uC5C5"
+    ru: "\u0421\u0435\u043B\u044C\u0441\u043A\u043E\u0435 \u0445\u043E\u0437\u044F\
+      \u0439\u0441\u0442\u0432\u043E"
+    zh: "\u519C\u4E1A"
+1:
+  name:
+    de: Landwirtschaft
+    en: Agriculture
+    es: Agricultura
+    fr: Agriculture
+    ja: "\u8FB2\u696D"
+    ko: "\uB18D\uC5C5"
+    ru: "\u0421\u0435\u043B\u044C\u0441\u043A\u043E\u0435 \u0445\u043E\u0437\u044F\
+      \u0439\u0441\u0442\u0432\u043E"
+    zh: "\u519C\u4E1A"
+2:
+  name:
+    de: Konstruktion
+    en: Construction
+    es: "Construcci\xF3n"
+    fr: Construction
+    ja: "\u5EFA\u8A2D"
+    ko: "\uAC74\uC124"
+    ru: "\u0421\u0442\u0440\u043E\u0438\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u043E"
+    zh: "\u5EFA\u8BBE"
+1:
+  name:
+    de: Landwirtschaft
+    en: Agriculture
+    es: Agricultura
+    fr: Agriculture
+    ja: "\u8FB2\u696D"
+    ko: "\uB18D\uC5C5"
+    ru: "\u0421\u0435\u043B\u044C\u0441\u043A\u043E\u0435 \u0445\u043E\u0437\u044F\
+      \u0439\u0441\u0442\u0432\u043E"
+    zh: "\u519C\u4E1A"
+2:
+  name:
+    de: Konstruktion
+    en: Construction
+    es: "Construcci\xF3n"
+    fr: Construction
+    ja: "\u5EFA\u8A2D"
+    ko: "\uAC74\uC124"
+    ru: "\u0421\u0442\u0440\u043E\u0438\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u043E"
+    zh: "\u5EFA\u8BBE"
+3:
+  name:
+    de: Bergbau
+    en: Mining
+    es: "Miner\xEDa"
+    fr: "Extraction mini\xE8re"
+    ja: "\u63A1\u6398"
+    ko: "\uCC44\uAD74"
+    ru: "\u0414\u043E\u0431\u044B\u0447\u0430 \u043F\u043E\u043B\u0435\u0437\u043D\
+      \u044B\u0445 \u0438\u0441\u043A\u043E\u043F\u0430\u0435\u043C\u044B\u0445"
+    zh: "\u91C7\u77FF"

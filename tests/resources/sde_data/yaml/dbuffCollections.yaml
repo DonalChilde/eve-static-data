@@ -1,0 +1,94 @@
+1:
+  aggregateMode: Maximum
+  developerDescription: '[PROTOTYPE]Test Multi Buff'
+  itemModifiers:
+  - dogmaAttributeID: 37
+  - dogmaAttributeID: 76
+  locationGroupModifiers:
+  - dogmaAttributeID: 20
+    groupID: 46
+  - dogmaAttributeID: 105
+    groupID: 52
+  locationModifiers:
+  - dogmaAttributeID: 68
+  - dogmaAttributeID: 84
+  locationRequiredSkillModifiers:
+  - dogmaAttributeID: 6
+    skillID: 3427
+  - dogmaAttributeID: 54
+    skillID: 3305
+  operationName: PostMul
+  showOutputValueInUI: ShowNormal
+1:
+  aggregateMode: Maximum
+  developerDescription: '[PROTOTYPE]Test Multi Buff'
+  itemModifiers:
+  - dogmaAttributeID: 37
+  - dogmaAttributeID: 76
+  locationGroupModifiers:
+  - dogmaAttributeID: 20
+    groupID: 46
+  - dogmaAttributeID: 105
+    groupID: 52
+  locationModifiers:
+  - dogmaAttributeID: 68
+  - dogmaAttributeID: 84
+  locationRequiredSkillModifiers:
+  - dogmaAttributeID: 6
+    skillID: 3427
+  - dogmaAttributeID: 54
+    skillID: 3305
+  operationName: PostMul
+  showOutputValueInUI: ShowNormal
+2:
+  aggregateMode: Maximum
+  developerDescription: '[PROTOTYPE]Test Boost Speed'
+  itemModifiers:
+  - dogmaAttributeID: 37
+  operationName: PostPercent
+  showOutputValueInUI: ShowNormal
+1:
+  aggregateMode: Maximum
+  developerDescription: '[PROTOTYPE]Test Multi Buff'
+  itemModifiers:
+  - dogmaAttributeID: 37
+  - dogmaAttributeID: 76
+  locationGroupModifiers:
+  - dogmaAttributeID: 20
+    groupID: 46
+  - dogmaAttributeID: 105
+    groupID: 52
+  locationModifiers:
+  - dogmaAttributeID: 68
+  - dogmaAttributeID: 84
+  locationRequiredSkillModifiers:
+  - dogmaAttributeID: 6
+    skillID: 3427
+  - dogmaAttributeID: 54
+    skillID: 3305
+  operationName: PostMul
+  showOutputValueInUI: ShowNormal
+2:
+  aggregateMode: Maximum
+  developerDescription: '[PROTOTYPE]Test Boost Speed'
+  itemModifiers:
+  - dogmaAttributeID: 37
+  operationName: PostPercent
+  showOutputValueInUI: ShowNormal
+3:
+  aggregateMode: Minimum
+  developerDescription: Velocity penalty
+  displayName:
+    de: Geschwindigkeitsabzug
+    en: Velocity penalty
+    es: "Penalizaci\xF3n de velocidad"
+    fr: "P\xE9nalit\xE9 de vitesse"
+    ja: "\u901F\u5EA6\u30DA\u30CA\u30EB\u30C6\u30A3"
+    ko: "\uC18D\uB3C4 \uD398\uB110\uD2F0"
+    ru: "\u041E\u0433\u0440\u0430\u043D\u0438\u0447\u0435\u043D\u0438\u0435 \u0441\
+      \u043A\u043E\u0440\u043E\u0441\u0442\u0438"
+    zh: Velocity penalty
+  itemModifiers:
+  - dogmaAttributeID: 3171
+  operationName: PostPercent
+  showOutputValueInUI: ShowNormal

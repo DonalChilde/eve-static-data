@@ -1,0 +1,261 @@
+12367:
+  anarchy_impact: -20
+  description:
+    de: "Alle Raubdrohnen zerst\xF6ren, um die Entwicklung des zugeh\xF6rigen S\xF6\
+      ldnerverstecks zu verbessern und seine Anarchie zu verringern."
+    en: Destroy all Rogue Drones to improve the associated Mercenary Den's Development
+      and lower its Anarchy.
+    es: "Destruye todos los drones rebeldes para mejorar el desarrollo de la guarida\
+      \ de mercenarios asociada y reducir su anarqu\xEDa."
+    fr: "D\xE9truisez tous les drones ren\xE9gats pour am\xE9liorer le d\xE9veloppement\
+      \ du repaire de mercenaires associ\xE9 et r\xE9duire son anarchie."
+    ja: "\u5168\u3066\u306E\u30ED\u30FC\u30B0\u30C9\u30ED\u30FC\u30F3\u3092\u6483\u589C\
+      \u3059\u308B\u3053\u3068\u3067\u3001\u95A2\u9023\u3059\u308B\u50AD\u5175\u306E\
+      \u96A0\u308C\u5BB6\u306E\u958B\u767A\u5EA6\u304C\u4E0A\u304C\u308A\u3001\u7121\
+      \u79E9\u5E8F\u5EA6\u304C\u4E0B\u304C\u308A\u307E\u3059\u3002"
+    ko: "\uBAA8\uB4E0 \uB85C\uADF8 \uB4DC\uB860\uC744 \uD30C\uAD34\uD574 \uC6A9\uBCD1\
+      \ \uC18C\uAD74\uC758 \uBC1C\uC804 \uC218\uCE58\uB97C \uB192\uC774\uACE0 \uD63C\
+      \uB3C8 \uC218\uCE58\uB97C \uAC10\uC18C\uC2DC\uD0A4\uC138\uC694."
+    ru: "\u0423\u043D\u0438\u0447\u0442\u043E\u0436\u044C\u0442\u0435 \u0432\u0441\
+      \u0435\u0445 \u0432\u043E\u0441\u0441\u0442\u0430\u0432\u0448\u0438\u0445 \u0434\
+      \u0440\u043E\u043D\u043E\u0432, \u0447\u0442\u043E\u0431\u044B \u043F\u043E\u0432\
+      \u044B\u0441\u0438\u0442\u044C \u0443\u0440\u043E\u0432\u0435\u043D\u044C \u0440\
+      \u0430\u0437\u0432\u0438\u0442\u0438\u044F \u0438 \u0443\u043C\u0435\u043D\u044C\
+      \u0448\u0438\u0442\u044C \u043F\u043E\u043A\u0430\u0437\u0430\u0442\u0435\u043B\
+      \u044C \u0430\u043D\u0430\u0440\u0445\u0438\u0438 \u0441\u043E\u043E\u0442\u0432\
+      \u0435\u0442\u0441\u0442\u0432\u0443\u044E\u0449\u0435\u0433\u043E \u043B\u043E\
+      \u0433\u043E\u0432\u0430 \u043D\u0430\u0451\u043C\u043D\u0438\u043A\u043E\u0432\
+      ."
+    zh: "\u51FB\u6BC1\u6240\u6709\u81EA\u7531\u65E0\u4EBA\u673A\uFF0C\u589E\u52A0\u76F8\
+      \u5173\u96C7\u4F63\u5175\u5DE2\u7A74\u7684\u53D1\u5C55\u503C\u5E76\u51CF\u5C11\
+      \u5176\u6DF7\u4E71\u503C\u3002"
+  development_impact: 10
+  infomorph_bonus: 350
+  name:
+    de: Raubdrohnen-Auftreten
+    en: Rogue Drone Emergence
+    es: "Aparici\xF3n de drones rebeldes"
+    fr: "\xC9mergence de drones ren\xE9gats"
+    ja: "\u30ED\u30FC\u30B0\u30C9\u30ED\u30FC\u30F3\u306E\u51FA\u73FE"
+    ko: "\uB85C\uADF8 \uB4DC\uB860 \uCD9C\uD604"
+    ru: "\u0418\u0441\u0442\u043E\u0447\u043D\u0438\u043A \u0432\u043E\u0441\u0441\
+      \u0442\u0430\u0432\u0448\u0438\u0445 \u0434\u0440\u043E\u043D\u043E\u0432"
+    zh: "\u81EA\u7531\u65E0\u4EBA\u673A\u51FA\u73B0"
+12367:
+  anarchy_impact: -20
+  description:
+    de: "Alle Raubdrohnen zerst\xF6ren, um die Entwicklung des zugeh\xF6rigen S\xF6\
+      ldnerverstecks zu verbessern und seine Anarchie zu verringern."
+    en: Destroy all Rogue Drones to improve the associated Mercenary Den's Development
+      and lower its Anarchy.
+    es: "Destruye todos los drones rebeldes para mejorar el desarrollo de la guarida\
+      \ de mercenarios asociada y reducir su anarqu\xEDa."
+    fr: "D\xE9truisez tous les drones ren\xE9gats pour am\xE9liorer le d\xE9veloppement\
+      \ du repaire de mercenaires associ\xE9 et r\xE9duire son anarchie."
+    ja: "\u5168\u3066\u306E\u30ED\u30FC\u30B0\u30C9\u30ED\u30FC\u30F3\u3092\u6483\u589C\
+      \u3059\u308B\u3053\u3068\u3067\u3001\u95A2\u9023\u3059\u308B\u50AD\u5175\u306E\
+      \u96A0\u308C\u5BB6\u306E\u958B\u767A\u5EA6\u304C\u4E0A\u304C\u308A\u3001\u7121\
+      \u79E9\u5E8F\u5EA6\u304C\u4E0B\u304C\u308A\u307E\u3059\u3002"
+    ko: "\uBAA8\uB4E0 \uB85C\uADF8 \uB4DC\uB860\uC744 \uD30C\uAD34\uD574 \uC6A9\uBCD1\
+      \ \uC18C\uAD74\uC758 \uBC1C\uC804 \uC218\uCE58\uB97C \uB192\uC774\uACE0 \uD63C\
+      \uB3C8 \uC218\uCE58\uB97C \uAC10\uC18C\uC2DC\uD0A4\uC138\uC694."
+    ru: "\u0423\u043D\u0438\u0447\u0442\u043E\u0436\u044C\u0442\u0435 \u0432\u0441\
+      \u0435\u0445 \u0432\u043E\u0441\u0441\u0442\u0430\u0432\u0448\u0438\u0445 \u0434\
+      \u0440\u043E\u043D\u043E\u0432, \u0447\u0442\u043E\u0431\u044B \u043F\u043E\u0432\
+      \u044B\u0441\u0438\u0442\u044C \u0443\u0440\u043E\u0432\u0435\u043D\u044C \u0440\
+      \u0430\u0437\u0432\u0438\u0442\u0438\u044F \u0438 \u0443\u043C\u0435\u043D\u044C\
+      \u0448\u0438\u0442\u044C \u043F\u043E\u043A\u0430\u0437\u0430\u0442\u0435\u043B\
+      \u044C \u0430\u043D\u0430\u0440\u0445\u0438\u0438 \u0441\u043E\u043E\u0442\u0432\
+      \u0435\u0442\u0441\u0442\u0432\u0443\u044E\u0449\u0435\u0433\u043E \u043B\u043E\
+      \u0433\u043E\u0432\u0430 \u043D\u0430\u0451\u043C\u043D\u0438\u043A\u043E\u0432\
+      ."
+    zh: "\u51FB\u6BC1\u6240\u6709\u81EA\u7531\u65E0\u4EBA\u673A\uFF0C\u589E\u52A0\u76F8\
+      \u5173\u96C7\u4F63\u5175\u5DE2\u7A74\u7684\u53D1\u5C55\u503C\u5E76\u51CF\u5C11\
+      \u5176\u6DF7\u4E71\u503C\u3002"
+  development_impact: 10
+  infomorph_bonus: 350
+  name:
+    de: Raubdrohnen-Auftreten
+    en: Rogue Drone Emergence
+    es: "Aparici\xF3n de drones rebeldes"
+    fr: "\xC9mergence de drones ren\xE9gats"
+    ja: "\u30ED\u30FC\u30B0\u30C9\u30ED\u30FC\u30F3\u306E\u51FA\u73FE"
+    ko: "\uB85C\uADF8 \uB4DC\uB860 \uCD9C\uD604"
+    ru: "\u0418\u0441\u0442\u043E\u0447\u043D\u0438\u043A \u0432\u043E\u0441\u0441\
+      \u0442\u0430\u0432\u0448\u0438\u0445 \u0434\u0440\u043E\u043D\u043E\u0432"
+    zh: "\u81EA\u7531\u65E0\u4EBA\u673A\u51FA\u73B0"
+12368:
+  anarchy_impact: -20
+  description:
+    de: "Alle Drifter und Sleeper zerst\xF6ren, um die Entwicklung des zugeh\xF6rigen\
+      \ S\xF6ldnerverstecks zu verbessern und seine Anarchie zu verringern."
+    en: Destroy all Drifters and Sleepers to improve the associated Mercenary Den's
+      Development and lower its Anarchy.
+    es: "Destruye todos los drifters y sleepers para mejorar el desarrollo de la guarida\
+      \ de mercenarios asociada y reducir su anarqu\xEDa."
+    fr: "D\xE9truisez tous les Drifters et Sleepers pour am\xE9liorer le d\xE9veloppement\
+      \ du repaire de mercenaires associ\xE9 et r\xE9duire son anarchie."
+    ja: "\u5168\u3066\u306E\u30C9\u30EA\u30D5\u30BF\u30FC\u3068\u30B9\u30EA\u30FC\u30D1\
+      \u30FC\u3092\u6483\u589C\u3059\u308B\u3053\u3068\u3067\u3001\u95A2\u9023\u3059\
+      \u308B\u50AD\u5175\u306E\u96A0\u308C\u5BB6\u306E\u958B\u767A\u5EA6\u304C\u4E0A\
+      \u304C\u308A\u3001\u7121\u79E9\u5E8F\u5EA6\u304C\u4E0B\u304C\u308A\u307E\u3059\
+      \u3002"
+    ko: "\uBAA8\uB4E0 \uB4DC\uB9AC\uD504\uD130\uC640 \uC2AC\uB9AC\uD37C \uD568\uC120\
+      \uC744 \uD30C\uAD34\uD574 \uC6A9\uBCD1 \uC18C\uAD74\uC758 \uBC1C\uC804 \uC218\
+      \uCE58\uB97C \uB192\uC774\uACE0 \uD63C\uB3C8 \uC218\uCE58\uB97C \uAC10\uC18C\
+      \uC2DC\uD0A4\uC138\uC694."
+    ru: "\u0423\u043D\u0438\u0447\u0442\u043E\u0436\u044C\u0442\u0435 \u0432\u0441\
+      \u0435\u0445 \u0421\u043A\u0438\u0442\u0430\u043B\u044C\u0446\u0435\u0432 \u0438\
+      \ \u0421\u043F\u044F\u0449\u0438\u0445, \u0447\u0442\u043E\u0431\u044B \u043F\
+      \u043E\u0432\u044B\u0441\u0438\u0442\u044C \u0443\u0440\u043E\u0432\u0435\u043D\
+      \u044C \u0440\u0430\u0437\u0432\u0438\u0442\u0438\u044F \u0438 \u0443\u043C\u0435\
+      \u043D\u044C\u0448\u0438\u0442\u044C \u043F\u043E\u043A\u0430\u0437\u0430\u0442\
+      \u0435\u043B\u044C \u0430\u043D\u0430\u0440\u0445\u0438\u0438 \u0441\u043E\u043E\
+      \u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u044E\u0449\u0435\u0433\u043E\
+      \ \u043B\u043E\u0433\u043E\u0432\u0430 \u043D\u0430\u0451\u043C\u043D\u0438\u043A\
+      \u043E\u0432."
+    zh: "\u6D88\u706D\u6240\u6709\u6D41\u6D6A\u8005\u548C\u51AC\u7720\u8005\uFF0C\u589E\
+      \u52A0\u76F8\u5173\u96C7\u4F63\u5175\u5DE2\u7A74\u7684\u53D1\u5C55\u503C\u5E76\
+      \u51CF\u5C11\u5176\u6DF7\u4E71\u503C\u3002"
+  development_impact: 10
+  infomorph_bonus: 350
+  name:
+    de: Drifter-Appell
+    en: Drifter Muster
+    es: Asamblea drifter
+    fr: Rassemblement drifter
+    ja: "\u30C9\u30EA\u30D5\u30BF\u30FC\u306E\u96C6\u7D50"
+    ko: "\uB4DC\uB9AC\uD504\uD130 \uC9D1\uACB0\uC9C0"
+    ru: "\u0421\u0431\u043E\u0440 \u0421\u043A\u0438\u0442\u0430\u043B\u044C\u0446\
+      \u0435\u0432"
+    zh: "\u6D41\u6D6A\u8005\u96C6\u7ED3"
+12367:
+  anarchy_impact: -20
+  description:
+    de: "Alle Raubdrohnen zerst\xF6ren, um die Entwicklung des zugeh\xF6rigen S\xF6\
+      ldnerverstecks zu verbessern und seine Anarchie zu verringern."
+    en: Destroy all Rogue Drones to improve the associated Mercenary Den's Development
+      and lower its Anarchy.
+    es: "Destruye todos los drones rebeldes para mejorar el desarrollo de la guarida\
+      \ de mercenarios asociada y reducir su anarqu\xEDa."
+    fr: "D\xE9truisez tous les drones ren\xE9gats pour am\xE9liorer le d\xE9veloppement\
+      \ du repaire de mercenaires associ\xE9 et r\xE9duire son anarchie."
+    ja: "\u5168\u3066\u306E\u30ED\u30FC\u30B0\u30C9\u30ED\u30FC\u30F3\u3092\u6483\u589C\
+      \u3059\u308B\u3053\u3068\u3067\u3001\u95A2\u9023\u3059\u308B\u50AD\u5175\u306E\
+      \u96A0\u308C\u5BB6\u306E\u958B\u767A\u5EA6\u304C\u4E0A\u304C\u308A\u3001\u7121\
+      \u79E9\u5E8F\u5EA6\u304C\u4E0B\u304C\u308A\u307E\u3059\u3002"
+    ko: "\uBAA8\uB4E0 \uB85C\uADF8 \uB4DC\uB860\uC744 \uD30C\uAD34\uD574 \uC6A9\uBCD1\
+      \ \uC18C\uAD74\uC758 \uBC1C\uC804 \uC218\uCE58\uB97C \uB192\uC774\uACE0 \uD63C\
+      \uB3C8 \uC218\uCE58\uB97C \uAC10\uC18C\uC2DC\uD0A4\uC138\uC694."
+    ru: "\u0423\u043D\u0438\u0447\u0442\u043E\u0436\u044C\u0442\u0435 \u0432\u0441\
+      \u0435\u0445 \u0432\u043E\u0441\u0441\u0442\u0430\u0432\u0448\u0438\u0445 \u0434\
+      \u0440\u043E\u043D\u043E\u0432, \u0447\u0442\u043E\u0431\u044B \u043F\u043E\u0432\
+      \u044B\u0441\u0438\u0442\u044C \u0443\u0440\u043E\u0432\u0435\u043D\u044C \u0440\
+      \u0430\u0437\u0432\u0438\u0442\u0438\u044F \u0438 \u0443\u043C\u0435\u043D\u044C\
+      \u0448\u0438\u0442\u044C \u043F\u043E\u043A\u0430\u0437\u0430\u0442\u0435\u043B\
+      \u044C \u0430\u043D\u0430\u0440\u0445\u0438\u0438 \u0441\u043E\u043E\u0442\u0432\
+      \u0435\u0442\u0441\u0442\u0432\u0443\u044E\u0449\u0435\u0433\u043E \u043B\u043E\
+      \u0433\u043E\u0432\u0430 \u043D\u0430\u0451\u043C\u043D\u0438\u043A\u043E\u0432\
+      ."
+    zh: "\u51FB\u6BC1\u6240\u6709\u81EA\u7531\u65E0\u4EBA\u673A\uFF0C\u589E\u52A0\u76F8\
+      \u5173\u96C7\u4F63\u5175\u5DE2\u7A74\u7684\u53D1\u5C55\u503C\u5E76\u51CF\u5C11\
+      \u5176\u6DF7\u4E71\u503C\u3002"
+  development_impact: 10
+  infomorph_bonus: 350
+  name:
+    de: Raubdrohnen-Auftreten
+    en: Rogue Drone Emergence
+    es: "Aparici\xF3n de drones rebeldes"
+    fr: "\xC9mergence de drones ren\xE9gats"
+    ja: "\u30ED\u30FC\u30B0\u30C9\u30ED\u30FC\u30F3\u306E\u51FA\u73FE"
+    ko: "\uB85C\uADF8 \uB4DC\uB860 \uCD9C\uD604"
+    ru: "\u0418\u0441\u0442\u043E\u0447\u043D\u0438\u043A \u0432\u043E\u0441\u0441\
+      \u0442\u0430\u0432\u0448\u0438\u0445 \u0434\u0440\u043E\u043D\u043E\u0432"
+    zh: "\u81EA\u7531\u65E0\u4EBA\u673A\u51FA\u73B0"
+12368:
+  anarchy_impact: -20
+  description:
+    de: "Alle Drifter und Sleeper zerst\xF6ren, um die Entwicklung des zugeh\xF6rigen\
+      \ S\xF6ldnerverstecks zu verbessern und seine Anarchie zu verringern."
+    en: Destroy all Drifters and Sleepers to improve the associated Mercenary Den's
+      Development and lower its Anarchy.
+    es: "Destruye todos los drifters y sleepers para mejorar el desarrollo de la guarida\
+      \ de mercenarios asociada y reducir su anarqu\xEDa."
+    fr: "D\xE9truisez tous les Drifters et Sleepers pour am\xE9liorer le d\xE9veloppement\
+      \ du repaire de mercenaires associ\xE9 et r\xE9duire son anarchie."
+    ja: "\u5168\u3066\u306E\u30C9\u30EA\u30D5\u30BF\u30FC\u3068\u30B9\u30EA\u30FC\u30D1\
+      \u30FC\u3092\u6483\u589C\u3059\u308B\u3053\u3068\u3067\u3001\u95A2\u9023\u3059\
+      \u308B\u50AD\u5175\u306E\u96A0\u308C\u5BB6\u306E\u958B\u767A\u5EA6\u304C\u4E0A\
+      \u304C\u308A\u3001\u7121\u79E9\u5E8F\u5EA6\u304C\u4E0B\u304C\u308A\u307E\u3059\
+      \u3002"
+    ko: "\uBAA8\uB4E0 \uB4DC\uB9AC\uD504\uD130\uC640 \uC2AC\uB9AC\uD37C \uD568\uC120\
+      \uC744 \uD30C\uAD34\uD574 \uC6A9\uBCD1 \uC18C\uAD74\uC758 \uBC1C\uC804 \uC218\
+      \uCE58\uB97C \uB192\uC774\uACE0 \uD63C\uB3C8 \uC218\uCE58\uB97C \uAC10\uC18C\
+      \uC2DC\uD0A4\uC138\uC694."
+    ru: "\u0423\u043D\u0438\u0447\u0442\u043E\u0436\u044C\u0442\u0435 \u0432\u0441\
+      \u0435\u0445 \u0421\u043A\u0438\u0442\u0430\u043B\u044C\u0446\u0435\u0432 \u0438\
+      \ \u0421\u043F\u044F\u0449\u0438\u0445, \u0447\u0442\u043E\u0431\u044B \u043F\
+      \u043E\u0432\u044B\u0441\u0438\u0442\u044C \u0443\u0440\u043E\u0432\u0435\u043D\
+      \u044C \u0440\u0430\u0437\u0432\u0438\u0442\u0438\u044F \u0438 \u0443\u043C\u0435\
+      \u043D\u044C\u0448\u0438\u0442\u044C \u043F\u043E\u043A\u0430\u0437\u0430\u0442\
+      \u0435\u043B\u044C \u0430\u043D\u0430\u0440\u0445\u0438\u0438 \u0441\u043E\u043E\
+      \u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u044E\u0449\u0435\u0433\u043E\
+      \ \u043B\u043E\u0433\u043E\u0432\u0430 \u043D\u0430\u0451\u043C\u043D\u0438\u043A\
+      \u043E\u0432."
+    zh: "\u6D88\u706D\u6240\u6709\u6D41\u6D6A\u8005\u548C\u51AC\u7720\u8005\uFF0C\u589E\
+      \u52A0\u76F8\u5173\u96C7\u4F63\u5175\u5DE2\u7A74\u7684\u53D1\u5C55\u503C\u5E76\
+      \u51CF\u5C11\u5176\u6DF7\u4E71\u503C\u3002"
+  development_impact: 10
+  infomorph_bonus: 350
+  name:
+    de: Drifter-Appell
+    en: Drifter Muster
+    es: Asamblea drifter
+    fr: Rassemblement drifter
+    ja: "\u30C9\u30EA\u30D5\u30BF\u30FC\u306E\u96C6\u7D50"
+    ko: "\uB4DC\uB9AC\uD504\uD130 \uC9D1\uACB0\uC9C0"
+    ru: "\u0421\u0431\u043E\u0440 \u0421\u043A\u0438\u0442\u0430\u043B\u044C\u0446\
+      \u0435\u0432"
+    zh: "\u6D41\u6D6A\u8005\u96C6\u7ED3"
+12369:
+  anarchy_impact: -20
+  description:
+    de: "Alle Sansha zerst\xF6ren, um die Entwicklung des zugeh\xF6rigen S\xF6ldnerverstecks\
+      \ zu verbessern und seine Anarchie zu verringern."
+    en: Destroy all Sansha to improve the associated Mercenary Den's Development and
+      lower its Anarchy.
+    es: "Destruye todos los sanshas para mejorar el desarrollo de la guarida de mercenarios\
+      \ asociada y reducir su anarqu\xEDa."
+    fr: "D\xE9truisez tous les Sansha pour am\xE9liorer le d\xE9veloppement du repaire\
+      \ de mercenaires associ\xE9 et r\xE9duire son anarchie."
+    ja: "\u5168\u3066\u306E\u30B5\u30F3\u30B7\u30E3\u3092\u6483\u589C\u3059\u308B\u3053\
+      \u3068\u3067\u3001\u95A2\u9023\u3059\u308B\u50AD\u5175\u306E\u96A0\u308C\u5BB6\
+      \u306E\u958B\u767A\u5EA6\u304C\u4E0A\u304C\u308A\u3001\u7121\u79E9\u5E8F\u5EA6\
+      \u304C\u4E0B\u304C\u308A\u307E\u3059\u3002"
+    ko: "\uBAA8\uB4E0 \uC0B0\uC0E4 \uD568\uC120\uC744 \uD30C\uAD34\uD574 \uC6A9\uBCD1\
+      \ \uC18C\uAD74\uC758 \uBC1C\uC804 \uC218\uCE58\uB97C \uB192\uC774\uACE0 \uD63C\
+      \uB3C8 \uC218\uCE58\uB97C \uAC10\uC18C\uC2DC\uD0A4\uC138\uC694."
+    ru: "\u0423\u043D\u0438\u0447\u0442\u043E\u0436\u044C\u0442\u0435 \u0432\u0441\
+      \u0435 \u0441\u0443\u0434\u0430 \xAB\u041D\u0430\u0446\u0438\u0438 \u0421\u0430\
+      \u043D\u0448\u0438\xBB, \u0447\u0442\u043E\u0431\u044B \u043F\u043E\u0432\u044B\
+      \u0441\u0438\u0442\u044C \u0443\u0440\u043E\u0432\u0435\u043D\u044C \u0440\u0430\
+      \u0437\u0432\u0438\u0442\u0438\u044F \u0438 \u0443\u043C\u0435\u043D\u044C\u0448\
+      \u0438\u0442\u044C \u043F\u043E\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u044C\
+      \ \u0430\u043D\u0430\u0440\u0445\u0438\u0438 \u0441\u043E\u043E\u0442\u0432\u0435\
+      \u0442\u0441\u0442\u0432\u0443\u044E\u0449\u0435\u0433\u043E \u043B\u043E\u0433\
+      \u043E\u0432\u0430 \u043D\u0430\u0451\u043C\u043D\u0438\u043A\u043E\u0432."
+    zh: "\u6D88\u706D\u6240\u6709\u8428\u6C99\u516C\u6C11\uFF0C\u589E\u52A0\u76F8\u5173\
+      \u96C7\u4F63\u5175\u5DE2\u7A74\u7684\u53D1\u5C55\u503C\u5E76\u51CF\u5C11\u5176\
+      \u6DF7\u4E71\u503C\u3002"
+  development_impact: 10
+  infomorph_bonus: 350
+  name:
+    de: "Sansha-Pl\xFCndergruppe"
+    en: Sansha Raiding Party
+    es: Grupo de asalto sansha
+    fr: Groupe de raid sansha
+    ja: "\u30B5\u30F3\u30B7\u30E3\u306E\u5947\u8972\u90E8\u968A"
+    ko: "\uC0B0\uC0E4 \uC57D\uD0C8 \uD568\uB300"
+    ru: "\u0411\u0430\u043D\u0434\u0430 \u043D\u0430\u043B\u0451\u0442\u0447\u0438\
+      \u043A\u043E\u0432 \xAB\u0421\u0430\u043D\u0448\u0438\xBB"
+    zh: "\u8428\u6C99\u7A81\u88AD\u961F"
