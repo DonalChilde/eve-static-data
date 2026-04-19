@@ -1,0 +1,55 @@
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "pyyaml>=6.0.3",
+#     "typer>=0.24.1",
+# ]
+# ///
+
+from pathlib import Path
+from time import perf_counter
+from typing import Annotated
+
+import typer
+from yaml import safe_dump, safe_load
+
+app = typer.Typer(no_args_is_help=True)
+
+
+@app.command()
+def main(
+    sde_directory: Annotated[
+        Path, typer.Argument(..., help="Path to the SDE directory")
+    ],
+    output_directory: Annotated[
+        Path, typer.Argument(..., help="Path to the output directory")
+    ],
+) -> None:
+    """Generate test data for the database from the SDE YAML files.
+
+    For each YAML file in the input directory, copy the first three records to a new file
+    in the output directory with the same name.
+    """
+    output_directory.mkdir(parents=True, exist_ok=True)
+    for yaml_file in sde_directory.glob("*.yaml"):
+        output_file = output_directory / yaml_file.name
+        print(f"Processing {yaml_file}...")
+        start = perf_counter()
+        with yaml_file.open("r") as infile, output_file.open("w") as outfile:
+            data = safe_load(infile)
+            if not isinstance(data, dict):
+                print(
+                    f"Skipping {yaml_file} because it does not contain a dictionary at the top level."
+                )
+                continue
+            result_dict = {}
+            for record_key in list(data.keys())[:3]:
+                result_dict[record_key] = data[record_key]
+                safe_dump(result_dict, outfile)
+        print(
+            f"Finished processing {yaml_file} in {perf_counter() - start:.2f} seconds."
+        )
+
+
+if __name__ == "__main__":
+    app()
