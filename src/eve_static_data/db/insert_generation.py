@@ -9,6 +9,9 @@ Datasets with a main table and sub_tables can be inserted with a loop that execu
 the appropriate SQL statements for each record and its related sub_tables. The main
 table should be inserted first, followed by any related sub_tables.
 """
+
+# NOTE: Deprecated. Moving to inserts from a different data model.
+
 # The INSERT statements in this module should match the table definitions in the table_sql files.
 # The functions should be named after the table they insert into, and should take a connection
 # and an iterable of pydantic records as arguments. The functions should use the connection
