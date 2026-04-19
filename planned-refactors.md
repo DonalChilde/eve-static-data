@@ -8,6 +8,8 @@
 - derived datasets, will become custom access functions, like meta_level. Maybe market path?. can be generated as table rows after database import. Some others like `def blueprints_manufacturing()` Maybe leave most of that to the user....
 - pydantic code becomes focused on import from json, and validation. Can always use type adaptor with the dataclasses if we need serialization.
 
+- Focus on yaml datasets. Because of long load times, offer loading as yaml, saving as json. Pydantic should coerce the keys back to ints when reloading, and the load time should improve dramatically. write script to test.
+
 ## Next!
 
 - Write test functions to make a database, with some tbales, and load data. see how it flows.
