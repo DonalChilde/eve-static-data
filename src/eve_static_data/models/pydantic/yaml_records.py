@@ -1,7 +1,22 @@
 """Pydantic models for YAML SDE datasets.
 
-These are useful, despite the greatly increased loading time, beacsue the datamodel declares
+These are useful, despite the greatly increased loading time, because the datamodel declares
 more structure guarantees.
+
+YAML allows integer keys in mappings, but JSON does not. This is the reason that the JSONL
+and YAML SDE files have different models. The YAML model is easier to reason with, but the JSONL
+model is more performant to load. If the YAML datasets are exported to JSON, the load time
+decreases dramatically (60x), and the same models can be used for validation and parsing.
+If the Pydantic RootModels are used to load the JSON files, then pydantic handles the
+type conversion of the dict keys from string to int.
+
+The addition of a `key_id` field to the dataclass models will allow the same models to be used
+when returning records from the database. This field would be None when loading from the
+YAML/JSON files, but would be populated with the appropriate key when loading from from the
+database. This would allow the same models to be used for all three use cases, and would
+eliminate the need for separate models for the YAML/JSON datasets and database records.
+
+Some specific datasets may required a more complex database return model. TBD.
 """
 
 from dataclasses import dataclass
@@ -10,7 +25,7 @@ from typing import Any
 from pydantic import BaseModel, ConfigDict, Field, RootModel
 
 # ------------------------------------------------------------------------------
-# Common Pydantic model definitions.
+# Common model definitions.
 # ------------------------------------------------------------------------------
 
 
@@ -82,6 +97,7 @@ class Position2D:
 class AgentsInSpace:
     """Model for the agentsInSpace.yaml dataset."""
 
+    agents_in_space_id: int | None = None
     dungeonID: int
     solarSystemID: int
     spawnPointID: int
@@ -92,6 +108,7 @@ class AgentsInSpace:
 class AgentTypes:
     """Model for the agentTypes.yaml dataset."""
 
+    agent_types_id: int | None = None
     name: str
 
 
@@ -99,6 +116,7 @@ class AgentTypes:
 class Ancestries:
     """Model for the ancestries.yaml dataset."""
 
+    ancestries_id: int | None = None
     bloodlineID: int
     charisma: int
     description: LocalizedString
