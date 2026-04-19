@@ -16,7 +16,7 @@ def agent_types(
         cursor = conn.cursor()
         for agent_types_id, record in records.root.items():
             cursor.execute(
-                "INSERT INTO agent_types (agent_types_id, name) VALUES (?, ?);",
+                "INSERT INTO agent_types (agent_types_id, agent_name) VALUES (?, ?);",
                 (agent_types_id, record.name),
             )
 

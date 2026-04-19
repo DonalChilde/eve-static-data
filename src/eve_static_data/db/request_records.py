@@ -14,7 +14,7 @@ def agent_types(
 ) -> Iterable[pydantic_records.AgentTypes]:
     """Retrieve records from the agent_types table and return them as pydantic models."""
     cursor = connection.cursor()
-    cursor.execute("SELECT agent_types_id, name FROM agent_types;")
+    cursor.execute("SELECT agent_types_id, agent_name FROM agent_types;")
     for row in cursor:
         yield pydantic_records.AgentTypes(agent_types_id=row[0], name=row[1])
 
