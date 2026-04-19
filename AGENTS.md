@@ -39,6 +39,7 @@ project-name: "esi-auth"
 - Account for common edge cases like empty inputs, invalid data types, and large datasets.
 - Include comments for edge cases and the expected behavior in those cases.
 - Write unit tests for functions and document them with docstrings explaining the test cases.
+- Test data representing the SDE is avaliable at [test data](tests/resources/sde_data/__init__.py)
 
 ## Documentation
 
