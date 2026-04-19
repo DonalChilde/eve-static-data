@@ -1,13 +1,13 @@
-from collections.abc import Iterator
-from dataclasses import dataclass, field
-from pathlib import Path
+"""Pydantic models for YAML SDE datasets.
+
+These are useful, despite the greatly increased loading time, beacsue the datamodel declares
+more structure guarantees.
+"""
+
+from dataclasses import dataclass
 from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field, RootModel
-
-from eve_static_data.helpers.jsonl_reader import read_jsonl_file
-from eve_static_data.models.dataset_filenames import SdeDatasetFiles
-from eve_static_data.transformers import ModelLoader
 
 # ------------------------------------------------------------------------------
 # Common Pydantic model definitions.
