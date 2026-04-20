@@ -14,6 +14,7 @@ from typing import Any
 import pytest
 import yaml
 from pydantic import RootModel
+from rich.pretty import pprint as rich_print
 
 from eve_static_data.db import insert_records, request_records
 from eve_static_data.models.pydantic import yaml_records
@@ -27,8 +28,8 @@ class RoundTripCase:
     fixture_file_name: str
     sql_file_name: str
     root_model: type[RootModel[Any]]
-    insert_func: Callable[[sqlite3.Connection, Any], None]
-    retrieve_func: Callable[[sqlite3.Connection], Iterable[Any]]
+    insert_func: Callable[[sqlite3.Cursor, Any], None]
+    retrieve_func: Callable[[sqlite3.Cursor], Iterable[Any]]
     key_field: str
 
 
@@ -72,14 +73,14 @@ def _expected_rows_by_key(records: Any, key_field: str) -> dict[int, dict[str, A
 
 
 def _actual_rows_by_key(
-    connection: sqlite3.Connection,
-    retrieve_func: Callable[[sqlite3.Connection], Iterable[Any]],
+    cursor: sqlite3.Cursor,
+    retrieve_func: Callable[[sqlite3.Cursor], Iterable[Any]],
     key_field: str,
 ) -> dict[int, dict[str, Any]]:
     """Build retrieved rows keyed by primary key field."""
     actual: dict[int, dict[str, Any]] = {}
 
-    for record in retrieve_func(connection):
+    for record in retrieve_func(cursor):
         row = asdict(record)
         actual[row[key_field]] = row
 
@@ -123,6 +124,33 @@ ROUND_TRIP_CASES: list[RoundTripCase] = [
         retrieve_func=request_records.bloodlines,
         key_field="bloodlines_id",
     ),
+    RoundTripCase(
+        case_id="blueprints",
+        fixture_file_name="blueprints.yaml",
+        sql_file_name="blueprints.sql",
+        root_model=yaml_records.BlueprintsRoot,
+        insert_func=insert_records.blueprints,
+        retrieve_func=request_records.blueprints,
+        key_field="blueprints_id",
+    ),
+    RoundTripCase(
+        case_id="categories",
+        fixture_file_name="categories.yaml",
+        sql_file_name="categories.sql",
+        root_model=yaml_records.CategoriesRoot,
+        insert_func=insert_records.categories,
+        retrieve_func=request_records.categories,
+        key_field="categories_id",
+    ),
+    RoundTripCase(
+        case_id="certificates",
+        fixture_file_name="certificates.yaml",
+        sql_file_name="certificates.sql",
+        root_model=yaml_records.CertificatesRoot,
+        insert_func=insert_records.certificates,
+        retrieve_func=request_records.certificates,
+        key_field="certificates_id",
+    ),
 ]
 
 
@@ -134,13 +162,27 @@ def test_table_round_trip_for_yaml_dataset(case: RoundTripCase) -> None:
 
     connection = sqlite3.connect(":memory:")
     connection.executescript(_load_sql_script(case.sql_file_name))
+    with connection:
+        cursor = connection.cursor()
 
-    case.insert_func(connection, validated_records)
+        case.insert_func(cursor, validated_records)
 
-    expected = _expected_rows_by_key(validated_records, case.key_field)
-    actual = _actual_rows_by_key(connection, case.retrieve_func, case.key_field)
+        expected = _expected_rows_by_key(validated_records, case.key_field)
+        actual = _actual_rows_by_key(cursor, case.retrieve_func, case.key_field)
 
-    assert actual == expected
+    expected_keys = set(expected.keys())
+    actual_keys = set(actual.keys())
+    assert expected_keys == actual_keys, (
+        f"Expected keys {expected_keys} do not match actual keys {actual_keys}"
+    )
+    for key in expected_keys:
+        expected_row = expected[key]
+        actual_row = actual[key]
+        assert expected_row == actual_row, (
+            f"Row for key {key} does not match expected.\nExpected: {expected_row}\nActual: {actual_row}"
+        )
+
+    # assert actual == expected
 
     # TODO try a version where the root model is compared against the retrieved records.
     # This will require transforming the retrieved records back into the root model structure,

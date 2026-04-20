@@ -13,9 +13,9 @@ CREATE TABLE IF NOT EXISTS ancestries (
     );
 CREATE TABLE IF NOT EXISTS ancestries_localized (
     ancestries_localized_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    parent_id               INTEGER NOT NULL REFERENCES ancestries(ancestries_id) ON DELETE CASCADE,
+    ancestries_id           INTEGER NOT NULL REFERENCES ancestries(ancestries_id) ON DELETE CASCADE,
     lang                    TEXT,
     localized_name          TEXT,
     localized_description   TEXT,
-    UNIQUE(parent_id, lang)
+    UNIQUE(ancestries_id, lang)
     );

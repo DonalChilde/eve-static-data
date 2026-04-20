@@ -22,7 +22,7 @@ Some specific datasets may required a more complex database return model. TBD.
 from dataclasses import dataclass
 from typing import Any
 
-from pydantic import BaseModel, ConfigDict, Field, RootModel
+from pydantic import Field, RootModel
 
 # ------------------------------------------------------------------------------
 # Common model definitions.
@@ -181,6 +181,7 @@ class Blueprints_Activities:
 class Blueprints:
     """Model for the blueprints.jsonl SDE file."""
 
+    blueprints_id: int | None = None
     activities: Blueprints_Activities
     blueprintTypeID: int
     maxProductionLimit: int
@@ -190,14 +191,15 @@ class Blueprints:
 class Categories:
     """Model for the categories.jsonl SDE file."""
 
+    categories_id: int | None = None
     name: LocalizedString
     published: bool
     iconID: int | None = None
 
 
 @dataclass(slots=True, kw_only=True)
-class Certificates_SkillType(BaseModel):
-    """Nested model for the certificates.jsonl SDE file."""
+class Certificates_SkillType:
+    """Nested model for the certificates.yaml SDE file."""
 
     basic: int
     standard: int
@@ -208,8 +210,9 @@ class Certificates_SkillType(BaseModel):
 
 @dataclass(slots=True, kw_only=True)
 class Certificates:
-    """Model for the certificates.jsonl SDE file."""
+    """Model for the certificates.yaml SDE file."""
 
+    certificates_id: int | None = None
     description: LocalizedString
     groupID: int
     name: LocalizedString
@@ -958,8 +961,6 @@ class PlanetSchematics_Types:
     isInput: bool
     quantity: int
 
-    model_config = ConfigDict(serialize_by_alias=True)
-
 
 @dataclass(slots=True, kw_only=True)
 class PlanetSchematics:
@@ -1106,14 +1107,12 @@ class TypeBonus_Types_Bonus:
     unitID: int | None = None
 
 
-@dataclass(slots=True, kw_only=True)
-class TypeBonus_Types:
-    """Nested model for the typeBonus.jsonl SDE file."""
+# @dataclass(slots=True, kw_only=True)
+# class TypeBonus_Types:
+#     """Nested model for the typeBonus.jsonl SDE file."""
 
-    key: int = Field(..., alias="_key")
-    value: list[TypeBonus_Types_Bonus] = Field(..., alias="_value")
-
-    model_config = ConfigDict(serialize_by_alias=True)
+#     # key: int = Field(..., alias="_key")
+#     value: list[TypeBonus_Types_Bonus] = Field(..., alias="_value")
 
 
 @dataclass(slots=True, kw_only=True)
