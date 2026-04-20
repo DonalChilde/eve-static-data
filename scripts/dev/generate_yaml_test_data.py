@@ -8,7 +8,7 @@
 
 from pathlib import Path
 from time import perf_counter
-from typing import Annotated
+from typing import Annotated, Any
 
 import typer
 from yaml import safe_dump, safe_load
@@ -36,16 +36,17 @@ def main(
         print(f"Processing {yaml_file}...")
         start = perf_counter()
         with yaml_file.open("r") as infile, output_file.open("w") as outfile:
-            data = safe_load(infile)
+            data: dict[int, Any] = safe_load(infile)
             if not isinstance(data, dict):
                 print(
                     f"Skipping {yaml_file} because it does not contain a dictionary at the top level."
                 )
                 continue
             result_dict = {}
-            for record_key in list(data.keys())[:3]:
+            first_three_keys: list[int] = list(data.keys())[:3]
+            for record_key in first_three_keys:
                 result_dict[record_key] = data[record_key]
-                safe_dump(result_dict, outfile)
+            safe_dump(result_dict, outfile)
         print(
             f"Finished processing {yaml_file} in {perf_counter() - start:.2f} seconds."
         )

@@ -16,63 +16,6 @@
   raceID: 1
   startDate: '2003-03-12 20:04:00'
   uniqueName: false
-3000001:
-  bloodlineID: 1
-  ceo: true
-  corporationID: 1000001
-  gender: false
-  locationID: 60000001
-  name:
-    de: Dame Hel
-    en: Dame Hel
-    es: Dame Hel
-    fr: Dame Hel
-    ja: "\u30C0\u30FC\u30E0\u30FB\u30D8\u30EB"
-    ko: "\uB370\uC784 \uD5EC"
-    ru: Dame Hel
-    zh: "\u8FBE\u7C73\xB7\u5E0C\u5C14"
-  raceID: 1
-  startDate: '2003-03-12 20:04:00'
-  uniqueName: false
-3003869:
-  bloodlineID: 5
-  ceo: true
-  corporationID: 1000073
-  gender: false
-  locationID: 60007183
-  name:
-    de: Pamoo Meninri
-    en: Pamoo Meninri
-    es: Pamoo Meninri
-    fr: Pamoo Meninri
-    ja: "\u30D1\u30E0\u30FC\u30FB\u30E1\u30CB\u30F3\u30EA"
-    ko: "\uD30C\uBB34 \uBA54\uB2CC\uB9AC"
-    ru: Pamoo Meninri
-    zh: "\u5E15\u83AB\xB7\u6885\u5C3C\u5229"
-  raceID: 4
-  skills:
-  - typeID: 3363
-  - typeID: 3368
-  startDate: '2003-03-27 13:27:00'
-  uniqueName: true
-3000001:
-  bloodlineID: 1
-  ceo: true
-  corporationID: 1000001
-  gender: false
-  locationID: 60000001
-  name:
-    de: Dame Hel
-    en: Dame Hel
-    es: Dame Hel
-    fr: Dame Hel
-    ja: "\u30C0\u30FC\u30E0\u30FB\u30D8\u30EB"
-    ko: "\uB370\uC784 \uD5EC"
-    ru: Dame Hel
-    zh: "\u8FBE\u7C73\xB7\u5E0C\u5C14"
-  raceID: 1
-  startDate: '2003-03-12 20:04:00'
-  uniqueName: false
 3003869:
   bloodlineID: 5
   ceo: true

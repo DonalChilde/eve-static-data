@@ -6,30 +6,6 @@
   mutually_exclusive_group: Infrastructure_5
   power_allocation: 250
   workforce_allocation: 1500
-81615:
-  fuel:
-    hourly_upkeep: 205
-    startup_cost: 62000
-    type_id: 81143
-  mutually_exclusive_group: Infrastructure_5
-  power_allocation: 250
-  workforce_allocation: 1500
-81619:
-  fuel:
-    hourly_upkeep: 205
-    startup_cost: 82600
-    type_id: 81143
-  mutually_exclusive_group: Infrastructure_4
-  power_allocation: 250
-  workforce_allocation: 4500
-81615:
-  fuel:
-    hourly_upkeep: 205
-    startup_cost: 62000
-    type_id: 81143
-  mutually_exclusive_group: Infrastructure_5
-  power_allocation: 250
-  workforce_allocation: 1500
 81619:
   fuel:
     hourly_upkeep: 205

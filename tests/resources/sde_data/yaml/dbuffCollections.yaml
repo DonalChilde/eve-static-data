@@ -19,55 +19,6 @@
     skillID: 3305
   operationName: PostMul
   showOutputValueInUI: ShowNormal
-1:
-  aggregateMode: Maximum
-  developerDescription: '[PROTOTYPE]Test Multi Buff'
-  itemModifiers:
-  - dogmaAttributeID: 37
-  - dogmaAttributeID: 76
-  locationGroupModifiers:
-  - dogmaAttributeID: 20
-    groupID: 46
-  - dogmaAttributeID: 105
-    groupID: 52
-  locationModifiers:
-  - dogmaAttributeID: 68
-  - dogmaAttributeID: 84
-  locationRequiredSkillModifiers:
-  - dogmaAttributeID: 6
-    skillID: 3427
-  - dogmaAttributeID: 54
-    skillID: 3305
-  operationName: PostMul
-  showOutputValueInUI: ShowNormal
-2:
-  aggregateMode: Maximum
-  developerDescription: '[PROTOTYPE]Test Boost Speed'
-  itemModifiers:
-  - dogmaAttributeID: 37
-  operationName: PostPercent
-  showOutputValueInUI: ShowNormal
-1:
-  aggregateMode: Maximum
-  developerDescription: '[PROTOTYPE]Test Multi Buff'
-  itemModifiers:
-  - dogmaAttributeID: 37
-  - dogmaAttributeID: 76
-  locationGroupModifiers:
-  - dogmaAttributeID: 20
-    groupID: 46
-  - dogmaAttributeID: 105
-    groupID: 52
-  locationModifiers:
-  - dogmaAttributeID: 68
-  - dogmaAttributeID: 84
-  locationRequiredSkillModifiers:
-  - dogmaAttributeID: 6
-    skillID: 3427
-  - dogmaAttributeID: 54
-    skillID: 3305
-  operationName: PostMul
-  showOutputValueInUI: ShowNormal
 2:
   aggregateMode: Maximum
   developerDescription: '[PROTOTYPE]Test Boost Speed'

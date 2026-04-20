@@ -8,68 +8,6 @@
   name: isOnline
   published: false
   stackable: true
-2:
-  attributeCategoryID: 9
-  dataType: 0
-  defaultValue: 0.0
-  description: Boolean to store status of online effect
-  displayWhenZero: false
-  highIsGood: true
-  name: isOnline
-  published: false
-  stackable: true
-3:
-  attributeCategoryID: 7
-  dataType: 1
-  defaultValue: 0.0
-  description: current structure damage dealt to module
-  displayName:
-    de: Gegenstandsschaden
-    en: Item Damage
-    es: "Da\xF1o de objeto"
-    fr: "Objet endommag\xE9"
-    ja: "\u30A2\u30A4\u30C6\u30E0\u30C0\u30E1\u30FC\u30B8"
-    ko: "\uC544\uC774\uD15C \uC190\uC0C1\uB3C4"
-    ru: "\u041F\u043E\u0432\u0440\u0435\u0436\u0434\u0435\u043D\u0438\u0435 \u043F\
-      \u0440\u0435\u0434\u043C\u0435\u0442\u0430"
-    zh: "\u7269\u54C1\u635F\u574F"
-  displayWhenZero: false
-  highIsGood: false
-  iconID: 1386
-  name: damage
-  published: true
-  stackable: true
-  tooltipDescription:
-    de: Modulschaden
-    en: Module Damage
-    es: "Da\xF1o del m\xF3dulo"
-    fr: "D\xE9t\xE9rioration du module"
-    ja: "\u30E2\u30B8\u30E5\u30FC\u30EB\u3078\u306E\u30C0\u30E1\u30FC\u30B8"
-    ko: "\uBAA8\uB4C8 \uD53C\uD574\uB7C9"
-    ru: "\u041F\u043E\u0432\u0440\u0435\u0436\u0434\u0435\u043D\u0438\u0435 \u043C\
-      \u043E\u0434\u0443\u043B\u0435\u0439"
-    zh: "\u88C5\u5907\u635F\u8017"
-  tooltipTitle:
-    de: Modulschaden
-    en: Module Damage
-    es: "Da\xF1o del m\xF3dulo"
-    fr: "D\xE9t\xE9rioration du module"
-    ja: "\u30E2\u30B8\u30E5\u30FC\u30EB\u3078\u306E\u30C0\u30E1\u30FC\u30B8"
-    ko: "\uBAA8\uB4C8 \uD53C\uD574\uB7C9"
-    ru: "\u041F\u043E\u0432\u0440\u0435\u0436\u0434\u0435\u043D\u0438\u0435 \u043C\
-      \u043E\u0434\u0443\u043B\u0435\u0439"
-    zh: "\u88C5\u5907\u635F\u8017"
-  unitID: 113
-2:
-  attributeCategoryID: 9
-  dataType: 0
-  defaultValue: 0.0
-  description: Boolean to store status of online effect
-  displayWhenZero: false
-  highIsGood: true
-  name: isOnline
-  published: false
-  stackable: true
 3:
   attributeCategoryID: 7
   dataType: 1
