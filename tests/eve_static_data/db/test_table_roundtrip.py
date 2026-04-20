@@ -105,6 +105,24 @@ ROUND_TRIP_CASES: list[RoundTripCase] = [
         retrieve_func=request_records.agents_in_space,
         key_field="agents_in_space_id",
     ),
+    RoundTripCase(
+        case_id="ancestries",
+        fixture_file_name="ancestries.yaml",
+        sql_file_name="ancestries.sql",
+        root_model=yaml_records.AncestriesRoot,
+        insert_func=insert_records.ancestries,
+        retrieve_func=request_records.ancestries,
+        key_field="ancestries_id",
+    ),
+    RoundTripCase(
+        case_id="bloodlines",
+        fixture_file_name="bloodlines.yaml",
+        sql_file_name="bloodlines.sql",
+        root_model=yaml_records.BloodlinesRoot,
+        insert_func=insert_records.bloodlines,
+        retrieve_func=request_records.bloodlines,
+        key_field="bloodlines_id",
+    ),
 ]
 
 
@@ -124,7 +142,7 @@ def test_table_round_trip_for_yaml_dataset(case: RoundTripCase) -> None:
 
     assert actual == expected
 
-    # TODO try a version where the root model is compared against the retireved records.
+    # TODO try a version where the root model is compared against the retrieved records.
     # This will require transforming the retrieved records back into the root model structure,
     # making a dict using the key field, and setting the keyfield to None on the retrieved records.
     # This should make equivalent structures and data.

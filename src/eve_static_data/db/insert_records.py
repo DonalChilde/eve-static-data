@@ -71,3 +71,36 @@ def ancestries(
                         getattr(record.description, lang),
                     ),
                 )
+
+
+def bloodlines(
+    connection: sqlite3.Connection, records: pydantic_records.BloodlinesRoot
+) -> None:
+    """Insert records into the bloodlines table."""
+    with connection as conn:
+        cursor = conn.cursor()
+        for bloodlines_id, record in records.root.items():
+            cursor.execute(
+                "INSERT INTO bloodlines (bloodlines_id, charisma, corporationID, iconID, intelligence, memory, perception, raceID, willpower) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);",
+                (
+                    bloodlines_id,
+                    record.charisma,
+                    record.corporationID,
+                    record.iconID,
+                    record.intelligence,
+                    record.memory,
+                    record.perception,
+                    record.raceID,
+                    record.willpower,
+                ),
+            )
+            for lang in LANGS:
+                cursor.execute(
+                    "INSERT INTO bloodlines_localized (parent_id, lang, localized_name, localized_description) VALUES (?, ?, ?, ?);",
+                    (
+                        bloodlines_id,
+                        lang,
+                        getattr(record.name, lang),
+                        getattr(record.description, lang),
+                    ),
+                )

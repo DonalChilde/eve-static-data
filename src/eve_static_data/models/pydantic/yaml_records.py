@@ -133,6 +133,7 @@ class Ancestries:
 class Bloodlines:
     """Model for the bloodlines.yaml dataset."""
 
+    bloodlines_id: int | None = None
     charisma: int
     corporationID: int
     description: LocalizedString
