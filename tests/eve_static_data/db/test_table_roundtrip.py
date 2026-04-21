@@ -16,6 +16,7 @@ import yaml
 from pydantic import RootModel
 from rich.pretty import pprint as rich_print
 
+import eve_static_data.models.pydantic.yaml_datasets
 from eve_static_data.db import insert_records, request_records
 from eve_static_data.models.pydantic import yaml_records
 
@@ -101,7 +102,7 @@ ROUND_TRIP_CASES: list[RoundTripCase] = [
         case_id="agents_in_space",
         fixture_file_name="agentsInSpace.yaml",
         sql_file_name="agents-in-space.sql",
-        root_model=yaml_records.AgentsInSpaceRoot,
+        root_model=eve_static_data.models.pydantic.yaml_datasets.AgentsInSpaceRoot,
         insert_func=insert_records.agents_in_space,
         retrieve_func=request_records.agents_in_space,
         key_field="agents_in_space_id",

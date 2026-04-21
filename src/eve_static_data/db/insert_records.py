@@ -2,6 +2,7 @@
 
 import sqlite3
 
+import eve_static_data.models.pydantic.yaml_datasets
 from eve_static_data.models.pydantic import yaml_records as pydantic_records
 from eve_static_data.models.type_defs import Lang
 
@@ -30,7 +31,8 @@ def agent_types(
 
 
 def agents_in_space(
-    cursor: sqlite3.Cursor, records: pydantic_records.AgentsInSpaceRoot
+    cursor: sqlite3.Cursor,
+    records: eve_static_data.models.pydantic.yaml_datasets.AgentsInSpaceRoot,
 ) -> None:
     """Insert records into the agents_in_space table."""
     for agents_in_space_id, record in records.root.items():

@@ -1,4 +1,4 @@
-"""Pydantic models for YAML SDE datasets.
+"""Dataclass models for the records in YAML SDE datasets.
 
 These are useful, despite the greatly increased loading time, because the datamodel declares
 more structure guarantees.
@@ -16,13 +16,12 @@ YAML/JSON files, but would be populated with the appropriate key when loading fr
 database. This would allow the same models to be used for all three use cases, and would
 eliminate the need for separate models for the YAML/JSON datasets and database records.
 
-Some specific datasets may required a more complex database return model. TBD.
+Some specific datasets may required a more complex database return model. Right now they are
+defined as types instead of dataclasses.
 """
 
 from dataclasses import dataclass
 from typing import Any
-
-from pydantic import Field, RootModel
 
 # ------------------------------------------------------------------------------
 # Common model definitions.
@@ -33,7 +32,7 @@ from pydantic import Field, RootModel
 class LocalizedString:
     """Type definition for LocalizedString.
 
-    Source info: SDE file: translationLanguages.jsonl
+    Source info: SDE file: translationLanguages.yaml
     """
 
     en: str = "NOT_TRANSLATED"
@@ -89,7 +88,7 @@ class Position2D:
 
 
 # ------------------------------------------------------------------------------
-# File level Pydantic model definitions.
+# File level record model definitions.
 # ------------------------------------------------------------------------------
 
 
@@ -148,7 +147,7 @@ class Bloodlines:
 
 @dataclass(slots=True, kw_only=True)
 class Blueprints_Products:
-    """Nested model for the blueprints.jsonl SDE file."""
+    """Nested model for the blueprints.yaml SDE file."""
 
     typeID: int
     quantity: int
@@ -157,7 +156,7 @@ class Blueprints_Products:
 
 @dataclass(slots=True, kw_only=True)
 class Blueprints_Activity:
-    """Nested model for the blueprints.jsonl SDE file."""
+    """Nested model for the blueprints.yaml SDE file."""
 
     materials: list[Materials] | None = None
     skills: list[Skills] | None = None
@@ -167,7 +166,7 @@ class Blueprints_Activity:
 
 @dataclass(slots=True, kw_only=True)
 class Blueprints_Activities:
-    """Nested model for the blueprints.jsonl SDE file."""
+    """Nested model for the blueprints.yaml SDE file."""
 
     copying: Blueprints_Activity | None = None
     invention: Blueprints_Activity | None = None
@@ -179,7 +178,7 @@ class Blueprints_Activities:
 
 @dataclass(slots=True, kw_only=True)
 class Blueprints:
-    """Model for the blueprints.jsonl SDE file."""
+    """Model for the blueprints.yaml SDE file."""
 
     blueprints_id: int | None = None
     activities: Blueprints_Activities
@@ -189,7 +188,7 @@ class Blueprints:
 
 @dataclass(slots=True, kw_only=True)
 class Categories:
-    """Model for the categories.jsonl SDE file."""
+    """Model for the categories.yaml SDE file."""
 
     categories_id: int | None = None
     name: LocalizedString
@@ -222,7 +221,7 @@ class Certificates:
 
 @dataclass(slots=True, kw_only=True)
 class CharacterAttributes:
-    """Model for the characterAttributes.jsonl SDE file."""
+    """Model for the characterAttributes.yaml SDE file."""
 
     description: str
     iconID: int
@@ -233,7 +232,7 @@ class CharacterAttributes:
 
 @dataclass(slots=True, kw_only=True)
 class CloneGrades:
-    """Model for the cloneGrades.jsonl SDE file."""
+    """Model for the cloneGrades.yaml SDE file."""
 
     name: str
     skills: list[Skills]
@@ -241,14 +240,14 @@ class CloneGrades:
 
 @dataclass(slots=True, kw_only=True)
 class CompressibleTypes:
-    """Model for the compressibleTypes.jsonl SDE file."""
+    """Model for the compressibleTypes.yaml SDE file."""
 
     compressedTypeID: int
 
 
 @dataclass(slots=True, kw_only=True)
 class ContrabandTypes_Faction:
-    """Nested model for the contrabandTypes.jsonl SDE file."""
+    """Nested model for the contrabandTypes.yaml SDE file."""
 
     attackMinSec: float
     confiscateMinSec: float
@@ -258,14 +257,14 @@ class ContrabandTypes_Faction:
 
 @dataclass(slots=True, kw_only=True)
 class ContrabandTypes:
-    """Model for the contrabandTypes.jsonl SDE file."""
+    """Model for the contrabandTypes.yaml SDE file."""
 
     factions: dict[int, ContrabandTypes_Faction]
 
 
 @dataclass(slots=True, kw_only=True)
 class ControlTowerResources_Resource:
-    """Nested model for the controlTowerResources.jsonl SDE file."""
+    """Nested model for the controlTowerResources.yaml SDE file."""
 
     factionID: int | None = None
     minSecurityLevel: float | None = None
@@ -276,21 +275,21 @@ class ControlTowerResources_Resource:
 
 @dataclass(slots=True, kw_only=True)
 class ControlTowerResources:
-    """Model for the controlTowerResources.jsonl SDE file."""
+    """Model for the controlTowerResources.yaml SDE file."""
 
     resources: list[ControlTowerResources_Resource]
 
 
 @dataclass(slots=True, kw_only=True)
 class CorporationActivities:
-    """Model for the corporationActivities.jsonl SDE file."""
+    """Model for the corporationActivities.yaml SDE file."""
 
     name: LocalizedString
 
 
 @dataclass(slots=True, kw_only=True)
 class DebuffCollections_LocationGroupModifier:
-    """Nested model for the dbuffCollections.jsonl SDE file."""
+    """Nested model for the dbuffCollections.yaml SDE file."""
 
     dogmaAttributeID: int
     groupID: int
@@ -298,14 +297,14 @@ class DebuffCollections_LocationGroupModifier:
 
 @dataclass(slots=True, kw_only=True)
 class DebuffCollections_LocationModifier:
-    """Nested model for the dbuffCollections.jsonl SDE file."""
+    """Nested model for the dbuffCollections.yaml SDE file."""
 
     dogmaAttributeID: int
 
 
 @dataclass(slots=True, kw_only=True)
 class DebuffCollections_LocationRequiredSkillModifier:
-    """Nested model for the dbuffCollections.jsonl SDE file."""
+    """Nested model for the dbuffCollections.yaml SDE file."""
 
     dogmaAttributeID: int
     skillID: int
@@ -313,14 +312,14 @@ class DebuffCollections_LocationRequiredSkillModifier:
 
 @dataclass(slots=True, kw_only=True)
 class DebuffCollections_ItemModifier:
-    """Nested model for the dbuffCollections.jsonl SDE file."""
+    """Nested model for the dbuffCollections.yaml SDE file."""
 
     dogmaAttributeID: int
 
 
 @dataclass(slots=True, kw_only=True)
 class DebuffCollections:
-    """Model for the dbuffCollections.jsonl SDE file."""
+    """Model for the dbuffCollections.yaml SDE file."""
 
     aggregateMode: str
     developerDescription: str
@@ -337,7 +336,7 @@ class DebuffCollections:
 
 @dataclass(slots=True, kw_only=True)
 class DogmaAttributeCategories:
-    """Model for the dogmaAttributeCategories.jsonl SDE file."""
+    """Model for the dogmaAttributeCategories.yaml SDE file."""
 
     description: str | None = None
     name: str
@@ -345,7 +344,7 @@ class DogmaAttributeCategories:
 
 @dataclass(slots=True, kw_only=True)
 class DogmaAttributes:
-    """Model for the dogmaAttributes.jsonl SDE file."""
+    """Model for the dogmaAttributes.yaml SDE file."""
 
     attributeCategoryID: int | None = None
     dataType: int
@@ -368,7 +367,7 @@ class DogmaAttributes:
 
 @dataclass(slots=True, kw_only=True)
 class DogmaEffects_ModifierInfo:
-    """Nested model for the dogmaEffects.jsonl SDE file."""
+    """Nested model for the dogmaEffects.yaml SDE file."""
 
     domain: str
     effectID: int | None = None
@@ -382,7 +381,7 @@ class DogmaEffects_ModifierInfo:
 
 @dataclass(slots=True, kw_only=True)
 class DogmaEffects:
-    """Model for the dogmaEffects.jsonl SDE file."""
+    """Model for the dogmaEffects.yaml SDE file."""
 
     disallowAutoRepeat: bool
     dischargeAttributeID: int | None = None
@@ -413,7 +412,7 @@ class DogmaEffects:
 
 @dataclass(slots=True, kw_only=True)
 class DogmaUnits:
-    """Model for the dogmaUnits.jsonl SDE file."""
+    """Model for the dogmaUnits.yaml SDE file."""
 
     description: LocalizedString | None = None
     displayName: LocalizedString | None = None
@@ -422,7 +421,7 @@ class DogmaUnits:
 
 @dataclass(slots=True, kw_only=True)
 class DynamicItemAttributes_AttributeID:
-    """Nested model for the dynamicItemAttributes.jsonl SDE file."""
+    """Nested model for the dynamicItemAttributes.yaml SDE file."""
 
     highIsGood: bool | None = None
     max: float
@@ -431,7 +430,7 @@ class DynamicItemAttributes_AttributeID:
 
 @dataclass(slots=True, kw_only=True)
 class DynamicItemAttributes_InputOutputMapping:
-    """Nested model for the dynamicItemAttributes.jsonl SDE file."""
+    """Nested model for the dynamicItemAttributes.yaml SDE file."""
 
     applicableTypes: list[int]
     resultingType: int
@@ -439,7 +438,7 @@ class DynamicItemAttributes_InputOutputMapping:
 
 @dataclass(slots=True, kw_only=True)
 class DynamicItemAttributes:
-    """Model for the dynamicItemAttributes.jsonl SDE file."""
+    """Model for the dynamicItemAttributes.yaml SDE file."""
 
     attributeIDs: dict[int, DynamicItemAttributes_AttributeID]
     inputOutputMapping: list[DynamicItemAttributes_InputOutputMapping]
@@ -447,7 +446,7 @@ class DynamicItemAttributes:
 
 @dataclass(slots=True, kw_only=True)
 class Factions:
-    """Model for the factions.jsonl SDE file."""
+    """Model for the factions.yaml SDE file."""
 
     corporationID: int | None = None
     description: LocalizedString
@@ -463,19 +462,13 @@ class Factions:
     uniqueName: bool
 
 
-# The freelanceJobSchemas.jsonl file has a more complex structure that doesn't fit well
-# with the current RootModel[dict[int, Model]] pattern. It may require a custom parsing
-# approach or a different model structure, so it's not included here yet.
-# @dataclass(slots=True, kw_only=True)
-# class FreelanceJobSchemas:
-#     """Model for the freelanceJobSchemas.jsonl SDE file."""
-
-#     value: list[dict[str, Any]] = Field(..., alias="_value")
+type FreelanceJobSchemas = dict[str, Any]
+"""Model for the freelanceJobSchemas.yaml SDE file."""
 
 
 @dataclass(slots=True, kw_only=True)
 class Graphics:
-    """Model for the graphics.jsonl SDE file."""
+    """Model for the graphics.yaml SDE file."""
 
     graphicFile: str | None = None
     iconFolder: str | None = None
@@ -488,7 +481,7 @@ class Graphics:
 
 @dataclass(slots=True, kw_only=True)
 class Groups:
-    """Model for the groups.jsonl SDE file."""
+    """Model for the groups.yaml SDE file."""
 
     anchorable: bool
     anchored: bool
@@ -502,14 +495,14 @@ class Groups:
 
 @dataclass(slots=True, kw_only=True)
 class Icons:
-    """Model for the icons.jsonl SDE file."""
+    """Model for the icons.yaml SDE file."""
 
     iconFile: str
 
 
 @dataclass(slots=True, kw_only=True)
 class Landmarks:
-    """Model for the landmarks.jsonl SDE file."""
+    """Model for the landmarks.yaml SDE file."""
 
     description: LocalizedString
     name: LocalizedString
@@ -520,7 +513,7 @@ class Landmarks:
 
 @dataclass(slots=True, kw_only=True)
 class MapAsteroidBelts_Statistics:
-    """Nested model for the mapAsteroidBelts.jsonl SDE file."""
+    """Nested model for the mapAsteroidBelts.yaml SDE file."""
 
     density: float
     eccentricity: float
@@ -538,7 +531,7 @@ class MapAsteroidBelts_Statistics:
 
 @dataclass(slots=True, kw_only=True)
 class MapAsteroidBelts:
-    """Model for the mapAsteroidBelts.jsonl SDE file."""
+    """Model for the mapAsteroidBelts.yaml SDE file."""
 
     celestialIndex: int
     orbitID: int
@@ -553,7 +546,7 @@ class MapAsteroidBelts:
 
 @dataclass(slots=True, kw_only=True)
 class MapConstellations:
-    """Model for the mapConstellations.jsonl SDE file."""
+    """Model for the mapConstellations.yaml SDE file."""
 
     factionID: int | None = None
     name: LocalizedString
@@ -565,7 +558,7 @@ class MapConstellations:
 
 @dataclass(slots=True, kw_only=True)
 class MapMoons_Attributes:
-    """Nested model for the mapMoons.jsonl SDE file."""
+    """Nested model for the mapMoons.yaml SDE file."""
 
     heightMap1: int
     heightMap2: int
@@ -574,7 +567,7 @@ class MapMoons_Attributes:
 
 @dataclass(slots=True, kw_only=True)
 class MapMoons_Statistics:
-    """Nested model for the mapMoons.jsonl SDE file."""
+    """Nested model for the mapMoons.yaml SDE file."""
 
     density: float
     eccentricity: float
@@ -593,7 +586,7 @@ class MapMoons_Statistics:
 
 @dataclass(slots=True, kw_only=True)
 class MapMoons:
-    """Model for the mapMoons.jsonl SDE file."""
+    """Model for the mapMoons.yaml SDE file."""
 
     attributes: MapMoons_Attributes
     celestialIndex: int
@@ -610,7 +603,7 @@ class MapMoons:
 
 @dataclass(slots=True, kw_only=True)
 class MapPlanets_Attributes:
-    """Nested model for the mapPlanets.jsonl SDE file."""
+    """Nested model for the mapPlanets.yaml SDE file."""
 
     heightMap1: int
     heightMap2: int
@@ -620,7 +613,7 @@ class MapPlanets_Attributes:
 
 @dataclass(slots=True, kw_only=True)
 class MapPlanets_Statistics:
-    """Nested model for the mapPlanets.jsonl SDE file."""
+    """Nested model for the mapPlanets.yaml SDE file."""
 
     density: float
     eccentricity: float
@@ -639,7 +632,7 @@ class MapPlanets_Statistics:
 
 @dataclass(slots=True, kw_only=True)
 class MapPlanets:
-    """Model for the mapPlanets.jsonl SDE file."""
+    """Model for the mapPlanets.yaml SDE file."""
 
     asteroidBeltIDs: list[int] | None = None
     attributes: MapPlanets_Attributes
@@ -657,7 +650,7 @@ class MapPlanets:
 
 @dataclass(slots=True, kw_only=True)
 class MapRegions:
-    """Model for the mapRegions.jsonl SDE file."""
+    """Model for the mapRegions.yaml SDE file."""
 
     constellationIDs: list[int]
     description: LocalizedString | None = None
@@ -670,7 +663,7 @@ class MapRegions:
 
 @dataclass(slots=True, kw_only=True)
 class MapSecondarySuns:
-    """Model for the mapSecondarySuns.jsonl SDE file."""
+    """Model for the mapSecondarySuns.yaml SDE file."""
 
     effectBeaconTypeID: int
     position: Position
@@ -680,7 +673,7 @@ class MapSecondarySuns:
 
 @dataclass(slots=True, kw_only=True)
 class MapSolarSystems:
-    """Model for the mapSolarSystems.jsonl SDE file."""
+    """Model for the mapSolarSystems.yaml SDE file."""
 
     border: bool | None = None
     constellationID: int
@@ -709,7 +702,7 @@ class MapSolarSystems:
 
 @dataclass(slots=True, kw_only=True)
 class MapStargates_Destination:
-    """Nested model for the mapStargates.jsonl SDE file."""
+    """Nested model for the mapStargates.yaml SDE file."""
 
     solarSystemID: int
     stargateID: int
@@ -717,7 +710,7 @@ class MapStargates_Destination:
 
 @dataclass(slots=True, kw_only=True)
 class MapStargates:
-    """Model for the mapStargates.jsonl SDE file."""
+    """Model for the mapStargates.yaml SDE file."""
 
     destination: MapStargates_Destination
     position: Position
@@ -727,7 +720,7 @@ class MapStargates:
 
 @dataclass(slots=True, kw_only=True)
 class MapStars_Statistics:
-    """Nested model for the mapStars.jsonl SDE file."""
+    """Nested model for the mapStars.yaml SDE file."""
 
     age: float
     life: float
@@ -738,7 +731,7 @@ class MapStars_Statistics:
 
 @dataclass(slots=True, kw_only=True)
 class MapStars:
-    """Model for the mapStars.jsonl SDE file."""
+    """Model for the mapStars.yaml SDE file."""
 
     radius: int
     solarSystemID: int
@@ -748,7 +741,7 @@ class MapStars:
 
 @dataclass(slots=True, kw_only=True)
 class MarketGroups:
-    """Model for the marketGroups.jsonl SDE file."""
+    """Model for the marketGroups.yaml SDE file."""
 
     description: LocalizedString | None = None
     hasTypes: bool
@@ -757,25 +750,13 @@ class MarketGroups:
     parentGroupID: int | None = None
 
 
-# These models wind up being so simple they are defined in the root model directly.
-
-# @dataclass(slots=True, kw_only=True)
-# class Masteries_Value:
-#     """Nested model for the masteries.jsonl SDE file."""
-
-#     value: list[int] = Field(..., alias="_value")
-
-
-# @dataclass(slots=True, kw_only=True)
-# class Masteries:
-#     """Model for the masteries.jsonl SDE file."""
-
-#     value: dict[int, Masteries_Value] = Field(..., alias="_value")
+type Masteries = dict[int, list[int]]
+"""Model for the masteries.yaml SDE file."""
 
 
 @dataclass(slots=True, kw_only=True)
 class MetaGroups:
-    """Model for the metaGroups.jsonl SDE file."""
+    """Model for the metaGroups.yaml SDE file."""
 
     color: Color | None = None
     name: LocalizedString
@@ -786,7 +767,7 @@ class MetaGroups:
 
 @dataclass(slots=True, kw_only=True)
 class MercenaryTacticalOperations:
-    """Model for the mercenaryTacticalOperations.jsonl SDE file."""
+    """Model for the mercenaryTacticalOperations.yaml SDE file."""
 
     anarchy_impact: int
     development_impact: int
@@ -797,14 +778,14 @@ class MercenaryTacticalOperations:
 
 @dataclass(slots=True, kw_only=True)
 class NpcCharacters_Skill:
-    """Nested model for the npcCharacters.jsonl SDE file."""
+    """Nested model for the npcCharacters.yaml SDE file."""
 
     typeID: int
 
 
 @dataclass(slots=True, kw_only=True)
 class NpcCharacters_Agent:
-    """Nested model for the npcCharacters.jsonl SDE file."""
+    """Nested model for the npcCharacters.yaml SDE file."""
 
     agentTypeID: int
     divisionID: int
@@ -814,7 +795,7 @@ class NpcCharacters_Agent:
 
 @dataclass(slots=True, kw_only=True)
 class NpcCharacters:
-    """Model for the npcCharacters.jsonl SDE file."""
+    """Model for the npcCharacters.yaml SDE file."""
 
     bloodlineID: int
     ceo: bool
@@ -836,7 +817,7 @@ class NpcCharacters:
 
 @dataclass(slots=True, kw_only=True)
 class NpcCorporationDivisions:
-    """Model for the npcCorporationDivisions.jsonl SDE file."""
+    """Model for the npcCorporationDivisions.yaml SDE file."""
 
     displayName: str | None = None
     internalName: str
@@ -845,42 +826,18 @@ class NpcCorporationDivisions:
     description: LocalizedString | None = None
 
 
-# @dataclass(slots=True, kw_only=True)
-# class NpcCorporations_Trade:
-#     """Nested model for the npcCorporations.jsonl SDE file."""
-
-#     key: int = Field(..., alias="_key")
-#     value: float = Field(..., alias="_value")
-
-
 @dataclass(slots=True, kw_only=True)
 class NpcCorporations_Divisions:
-    """Nested model for the npcCorporations.jsonl SDE file."""
+    """Nested model for the npcCorporations.yaml SDE file."""
 
     divisionNumber: int
     leaderID: int
     size: int
 
 
-# @dataclass(slots=True, kw_only=True)
-# class NpcCorporations_Investors:
-#     """Nested model for the npcCorporations.jsonl SDE file."""
-
-#     key: int = Field(..., alias="_key")
-#     value: int = Field(..., alias="_value")
-
-
-# @dataclass(slots=True, kw_only=True)
-# class NpcCorporations_ExchangeRates:
-#     """Nested model for the npcCorporations.jsonl SDE file."""
-
-#     key: int = Field(..., alias="_key")
-#     value: float = Field(..., alias="_value")
-
-
 @dataclass(slots=True, kw_only=True)
 class NpcCorporations:
-    """Model for the npcCorporations.jsonl SDE file."""
+    """Model for the npcCorporations.yaml SDE file."""
 
     ceoID: int | None = None
     deleted: bool
@@ -918,7 +875,7 @@ class NpcCorporations:
 
 @dataclass(slots=True, kw_only=True)
 class NpcStations:
-    """Model for the npcStations.jsonl SDE file."""
+    """Model for the npcStations.yaml SDE file."""
 
     celestialIndex: int | None = None
     operationID: int
@@ -936,7 +893,7 @@ class NpcStations:
 
 @dataclass(slots=True, kw_only=True)
 class PlanetResources_Reagent:
-    """Nested model for the planetResources.jsonl SDE file."""
+    """Nested model for the planetResources.yaml SDE file."""
 
     amount_per_cycle: int
     cycle_period: int
@@ -947,7 +904,7 @@ class PlanetResources_Reagent:
 
 @dataclass(slots=True, kw_only=True)
 class PlanetResources:
-    """Model for the planetResources.jsonl SDE file."""
+    """Model for the planetResources.yaml SDE file."""
 
     power: int | None = None
     workforce: int | None = None
@@ -956,7 +913,7 @@ class PlanetResources:
 
 @dataclass(slots=True, kw_only=True)
 class PlanetSchematics_Types:
-    """Nested model for the planetSchematics.jsonl SDE file."""
+    """Nested model for the planetSchematics.yaml SDE file."""
 
     isInput: bool
     quantity: int
@@ -964,7 +921,7 @@ class PlanetSchematics_Types:
 
 @dataclass(slots=True, kw_only=True)
 class PlanetSchematics:
-    """Model for the planetSchematics.jsonl SDE file."""
+    """Model for the planetSchematics.yaml SDE file."""
 
     cycleTime: int
     name: LocalizedString
@@ -974,7 +931,7 @@ class PlanetSchematics:
 
 @dataclass(slots=True, kw_only=True)
 class Races:
-    """Model for the races.jsonl SDE file."""
+    """Model for the races.yaml SDE file."""
 
     description: LocalizedString | None = None
     iconID: int | None = None
@@ -985,7 +942,7 @@ class Races:
 
 @dataclass(slots=True, kw_only=True)
 class SdeInfo:
-    """Model for the sdeInfo.jsonl SDE file."""
+    """Model for the sdeInfo.yaml SDE file."""
 
     buildNumber: int
     releaseDate: str
@@ -993,7 +950,7 @@ class SdeInfo:
 
 @dataclass(slots=True, kw_only=True)
 class SkinLicenses:
-    """Model for the skinLicenses.jsonl SDE file."""
+    """Model for the skinLicenses.yaml SDE file."""
 
     duration: int
     licenseTypeID: int
@@ -1003,7 +960,7 @@ class SkinLicenses:
 
 @dataclass(slots=True, kw_only=True)
 class SkinMaterials:
-    """Model for the skinMaterials.jsonl SDE file."""
+    """Model for the skinMaterials.yaml SDE file."""
 
     displayName: LocalizedString | None = None
     materialSetID: int
@@ -1011,7 +968,7 @@ class SkinMaterials:
 
 @dataclass(slots=True, kw_only=True)
 class Skins:
-    """Model for the skins.jsonl SDE file."""
+    """Model for the skins.yaml SDE file."""
 
     allowCCPDevs: bool
     internalName: str
@@ -1025,7 +982,7 @@ class Skins:
 
 @dataclass(slots=True, kw_only=True)
 class SovereigntyUpgrades_Fuel:
-    """Nested model for the sovereigntyUpgrades.jsonl SDE file."""
+    """Nested model for the sovereigntyUpgrades.yaml SDE file."""
 
     hourly_upkeep: int
     startup_cost: int
@@ -1034,7 +991,7 @@ class SovereigntyUpgrades_Fuel:
 
 @dataclass(slots=True, kw_only=True)
 class SovereigntyUpgrades:
-    """Model for the sovereigntyUpgrades.jsonl SDE file."""
+    """Model for the sovereigntyUpgrades.yaml SDE file."""
 
     fuel: SovereigntyUpgrades_Fuel | None = None
     mutually_exclusive_group: str
@@ -1044,19 +1001,9 @@ class SovereigntyUpgrades:
     workforce_production: int | None = None
 
 
-# @dataclass(slots=True, kw_only=True)
-# class StationOperations_StationType:
-#     """Nested model for the stationOperations.jsonl SDE file."""
-
-#     key: int = Field(..., alias="_key")
-#     value: int = Field(..., alias="_value")
-
-#     model_config = ConfigDict(serialize_by_alias=True)
-
-
 @dataclass(slots=True, kw_only=True)
 class StationOperations:
-    """Model for the stationOperations.jsonl SDE file."""
+    """Model for the stationOperations.yaml SDE file."""
 
     activityID: int
     border: float
@@ -1074,7 +1021,7 @@ class StationOperations:
 
 @dataclass(slots=True, kw_only=True)
 class StationServices:
-    """Model for the stationServices.jsonl SDE file."""
+    """Model for the stationServices.yaml SDE file."""
 
     serviceName: LocalizedString
     description: LocalizedString | None = None
@@ -1082,14 +1029,14 @@ class StationServices:
 
 @dataclass(slots=True, kw_only=True)
 class TranslationLanguages:
-    """Model for the translationLanguages.jsonl SDE file."""
+    """Model for the translationLanguages.yaml SDE file."""
 
     name: str
 
 
 @dataclass(slots=True, kw_only=True)
 class TypeBonus_RoleBonus:
-    """Nested model for the typeBonus.jsonl SDE file."""
+    """Nested model for the typeBonus.yaml SDE file."""
 
     bonus: int | float | None = None
     bonusText: LocalizedString
@@ -1099,7 +1046,7 @@ class TypeBonus_RoleBonus:
 
 @dataclass(slots=True, kw_only=True)
 class TypeBonus_Types_Bonus:
-    """Nested model for the typeBonus.jsonl SDE file."""
+    """Nested model for the typeBonus.yaml SDE file."""
 
     bonus: int | float | None = None
     bonusText: LocalizedString
@@ -1107,17 +1054,9 @@ class TypeBonus_Types_Bonus:
     unitID: int | None = None
 
 
-# @dataclass(slots=True, kw_only=True)
-# class TypeBonus_Types:
-#     """Nested model for the typeBonus.jsonl SDE file."""
-
-#     # key: int = Field(..., alias="_key")
-#     value: list[TypeBonus_Types_Bonus] = Field(..., alias="_value")
-
-
 @dataclass(slots=True, kw_only=True)
 class TypeBonus_MiscBonus:
-    """Nested model for the typeBonus.jsonl SDE file."""
+    """Nested model for the typeBonus.yaml SDE file."""
 
     bonus: int | float | None = None
     bonusText: LocalizedString
@@ -1128,7 +1067,7 @@ class TypeBonus_MiscBonus:
 
 @dataclass(slots=True, kw_only=True)
 class TypeBonus:
-    """Model for the typeBonus.jsonl SDE file."""
+    """Model for the typeBonus.yaml SDE file."""
 
     roleBonuses: list[TypeBonus_RoleBonus] | None = None
     types: dict[int, list[TypeBonus_Types_Bonus]] | None = None
@@ -1138,7 +1077,7 @@ class TypeBonus:
 
 @dataclass(slots=True, kw_only=True)
 class TypeDogma_Attributes:
-    """Nested model for the typeDogma.jsonl SDE file."""
+    """Nested model for the typeDogma.yaml SDE file."""
 
     attributeID: int
     value: float
@@ -1146,7 +1085,7 @@ class TypeDogma_Attributes:
 
 @dataclass(slots=True, kw_only=True)
 class TypeDogma_Effects:
-    """Nested model for the typeDogma.jsonl SDE file."""
+    """Nested model for the typeDogma.yaml SDE file."""
 
     effectID: int
     isDefault: bool
@@ -1154,7 +1093,7 @@ class TypeDogma_Effects:
 
 @dataclass(slots=True, kw_only=True)
 class TypeDogma:
-    """Model for the typeDogma.jsonl SDE file."""
+    """Model for the typeDogma.yaml SDE file."""
 
     dogmaAttributes: list[TypeDogma_Attributes]
     dogmaEffects: list[TypeDogma_Effects] | None = None
@@ -1162,7 +1101,7 @@ class TypeDogma:
 
 @dataclass(slots=True, kw_only=True)
 class TypeMaterials_Material:
-    """Nested model for the typeMaterials.jsonl SDE file."""
+    """Nested model for the typeMaterials.yaml SDE file."""
 
     materialTypeID: int
     quantity: int
@@ -1170,7 +1109,7 @@ class TypeMaterials_Material:
 
 @dataclass(slots=True, kw_only=True)
 class TypeMaterials_RandomizedMaterial:
-    """Nested model for the typeMaterials.jsonl SDE file."""
+    """Nested model for the typeMaterials.yaml SDE file."""
 
     materialTypeID: int
     quantityMax: int
@@ -1179,7 +1118,7 @@ class TypeMaterials_RandomizedMaterial:
 
 @dataclass(slots=True, kw_only=True)
 class TypeMaterials:
-    """Model for the typeMaterials.jsonl SDE file."""
+    """Model for the typeMaterials.yaml SDE file."""
 
     materials: list[TypeMaterials_Material] | None = None
     randomizedMaterials: list[TypeMaterials_RandomizedMaterial] | None = None
@@ -1187,7 +1126,7 @@ class TypeMaterials:
 
 @dataclass(slots=True, kw_only=True)
 class EveTypes:
-    """Model for the types.jsonl SDE file."""
+    """Model for the types.yaml SDE file."""
 
     groupID: int
     mass: float | None = None
@@ -1207,62 +1146,3 @@ class EveTypes:
     metaGroupID: int | None = None
     variationParentTypeID: int | None = None
     factionID: int | None = None
-
-
-AgentsInSpaceRoot = RootModel[dict[int, AgentsInSpace]]
-AgentTypesRoot = RootModel[dict[int, AgentTypes]]
-AncestriesRoot = RootModel[dict[int, Ancestries]]
-BloodlinesRoot = RootModel[dict[int, Bloodlines]]
-BlueprintsRoot = RootModel[dict[int, Blueprints]]
-CategoriesRoot = RootModel[dict[int, Categories]]
-CertificatesRoot = RootModel[dict[int, Certificates]]
-CharacterAttributesRoot = RootModel[dict[int, CharacterAttributes]]
-CloneGradesRoot = RootModel[dict[int, CloneGrades]]
-CompressibleTypesRoot = RootModel[dict[int, CompressibleTypes]]
-ContrabandTypesRoot = RootModel[dict[int, ContrabandTypes]]
-ControlTowerResourcesRoot = RootModel[dict[int, ControlTowerResources]]
-CorporationActivitiesRoot = RootModel[dict[int, CorporationActivities]]
-DebuffCollectionsRoot = RootModel[dict[int, DebuffCollections]]
-DogmaAttributeCategoriesRoot = RootModel[dict[int, DogmaAttributeCategories]]
-DogmaAttributesRoot = RootModel[dict[int, DogmaAttributes]]
-DogmaEffectsRoot = RootModel[dict[int, DogmaEffects]]
-DogmaUnitsRoot = RootModel[dict[int, DogmaUnits]]
-DynamicItemAttributesRoot = RootModel[dict[int, DynamicItemAttributes]]
-FactionsRoot = RootModel[dict[int, Factions]]
-FreelanceJobSchemasRoot = RootModel[dict[int, dict[str, Any]]]
-GraphicsRoot = RootModel[dict[int, Graphics]]
-GroupsRoot = RootModel[dict[int, Groups]]
-IconsRoot = RootModel[dict[int, Icons]]
-LandmarksRoot = RootModel[dict[int, Landmarks]]
-MapAsteroidBeltsRoot = RootModel[dict[int, MapAsteroidBelts]]
-MapConstellationsRoot = RootModel[dict[int, MapConstellations]]
-MapMoonsRoot = RootModel[dict[int, MapMoons]]
-MapPlanetsRoot = RootModel[dict[int, MapPlanets]]
-MapRegionsRoot = RootModel[dict[int, MapRegions]]
-MapSecondarySunsRoot = RootModel[dict[int, MapSecondarySuns]]
-MapSolarSystemsRoot = RootModel[dict[int, MapSolarSystems]]
-MapStargatesRoot = RootModel[dict[int, MapStargates]]
-MapStarsRoot = RootModel[dict[int, MapStars]]
-MarketGroupsRoot = RootModel[dict[int, MarketGroups]]
-MasteriesRoot = RootModel[dict[int, dict[int, list[int]]]]
-MetaGroupsRoot = RootModel[dict[int, MetaGroups]]
-MercenaryTacticalOperationsRoot = RootModel[dict[int, MercenaryTacticalOperations]]
-NpcCharactersRoot = RootModel[dict[int, NpcCharacters]]
-NpcCorporationDivisionsRoot = RootModel[dict[int, NpcCorporationDivisions]]
-NpcCorporationsRoot = RootModel[dict[int, NpcCorporations]]
-NpcStationsRoot = RootModel[dict[int, NpcStations]]
-PlanetResourcesRoot = RootModel[dict[int, PlanetResources]]
-PlanetSchematicsRoot = RootModel[dict[int, PlanetSchematics]]
-RacesRoot = RootModel[dict[int, Races]]
-SdeInfoRoot = RootModel[dict[str, SdeInfo]]
-SkinLicensesRoot = RootModel[dict[int, SkinLicenses]]
-SkinMaterialsRoot = RootModel[dict[int, SkinMaterials]]
-SkinsRoot = RootModel[dict[int, Skins]]
-SovereigntyUpgradesRoot = RootModel[dict[int, SovereigntyUpgrades]]
-StationOperationsRoot = RootModel[dict[int, StationOperations]]
-StationServicesRoot = RootModel[dict[int, StationServices]]
-TranslationLanguagesRoot = RootModel[dict[str, TranslationLanguages]]
-TypeBonusRoot = RootModel[dict[int, TypeBonus]]
-TypeDogmaRoot = RootModel[dict[int, TypeDogma]]
-TypeMaterialsRoot = RootModel[dict[int, TypeMaterials]]
-EveTypesRoot = RootModel[dict[int, EveTypes]]
