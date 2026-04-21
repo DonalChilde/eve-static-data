@@ -8,7 +8,8 @@ import typer
 from eve_static_data import __app_name__, __version__
 from eve_static_data.cli.config_info import app as config_info_app
 from eve_static_data.cli.sde_export import app as sde_export_app
-from eve_static_data.cli.sde_import import app as sde_import_app
+
+# from eve_static_data.cli.sde_import import app as sde_import_app
 from eve_static_data.cli.sde_network import app as sde_network_app
 from eve_static_data.cli.sde_unpack import app as sde_unpack_app
 from eve_static_data.cli.sde_validate import app as sde_validate_app
@@ -22,7 +23,7 @@ app.add_typer(sde_network_app)
 app.add_typer(sde_unpack_app)
 app.add_typer(sde_validate_app)
 app.add_typer(sde_export_app, name="export", help="Commands for exporting SDE data.")
-app.add_typer(sde_import_app, name="import", help="Commands for importing SDE data.")
+# app.add_typer(sde_import_app, name="import", help="Commands for importing SDE data.")
 app.add_typer(config_info_app)
 
 

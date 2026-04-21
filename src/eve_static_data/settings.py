@@ -15,7 +15,8 @@ from eve_static_data import (
     SDE_URL_TEMPLATE,
     USER_AGENT,
 )
-from eve_static_data.sde_loader import SDELoader
+
+# from eve_static_data.sde_loader import SDELoader
 from eve_static_data.sde_tools import SDETools
 
 _app_env_prefix = "PFMSOFT_EVE_STATIC_DATA_"
@@ -27,22 +28,22 @@ class EveStaticDataSettings:
 
     application_directory: Path
     logging_directory: Path
-    sde_directory: Path
+    # sde_directory: Path
     sde_latest_info_url: str = LATEST_INFO_URL
     sde_download_url_template: str = SDE_URL_TEMPLATE
     sde_data_changes_url_template: str = DATA_CHANGES_URL_TEMPLATE
     sde_schema_changelog_url: str = SCHEMA_CHANGELOG_URL
     sde_data_filename_template: str = DATA_FILENAME_TEMPLATE
 
-    def sde_loader(self) -> SDELoader:
-        """Get an instance of the SDELoader for working with the SDE data.
+    # def sde_loader(self) -> SDELoader:
+    #     """Get an instance of the SDELoader for working with the SDE data.
 
-        This loader is configured to cache the derived datasets in the `<sde_directory>/derived_datasets` directory.
-        """
-        return SDELoader(
-            self.sde_directory,
-            derived_datasets_path=self.sde_directory / "derived_datasets",
-        )
+    #     This loader is configured to cache the derived datasets in the `<sde_directory>/derived_datasets` directory.
+    #     """
+    #     return SDELoader(
+    #         self.sde_directory,
+    #         derived_datasets_path=self.sde_directory / "derived_datasets",
+    #     )
 
     def sde_tools(self) -> SDETools:
         """Get an instance of the SDETools for working with the SDE data."""
@@ -74,10 +75,10 @@ class EveStaticDataSettingsPydantic(BaseSettings):
         default=str(DEFAULT_APP_DIR),
         description="The application directory path.",
     )
-    sde_directory: str = Field(
-        default=str(DEFAULT_APP_DIR / "sde"),
-        description="The directory where the SDE data is stored.",
-    )
+    # sde_directory: str = Field(
+    #     default=str(DEFAULT_APP_DIR / "sde"),
+    #     description="The directory where the SDE data is stored.",
+    # )
     logging_directory: str = Field(
         default=str(DEFAULT_APP_DIR / "logs"),
         description="The directory where log files are stored.",
@@ -110,7 +111,7 @@ def get_settings() -> EveStaticDataSettings:
     settings = EveStaticDataSettings(
         application_directory=Path(pydantic_settings.application_directory),
         logging_directory=Path(pydantic_settings.logging_directory),
-        sde_directory=Path(pydantic_settings.sde_directory),
+        # sde_directory=Path(pydantic_settings.sde_directory),
         sde_latest_info_url=pydantic_settings.sde_latest_info_url,
         sde_download_url_template=pydantic_settings.sde_download_url_template,
         sde_data_changes_url_template=pydantic_settings.sde_data_changes_url_template,
@@ -120,5 +121,5 @@ def get_settings() -> EveStaticDataSettings:
     # Ensure that the application directories exist.
     Path(settings.application_directory).mkdir(parents=True, exist_ok=True)
     Path(settings.logging_directory).mkdir(parents=True, exist_ok=True)
-    Path(settings.sde_directory).mkdir(parents=True, exist_ok=True)
+    # Path(settings.sde_directory).mkdir(parents=True, exist_ok=True)
     return settings

@@ -215,7 +215,7 @@ def download_sde(
             help="The variant of the SDE to download",
             show_default=True,
         ),
-    ] = "jsonl",
+    ] = "yaml",
     build_number: Annotated[
         int | None,
         typer.Option(
@@ -253,7 +253,7 @@ def download_sde(
             f"Resolved latest build number to: {build_number}, released on {release_date}"
         )
 
-    console.print(f"Downloading SDE data.")
+    console.print(f"Downloading SDE data, {variant} variant.")
 
     try:
         file_path = asyncio.run(
@@ -268,4 +268,6 @@ def download_sde(
         console.print(f"[bold red]Error:[/bold red] Failed to download SDE data: {e}")
         raise typer.Exit(code=1) from e
 
-    console.print(f"SDE data downloaded successfully, saved to: {file_path}")
+    console.print(
+        f"SDE data, {variant} variant downloaded successfully, saved to: {file_path}"
+    )

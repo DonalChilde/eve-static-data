@@ -14,16 +14,14 @@ app = typer.Typer(no_args_is_help=True)
 
 
 @app.command()
-def validate(
+def validate_json(
     ctx: typer.Context,
     sde_path: Annotated[
-        Path | None,
-        typer.Option(
-            "--sde-path",
-            help="The path to the SDE data. If not provided, the SDE directory from the "
-            "settings will be used.",
+        Path,
+        typer.Argument(
+            help="The path to the json SDE data.",
         ),
-    ] = None,
+    ],
     report_path: Annotated[
         Path | None,
         typer.Option(
@@ -47,21 +45,17 @@ def validate(
     console.print("[bold green]Validating SDE Data[/bold green]")
     settings = get_esd_settings_from_context(ctx)
     sde_tools = settings.sde_tools()
-    if sde_path is None:
-        data_path = settings.sde_directory
-    else:
-        data_path = sde_path
-    if not data_path.exists():
+    if not sde_path.exists():
         console.print(
-            f"[bold red]Error:[/bold red] SDE path {data_path} does not exist."
+            f"[bold red]Error:[/bold red] SDE path {sde_path} does not exist."
         )
         raise typer.Exit(code=1)
-    if not data_path.is_dir():
+    if not sde_path.is_dir():
         console.print(
-            f"[bold red]Error:[/bold red] SDE path {data_path} is not a directory."
+            f"[bold red]Error:[/bold red] SDE path {sde_path} is not a directory."
         )
         raise typer.Exit(code=1)
-    sde_info_path = data_path / "_sde.jsonl"
+    sde_info_path = sde_path / "_sde.json"
     if not sde_info_path.exists():
         if sde_path:
             console.print(
@@ -74,13 +68,13 @@ def validate(
 
         raise typer.Exit(code=1)
     if report_path is None:
-        report_path = data_path / "validation_reports"
+        report_path = sde_path / "validation_reports"
     report_path.mkdir(parents=True, exist_ok=True)
-    msg = f"Validating SDE data in {data_path} and saving reports to {report_path}"
+    msg = f"Validating SDE data in {sde_path} and saving reports to {report_path}"
     console.print(f"[bold blue]{msg}[/bold blue]")
     asyncio.run(
         validation_report(
-            sde_path=data_path,
+            sde_path=sde_path,
             output_path=report_path,
             sde_tools=sde_tools,
             overwrite=overwrite,

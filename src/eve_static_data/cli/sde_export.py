@@ -1,106 +1,84 @@
 """CLI for exporting SDE data to JSON files."""
 
+import json
 from pathlib import Path
+from time import perf_counter
 from typing import Annotated
 
 import typer
 from rich.console import Console
+from yaml import safe_load
 
-from eve_static_data.models.dataset_filenames import SdeDatasetFiles
-from eve_static_data.models.type_defs import Lang, LangEnum
+from eve_static_data.models.type_defs import LangEnum
 
 app = typer.Typer(no_args_is_help=True)
 
-# STUBS
-# TODO make a dispatcher for the export commands that can call the appropriate export
-# functions based on the command and options, maybe SDESdeDatasetFiles? or something like that.
-
 
 @app.command()
-def derived_datasets(
-    sde_path: Annotated[
+def yaml_to_json(
+    yaml_sde_path: Annotated[
         Path,
         typer.Argument(
-            help="The path to the SDE data directory.",
+            help="The path to the SDE data directory containing the YAML files.",
             exists=True,
             dir_okay=True,
         ),
     ],
-    output_dir: Annotated[
+    json_output_path: Annotated[
         Path,
         typer.Argument(
-            help="The directory to save the exported derived datasets.",
-            file_okay=False,
+            help="The path to the output JSON file.",
+            file_okay=True,
+            dir_okay=False,
         ),
     ],
-    lang: Annotated[
-        list[LangEnum] | None,
-        typer.Option(
-            "-l",
-            "--lang",
-            help="The one or more languages to export the localized datasets in. If not "
-            "provided, 'en' will be used.",
-            show_default=True,
-        ),
-    ] = None,
-    overwrite: Annotated[
-        bool,
-        typer.Option(
-            "-o",
-            "--overwrite",
-            help="Whether to overwrite existing files in the output directory.",
-            show_default=True,
-        ),
-    ] = False,
 ):
-    """Export derived SDE datasets to JSON files."""
+    """Convert SDE data from YAML format to JSON format."""
     console = Console()
-    console.print("[bold green]Exporting Derived SDE Data[/bold green]")
-    # reader = SdeReader(sde_path)
-    # export_derived_datasets(reader, output_dir, overwrite)
-
-
-@app.command()
-def datasets(
-    sde_path: Annotated[
-        Path,
-        typer.Argument(
-            help="The path to the SDE data directory.",
-            exists=True,
-            dir_okay=True,
-        ),
-    ],
-    output_dir: Annotated[
-        Path,
-        typer.Argument(
-            help="The directory to save the exported datasets.",
-            file_okay=False,
-        ),
-    ],
-    datasets: Annotated[
-        list[SdeDatasetFiles] | None,
-        typer.Option(
-            "-d",
-            "--datasets",
-            help="The one or more datasets to export. If not provided, all datasets will be exported.",
-            show_default=True,
-        ),
-    ] = None,
-    overwrite: Annotated[
-        bool,
-        typer.Option(
-            "-o",
-            "--overwrite",
-            help="Whether to overwrite existing files in the output directory.",
-            show_default=True,
-        ),
-    ] = False,
-):
-    """Export SDE data to JSON files."""
-    console = Console()
-    console.print("[bold green]Exporting SDE Data[/bold green]")
-    # reader = SdeReader(sde_path)
-    # export_datasets(reader, output_dir, overwrite)
+    console.print("[bold green]Converting SDE Data from YAML to JSON[/bold green]")
+    console.print(f"This will take several minutes.....")
+    yaml_files = list(yaml_sde_path.glob("*.yaml"))
+    yaml_files.sort()  # Sort the files alphabetically for consistent processing order
+    if not yaml_files:
+        console.print(
+            f"[bold red]Error:[/bold red] No YAML files found in the specified SDE directory: {yaml_sde_path}"
+        )
+        raise typer.Exit(code=1)
+    json_output_path.mkdir(parents=True, exist_ok=True)
+    job_start = perf_counter()
+    for yaml_file in yaml_files:
+        console.print(f"Found YAML file: {yaml_file}")
+        start = perf_counter()
+        with yaml_file.open("r", encoding="utf-8") as f:
+            try:
+                yaml_data = safe_load(f)
+                console.print(
+                    f"Successfully read YAML file: {yaml_file} in {perf_counter() - start:.2f} seconds"
+                )
+            except Exception as e:
+                console.print(
+                    f"[bold red]Error:[/bold red] Failed to read YAML file {yaml_file}: {e}"
+                )
+                raise typer.Exit(code=1) from e
+        start_json = perf_counter()
+        json_file_path = json_output_path / (yaml_file.stem + ".json")
+        try:
+            with json_file_path.open("w", encoding="utf-8") as f:
+                json.dump(yaml_data, f, ensure_ascii=False, indent=2)
+            console.print(
+                f"Converted {yaml_file} to {json_file_path} in {perf_counter() - start_json:.2f} seconds"
+            )
+        except Exception as e:
+            console.print(
+                f"[bold red]Error:[/bold red] Failed to write JSON file {json_file_path}: {e}"
+            )
+            raise typer.Exit(code=1) from e
+        console.print(
+            f"Finished processing {yaml_file} in {perf_counter() - start:.2f} seconds"
+        )
+    console.print(
+        f"Finished converting all {len(yaml_files)} YAML files to JSON in {perf_counter() - job_start:.2f} seconds"
+    )
 
 
 @app.command()
