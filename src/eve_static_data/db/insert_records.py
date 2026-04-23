@@ -2,10 +2,10 @@
 
 import sqlite3
 
-import eve_static_data.models.pydantic.yaml_datasets
+import eve_static_data.models.yaml_datasets
+from eve_static_data.models import yaml_datasets
+from eve_static_data.models import yaml_records as pydantic_records
 from eve_static_data.models.common import TRANSLATION_MISSING, Lang
-from eve_static_data.models.pydantic import yaml_datasets
-from eve_static_data.models.pydantic import yaml_records as pydantic_records
 
 LANGS: set[Lang] = {"en", "de", "fr", "ja", "ru", "zh", "ko", "es"}
 ACTIVITIES: set[str] = {
@@ -31,7 +31,7 @@ def agent_types(cursor: sqlite3.Cursor, records: yaml_datasets.AgentTypesRoot) -
 
 def agents_in_space(
     cursor: sqlite3.Cursor,
-    records: eve_static_data.models.pydantic.yaml_datasets.AgentsInSpaceRoot,
+    records: eve_static_data.models.yaml_datasets.AgentsInSpaceRoot,
 ) -> None:
     """Insert records into the agents_in_space table."""
     for agents_in_space_id, record in records.root.items():

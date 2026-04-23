@@ -15,15 +15,15 @@ import typer
 from pydantic import RootModel
 from yaml import safe_load
 
-import eve_static_data.models.pydantic.yaml_datasets
-from eve_static_data.models.pydantic import yaml_records
+import eve_static_data.models.yaml_datasets
+from eve_static_data.models import yaml_records
 
 app = typer.Typer()
 
 YAML_DATASET_CASES: list[tuple[str, type[RootModel[Any]]]] = [
     (
         "agentsInSpace.yaml",
-        eve_static_data.models.pydantic.yaml_datasets.AgentsInSpaceRoot,
+        eve_static_data.models.yaml_datasets.AgentsInSpaceRoot,
     ),
     ("agentTypes.yaml", yaml_records.AgentTypesRoot),
     ("ancestries.yaml", yaml_records.AncestriesRoot),

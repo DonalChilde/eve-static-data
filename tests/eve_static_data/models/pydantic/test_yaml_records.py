@@ -8,7 +8,7 @@ import pytest
 import yaml
 from pydantic import RootModel
 
-from eve_static_data.models.pydantic import yaml_datasets
+from eve_static_data.models import yaml_datasets
 
 
 def _yaml_fixture_path(file_name: str) -> Traversable:

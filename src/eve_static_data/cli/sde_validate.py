@@ -8,7 +8,8 @@ import typer
 from rich.console import Console
 
 from eve_static_data.cli.helpers import get_esd_settings_from_context
-from eve_static_data.validation import validation_report
+
+# from eve_static_data.validation import validation_report
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -72,12 +73,13 @@ def validate_json(
     report_path.mkdir(parents=True, exist_ok=True)
     msg = f"Validating SDE data in {sde_path} and saving reports to {report_path}"
     console.print(f"[bold blue]{msg}[/bold blue]")
-    asyncio.run(
-        validation_report(
-            sde_path=sde_path,
-            output_path=report_path,
-            sde_tools=sde_tools,
-            overwrite=overwrite,
-            console=console,
-        )
-    )
+    # FIXME validation needs to be updated to work with the new SDE loading and model validation code, so commenting out for now
+    # asyncio.run(
+    #     validation_report(
+    #         sde_path=sde_path,
+    #         output_path=report_path,
+    #         sde_tools=sde_tools,
+    #         overwrite=overwrite,
+    #         console=console,
+    #     )
+    # )

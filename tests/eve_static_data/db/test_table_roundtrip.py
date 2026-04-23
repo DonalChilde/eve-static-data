@@ -17,7 +17,7 @@ from pydantic import RootModel
 from rich.pretty import pprint as rich_print
 
 from eve_static_data.db import insert_records, request_records
-from eve_static_data.models.pydantic import yaml_datasets, yaml_records
+from eve_static_data.models import yaml_datasets, yaml_records
 
 
 @dataclass(frozen=True)

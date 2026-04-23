@@ -13,8 +13,8 @@ from pydantic import RootModel
 
 import tests.resources.sde_data.yaml as _yaml_pkg
 from eve_static_data.access.yaml_datasets import SdeYamlDatasetLoader
+from eve_static_data.models import yaml_datasets
 from eve_static_data.models.dataset_filenames import SdeDatasetFiles
-from eve_static_data.models.pydantic import yaml_datasets
 
 # Directory of the committed YAML fixture files — used directly for happy-path tests.
 YAML_FIXTURE_DIR = Path(_yaml_pkg.__file__).parent
