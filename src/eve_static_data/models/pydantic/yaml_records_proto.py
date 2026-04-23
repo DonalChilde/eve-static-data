@@ -58,27 +58,15 @@ from eve_static_data.models.type_defs import (
 #     ko: str = "NOT_TRANSLATED"
 #     es: str = "NOT_TRANSLATED"
 
+TRANSLATION_MISSING = "NOT_AVAILABLE"
 
-def _fill_localized_string(
-    localized_string: LocalizedString, lang: Lang | None
-) -> LocalizedString:
-    """Helper function to fill in missing values in a LocalizedString.
 
-    If lang is None, then all missing values will be filled in with "NOT_PRESENT".
-
-    If lang is not None, then only the value for the specified language will be returned,
-    with the value filled in if it is missing.
-    """
-    if lang is None:
-        copied_localized_string = localized_string.copy()
-        for languages in PossibleTranslationLanguages:
-            if languages not in copied_localized_string:
-                copied_localized_string[languages] = "NOT_PRESENT"
-        return copied_localized_string
+def _lang_check(lang: Lang) -> None:
+    """Helper function to check if a language is valid."""
     if lang not in PossibleTranslationLanguages:
-        raise ValueError(f"Invalid language: {lang}")
-    local_string = localized_string.get(lang, "NOT_PRESENT")
-    return LocalizedString(**{lang: local_string})
+        raise ValueError(
+            f"Invalid language: {lang}. Must be one of {PossibleTranslationLanguages}."
+        )
 
 
 @dataclass
@@ -163,11 +151,12 @@ class Ancestries:
     shortDescription: str | None = None
     willpower: int
 
-    def localized_fields(self, lang: Lang | None = None) -> dict[str, LocalizedString]:
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
         """Returns a dict of the localized fields in the model."""
+        _lang_check(lang)
         return {
-            "description": _fill_localized_string(self.description, lang),
-            "name": _fill_localized_string(self.name, lang),
+            "description": self.description.get(lang) or TRANSLATION_MISSING,
+            "name": self.name.get(lang) or TRANSLATION_MISSING,
         }
 
 
