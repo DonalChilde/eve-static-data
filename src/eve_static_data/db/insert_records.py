@@ -3,6 +3,7 @@
 import sqlite3
 
 import eve_static_data.models.pydantic.yaml_datasets
+from eve_static_data.models.pydantic import yaml_datasets
 from eve_static_data.models.pydantic import yaml_records as pydantic_records
 from eve_static_data.models.type_defs import Lang
 
@@ -19,9 +20,7 @@ ACTIVITIES: set[str] = {
 # TODO change to cursor as argument instead of connection, and remove the with connection as conn: block from each function. This will allow multiple insert functions to be called within the same transaction if desired, and will simplify the function signatures by removing the need for type annotations related to connections and cursors.
 
 
-def agent_types(
-    cursor: sqlite3.Cursor, records: pydantic_records.AgentTypesRoot
-) -> None:
+def agent_types(cursor: sqlite3.Cursor, records: yaml_datasets.AgentTypesRoot) -> None:
     """Insert records into the agent_types table."""
     for agent_types_id, record in records.root.items():
         cursor.execute(
@@ -48,9 +47,7 @@ def agents_in_space(
         )
 
 
-def ancestries(
-    cursor: sqlite3.Cursor, records: pydantic_records.AncestriesRoot
-) -> None:
+def ancestries(cursor: sqlite3.Cursor, records: yaml_datasets.AncestriesRoot) -> None:
     """Insert records into the ancestries table."""
     for ancestries_id, record in records.root.items():
         cursor.execute(
@@ -79,9 +76,7 @@ def ancestries(
             )
 
 
-def bloodlines(
-    cursor: sqlite3.Cursor, records: pydantic_records.BloodlinesRoot
-) -> None:
+def bloodlines(cursor: sqlite3.Cursor, records: yaml_datasets.BloodlinesRoot) -> None:
     """Insert records into the bloodlines table."""
     for bloodlines_id, record in records.root.items():
         cursor.execute(
@@ -110,9 +105,7 @@ def bloodlines(
             )
 
 
-def blueprints(
-    cursor: sqlite3.Cursor, records: pydantic_records.BlueprintsRoot
-) -> None:
+def blueprints(cursor: sqlite3.Cursor, records: yaml_datasets.BlueprintsRoot) -> None:
     """Insert records into the blueprints table."""
     for blueprints_id, record in records.root.items():
         cursor.execute(
@@ -158,9 +151,7 @@ def blueprints(
                         )
 
 
-def categories(
-    cursor: sqlite3.Cursor, records: pydantic_records.CategoriesRoot
-) -> None:
+def categories(cursor: sqlite3.Cursor, records: yaml_datasets.CategoriesRoot) -> None:
     """Insert records into the categories table."""
     for categories_id, record in records.root.items():
         cursor.execute(
@@ -179,7 +170,7 @@ def categories(
 
 
 def certificates(
-    cursor: sqlite3.Cursor, records: pydantic_records.CertificatesRoot
+    cursor: sqlite3.Cursor, records: yaml_datasets.CertificatesRoot
 ) -> None:
     """Insert records into the certificates table."""
     for certificates_id, record in records.root.items():
