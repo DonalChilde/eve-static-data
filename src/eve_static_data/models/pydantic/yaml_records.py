@@ -1,20 +1,25 @@
-"""Dataclass models for the records in YAML SDE datasets.
+"""Dataclass models for the records in YAML format SDE datasets.
 
-These are useful, despite the greatly increased loading time, because the datamodel declares
-more structure guarantees.
+Prefer the use of the yaml format datamodels over the jsonl format datamodels,
+because the yaml format datamodels are easier to reason with and provide better inherant
+structure guarantees.
 
-YAML allows integer keys in mappings, but JSON does not. This is the reason that the JSONL
-and YAML SDE files have different models. The YAML model is easier to reason with, but the JSONL
-model is more performant to load. If the YAML datasets are exported to JSON, the load time
-decreases dramatically (60x), and the same models can be used for validation and parsing.
-If the Pydantic RootModels are used to load the JSON files, then pydantic handles the
-type conversion of the dict keys from string to int.
+Also, yaml allows integer keys in mappings, which is a common pattern in the SDE datasets,
+and json does not.
 
-The addition of a `key_id` field to the dataclass models will allow the same models to be used
-when returning records from the database. This field would be None when loading from the
-YAML/JSON files, but would be populated with the appropriate key when loading from from the
-database. This would allow the same models to be used for all three use cases, and would
-eliminate the need for separate models for the YAML/JSON datasets and database records.
+Because pyyaml is SO SLOW, consider exporting the raw yaml data to json one time, and
+loading through pydantic root models to handle the type conversion of the dict keys from
+string to int. The speedup is 60x on my machine.
+
+When loading with pydantic, the top level dict keys do not get stored in the record model,
+as the root model is defined as dict[int, <record model>]. This means that the individual
+record models do not have acess to their own key without further steps. When serializing
+to the database, the key is added to the record as a field, and when deserializing from
+the database, the key field is set in the record. This would allows the same models to be
+used for YAML/JSON datasets and database records.
+
+
+
 
 Some specific datasets may required a more complex database return model. Right now they are
 defined as types instead of dataclasses.
@@ -223,6 +228,7 @@ class Certificates:
 class CharacterAttributes:
     """Model for the characterAttributes.yaml SDE file."""
 
+    character_attributes_id: int | None = None
     description: str
     iconID: int
     name: LocalizedString
@@ -234,6 +240,7 @@ class CharacterAttributes:
 class CloneGrades:
     """Model for the cloneGrades.yaml SDE file."""
 
+    clone_grades_id: int | None = None
     name: str
     skills: list[Skills]
 
@@ -242,6 +249,7 @@ class CloneGrades:
 class CompressibleTypes:
     """Model for the compressibleTypes.yaml SDE file."""
 
+    compressible_types_id: int | None = None
     compressedTypeID: int
 
 
@@ -259,6 +267,7 @@ class ContrabandTypes_Faction:
 class ContrabandTypes:
     """Model for the contrabandTypes.yaml SDE file."""
 
+    contraband_types_id: int | None = None
     factions: dict[int, ContrabandTypes_Faction]
 
 
@@ -277,6 +286,7 @@ class ControlTowerResources_Resource:
 class ControlTowerResources:
     """Model for the controlTowerResources.yaml SDE file."""
 
+    control_tower_resources_id: int | None = None
     resources: list[ControlTowerResources_Resource]
 
 
@@ -284,6 +294,7 @@ class ControlTowerResources:
 class CorporationActivities:
     """Model for the corporationActivities.yaml SDE file."""
 
+    corporation_activities_id: int | None = None
     name: LocalizedString
 
 
@@ -321,6 +332,7 @@ class DebuffCollections_ItemModifier:
 class DebuffCollections:
     """Model for the dbuffCollections.yaml SDE file."""
 
+    debuff_collections_id: int | None = None
     aggregateMode: str
     developerDescription: str
     itemModifiers: list[DebuffCollections_ItemModifier] | None = None
@@ -346,6 +358,7 @@ class DogmaAttributeCategories:
 class DogmaAttributes:
     """Model for the dogmaAttributes.yaml SDE file."""
 
+    dogma_attributes_id: int | None = None
     attributeCategoryID: int | None = None
     dataType: int
     defaultValue: float
@@ -383,6 +396,7 @@ class DogmaEffects_ModifierInfo:
 class DogmaEffects:
     """Model for the dogmaEffects.yaml SDE file."""
 
+    dogma_effects_id: int | None = None
     disallowAutoRepeat: bool
     dischargeAttributeID: int | None = None
     durationAttributeID: int | None = None
@@ -414,6 +428,7 @@ class DogmaEffects:
 class DogmaUnits:
     """Model for the dogmaUnits.yaml SDE file."""
 
+    dogma_units_id: int | None = None
     description: LocalizedString | None = None
     displayName: LocalizedString | None = None
     name: str
@@ -440,6 +455,7 @@ class DynamicItemAttributes_InputOutputMapping:
 class DynamicItemAttributes:
     """Model for the dynamicItemAttributes.yaml SDE file."""
 
+    dynamic_item_attributes_id: int | None = None
     attributeIDs: dict[int, DynamicItemAttributes_AttributeID]
     inputOutputMapping: list[DynamicItemAttributes_InputOutputMapping]
 
@@ -448,6 +464,7 @@ class DynamicItemAttributes:
 class Factions:
     """Model for the factions.yaml SDE file."""
 
+    factions_id: int | None = None
     corporationID: int | None = None
     description: LocalizedString
     flatLogo: str | None = None
@@ -470,6 +487,7 @@ type FreelanceJobSchemas = dict[str, Any]
 class Graphics:
     """Model for the graphics.yaml SDE file."""
 
+    graphics_id: int | None = None
     graphicFile: str | None = None
     iconFolder: str | None = None
     sofFactionName: str | None = None
@@ -483,6 +501,7 @@ class Graphics:
 class Groups:
     """Model for the groups.yaml SDE file."""
 
+    groups_id: int | None = None
     anchorable: bool
     anchored: bool
     categoryID: int
@@ -497,6 +516,7 @@ class Groups:
 class Icons:
     """Model for the icons.yaml SDE file."""
 
+    icons_id: int | None = None
     iconFile: str
 
 
@@ -504,6 +524,7 @@ class Icons:
 class Landmarks:
     """Model for the landmarks.yaml SDE file."""
 
+    landmarks_id: int | None = None
     description: LocalizedString
     name: LocalizedString
     position: Position
@@ -533,6 +554,7 @@ class MapAsteroidBelts_Statistics:
 class MapAsteroidBelts:
     """Model for the mapAsteroidBelts.yaml SDE file."""
 
+    map_asteroid_belts_id: int | None = None
     celestialIndex: int
     orbitID: int
     orbitIndex: int
@@ -548,6 +570,7 @@ class MapAsteroidBelts:
 class MapConstellations:
     """Model for the mapConstellations.yaml SDE file."""
 
+    map_constellations_id: int | None = None
     factionID: int | None = None
     name: LocalizedString
     position: Position
@@ -588,6 +611,7 @@ class MapMoons_Statistics:
 class MapMoons:
     """Model for the mapMoons.yaml SDE file."""
 
+    map_moons_id: int | None = None
     attributes: MapMoons_Attributes
     celestialIndex: int
     orbitID: int
@@ -634,6 +658,7 @@ class MapPlanets_Statistics:
 class MapPlanets:
     """Model for the mapPlanets.yaml SDE file."""
 
+    map_planets_id: int | None = None
     asteroidBeltIDs: list[int] | None = None
     attributes: MapPlanets_Attributes
     celestialIndex: int
@@ -652,6 +677,7 @@ class MapPlanets:
 class MapRegions:
     """Model for the mapRegions.yaml SDE file."""
 
+    map_regions_id: int | None = None
     constellationIDs: list[int]
     description: LocalizedString | None = None
     factionID: int | None = None
@@ -665,6 +691,7 @@ class MapRegions:
 class MapSecondarySuns:
     """Model for the mapSecondarySuns.yaml SDE file."""
 
+    map_secondary_suns_id: int | None = None
     effectBeaconTypeID: int
     position: Position
     solarSystemID: int
@@ -675,6 +702,7 @@ class MapSecondarySuns:
 class MapSolarSystems:
     """Model for the mapSolarSystems.yaml SDE file."""
 
+    map_solar_systems_id: int | None = None
     border: bool | None = None
     constellationID: int
     corridor: bool | None = None
@@ -712,6 +740,7 @@ class MapStargates_Destination:
 class MapStargates:
     """Model for the mapStargates.yaml SDE file."""
 
+    map_stargates_id: int | None = None
     destination: MapStargates_Destination
     position: Position
     solarSystemID: int
@@ -733,6 +762,7 @@ class MapStars_Statistics:
 class MapStars:
     """Model for the mapStars.yaml SDE file."""
 
+    map_stars_id: int | None = None
     radius: int
     solarSystemID: int
     statistics: MapStars_Statistics
@@ -743,6 +773,7 @@ class MapStars:
 class MarketGroups:
     """Model for the marketGroups.yaml SDE file."""
 
+    market_groups_id: int | None = None
     description: LocalizedString | None = None
     hasTypes: bool
     iconID: int | None = None
@@ -750,6 +781,8 @@ class MarketGroups:
     parentGroupID: int | None = None
 
 
+# FIXME: check to see if this is following the same pattern,
+# where the _id field is captured in the records from the database.
 type Masteries = dict[int, list[int]]
 """Model for the masteries.yaml SDE file."""
 
@@ -758,6 +791,7 @@ type Masteries = dict[int, list[int]]
 class MetaGroups:
     """Model for the metaGroups.yaml SDE file."""
 
+    meta_groups_id: int | None = None
     color: Color | None = None
     name: LocalizedString
     iconID: int | None = None
@@ -769,6 +803,7 @@ class MetaGroups:
 class MercenaryTacticalOperations:
     """Model for the mercenaryTacticalOperations.yaml SDE file."""
 
+    mercenary_tactical_operations_id: int | None = None
     anarchy_impact: int
     development_impact: int
     infomorph_bonus: int
@@ -797,6 +832,7 @@ class NpcCharacters_Agent:
 class NpcCharacters:
     """Model for the npcCharacters.yaml SDE file."""
 
+    npc_characters_id: int | None = None
     bloodlineID: int
     ceo: bool
     corporationID: int
@@ -819,6 +855,7 @@ class NpcCharacters:
 class NpcCorporationDivisions:
     """Model for the npcCorporationDivisions.yaml SDE file."""
 
+    npc_corporation_divisions_id: int | None = None
     displayName: str | None = None
     internalName: str
     leaderTypeName: LocalizedString
@@ -839,6 +876,7 @@ class NpcCorporations_Divisions:
 class NpcCorporations:
     """Model for the npcCorporations.yaml SDE file."""
 
+    npc_corporations_id: int | None = None
     ceoID: int | None = None
     deleted: bool
     description: LocalizedString | None = None
@@ -877,6 +915,7 @@ class NpcCorporations:
 class NpcStations:
     """Model for the npcStations.yaml SDE file."""
 
+    npc_stations_id: int | None = None
     celestialIndex: int | None = None
     operationID: int
     orbitID: int
@@ -906,6 +945,7 @@ class PlanetResources_Reagent:
 class PlanetResources:
     """Model for the planetResources.yaml SDE file."""
 
+    planet_resources_id: int | None = None
     power: int | None = None
     workforce: int | None = None
     reagent: PlanetResources_Reagent | None = None
@@ -923,6 +963,7 @@ class PlanetSchematics_Types:
 class PlanetSchematics:
     """Model for the planetSchematics.yaml SDE file."""
 
+    planet_schematics_id: int | None = None
     cycleTime: int
     name: LocalizedString
     pins: list[int]
@@ -933,6 +974,7 @@ class PlanetSchematics:
 class Races:
     """Model for the races.yaml SDE file."""
 
+    races_id: int | None = None
     description: LocalizedString | None = None
     iconID: int | None = None
     name: LocalizedString
@@ -944,6 +986,7 @@ class Races:
 class SdeInfo:
     """Model for the sdeInfo.yaml SDE file."""
 
+    sde_info_id: str | None = None  # Included for completeness. is always 'sde'.
     buildNumber: int
     releaseDate: str
 
@@ -952,6 +995,7 @@ class SdeInfo:
 class SkinLicenses:
     """Model for the skinLicenses.yaml SDE file."""
 
+    skin_licenses_id: int | None = None
     duration: int
     licenseTypeID: int
     skinID: int
@@ -962,6 +1006,7 @@ class SkinLicenses:
 class SkinMaterials:
     """Model for the skinMaterials.yaml SDE file."""
 
+    skin_materials_id: int | None = None
     displayName: LocalizedString | None = None
     materialSetID: int
 
@@ -970,6 +1015,7 @@ class SkinMaterials:
 class Skins:
     """Model for the skins.yaml SDE file."""
 
+    skins_id: int | None = None
     allowCCPDevs: bool
     internalName: str
     skinMaterialID: int
@@ -993,6 +1039,7 @@ class SovereigntyUpgrades_Fuel:
 class SovereigntyUpgrades:
     """Model for the sovereigntyUpgrades.yaml SDE file."""
 
+    sovereignty_upgrades_id: int | None = None
     fuel: SovereigntyUpgrades_Fuel | None = None
     mutually_exclusive_group: str
     power_allocation: int | None = None
@@ -1005,6 +1052,7 @@ class SovereigntyUpgrades:
 class StationOperations:
     """Model for the stationOperations.yaml SDE file."""
 
+    station_operations_id: int | None = None
     activityID: int
     border: float
     corridor: float
@@ -1023,6 +1071,7 @@ class StationOperations:
 class StationServices:
     """Model for the stationServices.yaml SDE file."""
 
+    station_services_id: int | None = None
     serviceName: LocalizedString
     description: LocalizedString | None = None
 
@@ -1031,6 +1080,7 @@ class StationServices:
 class TranslationLanguages:
     """Model for the translationLanguages.yaml SDE file."""
 
+    translation_languages_id: str | None = None
     name: str
 
 
@@ -1069,6 +1119,7 @@ class TypeBonus_MiscBonus:
 class TypeBonus:
     """Model for the typeBonus.yaml SDE file."""
 
+    type_bonus_id: int | None = None
     roleBonuses: list[TypeBonus_RoleBonus] | None = None
     types: dict[int, list[TypeBonus_Types_Bonus]] | None = None
     iconID: int | None = None
@@ -1095,6 +1146,7 @@ class TypeDogma_Effects:
 class TypeDogma:
     """Model for the typeDogma.yaml SDE file."""
 
+    type_dogma_id: int | None = None
     dogmaAttributes: list[TypeDogma_Attributes]
     dogmaEffects: list[TypeDogma_Effects] | None = None
 
@@ -1120,6 +1172,7 @@ class TypeMaterials_RandomizedMaterial:
 class TypeMaterials:
     """Model for the typeMaterials.yaml SDE file."""
 
+    type_materials_id: int | None = None
     materials: list[TypeMaterials_Material] | None = None
     randomizedMaterials: list[TypeMaterials_RandomizedMaterial] | None = None
 
@@ -1128,6 +1181,7 @@ class TypeMaterials:
 class EveTypes:
     """Model for the types.yaml SDE file."""
 
+    type_id: int | None = None
     groupID: int
     mass: float | None = None
     name: LocalizedString
