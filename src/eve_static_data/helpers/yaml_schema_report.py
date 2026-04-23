@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import logging
 from collections import Counter
 from dataclasses import dataclass, field
@@ -318,8 +319,21 @@ def _inspect_yaml_dataset(file_path: Path) -> YamlDatasetInspection:
     top_level_key_type_counts: Counter[str] = _string_counter()
 
     try:
-        with file_path.open("r", encoding="utf-8") as handle:
-            data = safe_load(handle)
+        # Accept both json and yaml as input formats.
+        if file_path.suffix.lower() == ".json":
+            with file_path.open("r", encoding="utf-8") as handle:
+                data = json.load(handle)
+        elif file_path.suffix.lower() in {".yaml", ".yml"}:
+            with file_path.open("r", encoding="utf-8") as handle:
+                data = safe_load(handle)
+        else:
+            _append_warning(
+                warnings,
+                f"Unrecognized file extension {file_path.suffix}; "
+                "attempting to parse as YAML",
+            )
+            with file_path.open("r", encoding="utf-8") as handle:
+                data = safe_load(handle)
     except YAMLError as exc:
         logger.warning("Failed to parse YAML file %s: %s", file_path, exc)
         return {
