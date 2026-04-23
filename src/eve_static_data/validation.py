@@ -2,25 +2,30 @@
 
 import json
 import logging
+from dataclasses import dataclass
 from pathlib import Path
 from time import perf_counter
 
 from pydantic import BaseModel
 from rich.console import Console
 
-from eve_static_data.helpers.jsonl_reader import read_jsonl_file
 from eve_static_data.helpers.pydantic.save_to_disk import BaseModelToDisk
 from eve_static_data.helpers.save_text_file import save_text_file
 from eve_static_data.helpers.sde_info import SdeInfo, load_sde_info
 from eve_static_data.models.dataset_filenames import SdeDatasetFiles
-from eve_static_data.models.pydantic.records import LOOKUP as pydantic_model_lookup
 from eve_static_data.sde_tools import SDETools
 from eve_static_data.sde_type_sigs import get_sde_type_sigs
-from eve_static_data.transformers import ModelLoader, ModelValidationErrorRecord
 
 logger = logging.getLogger(__name__)
 
+
 # TODO report when input sde build number is greater than app build number and schema changelog afterbuildnumber.
+@dataclass(slots=True)
+class ModelValidationErrorRecord:
+    model: str
+    line_number: int
+    data: str
+    error_messages: list[str]
 
 
 class DatasetStats(BaseModel):

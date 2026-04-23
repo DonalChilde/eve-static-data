@@ -18,6 +18,14 @@ to the database, the key is added to the record as a field, and when deserializi
 the database, the key field is set in the record. This would allows the same models to be
 used for YAML/JSON datasets and database records.
 
+Records with LocalizedString fields support LocalizedRecord, which provides a
+localized_fields method to return a dict of the localized fields in the model for a given
+language.
+
+This will allow the same data model to be used to load ans save a subset of avaliable
+languages. For example, if only English and German are needed, The SDE files can be processed
+to only include those languages.
+
 
 
 
@@ -28,26 +36,18 @@ defined as types instead of dataclasses.
 from dataclasses import dataclass
 from typing import Any
 
+from eve_static_data.models.common import (
+    TRANSLATION_MISSING,
+    Lang,
+    LocalizableRecord,
+    LocalizedString,
+    lang_check,
+)
+
 # ------------------------------------------------------------------------------
 # Common model definitions.
+#     These models are used more than one time in this file.
 # ------------------------------------------------------------------------------
-
-
-@dataclass
-class LocalizedString:
-    """Type definition for LocalizedString.
-
-    Source info: SDE file: translationLanguages.yaml
-    """
-
-    en: str = "NOT_TRANSLATED"
-    de: str = "NOT_TRANSLATED"
-    fr: str = "NOT_TRANSLATED"
-    ja: str = "NOT_TRANSLATED"
-    zh: str = "NOT_TRANSLATED"
-    ru: str = "NOT_TRANSLATED"
-    ko: str = "NOT_TRANSLATED"
-    es: str = "NOT_TRANSLATED"
 
 
 @dataclass
@@ -117,7 +117,7 @@ class AgentTypes:
 
 
 @dataclass(slots=True, kw_only=True)
-class Ancestries:
+class Ancestries(LocalizableRecord):
     """Model for the ancestries.yaml dataset."""
 
     ancestries_id: int | None = None
@@ -132,9 +132,17 @@ class Ancestries:
     shortDescription: str | None = None
     willpower: int
 
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        return {
+            "description": self.description.get(lang, TRANSLATION_MISSING),
+            "name": self.name.get(lang, TRANSLATION_MISSING),
+        }
+
 
 @dataclass(slots=True, kw_only=True)
-class Bloodlines:
+class Bloodlines(LocalizableRecord):
     """Model for the bloodlines.yaml dataset."""
 
     bloodlines_id: int | None = None
@@ -148,6 +156,14 @@ class Bloodlines:
     perception: int
     raceID: int
     willpower: int
+
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        return {
+            "description": self.description.get(lang, TRANSLATION_MISSING),
+            "name": self.name.get(lang, TRANSLATION_MISSING),
+        }
 
 
 @dataclass(slots=True, kw_only=True)
@@ -192,13 +208,18 @@ class Blueprints:
 
 
 @dataclass(slots=True, kw_only=True)
-class Categories:
+class Categories(LocalizableRecord):
     """Model for the categories.yaml SDE file."""
 
     categories_id: int | None = None
     name: LocalizedString
     published: bool
     iconID: int | None = None
+
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        return {"name": self.name.get(lang, TRANSLATION_MISSING)}
 
 
 @dataclass(slots=True, kw_only=True)
@@ -213,7 +234,7 @@ class Certificates_SkillType:
 
 
 @dataclass(slots=True, kw_only=True)
-class Certificates:
+class Certificates(LocalizableRecord):
     """Model for the certificates.yaml SDE file."""
 
     certificates_id: int | None = None
@@ -223,9 +244,17 @@ class Certificates:
     recommendedFor: list[int] | None = None
     skillTypes: dict[int, Certificates_SkillType]
 
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        return {
+            "description": self.description.get(lang, TRANSLATION_MISSING),
+            "name": self.name.get(lang, TRANSLATION_MISSING),
+        }
+
 
 @dataclass(slots=True, kw_only=True)
-class CharacterAttributes:
+class CharacterAttributes(LocalizableRecord):
     """Model for the characterAttributes.yaml SDE file."""
 
     character_attributes_id: int | None = None
@@ -234,6 +263,11 @@ class CharacterAttributes:
     name: LocalizedString
     notes: str
     shortDescription: str
+
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        return {"name": self.name.get(lang, TRANSLATION_MISSING)}
 
 
 @dataclass(slots=True, kw_only=True)
@@ -291,11 +325,16 @@ class ControlTowerResources:
 
 
 @dataclass(slots=True, kw_only=True)
-class CorporationActivities:
+class CorporationActivities(LocalizableRecord):
     """Model for the corporationActivities.yaml SDE file."""
 
     corporation_activities_id: int | None = None
     name: LocalizedString
+
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        return {"name": self.name.get(lang, TRANSLATION_MISSING)}
 
 
 @dataclass(slots=True, kw_only=True)
@@ -329,7 +368,7 @@ class DebuffCollections_ItemModifier:
 
 
 @dataclass(slots=True, kw_only=True)
-class DebuffCollections:
+class DebuffCollections(LocalizableRecord):
     """Model for the dbuffCollections.yaml SDE file."""
 
     debuff_collections_id: int | None = None
@@ -345,6 +384,18 @@ class DebuffCollections:
     showOutputValueInUI: str
     displayName: LocalizedString | None = None
 
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        displayName = (
+            self.displayName.get(lang, TRANSLATION_MISSING)
+            if self.displayName
+            else TRANSLATION_MISSING
+        )
+        return {
+            "displayName": displayName,
+        }
+
 
 @dataclass(slots=True, kw_only=True)
 class DogmaAttributeCategories:
@@ -355,7 +406,7 @@ class DogmaAttributeCategories:
 
 
 @dataclass(slots=True, kw_only=True)
-class DogmaAttributes:
+class DogmaAttributes(LocalizableRecord):
     """Model for the dogmaAttributes.yaml SDE file."""
 
     dogma_attributes_id: int | None = None
@@ -377,6 +428,30 @@ class DogmaAttributes:
     maxAttributeID: int | None = None
     minAttributeID: int | None = None
 
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        displayName = (
+            self.displayName.get(lang, TRANSLATION_MISSING)
+            if self.displayName
+            else TRANSLATION_MISSING
+        )
+        tooltipDescription = (
+            self.tooltipDescription.get(lang, TRANSLATION_MISSING)
+            if self.tooltipDescription
+            else TRANSLATION_MISSING
+        )
+        tooltipTitle = (
+            self.tooltipTitle.get(lang, TRANSLATION_MISSING)
+            if self.tooltipTitle
+            else TRANSLATION_MISSING
+        )
+        return {
+            "displayName": displayName,
+            "tooltipDescription": tooltipDescription,
+            "tooltipTitle": tooltipTitle,
+        }
+
 
 @dataclass(slots=True, kw_only=True)
 class DogmaEffects_ModifierInfo:
@@ -393,7 +468,7 @@ class DogmaEffects_ModifierInfo:
 
 
 @dataclass(slots=True, kw_only=True)
-class DogmaEffects:
+class DogmaEffects(LocalizableRecord):
     """Model for the dogmaEffects.yaml SDE file."""
 
     dogma_effects_id: int | None = None
@@ -423,15 +498,51 @@ class DogmaEffects:
     fittingUsageChanceAttributeID: int | None = None
     resistanceAttributeID: int | None = None
 
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        description = (
+            self.description.get(lang, TRANSLATION_MISSING)
+            if self.description
+            else TRANSLATION_MISSING
+        )
+        displayName = (
+            self.displayName.get(lang, TRANSLATION_MISSING)
+            if self.displayName
+            else TRANSLATION_MISSING
+        )
+        return {
+            "description": description,
+            "displayName": displayName,
+        }
+
 
 @dataclass(slots=True, kw_only=True)
-class DogmaUnits:
+class DogmaUnits(LocalizableRecord):
     """Model for the dogmaUnits.yaml SDE file."""
 
     dogma_units_id: int | None = None
     description: LocalizedString | None = None
     displayName: LocalizedString | None = None
     name: str
+
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        displayName = (
+            self.displayName.get(lang, TRANSLATION_MISSING)
+            if self.displayName
+            else TRANSLATION_MISSING
+        )
+        description = (
+            self.description.get(lang, TRANSLATION_MISSING)
+            if self.description
+            else TRANSLATION_MISSING
+        )
+        return {
+            "displayName": displayName,
+            "description": description,
+        }
 
 
 @dataclass(slots=True, kw_only=True)
@@ -461,7 +572,7 @@ class DynamicItemAttributes:
 
 
 @dataclass(slots=True, kw_only=True)
-class Factions:
+class Factions(LocalizableRecord):
     """Model for the factions.yaml SDE file."""
 
     factions_id: int | None = None
@@ -477,6 +588,20 @@ class Factions:
     sizeFactor: float
     solarSystemID: int
     uniqueName: bool
+
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        shortDescription = (
+            self.shortDescription.get(lang, TRANSLATION_MISSING)
+            if self.shortDescription
+            else TRANSLATION_MISSING
+        )
+        return {
+            "description": self.description.get(lang, TRANSLATION_MISSING),
+            "name": self.name.get(lang, TRANSLATION_MISSING),
+            "shortDescription": shortDescription,
+        }
 
 
 type FreelanceJobSchemas = dict[str, Any]
@@ -498,7 +623,7 @@ class Graphics:
 
 
 @dataclass(slots=True, kw_only=True)
-class Groups:
+class Groups(LocalizableRecord):
     """Model for the groups.yaml SDE file."""
 
     groups_id: int | None = None
@@ -511,6 +636,11 @@ class Groups:
     useBasePrice: bool
     iconID: int | None = None
 
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        return {"name": self.name.get(lang, TRANSLATION_MISSING)}
+
 
 @dataclass(slots=True, kw_only=True)
 class Icons:
@@ -521,7 +651,7 @@ class Icons:
 
 
 @dataclass(slots=True, kw_only=True)
-class Landmarks:
+class Landmarks(LocalizableRecord):
     """Model for the landmarks.yaml SDE file."""
 
     landmarks_id: int | None = None
@@ -530,6 +660,14 @@ class Landmarks:
     position: Position
     iconID: int | None = None
     locationID: int | None = None
+
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        return {
+            "description": self.description.get(lang, TRANSLATION_MISSING),
+            "name": self.name.get(lang, TRANSLATION_MISSING),
+        }
 
 
 @dataclass(slots=True, kw_only=True)
@@ -551,7 +689,7 @@ class MapAsteroidBelts_Statistics:
 
 
 @dataclass(slots=True, kw_only=True)
-class MapAsteroidBelts:
+class MapAsteroidBelts(LocalizableRecord):
     """Model for the mapAsteroidBelts.yaml SDE file."""
 
     map_asteroid_belts_id: int | None = None
@@ -565,9 +703,19 @@ class MapAsteroidBelts:
     typeID: int
     uniqueName: LocalizedString | None = None
 
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        uniqueName = (
+            self.uniqueName.get(lang, TRANSLATION_MISSING)
+            if self.uniqueName
+            else TRANSLATION_MISSING
+        )
+        return {"uniqueName": uniqueName}
+
 
 @dataclass(slots=True, kw_only=True)
-class MapConstellations:
+class MapConstellations(LocalizableRecord):
     """Model for the mapConstellations.yaml SDE file."""
 
     map_constellations_id: int | None = None
@@ -577,6 +725,11 @@ class MapConstellations:
     regionID: int
     solarSystemIDs: list[int]
     wormholeClassID: int | None = None
+
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        return {"name": self.name.get(lang, TRANSLATION_MISSING)}
 
 
 @dataclass(slots=True, kw_only=True)
@@ -608,7 +761,7 @@ class MapMoons_Statistics:
 
 
 @dataclass(slots=True, kw_only=True)
-class MapMoons:
+class MapMoons(LocalizableRecord):
     """Model for the mapMoons.yaml SDE file."""
 
     map_moons_id: int | None = None
@@ -623,6 +776,16 @@ class MapMoons:
     typeID: int
     npcStationIDs: list[int] | None = None
     uniqueName: LocalizedString | None = None
+
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        uniqueName = (
+            self.uniqueName.get(lang, TRANSLATION_MISSING)
+            if self.uniqueName
+            else TRANSLATION_MISSING
+        )
+        return {"uniqueName": uniqueName}
 
 
 @dataclass(slots=True, kw_only=True)
@@ -655,7 +818,7 @@ class MapPlanets_Statistics:
 
 
 @dataclass(slots=True, kw_only=True)
-class MapPlanets:
+class MapPlanets(LocalizableRecord):
     """Model for the mapPlanets.yaml SDE file."""
 
     map_planets_id: int | None = None
@@ -672,9 +835,19 @@ class MapPlanets:
     npcStationIDs: list[int] | None = None
     uniqueName: LocalizedString | None = None
 
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        uniqueName = (
+            self.uniqueName.get(lang, TRANSLATION_MISSING)
+            if self.uniqueName
+            else TRANSLATION_MISSING
+        )
+        return {"uniqueName": uniqueName}
+
 
 @dataclass(slots=True, kw_only=True)
-class MapRegions:
+class MapRegions(LocalizableRecord):
     """Model for the mapRegions.yaml SDE file."""
 
     map_regions_id: int | None = None
@@ -685,6 +858,19 @@ class MapRegions:
     nebulaID: int
     position: Position
     wormholeClassID: int | None = None
+
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        description = (
+            self.description.get(lang, TRANSLATION_MISSING)
+            if self.description
+            else TRANSLATION_MISSING
+        )
+        return {
+            "description": description,
+            "name": self.name.get(lang, TRANSLATION_MISSING),
+        }
 
 
 @dataclass(slots=True, kw_only=True)
@@ -699,7 +885,7 @@ class MapSecondarySuns:
 
 
 @dataclass(slots=True, kw_only=True)
-class MapSolarSystems:
+class MapSolarSystems(LocalizableRecord):
     """Model for the mapSolarSystems.yaml SDE file."""
 
     map_solar_systems_id: int | None = None
@@ -726,6 +912,11 @@ class MapSolarSystems:
     stargateIDs: list[int] | None = None
     visualEffect: str | None = None
     wormholeClassID: int | None = None
+
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        return {"name": self.name.get(lang, TRANSLATION_MISSING)}
 
 
 @dataclass(slots=True, kw_only=True)
@@ -770,7 +961,7 @@ class MapStars:
 
 
 @dataclass(slots=True, kw_only=True)
-class MarketGroups:
+class MarketGroups(LocalizableRecord):
     """Model for the marketGroups.yaml SDE file."""
 
     market_groups_id: int | None = None
@@ -780,6 +971,19 @@ class MarketGroups:
     name: LocalizedString
     parentGroupID: int | None = None
 
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        description = (
+            self.description.get(lang, TRANSLATION_MISSING)
+            if self.description
+            else TRANSLATION_MISSING
+        )
+        return {
+            "description": description,
+            "name": self.name.get(lang, TRANSLATION_MISSING),
+        }
+
 
 # FIXME: check to see if this is following the same pattern,
 # where the _id field is captured in the records from the database.
@@ -788,7 +992,7 @@ type Masteries = dict[int, list[int]]
 
 
 @dataclass(slots=True, kw_only=True)
-class MetaGroups:
+class MetaGroups(LocalizableRecord):
     """Model for the metaGroups.yaml SDE file."""
 
     meta_groups_id: int | None = None
@@ -798,9 +1002,22 @@ class MetaGroups:
     iconSuffix: str | None = None
     description: LocalizedString | None = None
 
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        description = (
+            self.description.get(lang, TRANSLATION_MISSING)
+            if self.description
+            else TRANSLATION_MISSING
+        )
+        return {
+            "name": self.name.get(lang, TRANSLATION_MISSING),
+            "description": description,
+        }
+
 
 @dataclass(slots=True, kw_only=True)
-class MercenaryTacticalOperations:
+class MercenaryTacticalOperations(LocalizableRecord):
     """Model for the mercenaryTacticalOperations.yaml SDE file."""
 
     mercenary_tactical_operations_id: int | None = None
@@ -809,6 +1026,19 @@ class MercenaryTacticalOperations:
     infomorph_bonus: int
     name: LocalizedString
     description: LocalizedString | None = None
+
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        description = (
+            self.description.get(lang, TRANSLATION_MISSING)
+            if self.description
+            else TRANSLATION_MISSING
+        )
+        return {
+            "name": self.name.get(lang, TRANSLATION_MISSING),
+            "description": description,
+        }
 
 
 @dataclass(slots=True, kw_only=True)
@@ -829,7 +1059,7 @@ class NpcCharacters_Agent:
 
 
 @dataclass(slots=True, kw_only=True)
-class NpcCharacters:
+class NpcCharacters(LocalizableRecord):
     """Model for the npcCharacters.yaml SDE file."""
 
     npc_characters_id: int | None = None
@@ -850,9 +1080,14 @@ class NpcCharacters:
     agent: NpcCharacters_Agent | None = None
     description: str | None = None
 
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        return {"name": self.name.get(lang, TRANSLATION_MISSING)}
+
 
 @dataclass(slots=True, kw_only=True)
-class NpcCorporationDivisions:
+class NpcCorporationDivisions(LocalizableRecord):
     """Model for the npcCorporationDivisions.yaml SDE file."""
 
     npc_corporation_divisions_id: int | None = None
@@ -861,6 +1096,20 @@ class NpcCorporationDivisions:
     leaderTypeName: LocalizedString
     name: LocalizedString
     description: LocalizedString | None = None
+
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        description = (
+            self.description.get(lang, TRANSLATION_MISSING)
+            if self.description
+            else TRANSLATION_MISSING
+        )
+        return {
+            "name": self.name.get(lang, TRANSLATION_MISSING),
+            "description": description,
+            "leaderTypeName": self.leaderTypeName.get(lang, TRANSLATION_MISSING),
+        }
 
 
 @dataclass(slots=True, kw_only=True)
@@ -873,7 +1122,7 @@ class NpcCorporations_Divisions:
 
 
 @dataclass(slots=True, kw_only=True)
-class NpcCorporations:
+class NpcCorporations(LocalizableRecord):
     """Model for the npcCorporations.yaml SDE file."""
 
     npc_corporations_id: int | None = None
@@ -909,6 +1158,19 @@ class NpcCorporations:
     solarSystemID: int | None = None
     secondaryActivityID: int | None = None
     exchangeRates: dict[int, float] | None = None
+
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        description = (
+            self.description.get(lang, TRANSLATION_MISSING)
+            if self.description
+            else TRANSLATION_MISSING
+        )
+        return {
+            "description": description,
+            "name": self.name.get(lang, TRANSLATION_MISSING),
+        }
 
 
 @dataclass(slots=True, kw_only=True)
@@ -960,7 +1222,7 @@ class PlanetSchematics_Types:
 
 
 @dataclass(slots=True, kw_only=True)
-class PlanetSchematics:
+class PlanetSchematics(LocalizableRecord):
     """Model for the planetSchematics.yaml SDE file."""
 
     planet_schematics_id: int | None = None
@@ -969,9 +1231,14 @@ class PlanetSchematics:
     pins: list[int]
     types: dict[int, PlanetSchematics_Types]
 
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        return {"name": self.name.get(lang, TRANSLATION_MISSING)}
+
 
 @dataclass(slots=True, kw_only=True)
-class Races:
+class Races(LocalizableRecord):
     """Model for the races.yaml SDE file."""
 
     races_id: int | None = None
@@ -980,6 +1247,19 @@ class Races:
     name: LocalizedString
     shipTypeID: int | None = None
     skills: dict[int, int] | None = None
+
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        description = (
+            self.description.get(lang, TRANSLATION_MISSING)
+            if self.description
+            else TRANSLATION_MISSING
+        )
+        return {
+            "name": self.name.get(lang, TRANSLATION_MISSING),
+            "description": description,
+        }
 
 
 @dataclass(slots=True, kw_only=True)
@@ -1003,16 +1283,26 @@ class SkinLicenses:
 
 
 @dataclass(slots=True, kw_only=True)
-class SkinMaterials:
+class SkinMaterials(LocalizableRecord):
     """Model for the skinMaterials.yaml SDE file."""
 
     skin_materials_id: int | None = None
     displayName: LocalizedString | None = None
     materialSetID: int
 
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        displayName = (
+            self.displayName.get(lang, TRANSLATION_MISSING)
+            if self.displayName
+            else TRANSLATION_MISSING
+        )
+        return {"displayName": displayName}
+
 
 @dataclass(slots=True, kw_only=True)
-class Skins:
+class Skins(LocalizableRecord):
     """Model for the skins.yaml SDE file."""
 
     skins_id: int | None = None
@@ -1024,6 +1314,16 @@ class Skins:
     visibleTranquility: bool
     isStructureSkin: bool | None = None
     skinDescription: LocalizedString | None = None
+
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        skinDescription = (
+            self.skinDescription.get(lang, TRANSLATION_MISSING)
+            if self.skinDescription
+            else TRANSLATION_MISSING
+        )
+        return {"skinDescription": skinDescription}
 
 
 @dataclass(slots=True, kw_only=True)
@@ -1049,7 +1349,7 @@ class SovereigntyUpgrades:
 
 
 @dataclass(slots=True, kw_only=True)
-class StationOperations:
+class StationOperations(LocalizableRecord):
     """Model for the stationOperations.yaml SDE file."""
 
     station_operations_id: int | None = None
@@ -1066,14 +1366,40 @@ class StationOperations:
     services: list[int]
     stationTypes: dict[int, int] | None = None
 
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        description = (
+            self.description.get(lang, TRANSLATION_MISSING)
+            if self.description
+            else TRANSLATION_MISSING
+        )
+        return {
+            "description": description,
+            "operationName": self.operationName.get(lang, TRANSLATION_MISSING),
+        }
+
 
 @dataclass(slots=True, kw_only=True)
-class StationServices:
+class StationServices(LocalizableRecord):
     """Model for the stationServices.yaml SDE file."""
 
     station_services_id: int | None = None
     serviceName: LocalizedString
     description: LocalizedString | None = None
+
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        description = (
+            self.description.get(lang, TRANSLATION_MISSING)
+            if self.description
+            else TRANSLATION_MISSING
+        )
+        return {
+            "serviceName": self.serviceName.get(lang, TRANSLATION_MISSING),
+            "description": description,
+        }
 
 
 @dataclass(slots=True, kw_only=True)
@@ -1085,7 +1411,7 @@ class TranslationLanguages:
 
 
 @dataclass(slots=True, kw_only=True)
-class TypeBonus_RoleBonus:
+class TypeBonus_RoleBonus(LocalizableRecord):
     """Nested model for the typeBonus.yaml SDE file."""
 
     bonus: int | float | None = None
@@ -1093,9 +1419,14 @@ class TypeBonus_RoleBonus:
     importance: int
     unitID: int | None = None
 
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        return {"bonusText": self.bonusText.get(lang, TRANSLATION_MISSING)}
+
 
 @dataclass(slots=True, kw_only=True)
-class TypeBonus_Types_Bonus:
+class TypeBonus_Types_Bonus(LocalizableRecord):
     """Nested model for the typeBonus.yaml SDE file."""
 
     bonus: int | float | None = None
@@ -1103,9 +1434,14 @@ class TypeBonus_Types_Bonus:
     importance: int
     unitID: int | None = None
 
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        return {"bonusText": self.bonusText.get(lang, TRANSLATION_MISSING)}
+
 
 @dataclass(slots=True, kw_only=True)
-class TypeBonus_MiscBonus:
+class TypeBonus_MiscBonus(LocalizableRecord):
     """Nested model for the typeBonus.yaml SDE file."""
 
     bonus: int | float | None = None
@@ -1113,6 +1449,11 @@ class TypeBonus_MiscBonus:
     importance: int
     isPositive: bool | None = None
     unitID: int | None = None
+
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        return {"bonusText": self.bonusText.get(lang, TRANSLATION_MISSING)}
 
 
 @dataclass(slots=True, kw_only=True)
@@ -1178,7 +1519,7 @@ class TypeMaterials:
 
 
 @dataclass(slots=True, kw_only=True)
-class EveTypes:
+class EveTypes(LocalizableRecord):
     """Model for the types.yaml SDE file."""
 
     type_id: int | None = None
@@ -1200,3 +1541,16 @@ class EveTypes:
     metaGroupID: int | None = None
     variationParentTypeID: int | None = None
     factionID: int | None = None
+
+    def localized_fields(self, lang: Lang) -> dict[str, str]:
+        """Returns a dict of the localized fields in the model."""
+        lang_check(lang)
+        description = (
+            self.description.get(lang, TRANSLATION_MISSING)
+            if self.description
+            else TRANSLATION_MISSING
+        )
+        return {
+            "name": self.name.get(lang, TRANSLATION_MISSING),
+            "description": description,
+        }

@@ -71,25 +71,16 @@ class SdeDatasetFiles(StrEnum):
         """Return the filename for the JSON version of this file name.
 
         This file name is used when exporting the dataset to JSON format, as opposed to
-        the original JSONL format used in the SDE.
+        the original JSONL or YAML format used in the SDE.
         """
         return f"{self.value}.json"
 
-    def as_localized_dataset_json(self, lang: str) -> str:
-        """Return the filename for the localized JSON version of this file name.
+    def as_yaml(self) -> str:
+        """Return the filename for the YAML version of this file name.
 
-        This file name is used when exporting the dataset to JSON format, with localization
-        for the specified language.
+        This file name is used when working with the original SDE dataset files, which are in YAML format.
         """
-        return f"{self.value}-dataset-localized-{lang}.json"
-
-    def as_dataset_json(self) -> str:
-        """Return the filename for the dataset JSON version of this file name.
-
-        This file name is used when exporting the dataset to JSON format, with a standardized
-        naming convention for datasets.
-        """
-        return f"{self.value}-dataset.json"
+        return f"{self.value}.yaml"
 
 
 # TODO unifiy function naming conventions. Add published to above?

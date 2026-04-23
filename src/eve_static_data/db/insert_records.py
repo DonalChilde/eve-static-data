@@ -3,7 +3,7 @@
 import sqlite3
 
 import eve_static_data.models.pydantic.yaml_datasets
-from eve_static_data.models.common import Lang
+from eve_static_data.models.common import TRANSLATION_MISSING, Lang
 from eve_static_data.models.pydantic import yaml_datasets
 from eve_static_data.models.pydantic import yaml_records as pydantic_records
 
@@ -47,6 +47,11 @@ def agents_in_space(
         )
 
 
+def _is_not_localized(localized_fields: dict[str, str]) -> bool:
+    """Determine if all localized fields are missing."""
+    return all(value == TRANSLATION_MISSING for value in localized_fields.values())
+
+
 def ancestries(cursor: sqlite3.Cursor, records: yaml_datasets.AncestriesRoot) -> None:
     """Insert records into the ancestries table."""
     for ancestries_id, record in records.root.items():
@@ -65,13 +70,17 @@ def ancestries(cursor: sqlite3.Cursor, records: yaml_datasets.AncestriesRoot) ->
             ),
         )
         for lang in LANGS:
+            localized = record.localized_fields(lang)
+            # skip insert if all the localized fields are missing
+            if _is_not_localized(localized):
+                continue
             cursor.execute(
                 "INSERT INTO ancestries_localized (ancestries_id, lang, localized_name, localized_description) VALUES (?, ?, ?, ?);",
                 (
                     ancestries_id,
                     lang,
-                    getattr(record.name, lang),
-                    getattr(record.description, lang),
+                    localized["name"],
+                    localized["description"],
                 ),
             )
 
@@ -94,13 +103,17 @@ def bloodlines(cursor: sqlite3.Cursor, records: yaml_datasets.BloodlinesRoot) ->
             ),
         )
         for lang in LANGS:
+            localized = record.localized_fields(lang)
+            # skip insert if all the localized fields are missing
+            if _is_not_localized(localized):
+                continue
             cursor.execute(
                 "INSERT INTO bloodlines_localized (bloodlines_id, lang, localized_name, localized_description) VALUES (?, ?, ?, ?);",
                 (
                     bloodlines_id,
                     lang,
-                    getattr(record.name, lang),
-                    getattr(record.description, lang),
+                    localized["name"],
+                    localized["description"],
                 ),
             )
 
@@ -159,12 +172,15 @@ def categories(cursor: sqlite3.Cursor, records: yaml_datasets.CategoriesRoot) ->
             (categories_id, record.iconID, record.published),
         )
         for lang in LANGS:
+            localized = record.localized_fields(lang)
+            if _is_not_localized(localized):
+                continue
             cursor.execute(
                 "INSERT INTO categories_localized (categories_id, lang, localized_name) VALUES (?, ?, ?);",
                 (
                     categories_id,
                     lang,
-                    getattr(record.name, lang),
+                    localized["name"],
                 ),
             )
 
@@ -179,13 +195,16 @@ def certificates(
             (certificates_id, record.groupID),
         )
         for lang in LANGS:
+            localized = record.localized_fields(lang)
+            if _is_not_localized(localized):
+                continue
             cursor.execute(
                 "INSERT INTO certificates_localized (certificates_id, lang, localized_name,localized_description) VALUES (?, ?, ?, ?);",
                 (
                     certificates_id,
                     lang,
-                    getattr(record.name, lang),
-                    getattr(record.description, lang),
+                    localized["name"],
+                    localized["description"],
                 ),
             )
         if record.recommendedFor:
