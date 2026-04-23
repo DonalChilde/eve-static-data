@@ -9,7 +9,7 @@ import typer
 from rich.console import Console
 from yaml import safe_load
 
-from eve_static_data.models.type_defs import LangEnum
+from eve_static_data.models.common import LangEnum
 
 app = typer.Typer(no_args_is_help=True)
 

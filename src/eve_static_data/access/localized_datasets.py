@@ -3,9 +3,9 @@
 from pathlib import Path
 
 from eve_static_data.helpers.sde_info import load_sde_info
+from eve_static_data.models.common import Lang
 from eve_static_data.models.pydantic import localized_datasets as LDS
 from eve_static_data.models.pydantic import localized_records as LPM
-from eve_static_data.models.type_defs import Lang
 
 
 class LocalizedDatasetLoader:

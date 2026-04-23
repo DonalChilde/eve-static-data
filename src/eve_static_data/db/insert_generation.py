@@ -21,8 +21,8 @@ table should be inserted first, followed by any related sub_tables.
 import sqlite3
 from collections.abc import Iterable
 
+from eve_static_data.models.common import Lang
 from eve_static_data.models.pydantic import records as pydantic_records
-from eve_static_data.models.type_defs import Lang
 
 LANGS: set[Lang] = {"en", "de", "fr", "ja", "ru", "zh", "ko", "es"}
 

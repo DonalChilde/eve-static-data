@@ -2,7 +2,7 @@
 
 from pydantic import RootModel
 
-from eve_static_data.models.pydantic import yaml_records
+from eve_static_data.models.pydantic import yaml_records_proto as yaml_records
 
 AgentsInSpaceRoot = RootModel[dict[int, yaml_records.AgentsInSpace]]
 AgentTypesRoot = RootModel[dict[int, yaml_records.AgentTypes]]

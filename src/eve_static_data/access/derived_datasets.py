@@ -11,6 +11,7 @@ from pathlib import Path
 from eve_static_data.access import localized_datasets as LDA
 from eve_static_data.access import sde_datasets as SDE
 from eve_static_data.access.sde_datasets import sde_info as load_sde_info_2
+from eve_static_data.models.common import Lang
 from eve_static_data.models.dataset_filenames import (
     DerivedDatasetFiles,
     SdeDatasetFiles,
@@ -28,7 +29,6 @@ from eve_static_data.models.derived.region_names import RegionNames
 from eve_static_data.models.derived.system_names import SystemNames
 from eve_static_data.models.pydantic.datasets import SdeDataset
 from eve_static_data.models.pydantic.localized_datasets import SdeDatasetLocalized
-from eve_static_data.models.type_defs import Lang
 
 logger = logging.getLogger(__name__)
 

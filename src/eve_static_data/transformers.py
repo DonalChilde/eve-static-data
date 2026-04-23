@@ -8,7 +8,7 @@ from typing import Any
 from pydantic import ValidationError
 
 from eve_static_data.helpers.jsonl_reader import BASE_MODELS, PydanticTransformer
-from eve_static_data.models.type_defs import Lang, LocalizedString
+from eve_static_data.models.common import Lang, LocalizedString
 
 logger = logging.getLogger(__name__)
 

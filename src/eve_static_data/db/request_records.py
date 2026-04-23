@@ -4,8 +4,8 @@ import sqlite3
 from collections.abc import Iterable
 from typing import Any
 
+from eve_static_data.models.common import Lang
 from eve_static_data.models.pydantic import yaml_records as pydantic_records
-from eve_static_data.models.type_defs import Lang
 
 LANGS: set[Lang] = {"en", "de", "fr", "ja", "ru", "zh", "ko", "es"}
 ACTIVITIES: set[str] = {

@@ -5,9 +5,9 @@ More models to be added as needed for use.
 
 from pydantic import BaseModel
 
+from eve_static_data.models.common import Lang
 from eve_static_data.models.dataset_filenames import SdeDatasetFiles
 from eve_static_data.models.pydantic import localized_records as LPM
-from eve_static_data.models.type_defs import Lang
 
 
 class SdeDatasetLocalized(BaseModel):
