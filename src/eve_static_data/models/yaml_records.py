@@ -1535,6 +1535,7 @@ class EveTypes(LocalizableRecord):
     marketGroupID: int | None = None
     capacity: float | None = None
     metaGroupID: int | None = None
+    metaLevel: int | None = None
     variationParentTypeID: int | None = None
     factionID: int | None = None
 
