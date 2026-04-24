@@ -96,6 +96,23 @@ def yaml_model(
             help="The path to the yaml SDE data.",
         ),
     ],
+    report_path: Annotated[
+        Path | None,
+        typer.Option(
+            "--report-path",
+            help="The directory path to save the validation reports to. If not provided, "
+            "the reports will be saved to the `<sde_path>/validation_reports` directory.",
+            file_okay=False,
+            dir_okay=True,
+        ),
+    ] = None,
+    overwrite: Annotated[
+        bool,
+        typer.Option(
+            "--overwrite",
+            help="Whether to overwrite existing validation reports.",
+        ),
+    ] = False,
 ):
     """Validate the SDE YAML datasets."""
     console = Console()
@@ -112,18 +129,20 @@ def yaml_model(
             f"[bold red]Error:[/bold red] SDE path {sde_path} is not a directory."
         )
         raise typer.Exit(code=1)
-    sde_info_path = sde_path / "_sde.yaml"
-    if not sde_info_path.exists():
-        if sde_path:
-            console.print(
-                f"[bold red]Error:[/bold red] SDE info file {sde_info_path} does not exist. Is this a valid SDE data directory?"
-            )
-        else:
-            console.print(
-                f"[bold red]Error:[/bold red]Application SDE info file {sde_info_path} does not exist. Download the SDE data first?"
-            )
-
+    sde_info_yaml = sde_path / "_sde.yaml"
+    sde_info_json = sde_path / "_sde.json"
+    if not sde_info_yaml.exists() and not sde_info_json.exists():
+        console.print(
+            f"[bold red]Error:[/bold red] SDE info file {sde_info_yaml} or {sde_info_json} does not exist. Is this a valid SDE data directory?"
+        )
         raise typer.Exit(code=1)
     msg = f"Validating SDE YAML datasets in {sde_path}"
     console.print(f"[bold blue]{msg}[/bold blue]")
-    asyncio.run(validate_yaml_datasets(sde_path=sde_path, sde_tools=sde_tools))
+    asyncio.run(
+        validate_yaml_datasets(
+            sde_path=sde_path,
+            sde_tools=sde_tools,
+            output_path=report_path,
+            overwrite=overwrite,
+        )
+    )

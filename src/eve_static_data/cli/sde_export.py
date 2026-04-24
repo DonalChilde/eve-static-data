@@ -27,9 +27,9 @@ def yaml_to_json(
     json_output_path: Annotated[
         Path,
         typer.Argument(
-            help="The path to the output JSON file.",
-            file_okay=True,
-            dir_okay=False,
+            help="The path to the output JSON directory.",
+            file_okay=False,
+            dir_okay=True,
         ),
     ],
 ):
@@ -49,9 +49,13 @@ def yaml_to_json(
     for yaml_file in yaml_files:
         console.print(f"Found YAML file: {yaml_file}")
         start = perf_counter()
-        with yaml_file.open("r", encoding="utf-8") as f:
+        json_file_path = json_output_path / (yaml_file.stem + ".json")
+        with (
+            yaml_file.open("r", encoding="utf-8") as yaml_in,
+            json_file_path.open("w", encoding="utf-8") as json_out,
+        ):
             try:
-                yaml_data = safe_load(f)
+                yaml_data = safe_load(yaml_in)
                 console.print(
                     f"Successfully read YAML file: {yaml_file} in {perf_counter() - start:.2f} seconds"
                 )
@@ -60,22 +64,20 @@ def yaml_to_json(
                     f"[bold red]Error:[/bold red] Failed to read YAML file {yaml_file}: {e}"
                 )
                 raise typer.Exit(code=1) from e
-        start_json = perf_counter()
-        json_file_path = json_output_path / (yaml_file.stem + ".json")
-        try:
-            with json_file_path.open("w", encoding="utf-8") as f:
-                json.dump(yaml_data, f, ensure_ascii=False, indent=2)
+            start_json = perf_counter()
+            try:
+                json.dump(yaml_data, json_out, ensure_ascii=False, indent=2)
+                console.print(
+                    f"Converted {yaml_file} to {json_file_path} in {perf_counter() - start_json:.2f} seconds"
+                )
+            except Exception as e:
+                console.print(
+                    f"[bold red]Error:[/bold red] Failed to write JSON file {json_file_path}: {e}"
+                )
+                raise typer.Exit(code=1) from e
             console.print(
-                f"Converted {yaml_file} to {json_file_path} in {perf_counter() - start_json:.2f} seconds"
+                f"Finished processing {yaml_file} in {perf_counter() - start:.2f} seconds\n"
             )
-        except Exception as e:
-            console.print(
-                f"[bold red]Error:[/bold red] Failed to write JSON file {json_file_path}: {e}"
-            )
-            raise typer.Exit(code=1) from e
-        console.print(
-            f"Finished processing {yaml_file} in {perf_counter() - start:.2f} seconds"
-        )
     console.print(
         f"Finished converting all {len(yaml_files)} YAML files to JSON in {perf_counter() - job_start:.2f} seconds"
     )
