@@ -5,17 +5,44 @@
 
 ## Project Description
 
-eve-static-data provides a cli to check the status of the latest release of the EVE Online Static Data dataset. It supports downloading, expanding, and iterating over the various files in the dataset.
+eve-static-data provides a cli for working with the EVE Online SDE.
+
+NOTE the eve-static-data cli command is `esd`
+
+```bash
+esd status
+```
+
+Current Features:
+- Download the current SDE, schema changelog, data changelog, etc.
+- Unpack the downloaded SDE dataset.
+- export the YAML datasets to json, with optional narrowing of the avalable localiazations, saving space
+- A set of dataclasses defining the SDE schemas.
+- Report on the downloaded SDE data schemas.
+- Validate the downloaded data against the internal data models.
+- An API for easy loading of data from disc.
+
+Future Features:
+- A loadable, validateable, datamodel for the JSONL version of the SDE
+- A sqlite db of the YAML version of the SDE.
+
+### Notes about the YAML SDE data.
+The YAML version of the sde data is the easiest to reason with, and YAML supports integers as dictionary keys. But loading performance for YAML is... poor. 
+JSON loading is fast (60x faster on my machine), but json only accepts strings as dictionary keys.
+
+Eve-static-data supports exporting the yaml data to json, and when loading (through pydantic RootModels) the string keys will be automatically cast to int. Giving speed and data conformance.
+
+Its possible to use the data without exporting to json, but.... SLOW.
 
 ### CLI commands for downloading and processing SDE.
 
-### Provides Pydantic models for SDE data.
+### Provides models for SDE data validated with pydantic.
 
 ### Provides localized datasets.
 
 ### Validation report, structure information.
 
-### Derived datasets for easy use.
+
 
 ### Easy access functions for programatic usage.
 
