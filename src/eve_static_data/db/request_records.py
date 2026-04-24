@@ -4,8 +4,12 @@ import sqlite3
 from collections.abc import Iterable
 from typing import Any
 
-from eve_static_data.models import yaml_records as pydantic_records
-from eve_static_data.models.common import Lang
+from eve_static_data.models import yaml_records
+from eve_static_data.models.common import (
+    Lang,
+    LocalizedString,
+    PossibleTranslationLanguages,
+)
 
 LANGS: set[Lang] = {"en", "de", "fr", "ja", "ru", "zh", "ko", "es"}
 ACTIVITIES: set[str] = {
@@ -123,10 +127,68 @@ def execute_query(
     return rows
 
 
+def _build_localized_fields_for_record(
+    localized_rows: list[tuple[Any, ...]],
+) -> tuple[Any, ...]:
+    """Helper function to build LocalizedString fields for a record given its localized rows.
+
+    Assembles a LocalizedString for the rows based on indexes. The return value should be unpacked in the same order
+    as the source localized fields, e.g. (id, None, LocalizedString|None,...), where the LocalizedString|None fields are
+    ordered to match that of the source localized fields (e.g. localized_name, localized_description).
+
+    In the localized_rows, if a field is None for one language, it should be None
+    for all languages, and the resulting LocalizedString field should be None as well.
+
+    Args:
+        localized_rows: List of tuples containing localized fields for a record, e.g. [(id, lang, localized_name, localized_description), ...]
+
+    Returns:
+        Tuple of (id, None, LocalizedString|None,...)
+
+    Raises:
+        ValueError: If localized_rows is empty, if localized_rows have different numbers of localized fields,
+            if localized_rows have different ids, or if some but not all localized fields are None.
+    """
+    if not localized_rows:
+        raise ValueError("No localized rows provided")
+    number_of_localized_fields = len(localized_rows[0]) - 2
+    result: list[Any] = [
+        localized_rows[0][0],
+        None,
+    ]  # start with id and None for LocalizedString fields
+
+    # Accumulate values per localized field position: field_values[i][lang] = value
+    field_values: list[dict[str, Any]] = [{} for _ in range(number_of_localized_fields)]
+
+    for row in localized_rows:
+        if len(row) - 2 != number_of_localized_fields:
+            raise ValueError(
+                "All localized rows must have the same number of localized fields"
+            )
+        if row[0] != localized_rows[0][0]:
+            raise ValueError("All localized rows must have the same id")
+        lang: str = row[1]
+        for i in range(number_of_localized_fields):
+            field_values[i][lang] = row[2 + i]
+
+    for values in field_values:
+        none_count = sum(1 for v in values.values() if v is None)
+        if none_count == len(values):
+            result.append(None)
+        elif none_count > 0:
+            raise ValueError(
+                "Some but not all localized fields are None across languages"
+            )
+        else:
+            result.append(LocalizedString(**values))
+
+    return tuple(result)
+
+
 def agent_types(
     cursor: sqlite3.Cursor,
     fetch_ids: Iterable[int] | None = None,
-) -> list[pydantic_records.AgentTypes]:
+) -> list[yaml_records.AgentTypes]:
     """Retrieve records from the agent_types table and return them as pydantic models."""
     query = Query(
         table="agent_types",
@@ -134,15 +196,15 @@ def agent_types(
         id_column="agent_types_id",
     )
     rows = execute_query(cursor, query, fetch_ids)
-    results: list[pydantic_records.AgentTypes] = []
+    results: list[yaml_records.AgentTypes] = []
     for row in rows:
-        results.append(pydantic_records.AgentTypes(agent_types_id=row[0], name=row[1]))
+        results.append(yaml_records.AgentTypes(agent_types_id=row[0], name=row[1]))
     return results
 
 
 def agents_in_space(
     cursor: sqlite3.Cursor, fetch_ids: Iterable[int] | None = None
-) -> list[pydantic_records.AgentsInSpace]:
+) -> list[yaml_records.AgentsInSpace]:
     """Retrieve records from the agents_in_space table and return them as pydantic models."""
     query = Query(
         table="agents_in_space",
@@ -156,10 +218,10 @@ def agents_in_space(
         id_column="agents_in_space_id",
     )
     rows = execute_query(cursor, query, fetch_ids)
-    results: list[pydantic_records.AgentsInSpace] = []
+    results: list[yaml_records.AgentsInSpace] = []
     for row in rows:
         results.append(
-            pydantic_records.AgentsInSpace(
+            yaml_records.AgentsInSpace(
                 agents_in_space_id=row[0],
                 dungeonID=row[1],
                 solarSystemID=row[2],
@@ -170,6 +232,8 @@ def agents_in_space(
     return results
 
 
+# TODO Is it worth having a separate function for this? it move the row definition further from
+# the point of use. But it allows easier testing...
 def ancestries_localized_fields(
     cursor: sqlite3.Cursor,
     lang: Lang | None = None,
@@ -194,7 +258,7 @@ def ancestries_localized_fields(
 
 def ancestries(
     cursor: sqlite3.Cursor, fetch_ids: Iterable[int] | None = None
-) -> list[pydantic_records.Ancestries]:
+) -> list[yaml_records.Ancestries]:
     """Retrieve records from the ancestries table and return them as pydantic models."""
     ancestries_query = Query(
         table="ancestries",
@@ -223,19 +287,15 @@ def ancestries(
     localized_dict: dict[int, list[tuple[Any, ...]]] = {}
     for row in localized_rows:
         localized_dict.setdefault(row[0], []).append(row)
-    results: list[pydantic_records.Ancestries] = []
+    results: list[yaml_records.Ancestries] = []
+
     for row in ancestries_rows:
         localized_rows_for_parent = localized_dict.get(row[0], [])
-        localized_names: dict[str, str] = {}
-        localized_descriptions: dict[str, str] = {}
-        for localized_row in localized_rows_for_parent:
-            localized_names[localized_row[1]] = localized_row[2]
-            localized_descriptions[localized_row[1]] = localized_row[3]
-        name = pydantic_records.LocalizedString(**localized_names)
-        description = pydantic_records.LocalizedString(**localized_descriptions)
-
+        localized_strings = _build_localized_fields_for_record(
+            localized_rows_for_parent
+        )
         results.append(
-            pydantic_records.Ancestries(
+            yaml_records.Ancestries(
                 ancestries_id=row[0],
                 bloodlineID=row[1],
                 charisma=row[2],
@@ -245,8 +305,8 @@ def ancestries(
                 perception=row[6],
                 shortDescription=row[7],
                 willpower=row[8],
-                name=name,
-                description=description,
+                name=localized_strings[2],
+                description=localized_strings[3],
             )
         )
     return results
@@ -276,7 +336,7 @@ def bloodlines_localized_fields(
 
 def bloodlines(
     cursor: sqlite3.Cursor, fetch_ids: Iterable[int] | None = None
-) -> list[pydantic_records.Bloodlines]:
+) -> list[yaml_records.Bloodlines]:
     """Retrieve records from the bloodlines table and return them as pydantic models."""
     bloodlines_query = Query(
         table="bloodlines",
@@ -305,19 +365,15 @@ def bloodlines(
     localized_dict: dict[int, list[tuple[Any, ...]]] = {}
     for row in localized_rows:
         localized_dict.setdefault(row[0], []).append(row)
-    results: list[pydantic_records.Bloodlines] = []
+    results: list[yaml_records.Bloodlines] = []
     for row in bloodlines_rows:
         localized_rows_for_parent = localized_dict.get(row[0], [])
-        localized_names: dict[str, str] = {}
-        localized_descriptions: dict[str, str] = {}
-        for localized_row in localized_rows_for_parent:
-            localized_names[localized_row[1]] = localized_row[2]
-            localized_descriptions[localized_row[1]] = localized_row[3]
-        name = pydantic_records.LocalizedString(**localized_names)
-        description = pydantic_records.LocalizedString(**localized_descriptions)
+        localized_strings = _build_localized_fields_for_record(
+            localized_rows_for_parent
+        )
 
         results.append(
-            pydantic_records.Bloodlines(
+            yaml_records.Bloodlines(
                 bloodlines_id=row[0],
                 charisma=row[1],
                 corporationID=row[2],
@@ -327,8 +383,8 @@ def bloodlines(
                 perception=row[6],
                 raceID=row[7],
                 willpower=row[8],
-                name=name,
-                description=description,
+                name=localized_strings[2],
+                description=localized_strings[3],
             )
         )
     return results
@@ -399,7 +455,7 @@ def blueprint_activity_products(
 
 def blueprints(
     cursor: sqlite3.Cursor,
-) -> list[pydantic_records.Blueprints]:
+) -> list[yaml_records.Blueprints]:
     """Retrieve records from the blueprints table and return them as pydantic models."""
     blueprints_query = Query(
         table="blueprints",
@@ -427,14 +483,14 @@ def blueprints(
     products_rows_by_activity_id: dict[int, list[tuple[Any, ...]]] = {}
     for row in products_rows:
         products_rows_by_activity_id.setdefault(row[1], []).append(row)
-    results: list[pydantic_records.Blueprints] = []
+    results: list[yaml_records.Blueprints] = []
     for row in blueprints_rows:
         blueprint_id = row[0]
         blueprintTypeID = row[1]
         maxProductionLimit = row[2]
 
         activity_rows_for_blueprint = activity_rows_by_blueprint.get(blueprint_id, [])
-        activities: dict[str, pydantic_records.Blueprints_Activity | None] = {
+        activities: dict[str, yaml_records.Blueprints_Activity | None] = {
             k: None for k in ACTIVITIES
         }
         for activity_row in activity_rows_for_blueprint:
@@ -442,23 +498,23 @@ def blueprints(
             materials_rows_for_activity = materials_rows_by_activity_id.get(
                 activity_id, []
             )
-            materials: list[pydantic_records.Materials] | None = None
+            materials: list[yaml_records.Materials] | None = None
             for material_row in materials_rows_for_activity:
                 if materials is None:
                     materials = []
                 materials.append(
-                    pydantic_records.Materials(
+                    yaml_records.Materials(
                         typeID=material_row[2],
                         quantity=material_row[3],
                     )
                 )
             skills_rows_for_activity = skills_rows_by_activity_id.get(activity_id, [])
-            skills: list[pydantic_records.Skills] | None = None
+            skills: list[yaml_records.Skills] | None = None
             for skill_row in skills_rows_for_activity:
                 if skills is None:
                     skills = []
                 skills.append(
-                    pydantic_records.Skills(
+                    yaml_records.Skills(
                         typeID=skill_row[2],
                         level=skill_row[3],
                     )
@@ -466,29 +522,29 @@ def blueprints(
             products_rows_for_activity = products_rows_by_activity_id.get(
                 activity_id, []
             )
-            products: list[pydantic_records.Blueprints_Products] | None = None
+            products: list[yaml_records.Blueprints_Products] | None = None
             for product_row in products_rows_for_activity:
                 if products is None:
                     products = []
                 products.append(
-                    pydantic_records.Blueprints_Products(
+                    yaml_records.Blueprints_Products(
                         typeID=product_row[2],
                         quantity=product_row[3],
                         probability=product_row[4],
                     )
                 )
-            activities[activity_row[2]] = pydantic_records.Blueprints_Activity(
+            activities[activity_row[2]] = yaml_records.Blueprints_Activity(
                 time=activity_row[3],
                 materials=materials,
                 skills=skills,
                 products=products,
             )
         results.append(
-            pydantic_records.Blueprints(
+            yaml_records.Blueprints(
                 blueprints_id=blueprint_id,
                 blueprintTypeID=blueprintTypeID,
                 maxProductionLimit=maxProductionLimit,
-                activities=pydantic_records.Blueprints_Activities(**activities),
+                activities=yaml_records.Blueprints_Activities(**activities),
             )
         )
     return results
@@ -518,7 +574,7 @@ def categories_localized_fields(
 
 def categories(
     cursor: sqlite3.Cursor, fetch_ids: Iterable[int] | None = None
-) -> list[pydantic_records.Categories]:
+) -> list[yaml_records.Categories]:
     """Retrieve records from the categories table and return them as pydantic models."""
     categories_query = Query(
         table="categories",
@@ -537,20 +593,20 @@ def categories(
     localized_dict: dict[int, list[tuple[Any, ...]]] = {}
     for row in localized_rows:
         localized_dict.setdefault(row[0], []).append(row)
-    results: list[pydantic_records.Categories] = []
+    results: list[yaml_records.Categories] = []
     for row in categories_rows:
         categories_id = row[0]
         localized_rows_for_parent = localized_dict.get(categories_id, [])
-        localized_names: dict[str, str] = {}
-        for localized_row in localized_rows_for_parent:
-            localized_names[localized_row[1]] = localized_row[2]
-        name = pydantic_records.LocalizedString(**localized_names)
+        localized_strings = _build_localized_fields_for_record(
+            localized_rows_for_parent
+        )
+
         results.append(
-            pydantic_records.Categories(
+            yaml_records.Categories(
                 categories_id=categories_id,
                 iconID=row[1],
                 published=bool(row[2]),
-                name=name,
+                name=localized_strings[2],
             )
         )
     return results
@@ -558,7 +614,7 @@ def categories(
 
 def certificates(
     cursor: sqlite3.Cursor, fetch_ids: Iterable[int] | None = None
-) -> list[pydantic_records.Certificates]:
+) -> list[yaml_records.Certificates]:
     """Retrieve records from the certificates table and return them as pydantic models."""
     certificates_query = Query(
         table="certificates",
@@ -605,25 +661,21 @@ def certificates(
     recommended_for_by_certificate_id: dict[int, list[int]] = {}
     for row in recommended_for_rows:
         recommended_for_by_certificate_id.setdefault(row[0], []).append(row[1])
-    results: list[pydantic_records.Certificates] = []
+    results: list[yaml_records.Certificates] = []
     for row in certificates_rows:
         certificate_id = row[0]
         localized_rows_for_parent = localized_dict.get(certificate_id, [])
-        localized_names: dict[str, str] = {}
-        localized_descriptions: dict[str, str] = {}
-        for localized_row in localized_rows_for_parent:
-            localized_names[localized_row[1]] = localized_row[2]
-            localized_descriptions[localized_row[1]] = localized_row[3]
-        name = pydantic_records.LocalizedString(**localized_names)
-        description = pydantic_records.LocalizedString(**localized_descriptions)
+        localized_strings = _build_localized_fields_for_record(
+            localized_rows_for_parent
+        )
         skill_types_rows_for_certificate = skill_types_by_certificate_id.get(
             certificate_id, []
         )
-        skill_types: dict[int, pydantic_records.Certificates_SkillType] | None = None
+        skill_types: dict[int, yaml_records.Certificates_SkillType] | None = None
         for skill_type_row in skill_types_rows_for_certificate:
             if skill_types is None:
                 skill_types = {}
-            skill_types[skill_type_row[0]] = pydantic_records.Certificates_SkillType(
+            skill_types[skill_type_row[0]] = yaml_records.Certificates_SkillType(
                 basic=skill_type_row[2],
                 standard=skill_type_row[3],
                 improved=skill_type_row[4],
@@ -631,11 +683,11 @@ def certificates(
                 elite=skill_type_row[6],
             )
         results.append(
-            pydantic_records.Certificates(
+            yaml_records.Certificates(
                 certificates_id=certificate_id,
                 groupID=row[1],
-                name=name,
-                description=description,
+                name=localized_strings[2],
+                description=localized_strings[3],
                 skillTypes=skill_types if skill_types else {},
                 recommendedFor=recommended_for_by_certificate_id.get(
                     certificate_id, []

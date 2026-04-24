@@ -132,7 +132,7 @@ class Ancestries(LocalizableRecord):
     shortDescription: str | None = None
     willpower: int
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         return {
@@ -157,7 +157,7 @@ class Bloodlines(LocalizableRecord):
     raceID: int
     willpower: int
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         return {
@@ -216,7 +216,7 @@ class Categories(LocalizableRecord):
     published: bool
     iconID: int | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         return {"name": self.name.get(lang, TRANSLATION_MISSING)}
@@ -244,7 +244,7 @@ class Certificates(LocalizableRecord):
     recommendedFor: list[int] | None = None
     skillTypes: dict[int, Certificates_SkillType]
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         return {
@@ -264,7 +264,7 @@ class CharacterAttributes(LocalizableRecord):
     notes: str
     shortDescription: str
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         return {"name": self.name.get(lang, TRANSLATION_MISSING)}
@@ -331,7 +331,7 @@ class CorporationActivities(LocalizableRecord):
     corporation_activities_id: int | None = None
     name: LocalizedString
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         return {"name": self.name.get(lang, TRANSLATION_MISSING)}
@@ -384,13 +384,13 @@ class DebuffCollections(LocalizableRecord):
     showOutputValueInUI: str
     displayName: LocalizedString | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         displayName = (
             self.displayName.get(lang, TRANSLATION_MISSING)
             if self.displayName
-            else TRANSLATION_MISSING
+            else None
         )
         return {
             "displayName": displayName,
@@ -428,23 +428,23 @@ class DogmaAttributes(LocalizableRecord):
     maxAttributeID: int | None = None
     minAttributeID: int | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         displayName = (
             self.displayName.get(lang, TRANSLATION_MISSING)
             if self.displayName
-            else TRANSLATION_MISSING
+            else None
         )
         tooltipDescription = (
             self.tooltipDescription.get(lang, TRANSLATION_MISSING)
             if self.tooltipDescription
-            else TRANSLATION_MISSING
+            else None
         )
         tooltipTitle = (
             self.tooltipTitle.get(lang, TRANSLATION_MISSING)
             if self.tooltipTitle
-            else TRANSLATION_MISSING
+            else None
         )
         return {
             "displayName": displayName,
@@ -498,18 +498,18 @@ class DogmaEffects(LocalizableRecord):
     fittingUsageChanceAttributeID: int | None = None
     resistanceAttributeID: int | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         description = (
             self.description.get(lang, TRANSLATION_MISSING)
             if self.description
-            else TRANSLATION_MISSING
+            else None
         )
         displayName = (
             self.displayName.get(lang, TRANSLATION_MISSING)
             if self.displayName
-            else TRANSLATION_MISSING
+            else None
         )
         return {
             "description": description,
@@ -526,18 +526,18 @@ class DogmaUnits(LocalizableRecord):
     displayName: LocalizedString | None = None
     name: str
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         displayName = (
             self.displayName.get(lang, TRANSLATION_MISSING)
             if self.displayName
-            else TRANSLATION_MISSING
+            else None
         )
         description = (
             self.description.get(lang, TRANSLATION_MISSING)
             if self.description
-            else TRANSLATION_MISSING
+            else None
         )
         return {
             "displayName": displayName,
@@ -589,13 +589,13 @@ class Factions(LocalizableRecord):
     solarSystemID: int
     uniqueName: bool
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         shortDescription = (
             self.shortDescription.get(lang, TRANSLATION_MISSING)
             if self.shortDescription
-            else TRANSLATION_MISSING
+            else None
         )
         return {
             "description": self.description.get(lang, TRANSLATION_MISSING),
@@ -636,7 +636,7 @@ class Groups(LocalizableRecord):
     useBasePrice: bool
     iconID: int | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         return {"name": self.name.get(lang, TRANSLATION_MISSING)}
@@ -661,7 +661,7 @@ class Landmarks(LocalizableRecord):
     iconID: int | None = None
     locationID: int | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         return {
@@ -703,13 +703,11 @@ class MapAsteroidBelts(LocalizableRecord):
     typeID: int
     uniqueName: LocalizedString | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         uniqueName = (
-            self.uniqueName.get(lang, TRANSLATION_MISSING)
-            if self.uniqueName
-            else TRANSLATION_MISSING
+            self.uniqueName.get(lang, TRANSLATION_MISSING) if self.uniqueName else None
         )
         return {"uniqueName": uniqueName}
 
@@ -726,7 +724,7 @@ class MapConstellations(LocalizableRecord):
     solarSystemIDs: list[int]
     wormholeClassID: int | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         return {"name": self.name.get(lang, TRANSLATION_MISSING)}
@@ -777,13 +775,11 @@ class MapMoons(LocalizableRecord):
     npcStationIDs: list[int] | None = None
     uniqueName: LocalizedString | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         uniqueName = (
-            self.uniqueName.get(lang, TRANSLATION_MISSING)
-            if self.uniqueName
-            else TRANSLATION_MISSING
+            self.uniqueName.get(lang, TRANSLATION_MISSING) if self.uniqueName else None
         )
         return {"uniqueName": uniqueName}
 
@@ -835,7 +831,7 @@ class MapPlanets(LocalizableRecord):
     npcStationIDs: list[int] | None = None
     uniqueName: LocalizedString | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         uniqueName = (
@@ -859,13 +855,13 @@ class MapRegions(LocalizableRecord):
     position: Position
     wormholeClassID: int | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         description = (
             self.description.get(lang, TRANSLATION_MISSING)
             if self.description
-            else TRANSLATION_MISSING
+            else None
         )
         return {
             "description": description,
@@ -913,7 +909,7 @@ class MapSolarSystems(LocalizableRecord):
     visualEffect: str | None = None
     wormholeClassID: int | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         return {"name": self.name.get(lang, TRANSLATION_MISSING)}
@@ -971,13 +967,13 @@ class MarketGroups(LocalizableRecord):
     name: LocalizedString
     parentGroupID: int | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         description = (
             self.description.get(lang, TRANSLATION_MISSING)
             if self.description
-            else TRANSLATION_MISSING
+            else None
         )
         return {
             "description": description,
@@ -1002,13 +998,13 @@ class MetaGroups(LocalizableRecord):
     iconSuffix: str | None = None
     description: LocalizedString | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         description = (
             self.description.get(lang, TRANSLATION_MISSING)
             if self.description
-            else TRANSLATION_MISSING
+            else None
         )
         return {
             "name": self.name.get(lang, TRANSLATION_MISSING),
@@ -1027,13 +1023,13 @@ class MercenaryTacticalOperations(LocalizableRecord):
     name: LocalizedString
     description: LocalizedString | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         description = (
             self.description.get(lang, TRANSLATION_MISSING)
             if self.description
-            else TRANSLATION_MISSING
+            else None
         )
         return {
             "name": self.name.get(lang, TRANSLATION_MISSING),
@@ -1080,7 +1076,7 @@ class NpcCharacters(LocalizableRecord):
     agent: NpcCharacters_Agent | None = None
     description: str | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         return {"name": self.name.get(lang, TRANSLATION_MISSING)}
@@ -1097,13 +1093,13 @@ class NpcCorporationDivisions(LocalizableRecord):
     name: LocalizedString
     description: LocalizedString | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         description = (
             self.description.get(lang, TRANSLATION_MISSING)
             if self.description
-            else TRANSLATION_MISSING
+            else None
         )
         return {
             "name": self.name.get(lang, TRANSLATION_MISSING),
@@ -1159,13 +1155,13 @@ class NpcCorporations(LocalizableRecord):
     secondaryActivityID: int | None = None
     exchangeRates: dict[int, float] | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         description = (
             self.description.get(lang, TRANSLATION_MISSING)
             if self.description
-            else TRANSLATION_MISSING
+            else None
         )
         return {
             "description": description,
@@ -1231,7 +1227,7 @@ class PlanetSchematics(LocalizableRecord):
     pins: list[int]
     types: dict[int, PlanetSchematics_Types]
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         return {"name": self.name.get(lang, TRANSLATION_MISSING)}
@@ -1248,13 +1244,13 @@ class Races(LocalizableRecord):
     shipTypeID: int | None = None
     skills: dict[int, int] | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         description = (
             self.description.get(lang, TRANSLATION_MISSING)
             if self.description
-            else TRANSLATION_MISSING
+            else None
         )
         return {
             "name": self.name.get(lang, TRANSLATION_MISSING),
@@ -1290,13 +1286,13 @@ class SkinMaterials(LocalizableRecord):
     displayName: LocalizedString | None = None
     materialSetID: int
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         displayName = (
             self.displayName.get(lang, TRANSLATION_MISSING)
             if self.displayName
-            else TRANSLATION_MISSING
+            else None
         )
         return {"displayName": displayName}
 
@@ -1315,13 +1311,13 @@ class Skins(LocalizableRecord):
     isStructureSkin: bool | None = None
     skinDescription: LocalizedString | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         skinDescription = (
             self.skinDescription.get(lang, TRANSLATION_MISSING)
             if self.skinDescription
-            else TRANSLATION_MISSING
+            else None
         )
         return {"skinDescription": skinDescription}
 
@@ -1366,13 +1362,13 @@ class StationOperations(LocalizableRecord):
     services: list[int]
     stationTypes: dict[int, int] | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         description = (
             self.description.get(lang, TRANSLATION_MISSING)
             if self.description
-            else TRANSLATION_MISSING
+            else None
         )
         return {
             "description": description,
@@ -1388,13 +1384,13 @@ class StationServices(LocalizableRecord):
     serviceName: LocalizedString
     description: LocalizedString | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         description = (
             self.description.get(lang, TRANSLATION_MISSING)
             if self.description
-            else TRANSLATION_MISSING
+            else None
         )
         return {
             "serviceName": self.serviceName.get(lang, TRANSLATION_MISSING),
@@ -1419,7 +1415,7 @@ class TypeBonus_RoleBonus(LocalizableRecord):
     importance: int
     unitID: int | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         return {"bonusText": self.bonusText.get(lang, TRANSLATION_MISSING)}
@@ -1434,7 +1430,7 @@ class TypeBonus_Types_Bonus(LocalizableRecord):
     importance: int
     unitID: int | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         return {"bonusText": self.bonusText.get(lang, TRANSLATION_MISSING)}
@@ -1450,7 +1446,7 @@ class TypeBonus_MiscBonus(LocalizableRecord):
     isPositive: bool | None = None
     unitID: int | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         return {"bonusText": self.bonusText.get(lang, TRANSLATION_MISSING)}
@@ -1542,13 +1538,13 @@ class EveTypes(LocalizableRecord):
     variationParentTypeID: int | None = None
     factionID: int | None = None
 
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         lang_check(lang)
         description = (
             self.description.get(lang, TRANSLATION_MISSING)
             if self.description
-            else TRANSLATION_MISSING
+            else None
         )
         return {
             "name": self.name.get(lang, TRANSLATION_MISSING),

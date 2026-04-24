@@ -10,6 +10,7 @@ from rich.console import Console
 from eve_static_data.cli.helpers import get_esd_settings_from_context
 
 # from eve_static_data.validation import validation_report
+from eve_static_data.yaml_validation import validate_yaml_datasets
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -73,6 +74,7 @@ def validate_json(
     report_path.mkdir(parents=True, exist_ok=True)
     msg = f"Validating SDE data in {sde_path} and saving reports to {report_path}"
     console.print(f"[bold blue]{msg}[/bold blue]")
+
     # FIXME validation needs to be updated to work with the new SDE loading and model validation code, so commenting out for now
     # asyncio.run(
     #     validation_report(
@@ -83,3 +85,45 @@ def validate_json(
     #         console=console,
     #     )
     # )
+
+
+@app.command()
+def yaml_model(
+    ctx: typer.Context,
+    sde_path: Annotated[
+        Path,
+        typer.Argument(
+            help="The path to the yaml SDE data.",
+        ),
+    ],
+):
+    """Validate the SDE YAML datasets."""
+    console = Console()
+    console.print("[bold green]Validating SDE YAML Datasets[/bold green]")
+    settings = get_esd_settings_from_context(ctx)
+    sde_tools = settings.sde_tools()
+    if not sde_path.exists():
+        console.print(
+            f"[bold red]Error:[/bold red] SDE path {sde_path} does not exist."
+        )
+        raise typer.Exit(code=1)
+    if not sde_path.is_dir():
+        console.print(
+            f"[bold red]Error:[/bold red] SDE path {sde_path} is not a directory."
+        )
+        raise typer.Exit(code=1)
+    sde_info_path = sde_path / "_sde.yaml"
+    if not sde_info_path.exists():
+        if sde_path:
+            console.print(
+                f"[bold red]Error:[/bold red] SDE info file {sde_info_path} does not exist. Is this a valid SDE data directory?"
+            )
+        else:
+            console.print(
+                f"[bold red]Error:[/bold red]Application SDE info file {sde_info_path} does not exist. Download the SDE data first?"
+            )
+
+        raise typer.Exit(code=1)
+    msg = f"Validating SDE YAML datasets in {sde_path}"
+    console.print(f"[bold blue]{msg}[/bold blue]")
+    asyncio.run(validate_yaml_datasets(sde_path=sde_path, sde_tools=sde_tools))

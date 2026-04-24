@@ -21,7 +21,9 @@ logger = logging.getLogger(__name__)
 app = typer.Typer(no_args_is_help=True)
 app.add_typer(sde_network_app)
 app.add_typer(sde_unpack_app)
-app.add_typer(sde_validate_app)
+app.add_typer(
+    sde_validate_app, name="validate", help="Commands for validating SDE data."
+)
 app.add_typer(sde_export_app, name="export", help="Commands for exporting SDE data.")
 # app.add_typer(sde_import_app, name="import", help="Commands for importing SDE data.")
 app.add_typer(config_info_app)

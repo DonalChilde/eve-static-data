@@ -4,20 +4,27 @@ import sqlite3
 
 import eve_static_data.models.yaml_datasets
 from eve_static_data.models import yaml_datasets
-from eve_static_data.models import yaml_records as pydantic_records
-from eve_static_data.models.common import TRANSLATION_MISSING, Lang
+from eve_static_data.models import yaml_records as yaml_records
+from eve_static_data.models.common import (
+    ACTIVITIES,
+    Lang,
+    LocalizableRecord,
+    PossibleTranslationLanguages,
+)
 
-LANGS: set[Lang] = {"en", "de", "fr", "ja", "ru", "zh", "ko", "es"}
-ACTIVITIES: set[str] = {
-    "copying",
-    "invention",
-    "manufacturing",
-    "reaction",
-    "research_material",
-    "research_time",
-}
 
-# TODO change to cursor as argument instead of connection, and remove the with connection as conn: block from each function. This will allow multiple insert functions to be called within the same transaction if desired, and will simplify the function signatures by removing the need for type annotations related to connections and cursors.
+def _langs_in_record(record: LocalizableRecord) -> set[Lang]:
+    """Get the set of languages that have localized fields in the record.
+
+    This is to support inserting localized fields for records that are only localized in
+    a subset of languages. This might happen when the records are preprocessed to contain
+    only one language, or when the records are missing localized fields in some languages.
+    """
+    language_fields = record.localized_fields("en").keys()
+    languages: set[Lang] = set()
+    for field in language_fields:
+        languages.update(getattr(record, field).keys())
+    return languages.intersection(PossibleTranslationLanguages)
 
 
 def agent_types(cursor: sqlite3.Cursor, records: yaml_datasets.AgentTypesRoot) -> None:
@@ -47,11 +54,6 @@ def agents_in_space(
         )
 
 
-def _is_not_localized(localized_fields: dict[str, str]) -> bool:
-    """Determine if all localized fields are missing."""
-    return all(value == TRANSLATION_MISSING for value in localized_fields.values())
-
-
 def ancestries(cursor: sqlite3.Cursor, records: yaml_datasets.AncestriesRoot) -> None:
     """Insert records into the ancestries table."""
     for ancestries_id, record in records.root.items():
@@ -69,11 +71,9 @@ def ancestries(cursor: sqlite3.Cursor, records: yaml_datasets.AncestriesRoot) ->
                 record.willpower,
             ),
         )
-        for lang in LANGS:
+
+        for lang in _langs_in_record(record):
             localized = record.localized_fields(lang)
-            # skip insert if all the localized fields are missing
-            if _is_not_localized(localized):
-                continue
             cursor.execute(
                 "INSERT INTO ancestries_localized (ancestries_id, lang, localized_name, localized_description) VALUES (?, ?, ?, ?);",
                 (
@@ -102,11 +102,8 @@ def bloodlines(cursor: sqlite3.Cursor, records: yaml_datasets.BloodlinesRoot) ->
                 record.willpower,
             ),
         )
-        for lang in LANGS:
+        for lang in _langs_in_record(record):
             localized = record.localized_fields(lang)
-            # skip insert if all the localized fields are missing
-            if _is_not_localized(localized):
-                continue
             cursor.execute(
                 "INSERT INTO bloodlines_localized (bloodlines_id, lang, localized_name, localized_description) VALUES (?, ?, ?, ?);",
                 (
@@ -130,7 +127,7 @@ def blueprints(cursor: sqlite3.Cursor, records: yaml_datasets.BlueprintsRoot) ->
             ),
         )
         for activity_name in ACTIVITIES:
-            activity_value: pydantic_records.Blueprints_Activity | None = getattr(
+            activity_value: yaml_records.Blueprints_Activity | None = getattr(
                 record.activities, activity_name
             )
             if activity_value is not None:
@@ -171,10 +168,8 @@ def categories(cursor: sqlite3.Cursor, records: yaml_datasets.CategoriesRoot) ->
             "INSERT INTO categories (categories_id, iconID,published) VALUES (?, ?, ?);",
             (categories_id, record.iconID, record.published),
         )
-        for lang in LANGS:
+        for lang in _langs_in_record(record):
             localized = record.localized_fields(lang)
-            if _is_not_localized(localized):
-                continue
             cursor.execute(
                 "INSERT INTO categories_localized (categories_id, lang, localized_name) VALUES (?, ?, ?);",
                 (
@@ -194,10 +189,8 @@ def certificates(
             "INSERT INTO certificates (certificates_id, groupID) VALUES (?, ?);",
             (certificates_id, record.groupID),
         )
-        for lang in LANGS:
+        for lang in _langs_in_record(record):
             localized = record.localized_fields(lang)
-            if _is_not_localized(localized):
-                continue
             cursor.execute(
                 "INSERT INTO certificates_localized (certificates_id, lang, localized_name,localized_description) VALUES (?, ?, ?, ?);",
                 (

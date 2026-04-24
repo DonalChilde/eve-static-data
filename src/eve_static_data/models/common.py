@@ -49,6 +49,17 @@ class LocalizedString(TypedDict, total=False):
 
 
 class LocalizableRecord:
-    def localized_fields(self, lang: Lang) -> dict[str, str]:
+    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
         """Returns a dict of the localized fields in the model."""
         raise NotImplementedError("This method should be implemented by subclasses.")
+
+
+ACTIVITIES: set[str] = {
+    "copying",
+    "invention",
+    "manufacturing",
+    "reaction",
+    "research_material",
+    "research_time",
+}
+"""Industrial activities from blueprints."""
