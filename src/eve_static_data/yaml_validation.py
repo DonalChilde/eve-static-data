@@ -440,7 +440,9 @@ async def validate_yaml_datasets(
         validate_start = perf_counter()
         for top_level_key, record_payload in payload.items():
             try:
-                root_model.model_validate({top_level_key: record_payload})
+                root_model.model_validate(
+                    {top_level_key: record_payload}, extra="forbid"
+                )
             except ValidationError as exc:
                 result.failed_records.append(
                     FailedRecordValidation(
