@@ -6,23 +6,11 @@ from typing import Any
 
 from eve_static_data.models import yaml_records
 from eve_static_data.models.common import (
+    ACTIVITIES,
     Lang,
     LocalizedString,
     PossibleTranslationLanguages,
 )
-
-LANGS: set[Lang] = {"en", "de", "fr", "ja", "ru", "zh", "ko", "es"}
-ACTIVITIES: set[str] = {
-    "copying",
-    "invention",
-    "manufacturing",
-    "reaction",
-    "research_material",
-    "research_time",
-}
-# from typing import TypeVar
-
-# T = TypeVar("T")
 
 
 def chunked[T](items: Iterable[T], size: int = 999) -> Iterable[list[T]]:
