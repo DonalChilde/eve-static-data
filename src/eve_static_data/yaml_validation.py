@@ -20,7 +20,7 @@ from typing import Any, cast
 from pydantic import RootModel, ValidationError
 from yaml import YAMLError, safe_load
 
-from eve_static_data.helpers import yaml_schema_report
+from eve_static_data.helpers import schema_report
 from eve_static_data.helpers.save_text_file import save_text_file
 from eve_static_data.models import yaml_datasets
 from eve_static_data.models.dataset_filenames import SdeDatasetFiles
@@ -501,15 +501,15 @@ async def validate_yaml_datasets(
         overwrite=overwrite,
     )
 
-    schema_report = yaml_schema_report.scan_yaml_directory(sde_path)
+    schema_report_data = schema_report.scan_directory(sde_path, sde_format="yaml-model")
     save_text_file(
-        text=json.dumps(schema_report, indent=2),
+        text=json.dumps(schema_report_data, indent=2),
         output_path=resolved_output_path,
         file_name="yaml_schema_report.json",
         overwrite=overwrite,
     )
     save_text_file(
-        text=yaml_schema_report.generate_markdown_report(schema_report),
+        text=schema_report.generate_markdown_report(schema_report_data),
         output_path=resolved_output_path,
         file_name="yaml_schema_report.md",
         overwrite=overwrite,

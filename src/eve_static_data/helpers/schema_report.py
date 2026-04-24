@@ -1,4 +1,18 @@
-"""Generate schema inspection reports for YAML SDE datasets."""
+"""Generate schema inspection reports for SDE datasets.
+
+Supports two SDE source formats:
+
+- ``"yaml-model"``: top-level value is a ``dict`` mapping record IDs to record
+  dicts (produced from YAML or yaml-converted-to-JSON datasets).  Nested dicts
+  whose keys are integers (or digit-only strings from JSON conversion) are
+  automatically normalised to the sentinel path component ``INTEGER_KEY`` to
+  avoid path explosion.
+
+- ``"jsonl-model"``: top-level value is a ``list`` of record dicts, where each
+  record carries a ``_key`` field identifying the record.  Integer key
+  normalisation is **not** applied for this format because field names in JSON
+  are always strings and the ``_key`` field is a first-class schema member.
+"""
 
 from __future__ import annotations
 
@@ -15,10 +29,15 @@ from yaml import YAMLError, safe_load
 
 logger = logging.getLogger(__name__)
 
-type PathStatsMap = dict[str, "YamlPathInspection"]
-type DatasetMap = dict[str, "YamlDatasetInspection"]
+type PathStatsMap = dict[str, "PathInspection"]
+type DatasetMap = dict[str, "DatasetInspection"]
 type WarningList = list[str]
-YamlTypeName = Literal["dict", "list", "str", "int", "float", "bool", "null"]
+
+SdeTypeName = Literal["dict", "list", "str", "int", "float", "bool", "null"]
+SdeFormat = Literal["yaml-model", "jsonl-model"]
+
+#: Sentinel path component used in place of integer keys for ``yaml-model`` datasets.
+INTEGER_KEY = "INTEGER_KEY"
 
 
 def _string_counter() -> Counter[str]:
@@ -31,7 +50,7 @@ def _field_node_map() -> dict[str, _FieldNode]:
     return {}
 
 
-class YamlPathInspection(TypedDict):
+class PathInspection(TypedDict):
     """Flattened inspection data for one dotted field path."""
 
     path: str
@@ -41,11 +60,12 @@ class YamlPathInspection(TypedDict):
     value_type_counts: dict[str, int]
 
 
-class YamlDatasetInspection(TypedDict):
-    """Inspection output for one YAML dataset file."""
+class DatasetInspection(TypedDict):
+    """Inspection output for one dataset file."""
 
     file_name: str
     file_path: str
+    sde_format: SdeFormat
     top_level_key_type_counts: dict[str, int]
     total_records: int
     valid_record_count: int
@@ -55,11 +75,12 @@ class YamlDatasetInspection(TypedDict):
     warnings: WarningList
 
 
-class YamlSchemaReport(TypedDict):
-    """Top-level schema report for one or more YAML dataset files."""
+class SchemaReport(TypedDict):
+    """Top-level schema report for one or more dataset files."""
 
     source_path: str
     generated_at_utc: str
+    sde_format: SdeFormat
     file_count: int
     total_records: int
     total_unique_paths: int
@@ -86,11 +107,11 @@ class _FieldNode:
     list_stats: _ListStats | None = None
 
 
-def _yaml_type_name(value: Any) -> YamlTypeName:
-    """Return a normalized YAML value type name.
+def _sde_type_name(value: Any) -> SdeTypeName:
+    """Return a normalised SDE value type name.
 
     Args:
-        value: Parsed YAML value.
+        value: Parsed value from a YAML or JSON dataset.
 
     Returns:
         Stable type label used in reports.
@@ -120,21 +141,59 @@ def _sequence_items(value: Any) -> list[object]:
     return list(cast(list[object], value))
 
 
-def _update_node_from_value(node: _FieldNode, value: Any) -> None:
+def _normalize_child_key(key: object, sde_format: SdeFormat) -> str:
+    """Return the path component for a child dict key.
+
+    For ``yaml-model`` datasets, integer keys and digit-only string keys
+    (which arise when a YAML file with integer keys is converted to JSON) are
+    replaced with the sentinel ``INTEGER_KEY`` to collapse structurally
+    identical sibling paths.
+
+    Args:
+        key: Child key observed in the source data.
+        sde_format: Active source format for this scan.
+
+    Returns:
+        Normalised path component string.
+
+    Examples:
+        >>> _normalize_child_key(3380, "yaml-model")
+        'INTEGER_KEY'
+        >>> _normalize_child_key("3380", "yaml-model")
+        'INTEGER_KEY'
+        >>> _normalize_child_key("name", "yaml-model")
+        'name'
+        >>> _normalize_child_key("3380", "jsonl-model")
+        '3380'
+    """
+    if sde_format == "yaml-model":
+        if isinstance(key, int):
+            return INTEGER_KEY
+        str_key = str(key)
+        if str_key.lstrip("-").isdigit():
+            return INTEGER_KEY
+    return str(key)
+
+
+def _update_node_from_value(
+    node: _FieldNode, value: Any, sde_format: SdeFormat
+) -> None:
     """Recursively aggregate one observed value into a field node.
 
     Args:
         node: Aggregation node to update.
         value: Observed value for the path represented by ``node``.
+        sde_format: Active source format controlling key normalisation.
     """
-    type_name = _yaml_type_name(value)
+    type_name = _sde_type_name(value)
     node.value_type_counts[type_name] += 1
 
     if isinstance(value, dict):
         for child_name, child_value in _mapping_items(value):
-            child_node = node.children.setdefault(str(child_name), _FieldNode())
+            child_key = _normalize_child_key(child_name, sde_format)
+            child_node = node.children.setdefault(child_key, _FieldNode())
             child_node.presence_count += 1
-            _update_node_from_value(child_node, child_value)
+            _update_node_from_value(child_node, child_value, sde_format)
         return
 
     if not isinstance(value, list):
@@ -150,12 +209,12 @@ def _update_node_from_value(node: _FieldNode, value: Any) -> None:
         return
 
     for item in _sequence_items(value):
-        item_type = _yaml_type_name(item)
+        item_type = _sde_type_name(item)
         list_stats.item_count += 1
         list_stats.item_type_counts[item_type] += 1
         if isinstance(item, dict):
             list_stats.item_node.presence_count += 1
-            _update_node_from_value(list_stats.item_node, item)
+            _update_node_from_value(list_stats.item_node, item, sde_format)
 
 
 def _sorted_type_counts(type_counts: dict[str, int]) -> dict[str, int]:
@@ -305,11 +364,12 @@ def _collect_node_warnings(
         )
 
 
-def _inspect_yaml_dataset(file_path: Path) -> YamlDatasetInspection:
-    """Inspect one YAML dataset file.
+def _inspect_dataset(file_path: Path, sde_format: SdeFormat) -> DatasetInspection:
+    """Inspect one dataset file.
 
     Args:
-        file_path: YAML dataset file to inspect.
+        file_path: Dataset file to inspect (JSON, YAML, or YML).
+        sde_format: Expected top-level structure of the dataset.
 
     Returns:
         Flattened inspection report for a single dataset file.
@@ -318,8 +378,21 @@ def _inspect_yaml_dataset(file_path: Path) -> YamlDatasetInspection:
     root_fields: dict[str, _FieldNode] = {}
     top_level_key_type_counts: Counter[str] = _string_counter()
 
+    def _empty_result(extra_warnings: list[str]) -> DatasetInspection:
+        return {
+            "file_name": file_path.name,
+            "file_path": str(file_path),
+            "sde_format": sde_format,
+            "top_level_key_type_counts": {},
+            "total_records": 0,
+            "valid_record_count": 0,
+            "skipped_record_count": 0,
+            "path_count": 0,
+            "paths": {},
+            "warnings": extra_warnings,
+        }
+
     try:
-        # Accept both json and yaml as input formats.
         if file_path.suffix.lower() == ".json":
             with file_path.open("r", encoding="utf-8") as handle:
                 data = json.load(handle)
@@ -329,64 +402,78 @@ def _inspect_yaml_dataset(file_path: Path) -> YamlDatasetInspection:
         else:
             _append_warning(
                 warnings,
-                f"Unrecognized file extension {file_path.suffix}; "
+                f"Unrecognised file extension {file_path.suffix}; "
                 "attempting to parse as YAML",
             )
             with file_path.open("r", encoding="utf-8") as handle:
                 data = safe_load(handle)
-    except YAMLError as exc:
-        logger.warning("Failed to parse YAML file %s: %s", file_path, exc)
-        return {
-            "file_name": file_path.name,
-            "file_path": str(file_path),
-            "top_level_key_type_counts": {},
-            "total_records": 0,
-            "valid_record_count": 0,
-            "skipped_record_count": 0,
-            "path_count": 0,
-            "paths": {},
-            "warnings": [f"Failed to parse YAML: {exc}"],
-        }
+    except (YAMLError, json.JSONDecodeError) as exc:
+        logger.warning("Failed to parse dataset file %s: %s", file_path, exc)
+        return _empty_result([f"Failed to parse file: {exc}"])
 
-    if not isinstance(data, dict):
-        type_name = _yaml_type_name(data)
-        return {
-            "file_name": file_path.name,
-            "file_path": str(file_path),
-            "top_level_key_type_counts": {},
-            "total_records": 0,
-            "valid_record_count": 0,
-            "skipped_record_count": 0,
-            "path_count": 0,
-            "paths": {},
-            "warnings": [
-                f"Top-level YAML value must be a mapping of records, found {type_name}",
-            ],
-        }
-
-    record_mapping = cast(dict[object, object], data)
-    total_records = len(record_mapping)
+    total_records = 0
     valid_record_count = 0
     skipped_record_count = 0
 
-    for record_key, record_value in record_mapping.items():
-        top_level_key_type_counts[_yaml_type_name(record_key)] += 1
-        if not isinstance(record_value, dict):
-            skipped_record_count += 1
-            _append_warning(
-                warnings,
-                (
-                    f"Top-level key {record_key!r} has non-dict value "
-                    f"{_yaml_type_name(record_value)}; skipped"
-                ),
+    if sde_format == "yaml-model":
+        if not isinstance(data, dict):
+            type_name = _sde_type_name(data)
+            return _empty_result(
+                [
+                    f"yaml-model expects a top-level dict mapping records, "
+                    f"found {type_name}"
+                ]
             )
-            continue
 
-        valid_record_count += 1
-        for field_name, field_value in _mapping_items(record_value):
-            node = root_fields.setdefault(str(field_name), _FieldNode())
-            node.presence_count += 1
-            _update_node_from_value(node, field_value)
+        record_mapping = cast(dict[object, object], data)
+        total_records = len(record_mapping)
+
+        for record_key, record_value in record_mapping.items():
+            top_level_key_type_counts[_sde_type_name(record_key)] += 1
+            if not isinstance(record_value, dict):
+                skipped_record_count += 1
+                _append_warning(
+                    warnings,
+                    (
+                        f"Top-level key {record_key!r} has non-dict value "
+                        f"{_sde_type_name(record_value)}; skipped"
+                    ),
+                )
+                continue
+
+            valid_record_count += 1
+            for field_name, field_value in _mapping_items(record_value):
+                node = root_fields.setdefault(str(field_name), _FieldNode())
+                node.presence_count += 1
+                _update_node_from_value(node, field_value, sde_format)
+
+    else:  # jsonl-model
+        if not isinstance(data, list):
+            type_name = _sde_type_name(data)
+            return _empty_result(
+                [f"jsonl-model expects a top-level list of records, found {type_name}"]
+            )
+
+        record_list = cast(list[object], data)
+        total_records = len(record_list)
+
+        for record_value in record_list:
+            if not isinstance(record_value, dict):
+                skipped_record_count += 1
+                _append_warning(
+                    warnings,
+                    (
+                        f"List item has non-dict value "
+                        f"{_sde_type_name(record_value)}; skipped"
+                    ),
+                )
+                continue
+
+            valid_record_count += 1
+            for field_name, field_value in _mapping_items(record_value):
+                node = root_fields.setdefault(str(field_name), _FieldNode())
+                node.presence_count += 1
+                _update_node_from_value(node, field_value, sde_format)
 
     for field_name in sorted(root_fields):
         _collect_node_warnings(field_name, root_fields[field_name], warnings)
@@ -396,6 +483,7 @@ def _inspect_yaml_dataset(file_path: Path) -> YamlDatasetInspection:
     return {
         "file_name": file_path.name,
         "file_path": str(file_path),
+        "sde_format": sde_format,
         "top_level_key_type_counts": _sorted_type_counts(
             dict(top_level_key_type_counts)
         ),
@@ -409,13 +497,16 @@ def _inspect_yaml_dataset(file_path: Path) -> YamlDatasetInspection:
 
 
 def _build_schema_report(
-    source_path: str, datasets: list[YamlDatasetInspection]
-) -> YamlSchemaReport:
+    source_path: str,
+    datasets: list[DatasetInspection],
+    sde_format: SdeFormat,
+) -> SchemaReport:
     """Build the top-level schema report object.
 
     Args:
         source_path: Source file, directory, or glob used for scanning.
         datasets: Dataset inspection results to aggregate.
+        sde_format: Source format shared across all scanned datasets.
 
     Returns:
         Aggregated schema report.
@@ -429,6 +520,7 @@ def _build_schema_report(
     return {
         "source_path": source_path,
         "generated_at_utc": datetime.now(UTC).isoformat(timespec="seconds"),
+        "sde_format": sde_format,
         "file_count": len(sorted_datasets),
         "total_records": total_records,
         "total_unique_paths": len(all_paths),
@@ -436,24 +528,26 @@ def _build_schema_report(
     }
 
 
-def scan_yaml_file(path: Path) -> YamlSchemaReport:
-    """Scan a single YAML file and return a schema report.
+def scan_file(path: Path, sde_format: SdeFormat) -> SchemaReport:
+    """Scan a single dataset file and return a schema report.
 
     Args:
-        path: YAML file to scan.
+        path: Dataset file to scan (JSON, YAML, or YML).
+        sde_format: Expected top-level structure of the dataset.
 
     Returns:
         Schema report containing one dataset section.
     """
-    dataset = _inspect_yaml_dataset(path)
-    return _build_schema_report(str(path), [dataset])
+    dataset = _inspect_dataset(path, sde_format)
+    return _build_schema_report(str(path), [dataset], sde_format)
 
 
-def scan_yaml_directory(pattern: str | Path) -> YamlSchemaReport:
-    """Scan multiple YAML files and return an aggregated schema report.
+def scan_directory(pattern: str | Path, sde_format: SdeFormat) -> SchemaReport:
+    """Scan multiple dataset files and return an aggregated schema report.
 
     Args:
-        pattern: Directory, file path, or glob pattern selecting YAML files.
+        pattern: Directory, file path, or glob pattern selecting dataset files.
+        sde_format: Expected top-level structure of the datasets.
 
     Returns:
         Schema report with one section per matching dataset file.
@@ -461,7 +555,11 @@ def scan_yaml_directory(pattern: str | Path) -> YamlSchemaReport:
     if isinstance(pattern, Path):
         candidate = pattern
         if candidate.is_dir():
-            files = sorted(candidate.glob("*.yaml"))
+            # Collect files with supported extensions (yaml, yml, json).
+            yaml_files = set(candidate.glob("*.yaml"))
+            yml_files = set(candidate.glob("*.yml"))
+            json_files = set(candidate.glob("*.json"))
+            files = sorted(yaml_files | yml_files | json_files)
             source_path = str(candidate)
         elif candidate.is_file():
             files = [candidate]
@@ -472,32 +570,37 @@ def scan_yaml_directory(pattern: str | Path) -> YamlSchemaReport:
     else:
         candidate = Path(pattern)
         if candidate.is_dir():
-            files = sorted(candidate.glob("*.yaml"))
+            # Collect files with supported extensions (yaml, yml, json).
+            yaml_files = set(candidate.glob("*.yaml"))
+            yml_files = set(candidate.glob("*.yml"))
+            json_files = set(candidate.glob("*.json"))
+            files = sorted(yaml_files | yml_files | json_files)
         elif candidate.is_file():
             files = [candidate]
         else:
             files = [Path(match) for match in sorted(glob(pattern))]
         source_path = str(pattern)
 
-    datasets = [_inspect_yaml_dataset(file_path) for file_path in files]
-    return _build_schema_report(source_path, datasets)
+    datasets = [_inspect_dataset(file_path, sde_format) for file_path in files]
+    return _build_schema_report(source_path, datasets, sde_format)
 
 
-def generate_markdown_report(report: YamlSchemaReport) -> str:
+def generate_markdown_report(report: SchemaReport) -> str:
     """Render a human-readable markdown schema report.
 
     Args:
-        report: Schema report from ``scan_yaml_file`` or ``scan_yaml_directory``.
+        report: Schema report from ``scan_file`` or ``scan_directory``.
 
     Returns:
         Markdown text with a summary and per-dataset sections.
     """
     lines: list[str] = [
-        "# YAML Schema Report",
+        "# Schema Report",
         "",
         "## Summary",
         f"- source_path: {report['source_path']}",
         f"- generated_at_utc: {report['generated_at_utc']}",
+        f"- sde_format: {report['sde_format']}",
         f"- files_scanned: {report['file_count']}",
         f"- total_records: {report['total_records']}",
         f"- total_unique_paths: {report['total_unique_paths']}",
@@ -513,6 +616,7 @@ def generate_markdown_report(report: YamlSchemaReport) -> str:
         lines.extend(
             [
                 f"## {dataset['file_name']}",
+                f"- sde_format: {dataset['sde_format']}",
                 f"- Records: {dataset['total_records']}",
                 f"- Top-level key types: {key_type_summary or 'unknown'}",
                 f"- Valid dict records: {dataset['valid_record_count']}",
@@ -556,27 +660,39 @@ def generate_markdown_report(report: YamlSchemaReport) -> str:
 
 if __name__ == "__main__":
     import argparse
+    import json
 
-    parser = argparse.ArgumentParser(description="Generate YAML schema report.")
+    parser = argparse.ArgumentParser(description="Generate SDE schema report.")
     parser.add_argument(
         "input_path",
         type=str,
         help=(
-            "Path to YAML file, directory, or glob pattern to scan. "
+            "Path to dataset file, directory, or glob pattern to scan. "
             "Examples: 'data.yaml', 'datasets/', 'yaml_files/*.yaml'"
         ),
     )
     parser.add_argument(
-        "output_file",
+        "output_directory",
         type=str,
-        help="Path to write the markdown report. Use '-' for stdout.",
+        help="Path to write the markdown reports.",
+    )
+    parser.add_argument(
+        "--format",
+        dest="sde_format",
+        choices=["yaml-model", "jsonl-model"],
+        default="yaml-model",
+        help="Expected top-level structure of the dataset files (default: yaml-model).",
     )
     args = parser.parse_args()
 
-    report = scan_yaml_directory(args.input_path)
+    report = scan_directory(args.input_path, sde_format=args.sde_format)
     markdown = generate_markdown_report(report)
-    if args.output_file == "-":
-        print(markdown)
-    else:
-        with open(args.output_file, "w", encoding="utf-8") as f:
-            f.write(markdown)
+
+    markdown_report_path = Path(args.output_directory) / "schema_report.md"
+    json_report_path = Path(args.output_directory) / "schema_report.json"
+    markdown_report_path.parent.mkdir(parents=True, exist_ok=True)
+    json_report_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(markdown_report_path, "w", encoding="utf-8") as f:
+        f.write(markdown)
+    with open(json_report_path, "w", encoding="utf-8") as f:
+        json.dump(report, f, indent=2)
