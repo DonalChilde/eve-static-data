@@ -1,7 +1,7 @@
 """Common type definitions for the EVE static data models."""
 
 from enum import StrEnum
-from typing import Literal, TypedDict
+from typing import Any, Literal, TypedDict
 
 TRANSLATION_MISSING = "NOT_AVAILABLE"
 
@@ -49,9 +49,48 @@ class LocalizedString(TypedDict, total=False):
 
 
 class LocalizableRecord:
-    def localized_fields(self, lang: Lang) -> dict[str, str | None]:
-        """Returns a dict of the localized fields in the model."""
+    def localized_fields(self, lang: Lang | None) -> dict[str, str | None]:
+        """Returns a dict of the localized fields in the model.
+
+        Args:
+            lang: The language to return the localized fields for. If None, returns {field_name: None}.
+
+        Returns:
+            A dict of the localized fields in the model, with the field name as the key
+                and the `lang` localized string as the value.
+        """
         raise NotImplementedError("This method should be implemented by subclasses.")
+
+    # def narrow_localizable_record(self, langs: set[Lang]) -> Self:
+    #     """Narrow a LocalizableRecord to a specific language.
+
+    #     For Records with localized fields in sub_records, ovverride this method to narrow
+    #     those sub_records as well.
+
+    #     Modifies the record in place and also returns it for chaining.
+
+    #     If selected lang is missing from a field, the value will be set to TRANSLATION_MISSING.
+
+    #     fields that are None will be left as None.
+
+    #     Args:
+    #         langs: The set of languages to narrow to.
+
+    #     Returns:
+    #         A new LocalizableRecord containing only the translation for the target language.
+    #     """
+    #     if not langs:
+    #         raise ValueError("At least one language must be specified.")
+    #     localized_fields = set(self.localized_fields(lang=None).keys())
+    #     for lang in langs:
+    #         lang_check(lang)
+    #     for field_name in localized_fields:
+    #         field = getattr(self, field_name)
+    #         if field is None:
+    #             continue
+    #         new_field = {lang: field.get(lang, TRANSLATION_MISSING) for lang in langs}
+    #         setattr(self, field_name, new_field)
+    #     return self
 
 
 ACTIVITIES: set[str] = {
@@ -63,3 +102,46 @@ ACTIVITIES: set[str] = {
     "research_time",
 }
 """Industrial activities from blueprints."""
+
+
+def narrow_localizable_json_dict(
+    json_record: dict[str, Any], langs: set[Lang]
+) -> dict[str, Any]:
+    """Narrow a JSON dict representing a LocalizableRecord to a specific language.
+
+    This is used for the CLI export, to avoid the overhead of converting to the Pydantic models
+    and then back to JSON.
+
+    must detect which fields are localized by checking if the value is a LocalizedString,
+    and then narrow those fields to the specified languages.
+
+    Args:
+        json_record: The JSON dict representing the record. It should have the same shape as the Pydantic model,
+            but with all fields as dicts of {lang: value}.
+        langs: The set of languages to narrow to.
+
+    Returns:
+        A new JSON dict containing the record with only the translation for the target language.
+    """
+    if not langs:
+        raise ValueError("At least one language must be specified.")
+    for key, value in json_record.items():
+        if isinstance(value, dict) and set(value.keys()).issubset(
+            PossibleTranslationLanguages
+        ):
+            # This is a localized field, narrow it to the specified languages
+            json_record[key] = {
+                lang: value.get(lang, TRANSLATION_MISSING) for lang in langs
+            }
+        elif isinstance(value, dict):
+            # This is a nested record, recursively narrow it
+            json_record[key] = narrow_localizable_json_dict(value, langs)
+        elif isinstance(value, list):
+            # This is a list of records, recursively narrow each item if it's a dict
+            json_record[key] = [
+                narrow_localizable_json_dict(item, langs)
+                if isinstance(item, dict)
+                else item
+                for item in value
+            ]
+    return json_record

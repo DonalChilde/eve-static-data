@@ -9,7 +9,7 @@ import typer
 from rich.console import Console
 from yaml import safe_load
 
-from eve_static_data.models.common import LangEnum
+from eve_static_data.models.common import LangEnum, narrow_localizable_json_dict
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -32,6 +32,16 @@ def yaml_to_json(
             dir_okay=True,
         ),
     ],
+    lang: Annotated[
+        list[LangEnum] | None,
+        typer.Option(
+            "-l",
+            "--lang",
+            help="The one or more languages to include in the output JSON files. If not "
+            "provided, all languages will be included.",
+            show_default=True,
+        ),
+    ] = None,
 ):
     """Convert SDE data from YAML format to JSON format."""
     console = Console()
@@ -66,6 +76,10 @@ def yaml_to_json(
                 raise typer.Exit(code=1) from e
             start_json = perf_counter()
             try:
+                if lang:
+                    yaml_data = narrow_localizable_json_dict(
+                        yaml_data, set(lang.value for lang in lang)
+                    )
                 json.dump(yaml_data, json_out, ensure_ascii=False, indent=2)
                 console.print(
                     f"Converted {yaml_file} to {json_file_path} in {perf_counter() - start_json:.2f} seconds"
@@ -81,6 +95,11 @@ def yaml_to_json(
     console.print(
         f"Finished converting all {len(yaml_files)} YAML files to JSON in {perf_counter() - job_start:.2f} seconds"
     )
+
+
+# To narrow the localized fields:
+# - export to json is preferred, since it is much faster.
+# -
 
 
 @app.command()

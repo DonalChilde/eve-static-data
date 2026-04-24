@@ -2,6 +2,7 @@
 
 import sqlite3
 from collections.abc import Iterable
+from dataclasses import dataclass, field
 from typing import Any
 
 from eve_static_data.models import yaml_records
@@ -9,7 +10,6 @@ from eve_static_data.models.common import (
     ACTIVITIES,
     Lang,
     LocalizedString,
-    PossibleTranslationLanguages,
 )
 
 
@@ -44,9 +44,6 @@ def fetch_rows(cursor: sqlite3.Cursor, query: str) -> list[tuple[Any, ...]]:
     """Fetch all rows from the database for a given query."""
     cursor.execute(query)
     return cursor.fetchall()
-
-
-from dataclasses import dataclass, field
 
 
 @dataclass
