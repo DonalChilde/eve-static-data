@@ -1,5 +1,3 @@
-"""Helper functions for exporting data to csv files."""
-
 import csv
 from collections.abc import Iterable
 from pathlib import Path

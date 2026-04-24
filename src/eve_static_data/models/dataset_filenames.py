@@ -1,3 +1,5 @@
+"""This module defines the SdeDatasetFiles enum, which contains the names of all the dataset files in the SDE."""
+
 from enum import StrEnum
 
 
@@ -81,22 +83,3 @@ class SdeDatasetFiles(StrEnum):
         This file name is used when working with the original SDE dataset files, which are in YAML format.
         """
         return f"{self.value}.yaml"
-
-
-# TODO unifiy function naming conventions. Add published to above?
-
-
-# FIXME should dervied datasets always be published only? If so, should we add published to the function names above and remove the only_published parameter?
-class DerivedDatasetFiles(StrEnum):
-    MARKET_PATHS = "market_paths"
-    NORMALIZED_EVE_TYPES = "normalized_eve_types"
-    PUBLISHED_BLUEPRINTS = "published_blueprints"
-    REGION_NAMES = "region_names"
-    SYSTEM_NAMES = "system_names"
-    BILLS_OF_MATERIALS = "bills_of_materials"
-    TYPE_META_LEVELS = "type_meta_levels"
-
-    def localized_published(self, lang: str, only_published: bool = False) -> str:
-        """Return the filename for the localized version of this file name."""
-        suffix = "-published" if only_published else ""
-        return f"{self.value}-localized-{lang}{suffix}.json"
