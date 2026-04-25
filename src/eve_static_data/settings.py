@@ -66,8 +66,8 @@ class EveStaticDataSettingsPydantic(BaseSettings):
         default=DEFAULT_APP_DIR,
         description="The application directory path.",
     )
-    logging_directory: str = Field(
-        default=str(DEFAULT_APP_DIR / "logs"),
+    logging_directory: Path = Field(
+        default=DEFAULT_APP_DIR / "logs",
         description="The directory where log files are stored.",
     )
     sde_latest_info_url: str = Field(
@@ -99,9 +99,8 @@ def get_settings(
     if pydantic_settings is None:
         pydantic_settings = EveStaticDataSettingsPydantic()
     settings = EveStaticDataSettings(
-        application_directory=Path(pydantic_settings.application_directory),
-        logging_directory=Path(pydantic_settings.logging_directory),
-        # sde_directory=Path(pydantic_settings.sde_directory),
+        application_directory=pydantic_settings.application_directory,
+        logging_directory=pydantic_settings.logging_directory,
         sde_latest_info_url=pydantic_settings.sde_latest_info_url,
         sde_download_url_template=pydantic_settings.sde_download_url_template,
         sde_data_changes_url_template=pydantic_settings.sde_data_changes_url_template,
@@ -109,7 +108,6 @@ def get_settings(
         sde_data_filename_template=pydantic_settings.sde_data_filename_template,
     )
     # Ensure that the application directories exist.
-    Path(settings.application_directory).mkdir(parents=True, exist_ok=True)
-    Path(settings.logging_directory).mkdir(parents=True, exist_ok=True)
-    # Path(settings.sde_directory).mkdir(parents=True, exist_ok=True)
+    settings.application_directory.mkdir(parents=True, exist_ok=True)
+    settings.logging_directory.mkdir(parents=True, exist_ok=True)
     return settings
