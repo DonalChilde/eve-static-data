@@ -19,8 +19,8 @@ Current Features:
 - export the YAML datasets to json, with optional narrowing of the avalable localiazations, saving space
 - A set of dataclasses defining the SDE schemas.
 - Report on the downloaded SDE data schemas.
-- Validate the downloaded data against the internal data models.
-- An API for easy loading of data from disc.
+- Validate the downloaded data against the internal data models, with report.
+- An API for easy loading of data from disk.
 
 Future Features:
 - A loadable, validateable, datamodel for the JSONL version of the SDE
