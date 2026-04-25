@@ -35,16 +35,7 @@ class EveStaticDataSettings:
     sde_schema_changelog_url: str = SCHEMA_CHANGELOG_URL
     sde_data_filename_template: str = DATA_FILENAME_TEMPLATE
 
-    # def sde_loader(self) -> SDELoader:
-    #     """Get an instance of the SDELoader for working with the SDE data.
-
-    #     This loader is configured to cache the derived datasets in the `<sde_directory>/derived_datasets` directory.
-    #     """
-    #     return SDELoader(
-    #         self.sde_directory,
-    #         derived_datasets_path=self.sde_directory / "derived_datasets",
-    #     )
-
+    # TODO: Consider allowing/requiring users to add to USER_AGENT.
     def sde_tools(self) -> SDETools:
         """Get an instance of the SDETools for working with the SDE data."""
         return SDETools(
