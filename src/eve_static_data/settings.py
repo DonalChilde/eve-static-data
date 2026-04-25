@@ -62,14 +62,10 @@ class EveStaticDataSettingsPydantic(BaseSettings):
         env_file_encoding="utf-8",
     )
 
-    application_directory: str = Field(
-        default=str(DEFAULT_APP_DIR),
+    application_directory: Path = Field(
+        default=DEFAULT_APP_DIR,
         description="The application directory path.",
     )
-    # sde_directory: str = Field(
-    #     default=str(DEFAULT_APP_DIR / "sde"),
-    #     description="The directory where the SDE data is stored.",
-    # )
     logging_directory: str = Field(
         default=str(DEFAULT_APP_DIR / "logs"),
         description="The directory where log files are stored.",
@@ -96,9 +92,12 @@ class EveStaticDataSettingsPydantic(BaseSettings):
     )
 
 
-def get_settings() -> EveStaticDataSettings:
+def get_settings(
+    pydantic_settings: EveStaticDataSettingsPydantic | None = None,
+) -> EveStaticDataSettings:
     """Get the Eve Static Data settings."""
-    pydantic_settings = EveStaticDataSettingsPydantic()
+    if pydantic_settings is None:
+        pydantic_settings = EveStaticDataSettingsPydantic()
     settings = EveStaticDataSettings(
         application_directory=Path(pydantic_settings.application_directory),
         logging_directory=Path(pydantic_settings.logging_directory),
