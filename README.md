@@ -13,6 +13,10 @@ NOTE the eve-static-data cli command is `esd`
 esd status
 ```
 
+Schema supported:
+- After Build Number: 3279491
+- Date: 2026-03-30
+
 Current Features:
 - Download the current SDE, schema changelog, data changelog, etc.
 - Unpack the downloaded SDE dataset.
