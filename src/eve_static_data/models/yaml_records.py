@@ -34,7 +34,7 @@ defined as types instead of dataclasses.
 """
 
 from dataclasses import dataclass
-from typing import Any, Self
+from typing import Any
 
 from eve_static_data.models.common import (
     TRANSLATION_MISSING,
