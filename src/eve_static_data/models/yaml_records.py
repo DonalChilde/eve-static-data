@@ -34,7 +34,7 @@ defined as types instead of dataclasses.
 """
 
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Literal
 
 from eve_static_data.models.common import (
     TRANSLATION_MISSING,
@@ -136,11 +136,21 @@ class Ancestries(LocalizableRecord):
         """Returns a dict of the localized fields in the model."""
         if lang is None:
             return {"description": None, "name": None}
-        lang_check(lang)
+
         return {
-            "description": self.description.get(lang, TRANSLATION_MISSING),
-            "name": self.name.get(lang, TRANSLATION_MISSING),
+            "description": self.localized_description(lang),
+            "name": self.localized_name(lang),
         }
+
+    def localized_description(self, lang: Lang) -> str:
+        """Returns the localized description for the given language."""
+        lang_check(lang)
+        return self.description.get(lang, TRANSLATION_MISSING)
+
+    def localized_name(self, lang: Lang) -> str:
+        """Returns the localized name for the given language."""
+        lang_check(lang)
+        return self.name.get(lang, TRANSLATION_MISSING)
 
 
 @dataclass(slots=True, kw_only=True)
@@ -1009,20 +1019,32 @@ class MarketGroups(LocalizableRecord):
     name: LocalizedString
     parentGroupID: int | None = None
 
-    def localized_fields(self, lang: Lang | None) -> dict[str, str | None]:
+    def localized_fields(
+        self, lang: Lang | None
+    ) -> dict[Literal["name", "description"], str | None]:
         """Returns a dict of the localized fields in the model."""
         if lang is None:
             return {"description": None, "name": None}
         lang_check(lang)
-        description = (
+        description = self.localized_description(lang)
+        return {
+            "description": description,
+            "name": self.localized_name(lang),
+        }
+
+    def localized_name(self, lang: Lang) -> str | None:
+        """Returns the localized name of the market group."""
+        lang_check(lang)
+        return self.name.get(lang, TRANSLATION_MISSING)
+
+    def localized_description(self, lang: Lang) -> str | None:
+        """Returns the localized description of the market group."""
+        lang_check(lang)
+        return (
             self.description.get(lang, TRANSLATION_MISSING)
             if self.description
             else None
         )
-        return {
-            "description": description,
-            "name": self.name.get(lang, TRANSLATION_MISSING),
-        }
 
 
 # FIXME: check to see if this is following the same pattern,

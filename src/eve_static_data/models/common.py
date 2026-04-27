@@ -49,7 +49,7 @@ class LocalizedString(TypedDict, total=False):
 
 
 class LocalizableRecord:
-    def localized_fields(self, lang: Lang | None) -> dict[str, str | None]:
+    def localized_fields(self, lang: Lang | None) -> dict[Any, str | None]:
         """Returns a dict of the localized fields in the model.
 
         Args:
