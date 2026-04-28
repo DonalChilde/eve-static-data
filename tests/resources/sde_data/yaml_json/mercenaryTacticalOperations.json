@@ -1,6 +1,6 @@
 {
   "12367": {
-    "anarchy_impact": -20,
+    "anarchyImpact": -20,
     "description": {
       "de": "Alle Raubdrohnen zerst\u00f6ren, um die Entwicklung des zugeh\u00f6rigen S\u00f6ldnerverstecks zu verbessern und seine Anarchie zu verringern.",
       "en": "Destroy all Rogue Drones to improve the associated Mercenary Den's Development and lower its Anarchy.",
@@ -11,8 +11,9 @@
       "ru": "\u0423\u043d\u0438\u0447\u0442\u043e\u0436\u044c\u0442\u0435 \u0432\u0441\u0435\u0445 \u0432\u043e\u0441\u0441\u0442\u0430\u0432\u0448\u0438\u0445 \u0434\u0440\u043e\u043d\u043e\u0432, \u0447\u0442\u043e\u0431\u044b \u043f\u043e\u0432\u044b\u0441\u0438\u0442\u044c \u0443\u0440\u043e\u0432\u0435\u043d\u044c \u0440\u0430\u0437\u0432\u0438\u0442\u0438\u044f \u0438 \u0443\u043c\u0435\u043d\u044c\u0448\u0438\u0442\u044c \u043f\u043e\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u044c \u0430\u043d\u0430\u0440\u0445\u0438\u0438 \u0441\u043e\u043e\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u044e\u0449\u0435\u0433\u043e \u043b\u043e\u0433\u043e\u0432\u0430 \u043d\u0430\u0451\u043c\u043d\u0438\u043a\u043e\u0432.",
       "zh": "\u51fb\u6bc1\u6240\u6709\u81ea\u7531\u65e0\u4eba\u673a\uff0c\u589e\u52a0\u76f8\u5173\u96c7\u4f63\u5175\u5de2\u7a74\u7684\u53d1\u5c55\u503c\u5e76\u51cf\u5c11\u5176\u6df7\u4e71\u503c\u3002"
     },
-    "development_impact": 10,
-    "infomorph_bonus": 350,
+    "developmentImpact": 10,
+    "dungeonID": 12367,
+    "infomorphBonus": 350,
     "name": {
       "de": "Raubdrohnen-Auftreten",
       "en": "Rogue Drone Emergence",
@@ -25,7 +26,7 @@
     }
   },
   "12368": {
-    "anarchy_impact": -20,
+    "anarchyImpact": -20,
     "description": {
       "de": "Alle Drifter und Sleeper zerst\u00f6ren, um die Entwicklung des zugeh\u00f6rigen S\u00f6ldnerverstecks zu verbessern und seine Anarchie zu verringern.",
       "en": "Destroy all Drifters and Sleepers to improve the associated Mercenary Den's Development and lower its Anarchy.",
@@ -36,8 +37,9 @@
       "ru": "\u0423\u043d\u0438\u0447\u0442\u043e\u0436\u044c\u0442\u0435 \u0432\u0441\u0435\u0445 \u0421\u043a\u0438\u0442\u0430\u043b\u044c\u0446\u0435\u0432 \u0438 \u0421\u043f\u044f\u0449\u0438\u0445, \u0447\u0442\u043e\u0431\u044b \u043f\u043e\u0432\u044b\u0441\u0438\u0442\u044c \u0443\u0440\u043e\u0432\u0435\u043d\u044c \u0440\u0430\u0437\u0432\u0438\u0442\u0438\u044f \u0438 \u0443\u043c\u0435\u043d\u044c\u0448\u0438\u0442\u044c \u043f\u043e\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u044c \u0430\u043d\u0430\u0440\u0445\u0438\u0438 \u0441\u043e\u043e\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u044e\u0449\u0435\u0433\u043e \u043b\u043e\u0433\u043e\u0432\u0430 \u043d\u0430\u0451\u043c\u043d\u0438\u043a\u043e\u0432.",
       "zh": "\u6d88\u706d\u6240\u6709\u6d41\u6d6a\u8005\u548c\u51ac\u7720\u8005\uff0c\u589e\u52a0\u76f8\u5173\u96c7\u4f63\u5175\u5de2\u7a74\u7684\u53d1\u5c55\u503c\u5e76\u51cf\u5c11\u5176\u6df7\u4e71\u503c\u3002"
     },
-    "development_impact": 10,
-    "infomorph_bonus": 350,
+    "developmentImpact": 10,
+    "dungeonID": 12368,
+    "infomorphBonus": 350,
     "name": {
       "de": "Drifter-Appell",
       "en": "Drifter Muster",
@@ -50,7 +52,7 @@
     }
   },
   "12369": {
-    "anarchy_impact": -20,
+    "anarchyImpact": -20,
     "description": {
       "de": "Alle Sansha zerst\u00f6ren, um die Entwicklung des zugeh\u00f6rigen S\u00f6ldnerverstecks zu verbessern und seine Anarchie zu verringern.",
       "en": "Destroy all Sansha to improve the associated Mercenary Den's Development and lower its Anarchy.",
@@ -61,8 +63,9 @@
       "ru": "\u0423\u043d\u0438\u0447\u0442\u043e\u0436\u044c\u0442\u0435 \u0432\u0441\u0435 \u0441\u0443\u0434\u0430 \u00ab\u041d\u0430\u0446\u0438\u0438 \u0421\u0430\u043d\u0448\u0438\u00bb, \u0447\u0442\u043e\u0431\u044b \u043f\u043e\u0432\u044b\u0441\u0438\u0442\u044c \u0443\u0440\u043e\u0432\u0435\u043d\u044c \u0440\u0430\u0437\u0432\u0438\u0442\u0438\u044f \u0438 \u0443\u043c\u0435\u043d\u044c\u0448\u0438\u0442\u044c \u043f\u043e\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u044c \u0430\u043d\u0430\u0440\u0445\u0438\u0438 \u0441\u043e\u043e\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u044e\u0449\u0435\u0433\u043e \u043b\u043e\u0433\u043e\u0432\u0430 \u043d\u0430\u0451\u043c\u043d\u0438\u043a\u043e\u0432.",
       "zh": "\u6d88\u706d\u6240\u6709\u8428\u6c99\u516c\u6c11\uff0c\u589e\u52a0\u76f8\u5173\u96c7\u4f63\u5175\u5de2\u7a74\u7684\u53d1\u5c55\u503c\u5e76\u51cf\u5c11\u5176\u6df7\u4e71\u503c\u3002"
     },
-    "development_impact": 10,
-    "infomorph_bonus": 350,
+    "developmentImpact": 10,
+    "dungeonID": 12369,
+    "infomorphBonus": 350,
     "name": {
       "de": "Sansha-Pl\u00fcndergruppe",
       "en": "Sansha Raiding Party",

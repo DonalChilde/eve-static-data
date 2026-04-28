@@ -1,0 +1,221 @@
+43:
+  allowedShipsList:
+  - 478
+  archetypeID: 24
+  description:
+    de: "<P>Dies ist ein Versorgungsdepot f\xFCr Kampfschiffe und Piraten-Frachter.\
+      \ Der Guristaskern in diesen Depots ist sehr aggressiv.</P> <P>DED Bedrohungseinstufung:\
+      \ Gering (2 von 10)</P>"
+    en: '<P>This is a supply depot for combat vessels and pirate cargo haulers alike.
+      The Pith Guristas in these depots are very aggressive.</P>
+
+      <P>DED Threat Assessment: Minor (2 of 10)</P>'
+    es: "<P>Dep\xF3sito de suministros para naves de combate y naves de mercanc\xED\
+      as piratas. Los guristas pith que hay en estos almacenes son muy agresivos.</P>\n\
+      \n<P>Evaluaci\xF3n de amenaza del DED: menor (2 de 10)</P>"
+    fr: "<P>Ce d\xE9p\xF4t d'approvisionnement est destin\xE9 aux vaisseaux de combat\
+      \ et aux cargos pirates. Les Pith guristas pr\xE9sents dans ces d\xE9p\xF4ts\
+      \ sont tr\xE8s agressifs.</P> <P>\xC9valuation de la menace DED\_: mineur (2\_\
+      sur\_10)</P>"
+    ja: "<P>\u3053\u3053\u306F\u30B3\u30F3\u30D0\u30C3\u30C8\u8266\u540C\u69D8\u3001\
+      \u6D77\u8CCA\u306E\u30AB\u30FC\u30B4\u8F38\u9001\u8247\u306E\u305F\u3081\u306E\
+      \u88DC\u7D66\u6240\u3067\u3082\u3042\u308B\u3002\u3053\u306E\u5009\u5EAB\u306B\
+      \u3044\u308B\u30D4\u30B9\u30AC\u30EA\u30B9\u30BF\u30B9\u306F\u3068\u3066\u3082\
+      \u653B\u6483\u7684\u3060\u3002</P>\n<P>DED\u8105\u5A01\u306E\u8A55\u4FA1: \u5B89\
+      \u5168\uFF082/10\uFF09</P>"
+    ko: "<P>\uC774 \uC2DC\uC124\uC740 \uD574\uC801 \uC804\uD22C\uC120 \uBC0F \uC218\
+      \uC1A1\uC120\uC744 \uC704\uD55C \uBCF4\uAE09\uC18C\uC785\uB2C8\uB2E4. \uBCF4\
+      \uAE09\uC18C \uB0B4\uC758 \uD53C\uC2A4 \uAD6C\uB9AC\uC2A4\uD0C0\uC2A4 \uC870\
+      \uC9C1\uC6D0\uB4E4\uC740 \uB9E4\uC6B0 \uACF5\uACA9\uC801\uC785\uB2C8\uB2E4.</P>\
+      \ <P>DED \uC704\uD611\uBD84\uC11D\uBCF4\uACE0\uC11C: \uC8FC\uC758 (2/10) </P>"
+    ru: "<P>\u042D\u0442\u043E \u0441\u043A\u043B\u0430\u0434 \u0441\u043D\u0430\u0431\
+      \u0436\u0435\u043D\u0438\u044F, \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\
+      \u0435\u043C\u044B\u0439 \u043A\u0430\u043A \u0431\u043E\u0435\u0432\u044B\u043C\
+      \u0438 \u043A\u043E\u0440\u0430\u0431\u043B\u044F\u043C\u0438, \u0442\u0430\u043A\
+      \ \u0438 \u043F\u0438\u0440\u0430\u0442\u0441\u043A\u0438\u043C\u0438 \u0442\
+      \u0440\u0430\u043D\u0441\u043F\u043E\u0440\u0442\u043D\u0438\u043A\u0430\u043C\
+      \u0438. \u041F\u0438\u0440\u0430\u0442\u044B Pith Gurista \u043D\u0430 \u044D\
+      \u0442\u0438\u0445 \u0441\u043A\u043B\u0430\u0434\u0430\u0445 \u043E\u0447\u0435\
+      \u043D\u044C \u0430\u0433\u0440\u0435\u0441\u0441\u0438\u0432\u043D\u044B.</P>\n\
+      <P>\u041E\u0446\u0435\u043D\u043A\u0430 \u0443\u0433\u0440\u043E\u0437\u044B\
+      \ DED: \u043D\u0435\u0437\u043D\u0430\u0447\u0438\u0442\u0435\u043B\u044C\u043D\
+      \u0430\u044F (2 \u0438\u0437 10)</P>"
+    zh: "<P>\u6218\u8230\u548C\u6D77\u76D7\u8FD0\u8F93\u8239\u7684\u80FD\u6E90\u8865\
+      \u7ED9\u7AD9\u3002\u5728\u8FD9\u4E9B\u8865\u7ED9\u7AD9\u7684\u76AE\u7279\u53E4\
+      \u65AF\u5854\u65AF\u975E\u5E38\u597D\u6597\u3002</P> <P>DED\u5A01\u80C1\u8BC4\
+      \u4F30\uFF1A\u8F83\u5C0F(2/10)</P>"
+  factionID: 500010
+  name:
+    de: "Kernh\xE4ndler-Depot"
+    en: Pith Merchant Depot
+    es: "Almac\xE9n mercantil pith"
+    fr: "D\xE9p\xF4t commercial pith"
+    ja: "\u30D4\u30B9\u5546\u4EBA\u8CAF\u8535\u6240"
+    ko: "\uD53C\uC2A4 \uAC70\uB798\uC0C1 \uBCF4\uAE09\uC18C"
+    ru: "\u0422\u043E\u0440\u0433\u043E\u0432\u0430\u044F \u0431\u0430\u0437\u0430\
+      \ Pith (Pith Merchant Depot)"
+    zh: "\u6CE2\u5E0C\u4F63\u5175\u7AD9"
+111:
+  allowedShipsList:
+  - 482
+  - 478
+  archetypeID: 24
+  description:
+    de: "<P>Dieser Raumverwerfungskomplex ist von den Soldaten von Sansha's Nation\
+      \ besetzt. Das Gebiet h\xE4lt als Milit\xE4rau\xDFenposten her und erlaubt es\
+      \ Sansha-Truppen, die Waffensysteme neu zu laden, Cyberimplantate zu reparieren\
+      \ und \xDCberwachungsdaten zu verarbeiten. Der Komplex enth\xE4lt au\xDFerdem\
+      \ die Cryo-Kammern f\xFCr Hunderte von Sansha-Reservisten.</P>\n\n<P>DED Bedrohungseinstufung:\
+      \ Training (1 von 10)</P>"
+    en: '<P>This deadspace complex is occupied by the soldiers of Sansha''s Nation.
+      The area serves as a military outpost, allowing their troops to rearm their
+      weapon systems, repair personal cyberimplants and process surveillance data.
+      The complex also stores the cryo-chambers for hundreds of Sansha reserves.</P>
+
+      <P>DED Threat Assessment: Training (1 of 10)</P>'
+    es: "<P>Este complejo del espacio muerto est\xE1 ocupado por los soldados de la\
+      \ Naci\xF3n Sansha. El \xE1rea sirve como puesto avanzado militar, lo que permite\
+      \ a sus tropas recargar los sistemas de armas, reparar ciberimplantes personales\
+      \ y procesar datos de vigilancia. El complejo tambi\xE9n almacena las crioc\xE1\
+      maras de cientos de reservas sanshas.</P>\n<P>Evaluaci\xF3n de amenaza del DED:\
+      \ en desarrollo (1 de 10)</P>"
+    fr: "<P>Ce complexe Deadspace est occup\xE9 par les soldats de la Sansha's Nation.\
+      \ Le secteur sert d'avant-poste militaire, permettant aux troupes de r\xE9approvisionner\
+      \ leurs syst\xE8mes d'armement, r\xE9parer les implants cybern\xE9tiques personnels\
+      \ et traiter les donn\xE9es de surveillance. Ce complexe accueille aussi des\
+      \ chambres cryog\xE9niques abritant des centaines d'unit\xE9s sansha.</P> <P>\xC9\
+      valuation de la menace DED\_: formation (1\_sur\_10)</P>"
+    ja: "<P>\u3053\u306E\u30C7\u30C3\u30C9\u30B9\u30DA\u30FC\u30B9\u30B3\u30F3\u30D7\
+      \u30EC\u30C3\u30AF\u30B9\u306F\u3001\u30B5\u30F3\u30B7\u30E3\u56FD\u306E\u5175\
+      \u58EB\u306B\u3088\u3063\u3066\u5360\u62E0\u3055\u308C\u3066\u3044\u308B\u3002\
+      \u3053\u306E\u30A8\u30EA\u30A2\u306F\u3001\u6B66\u88C5\u30B7\u30B9\u30C6\u30E0\
+      \u306E\u518D\u7DE8\u3001\u30B5\u30A4\u30D0\u30FC\u30A4\u30F3\u30D7\u30E9\u30F3\
+      \u30C8\u306E\u30EA\u30DA\u30A2\u3001\u76E3\u8996\u30C7\u30FC\u30BF\u306E\u51E6\
+      \u7406\u306A\u3069\u3092\u884C\u3046\u8ECD\u4E8B\u30A2\u30A6\u30C8\u30DD\u30B9\
+      \u30C8\u3068\u3057\u3066\u6A5F\u80FD\u3057\u3066\u3044\u308B\u3002\u307E\u305F\
+      \u3001\u4F55\u767E\u4EBA\u3082\u306E\u30B5\u30F3\u30B7\u30E3\u4E88\u5099\u5F79\
+      \u8ECD\u4EBA\u306E\u305F\u3081\u306E\u51B7\u51CD\u4FDD\u5B58\u5BA4\u3082\u4FDD\
+      \u7BA1\u3055\u308C\u3066\u3044\u308B\u3002</P>\n<P>DED\u8105\u5A01\u306E\u8A55\
+      \u4FA1: \u8A13\u7DF4\uFF081/10\uFF09</P>"
+    ko: "<P>\uC0B0\uC0E4 \uB124\uC774\uC158\uC774 \uC810\uB839\uD558\uACE0 \uC788\uB294\
+      \ \uB370\uB4DC\uC2A4\uD398\uC774\uC2A4 \uCEF4\uD50C\uB809\uC2A4\uB85C \uD0C4\
+      \uC57D \uBCF4\uAE09, \uC784\uD50C\uB780\uD2B8 \uC218\uB9AC, \uC815\uCC30 \uB370\
+      \uC774\uD130 \uD574\uC11D \uB4F1 \uB2E4\uC591\uD55C \uC6A9\uB3C4\uB85C \uC0AC\
+      \uC6A9\uB418\uACE0 \uC788\uC2B5\uB2C8\uB2E4. \uCD94\uAC00\uB85C \uB2E4\uC218\
+      \uC758 \uC608\uBE44 \uBCD1\uB825\uC744 \uC218\uC6A9\uD558\uAE30 \uC704\uD55C\
+      \ \uBAA9\uC801\uC73C\uB85C \uC218\uBC31 \uAC1C\uC758 \uB3D9\uBA74\uC2E4\uC774\
+      \ \uC124\uCE58\uB418\uC5B4 \uC788\uC2B5\uB2C8\uB2E4.</P> <P>DED \uC704\uD611\
+      \uBD84\uC11D\uBCF4\uACE0\uC11C: \uD6C8\uB828 (1/10)</P>"
+    ru: "<P>\u042D\u0442\u043E\u0442 \u043A\u043E\u043C\u043F\u043B\u0435\u043A\u0441\
+      \ \u0434\u044D\u0434\u0441\u043F\u0435\u0439\u0441\u0430 \u043E\u043A\u043A\u0443\
+      \u043F\u0438\u0440\u043E\u0432\u0430\u043D \u0441\u043E\u043B\u0434\u0430\u0442\
+      \u0430\u043C\u0438 \u041D\u0430\u0446\u0438\u0438 Sansha. \u041E\u043D \u044F\
+      \u0432\u043B\u044F\u0435\u0442\u0441\u044F \u0432\u043E\u0435\u043D\u043D\u043E\
+      \u0439 \u0441\u0442\u0430\u043D\u0446\u0438\u0435\u0439, \u043F\u043E\u0437\u0432\
+      \u043E\u043B\u044F\u044E\u0449\u0435\u0439 \u0441\u043E\u043B\u0434\u0430\u0442\
+      \u0430\u043C \u043F\u0435\u0440\u0435\u0432\u043E\u043E\u0440\u0443\u0436\u0430\
+      \u0442\u044C\u0441\u044F, \u0447\u0438\u043D\u0438\u0442\u044C \u043B\u0438\u0447\
+      \u043D\u044B\u0435 \u043A\u0438\u0431\u0435\u0440\u0438\u043C\u043F\u043B\u0430\
+      \u043D\u0442\u0430\u0442\u044B \u0438 \u043E\u0431\u0440\u0430\u0431\u0430\u0442\
+      \u044B\u0432\u0430\u0442\u044C \u0434\u0430\u043D\u043D\u044B\u0435 \u043D\u0430\
+      \u0431\u043B\u044E\u0434\u0435\u043D\u0438\u044F. \u0412 \u043A\u043E\u043C\u043F\
+      \u043B\u0435\u043A\u0441\u0435 \u0442\u0430\u043A\u0436\u0435 \u0445\u0440\u0430\
+      \u043D\u044F\u0442\u0441\u044F \u043A\u0440\u0438\u043E-\u043A\u0430\u043C\u0435\
+      \u0440\u044B \u0434\u043B\u044F \u0441\u043E\u0442\u0435\u043D \u0441\u043E\u043B\
+      \u0434\u0430\u0442 \u0440\u0435\u0437\u0435\u0440\u0432\u0430 Sansha.</P>\n\
+      <P>\u0423\u0440\u043E\u0432\u0435\u043D\u044C \u043E\u043F\u0430\u0441\u043D\
+      \u043E\u0441\u0442\u0438 DED: \u0422\u0440\u0435\u043D\u0438\u0440\u043E\u0432\
+      \u043A\u0430 (1 \u0438\u0437 10)</P>"
+    zh: "<P>\u8FD9\u4E2A\u6B7B\u4EA1\u7A7A\u95F4\u590D\u5408\u4F53\u88AB\u8428\u6C99\
+      \u5171\u548C\u56FD\u7684\u68EE\u5C60\u65AF\u58EB\u5175\u5360\u9886\u3002\u73B0\
+      \u5728\u5B83\u88AB\u6539\u9020\u6210\u4E00\u4E2A\u519B\u4E8B\u54E8\u7AD9\uFF0C\
+      \u90E8\u961F\u53EF\u4EE5\u5728\u6B64\u91CD\u65B0\u88C5\u5907\u6B66\u5668\uFF0C\
+      \u4FEE\u590D\u690D\u5165\u4F53\u5E76\u5904\u7406\u4FA6\u5BDF\u6570\u636E\u3002\
+      \u53E6\u5916\uFF0C\u8FD9\u4E2A\u590D\u5408\u4F53\u4E5F\u4E3A\u6570\u4EE5\u767E\
+      \u8BA1\u7684\u8428\u6C99\u540E\u5907\u519B\u5B58\u50A8\u4E86\u51AC\u7720\u8231\
+      \u3002</P><P>DED\u5A01\u80C1\u8BC4\u4F30\uFF1A\u521D\u7EA7\u8BAD\u7EC3(1/10)</P>"
+  factionID: 500019
+  name:
+    de: "Sansha-Milit\xE4rau\xDFenposten"
+    en: Sansha Military Outpost
+    es: Puesto avanzado militar sansha
+    fr: Avant-poste militaire sansha
+    ja: "\u30B5\u30F3\u30B7\u30E3\u8ECD\u4E8B\u30A2\u30A6\u30C8\u30DD\u30B9\u30C8"
+    ko: "\uC0B0\uC0E4 \uAD70\uC0AC\uAE30\uC9C0"
+    ru: "\u0412\u043E\u0435\u043D\u043D\u0430\u044F \u0437\u0430\u0441\u0442\u0430\
+      \u0432\u0430 Sansha (Sansha Military Outpost)"
+    zh: "\u8428\u6C99\u519B\u4E8B\u54E8\u7AD9"
+116:
+  allowedShipsList:
+  - 482
+  archetypeID: 24
+  description:
+    de: "<P>Dieser Raumverwerfungskomplex steht unter der Kontrolle der mit Drogen\
+      \ handelnden Serpentis-Corporation. Diese spezielle Filiale ist die Drogenvertriebsstelle.\
+      \ Sie enth\xE4lt einen Bet\xE4ubungsmittel-Supermarkt und \xF6rtliche Lager\
+      \ f\xFCr unerlaubte Substanzen.</P> <P>DED Bedrohungseinstufung: Training (1\
+      \ von 10) </P>"
+    en: '<P>This deadspace complex is under the control of the drug-dealing Serpentis
+      Corporation. This particular branch is a drug dealing outlet, containing narcotic
+      supermarkets and local storages for illicit substances.</P>
+
+      <P>DED Threat Assessment: Training (1 of 10) </P>'
+    es: "<P>Este complejo del espacio muerto est\xE1 bajo el control de Serpentis,\
+      \ la corporaci\xF3n dedicada al tr\xE1fico de sustancias. Esta secci\xF3n en\
+      \ concreto es un punto de venta de sustancias que alberga supermercados de narc\xF3\
+      ticos y almacenes locales de qu\xEDmicos ilegales.</P>\n\n<P>Evaluaci\xF3n de\
+      \ amenaza del DED: en desarrollo (1 de 10) </P>"
+    fr: "<P>Ce complexe Deadspace est contr\xF4l\xE9 par les trafiquants de drogues\
+      \ de la Serpentis Corporation. Cette succursale est une v\xE9ritable bourse\
+      \ \xE0 la drogue, avec ces supermarch\xE9s de narcotiques et ces entrep\xF4\
+      ts de substances illicites.</P> <P>\xC9valuation de la menace DED\_: formation\
+      \ (1\_sur\_10)</P>"
+    ja: "<P>\u3053\u306E\u30C7\u30C3\u30C9\u30B9\u30DA\u30FC\u30B9\u30B3\u30F3\u30D7\
+      \u30EC\u30C3\u30AF\u30B9\u306F\u9EBB\u85AC\u5BC6\u58F2\u7D44\u7E54\u30B5\u30FC\
+      \u30DA\u30F3\u30C6\u30A3\u30B9\u30B3\u30FC\u30DD\u30EC\u30FC\u30B7\u30E7\u30F3\
+      \u306E\u7BA1\u7406\u4E0B\u306B\u3042\u308B\u3002\u4E2D\u3067\u3082\u3053\u306E\
+      \u533A\u753B\u306F\u9EBB\u85AC\u30B9\u30FC\u30D1\u30FC\u30DE\u30FC\u30B1\u30C3\
+      \u30C8\u3084\u9055\u6CD5\u7269\u8CEA\u306E\u4FDD\u7BA1\u5EAB\u304C\u8ED2\u3092\
+      \u9023\u306D\u308B\u3001\u85AC\u7269\u53D6\u5F15\u306E\u30A2\u30A6\u30C8\u30EC\
+      \u30C3\u30C8\u65BD\u8A2D\u3068\u306A\u3063\u3066\u3044\u308B\u3002</P>\n<P>DED\u8105\
+      \u5A01\u306E\u8A55\u4FA1: \u8A13\u7DF4\uFF081/10\uFF09 </P>"
+    ko: "<P>\uB9C8\uC57D \uD310\uB9E4\uB97C \uC8FC \uC0AC\uC5C5\uC73C\uB85C \uC0BC\
+      \uACE0 \uC788\uB294 \uC11C\uD39C\uD2F0\uC2A4 \uCF54\uD37C\uB808\uC774\uC158\uC774\
+      \ \uD1B5\uC81C\uD558\uACE0 \uC788\uB294 \uB370\uB4DC\uC2A4\uD398\uC774\uC2A4\
+      \ \uAD6C\uC5ED\uC785\uB2C8\uB2E4. \uB9C8\uC57D \uC544\uC6B8\uB81B\uC5D0\uB294\
+      \ \uB9C8\uC57D \uAC70\uB798\uC2DC\uC7A5 \uBC0F \uBD88\uBC95 \uC57D\uBB3C \uC800\
+      \uC7A5\uACE0\uAC00 \uC788\uC2B5\uB2C8\uB2E4.</P> <P>DED \uC704\uD611\uBD84\uC11D\
+      \uBCF4\uACE0\uC11C: \uD6C8\uB828 (1/10) </P>"
+    ru: "<P>\u042D\u0442\u0430 \u043E\u0431\u043B\u0430\u0441\u0442\u044C \u0434\u044D\
+      \u0434\u0441\u043F\u0435\u0439\u0441\u0430 \u043D\u0430\u0445\u043E\u0434\u0438\
+      \u0442\u0441\u044F \u043F\u043E\u0434 \u043A\u043E\u043D\u0442\u0440\u043E\u043B\
+      \u0435\u043C \u041A\u043E\u0440\u043F\u043E\u0440\u0430\u0446\u0438\u0438 Serpentis,\
+      \ \u0442\u043E\u0440\u0433\u0443\u044E\u0449\u0435\u0439 \u043D\u0430\u0440\u043A\
+      \u043E\u0442\u0438\u043A\u0430\u043C\u0438. \u0417\u0434\u0435\u0441\u044C \u043F\
+      \u0438\u0440\u0430\u0442\u044B \u0437\u0430\u043D\u0438\u043C\u0430\u044E\u0442\
+      \u0441\u044F \u0440\u0430\u0441\u043F\u0440\u043E\u0441\u0442\u0440\u0430\u043D\
+      \u0435\u043D\u0438\u0435\u043C \u043D\u0430\u0440\u043A\u043E\u0442\u0438\u0447\
+      \u0435\u0441\u043A\u0438\u0445 \u0432\u0435\u0449\u0435\u0441\u0442\u0432 \u0438\
+      \ \u0445\u0440\u0430\u043D\u044F\u0442 \u043D\u0435\u0437\u0430\u043A\u043E\u043D\
+      \u043D\u044B\u0435 \u0441\u0443\u0431\u0441\u0442\u0430\u043D\u0446\u0438\u0438\
+      .</P>\n<P>\u0421\u0442\u0435\u043F\u0435\u043D\u044C \u043E\u043F\u0430\u0441\
+      \u043D\u043E\u0441\u0442\u0438 \u043F\u043E \u043E\u0446\u0435\u043D\u043A\u0435\
+      \ DED: 1 \u0438\u0437 10 </P>"
+    zh: "<P>\u8FD9\u4E2A\u6B7B\u4EA1\u7A7A\u95F4\u590D\u5408\u4F53\u5904\u5728\u5929\
+      \u86C7\u96C6\u56E2\u63A7\u5236\u4E4B\u4E0B\uFF0C\u662F\u6BD2\u54C1\u4EA4\u6613\
+      \u7684\u7A9D\u70B9\uFF0C\u5305\u62EC\u4E86\u8FF7\u5E7B\u836F\u5E02\u573A\u548C\
+      \u5F53\u5730\u975E\u6CD5\u7269\u8D44\u7684\u4ED3\u5E93\u3002</P>\n<P>DED\u5A01\
+      \u80C1\u8BC4\u4F30\uFF1A\u521D\u7EA7\u8BAD\u7EC3(1/10)</P>"
+  factionID: 500020
+  name:
+    de: Serpentis-Drogenvertriebsstelle
+    en: Serpentis Drug Outlet
+    es: Mercado de estupefacientes serpentis
+    fr: "March\xE9 de la drogue serpentis"
+    ja: "\u30B5\u30FC\u30DA\u30F3\u30C6\u30A3\u30B9\u30C9\u30E9\u30C3\u30B0\u30A2\u30A6\
+      \u30C8\u30EC\u30C3\u30C8"
+    ko: "\uC11C\uD39C\uD2F0\uC2A4 \uB9C8\uC57D\uC18C\uAD74"
+    ru: "\u041F\u0443\u043D\u043A\u0442 \u0442\u043E\u0440\u0433\u043E\u0432\u043B\
+      \u0438 \u043D\u0430\u0440\u043A\u043E\u0442\u0438\u043A\u0430\u043C\u0438 Serpentis\
+      \ (Serpentis Drug Outlet)"
+    zh: "\u5929\u86C7\u6BD2\u54C1\u51FA\u53E3"

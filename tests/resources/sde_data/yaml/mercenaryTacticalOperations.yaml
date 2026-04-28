@@ -1,5 +1,5 @@
 12367:
-  anarchy_impact: -20
+  anarchyImpact: -20
   description:
     de: "Alle Raubdrohnen zerst\xF6ren, um die Entwicklung des zugeh\xF6rigen S\xF6\
       ldnerverstecks zu verbessern und seine Anarchie zu verringern."
@@ -29,8 +29,9 @@
     zh: "\u51FB\u6BC1\u6240\u6709\u81EA\u7531\u65E0\u4EBA\u673A\uFF0C\u589E\u52A0\u76F8\
       \u5173\u96C7\u4F63\u5175\u5DE2\u7A74\u7684\u53D1\u5C55\u503C\u5E76\u51CF\u5C11\
       \u5176\u6DF7\u4E71\u503C\u3002"
-  development_impact: 10
-  infomorph_bonus: 350
+  developmentImpact: 10
+  dungeonID: 12367
+  infomorphBonus: 350
   name:
     de: Raubdrohnen-Auftreten
     en: Rogue Drone Emergence
@@ -42,7 +43,7 @@
       \u0442\u0430\u0432\u0448\u0438\u0445 \u0434\u0440\u043E\u043D\u043E\u0432"
     zh: "\u81EA\u7531\u65E0\u4EBA\u673A\u51FA\u73B0"
 12368:
-  anarchy_impact: -20
+  anarchyImpact: -20
   description:
     de: "Alle Drifter und Sleeper zerst\xF6ren, um die Entwicklung des zugeh\xF6rigen\
       \ S\xF6ldnerverstecks zu verbessern und seine Anarchie zu verringern."
@@ -74,8 +75,9 @@
     zh: "\u6D88\u706D\u6240\u6709\u6D41\u6D6A\u8005\u548C\u51AC\u7720\u8005\uFF0C\u589E\
       \u52A0\u76F8\u5173\u96C7\u4F63\u5175\u5DE2\u7A74\u7684\u53D1\u5C55\u503C\u5E76\
       \u51CF\u5C11\u5176\u6DF7\u4E71\u503C\u3002"
-  development_impact: 10
-  infomorph_bonus: 350
+  developmentImpact: 10
+  dungeonID: 12368
+  infomorphBonus: 350
   name:
     de: Drifter-Appell
     en: Drifter Muster
@@ -87,7 +89,7 @@
       \u0435\u0432"
     zh: "\u6D41\u6D6A\u8005\u96C6\u7ED3"
 12369:
-  anarchy_impact: -20
+  anarchyImpact: -20
   description:
     de: "Alle Sansha zerst\xF6ren, um die Entwicklung des zugeh\xF6rigen S\xF6ldnerverstecks\
       \ zu verbessern und seine Anarchie zu verringern."
@@ -116,8 +118,9 @@
     zh: "\u6D88\u706D\u6240\u6709\u8428\u6C99\u516C\u6C11\uFF0C\u589E\u52A0\u76F8\u5173\
       \u96C7\u4F63\u5175\u5DE2\u7A74\u7684\u53D1\u5C55\u503C\u5E76\u51CF\u5C11\u5176\
       \u6DF7\u4E71\u503C\u3002"
-  development_impact: 10
-  infomorph_bonus: 350
+  developmentImpact: 10
+  dungeonID: 12369
+  infomorphBonus: 350
   name:
     de: "Sansha-Pl\xFCndergruppe"
     en: Sansha Raiding Party
