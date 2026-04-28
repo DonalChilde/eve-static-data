@@ -8,6 +8,10 @@
 ### Add
 - functions to detect and load all the _sde variants, used to get buildNumber etc, and to be a quick check that the SDE data exists.
 
+### Change
+- Export to json takes yaml or jsonl files. 
+- Narrow language command to strip unwanted localizatinos from json files. must handle dicts or lists of dicts.
+
 
 
 ## Next!
