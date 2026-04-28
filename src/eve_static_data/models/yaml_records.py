@@ -161,7 +161,7 @@ class Archetypes(LocalizableRecord):
 
     archetypes_id: int | None = None
     description: LocalizedString
-    title: LocalizedString
+    title: LocalizedString | None = None
 
     def localized_fields(
         self, lang: Lang | None
@@ -179,10 +179,10 @@ class Archetypes(LocalizableRecord):
         lang_check(lang)
         return self.description.get(lang, TRANSLATION_MISSING)
 
-    def localized_title(self, lang: Lang) -> str:
+    def localized_title(self, lang: Lang) -> str | None:
         """Returns the localized title for the given language."""
         lang_check(lang)
-        return self.title.get(lang, TRANSLATION_MISSING)
+        return self.title.get(lang, TRANSLATION_MISSING) if self.title else None
 
 
 @dataclass(slots=True, kw_only=True)
