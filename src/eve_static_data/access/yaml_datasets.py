@@ -54,7 +54,7 @@ class SdeYamlDatasetLoader:
         file_name = (
             dataset_file.as_yaml()
             if self.file_type in [".yaml", ".yml"]
-            else dataset_file.as_jsonl()
+            else dataset_file.as_json()
         )
         file_path = self.sde_path / file_name
         if not file_path.exists():
