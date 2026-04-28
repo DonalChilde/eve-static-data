@@ -405,6 +405,12 @@ class SdeYamlDatasetLoader:
         data = _load_file(file_path)
         return YD.TypeDogmaRoot.model_validate(data)
 
+    def type_lists(self) -> YD.TypeListsRoot:
+        """Load the type lists dataset from the SDE."""
+        file_path = self._narrow_file_path(SdeDatasetFiles.TYPE_LISTS)
+        data = _load_file(file_path)
+        return YD.TypeListsRoot.model_validate(data)
+
     def type_materials(self) -> YD.TypeMaterialsRoot:
         """Load the type materials dataset from the SDE."""
         file_path = self._narrow_file_path(SdeDatasetFiles.TYPE_MATERIALS)

@@ -1907,6 +1907,51 @@ class TypeDogma:
 
 
 @dataclass(slots=True, kw_only=True)
+class TypeLists(LocalizableRecord):
+    """Model for the typeLists.yaml SDE file."""
+
+    type_lists_id: int | None = None
+    displayDescription: LocalizedString | None = None
+    displayName: LocalizedString | None = None
+    excludedCategoryIDs: list[int] | None = None
+    excludedGroupIDs: list[int] | None = None
+    excludedTypeIDs: list[int] | None = None
+    includedCategoryIDs: list[int] | None = None
+    includedGroupIDs: list[int] | None = None
+    includedTypeIDs: list[int] | None = None
+    name: str
+
+    def localized_fields(
+        self, lang: Lang | None
+    ) -> dict[Literal["displayDescription", "displayName"], str | None]:
+        """Returns a dict of the localized fields in the model."""
+        if lang is None:
+            return {"displayDescription": None, "displayName": None}
+        return {
+            "displayDescription": self.localized_displayDescription(lang),
+            "displayName": self.localized_displayName(lang),
+        }
+
+    def localized_displayDescription(self, lang: Lang) -> str | None:
+        """Returns the localized display description of the type list."""
+        lang_check(lang)
+        return (
+            self.displayDescription.get(lang, TRANSLATION_MISSING)
+            if self.displayDescription
+            else None
+        )
+
+    def localized_displayName(self, lang: Lang) -> str | None:
+        """Returns the localized display name of the type list."""
+        lang_check(lang)
+        return (
+            self.displayName.get(lang, TRANSLATION_MISSING)
+            if self.displayName
+            else None
+        )
+
+
+@dataclass(slots=True, kw_only=True)
 class TypeMaterials_Material:
     """Nested model for the typeMaterials.yaml SDE file."""
 

@@ -99,6 +99,7 @@ YAML_DATASET_CASES: list[tuple[str, type[RootModel[Any]]]] = [
     ("translationLanguages.yaml", yaml_datasets.TranslationLanguagesRoot),
     ("typeBonus.yaml", yaml_datasets.TypeBonusRoot),
     ("typeDogma.yaml", yaml_datasets.TypeDogmaRoot),
+    ("typeLists.yaml", yaml_datasets.TypeListsRoot),
     ("typeMaterials.yaml", yaml_datasets.TypeMaterialsRoot),
     ("types.yaml", yaml_datasets.EveTypesRoot),
 ]

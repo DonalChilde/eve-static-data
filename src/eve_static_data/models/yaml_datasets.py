@@ -68,6 +68,7 @@ StationServicesRoot = RootModel[dict[int, yaml_records.StationServices]]
 TranslationLanguagesRoot = RootModel[dict[str, yaml_records.TranslationLanguages]]
 TypeBonusRoot = RootModel[dict[int, yaml_records.TypeBonus]]
 TypeDogmaRoot = RootModel[dict[int, yaml_records.TypeDogma]]
+TypeListsRoot = RootModel[dict[int, yaml_records.TypeLists]]
 TypeMaterialsRoot = RootModel[dict[int, yaml_records.TypeMaterials]]
 EveTypesRoot = RootModel[dict[int, yaml_records.EveTypes]]
 
@@ -133,5 +134,6 @@ def files_to_root_model_lookup() -> dict[SdeDatasetFiles, type[RootModel[Any]]]:
         SdeDatasetFiles.TYPE_BONUS: TypeBonusRoot,
         SdeDatasetFiles.TYPE_DOGMA: TypeDogmaRoot,
         SdeDatasetFiles.TYPE_MATERIALS: TypeMaterialsRoot,
+        SdeDatasetFiles.TYPE_LISTS: TypeListsRoot,
         SdeDatasetFiles.TYPES: EveTypesRoot,
     }

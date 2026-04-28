@@ -61,6 +61,7 @@ class SdeDatasetFiles(StrEnum):
     TRANSLATION_LANGUAGES = "translationLanguages"
     TYPE_BONUS = "typeBonus"
     TYPE_DOGMA = "typeDogma"
+    TYPE_LISTS = "typeLists"
     TYPE_MATERIALS = "typeMaterials"
     TYPES = "types"
 
