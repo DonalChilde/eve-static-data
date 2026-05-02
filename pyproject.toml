@@ -12,6 +12,8 @@ dependencies = [
     "pydantic>=2.12.4",
     "pydantic-settings>=2.11.0",
     "pyyaml>=6.0.3",
+
+    "textual[syntax]>=8.2.4",
     "typer>=0.20.0",
     "whenever>=0.9.5",
 ]
@@ -40,6 +42,7 @@ dev = [
     "pytest-cov>=7.0.0",
     "ruff>=0.13.1",
     "scriv>=1.7.0",
+    "textual-dev>=1.8.0",
 ]
 lint = ["ruff>=0.13.1"]
 test = [
