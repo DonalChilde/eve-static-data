@@ -3,6 +3,8 @@
 from pathlib import Path
 from string import Template
 
+from httpx2 import Client
+
 from eve_static_data import (
     DATA_CHANGES_URL_TEMPLATE,
     DATA_FILENAME_TEMPLATE,
@@ -11,7 +13,7 @@ from eve_static_data import (
     SDE_URL_TEMPLATE,
     USER_AGENT,
 )
-from eve_static_data.helpers.aiohttp.download_files import (
+from eve_static_data.helpers.httpx2.download_files import (
     download_bytes_to_file,
     download_text,
 )
@@ -39,10 +41,12 @@ class SDETools:
         self.data_filename_template = data_filename_template
         self.user_agent = user_agent
 
-    async def download(
+    def download(
         self,
         build_number: int,
         output_directory: Path,
+        *,
+        session: Client,
         variant: str = "yaml",
         overwrite: bool = False,
     ) -> Path:
@@ -55,8 +59,12 @@ class SDETools:
             build_number=build_number, variant=variant
         )
         output_path = output_directory / file_name
-        await download_bytes_to_file(
-            url=url, file_path=output_path, headers=headers, overwrite=overwrite
+        download_bytes_to_file(
+            url=url,
+            file_path=output_path,
+            headers=headers,
+            overwrite=overwrite,
+            session=session,
         )
         return output_path
 
@@ -69,11 +77,11 @@ class SDETools:
         )
         return file_path, info
 
-    async def validate(self, sde_path: Path, report_directory: Path) -> None:
+    def validate(self, sde_path: Path, report_directory: Path) -> None:
         """Validate the SDE tools static data."""
         raise NotImplementedError("SDE validation is not yet implemented.")
 
-    async def fetch_data_changes(self, build_number: int) -> str:
+    def fetch_data_changes(self, build_number: int, *, session: Client) -> str:
         """Download the sde data changes for the given build number.
 
         The SDE data changes is a JSONL file that contains a list of changes for a build.
@@ -85,10 +93,10 @@ class SDETools:
         url = Template(self.data_changes_url_template).substitute(
             build_number=build_number
         )
-        text, _ = await download_text(url=url, headers=headers)
+        text, _ = download_text(url=url, headers=headers, session=session)
         return text
 
-    async def fetch_schema_changelog(self, build_number: int) -> str:
+    def fetch_schema_changelog(self, build_number: int, *, session: Client) -> str:
         """Download the sde schema changelog for the given build number.
 
         The SDE schema changelog is a YAML file that contains a list of schema changes for a build.
@@ -97,10 +105,10 @@ class SDETools:
         """
         headers = {"User-Agent": self.user_agent}
         url = Template(self.schema_changelog_url).substitute(build_number=build_number)
-        text, _ = await download_text(url=url, headers=headers)
+        text, _ = download_text(url=url, headers=headers, session=session)
         return text
 
-    async def fetch_latest_sde_info(self) -> str:
+    def fetch_latest_sde_info(self, *, session: Client) -> str:
         """Download the latest sde info.
 
         The latest sde info is a JSONL file that contains information about the latest
@@ -112,5 +120,5 @@ class SDETools:
         """
         headers = {"User-Agent": self.user_agent}
         url = Template(self.latest_info_url).substitute()
-        text, _ = await download_text(url=url, headers=headers)
+        text, _ = download_text(url=url, headers=headers, session=session)
         return text

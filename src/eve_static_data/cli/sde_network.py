@@ -4,7 +4,6 @@ This module focuses on commands to work with the raw SDE data, such as downloadi
 checking for the current version, checking the changelog, and printing the data.
 """
 
-import asyncio
 import json
 from pathlib import Path
 from typing import Annotated, Literal
@@ -13,6 +12,7 @@ import typer
 from rich.console import Console
 
 from eve_static_data.cli.helpers import get_esd_settings_from_context
+from eve_static_data.helpers.http_client import config_http_client
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -47,7 +47,8 @@ def latest(
     console.print("[bold green]Latest SDE Information[/bold green]")
     settings = get_esd_settings_from_context(ctx)
     sde_tools = settings.sde_tools()
-    info = asyncio.run(sde_tools.fetch_latest_sde_info())
+    session = config_http_client()
+    info = sde_tools.fetch_latest_sde_info(session=session)
     if terminal:
         console.print(info)
     if file_out:
@@ -97,10 +98,11 @@ def schema_changelog(
         raise typer.Exit(code=1)
     console.print("[bold green]SDE Schema Changelog[/bold green]")
     settings = get_esd_settings_from_context(ctx)
+    session = config_http_client()
     sde_tools = settings.sde_tools()
     if build_number is None:
         console.print("No build number provided, resolving latest build number...")
-        latest_info = asyncio.run(sde_tools.fetch_latest_sde_info())
+        latest_info = sde_tools.fetch_latest_sde_info(session=session)
         latest_info = json.loads(latest_info)
         build_number = latest_info.get("buildNumber")
         if not build_number:
@@ -110,7 +112,9 @@ def schema_changelog(
             console.print(latest_info)
             raise typer.Exit(code=1)
         console.print(f"Resolved latest build number to: {build_number}")
-    changelog = asyncio.run(sde_tools.fetch_schema_changelog(build_number=build_number))
+    changelog = sde_tools.fetch_schema_changelog(
+        build_number=build_number, session=session
+    )
     if terminal:
         console.print(changelog)
     if file_out:
@@ -169,10 +173,11 @@ def data_changelog(
         raise typer.Exit(code=1)
     console.print("[bold green]SDE Data Changelog[/bold green]")
     settings = get_esd_settings_from_context(ctx)
+    session = config_http_client()
     sde_tools = settings.sde_tools()
     if build_number is None:
         console.print("No build number provided, resolving latest build number...")
-        latest_info = asyncio.run(sde_tools.fetch_latest_sde_info())
+        latest_info = sde_tools.fetch_latest_sde_info(session=session)
         latest_info = json.loads(latest_info)
         build_number = latest_info.get("buildNumber")
         if not build_number:
@@ -182,7 +187,7 @@ def data_changelog(
             console.print(latest_info)
             raise typer.Exit(code=1)
         console.print(f"Resolved latest build number to: {build_number}")
-    changelog = asyncio.run(sde_tools.fetch_data_changes(build_number=build_number))
+    changelog = sde_tools.fetch_data_changes(build_number=build_number, session=session)
     if terminal:
         console.print(changelog)
     if file_out:
@@ -236,10 +241,11 @@ def download_sde(
     console = Console()
     console.print("[bold green]Downloading SDE Data...[/bold green]")
     settings = get_esd_settings_from_context(ctx)
+    session = config_http_client()
     sde_tools = settings.sde_tools()
     if build_number is None:
         console.print("No build number provided, resolving latest build number...")
-        latest_info = asyncio.run(sde_tools.fetch_latest_sde_info())
+        latest_info = sde_tools.fetch_latest_sde_info(session=session)
         latest_info = json.loads(latest_info)
         build_number = latest_info.get("buildNumber")
         release_date = latest_info.get("releaseDate")
@@ -256,14 +262,14 @@ def download_sde(
     console.print(f"Downloading SDE data, {variant} variant.")
 
     try:
-        file_path = asyncio.run(
-            sde_tools.download(
-                build_number=build_number,
-                output_directory=output_dir,
-                variant=variant,
-                overwrite=overwrite,
-            )
+        file_path = sde_tools.download(
+            build_number=build_number,
+            output_directory=output_dir,
+            variant=variant,
+            overwrite=overwrite,
+            session=session,
         )
+
     except Exception as e:
         console.print(f"[bold red]Error:[/bold red] Failed to download SDE data: {e}")
         raise typer.Exit(code=1) from e
