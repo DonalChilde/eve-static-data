@@ -32,7 +32,7 @@ Most users follow this sequence:
 4. Build a SQLite database.
 5. Query data from the CLI or Python.
 
-### 1) Fetch Latest Build Info
+### 1. Fetch Latest Build Info
 
 ```bash
 eve-sd fetch latest
@@ -44,7 +44,7 @@ Optional: write output to disk.
 eve-sd fetch latest --to ./metadata --file-name latest_sde_info.json
 ```
 
-### 2) Download an SDE Archive
+### 2. Download an SDE Archive
 
 Download the latest YAML variant:
 
@@ -58,7 +58,7 @@ Download a specific build:
 eve-sd fetch sde --to ./downloads --variant jsonl --build-number 3419624
 ```
 
-### 3) Unpack the Archive
+### 3. Unpack the Archive
 
 ```bash
 eve-sd unpack --from ./downloads/eve-online-static-data-3419624-yaml.zip --to ./sde
@@ -67,7 +67,7 @@ eve-sd unpack --from ./downloads/eve-online-static-data-3419624-yaml.zip --to ./
 By default, unpack uses a build-number subdirectory, for example
 `./sde/3419624`.
 
-### 4) Create a Database from Unpacked Data
+### 4. Create a Database from Unpacked Data
 
 ```bash
 eve-sd db create --from ./sde/3419624 --to ./db --file-name sde_3419624.db
@@ -77,10 +77,10 @@ Defaults:
 
 - If `--file-name` is omitted, a name based on build and variant is generated.
 - If `--serialization-format` is omitted, the app chooses:
-    - `json` for JSONL source data
-    - `pickle` for YAML source data
+  - `json` for JSONL source data
+  - `pickle` for YAML source data
 
-### 5) Browse the Database in the CLI
+### 5. Browse the Database in the CLI
 
 List datasets with record counts and key types:
 
