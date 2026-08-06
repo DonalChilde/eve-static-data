@@ -8,7 +8,13 @@ from string import Template
 
 from httpx2 import Client
 
-from pfmsoft.eve_sd import (
+from pfmsoft.eve_sd.helpers.httpx2.download_files import (
+    download_bytes_to_file,
+    download_text,
+)
+from pfmsoft.eve_sd.helpers.sde_metadata import SdeMetadata
+from pfmsoft.eve_sd.helpers.sde_unpack import unpack as unpack_sde
+from pfmsoft.eve_sd.settings import (
     DATA_CHANGES_URL_TEMPLATE,
     DATA_FILENAME_TEMPLATE,
     LATEST_INFO_URL,
@@ -16,12 +22,6 @@ from pfmsoft.eve_sd import (
     SDE_URL_TEMPLATE,
     USER_AGENT,
 )
-from pfmsoft.eve_sd.helpers.httpx2.download_files import (
-    download_bytes_to_file,
-    download_text,
-)
-from pfmsoft.eve_sd.helpers.sde_metadata import SdeMetadata
-from pfmsoft.eve_sd.helpers.sde_unpack import unpack as unpack_sde
 
 
 class SDETools:
