@@ -1,109 +1,148 @@
----
-description: "Python coding conventions and guidelines"
-applyTo: "**/*.py"
-project-name: "eve-sd"
----
-
-# Python Coding Conventions
-
-## Python Instructions
-
-- Write clear and concise comments for each function.
-- Ensure functions have descriptive names and include type hints.
-- Provide docstrings following PEP 257 conventions.
-- Break down complex functions into smaller, more manageable functions.
-- During development, use the virtual environment found at the project root - `./.venv`
-- all code should be typed. eg. `foo:list[int] = [1,2,3]`
-- use red/green TDD
-- Use python 3.14 syntax and features.
-
-## General Instructions
-
-- Always prioritize readability and clarity.
-- For algorithm-related code, include explanations of the approach used.
-- Write code with good maintainability practices, including comments on why certain design decisions were made.
-- Handle edge cases and write clear exception handling.
-- For libraries or external dependencies, mention their usage and purpose in comments.
-- Use consistent naming conventions and follow language-specific best practices.
-- Write concise, efficient, and idiomatic code that is also easily understandable.
-- use red/green TDD.
-
-## Code Style and Formatting
-
-- Follow the **PEP 8** style guide for Python.
-- Maintain proper indentation (use 4 spaces for each level of indentation).
-- Prefer lines do not exceed 88 characters.
-- Use blank lines to separate functions, classes, and code blocks where appropriate.
-- Code will be formatted and linted using ruff. The configuration is located in the `pyproject.toml`.
-
-## Edge Cases and Testing
-
-- Always include test cases for critical paths of the application.
-- Account for common edge cases like empty inputs, invalid data types, and large datasets.
-- Include comments for edge cases and the expected behavior in those cases.
-- Write unit tests for functions and document them with docstrings explaining the test cases.
-- Test data representing the SDE is avaliable at [test data](tests/resources/sde_data/__init__.py)
-
-## Documentation
-
-- Ensure all public functions and classes have appropriate docstrings.
-- Use Google style docstrings.
-- Include examples in docstrings where applicable.
-- Classes with an `__init__` function should have the docstring after that `__init__` function.
-- Classes without an `__init__` function should have the docstring immediately following the class definition.
-
-# Project Specific Information
-
-NOTE: NEEDS TO BE UPDATED.
+# AGENTS.md - pfmsoft-eve-sd
 
 ## Project Overview
 
-eve-sd provides a cli interface for downloading and processing the EVE Online static data set. Information about this
-data set can be found at https://developers.eveonline.com/docs/services/static-data/
+A CLI and API for downloading and using the EVE Online SDE.
 
-### CLI Commands:
- - root
-   - version - Get version information for the app.
- - sde
-   - local
-     - status
-       Get the status of the local imported copy of the sde in a particular folder, and optionaly compare it to the latest available version.
-     - print
-       Print the selected dataset to the terminal
-     - import
-       Import a downloaded and extracted dataset to a specifed folder, with the selected language.
-     - export
-       Placeholder - Possibly export some tables as csv, combined tables, market-path, market categories eg. blueprints, regions-name, etc.
-   - network
-     - status
-       Download and display the latest available sde data.
-     - download
-       Download the sde, defaults to latest jsonl, but yaml and/or specific builds are selectable.
-     - schema-changelog
-       Download and display the schema changelog.
-   - dev
-     - Placeholder
-     - validate
-       validate jsonl file against TypedDict and BaseModel
-     - validate-all
+## Current State and Goals
 
-### API
+### State
 
-- Provides TypedDicts and pydantic BaseModels for the jsonl sde files.
-- Provides pydantic BaseModels for the imported data.
-- Provides an iterable access api for the sde jsonl files, with untyped, TypedDict, and pydantic BaseModel versions.
-- Provides a lazy-loading access class for the imported data, with pydantic models.
+A brief description of the current state of the project
+
+### Goals For The Current Session
+
+The goals of the current coding session.
+
+### Key Dependencies
+
+A list of important dependencies, with versions
+
+## Commands
+
+- Generate project .venv and install app and dev dependencies: `uv sync`
+- Run tests: `uv run pytest`
+- Lint: `uv run ruff check`
+- Format check .py files: `uv run ruff format --check`
+- Format .py files: `uv run ruff format`
+- run app cli: `uv run _ENTRY_POINT_`
+
+## Environment
+
+see [pyproject,toml](pyproject.toml)
+
+This project uses `uv`, and has a `.venv` at the project root.
+
+## Project Structure
+
+- `src/` - application source code
+- `tests/` - test files. Mirror src/ structure.
+
+## Code Style
+
+```python
+# example.py
+"""This is an example of a python code file.
+
+This doc string provides a brief overview of the file's purpose and contents. It can
+include information about the module, its functions, classes, and any other relevant
+details.
+
+When docstrings are generated, they should follow the Google style guide for consistency
+and clarity.
+
+They should also try to respect a line length of about 88 characters before wrapping to
+the next line.
+
+"""
+
+# Use Google style docstrings for documentation.
+
+from collections.abc import Iterator
+from types import TracebackType
+from typing import Self
 
 
+def example_function(
+    primary_arg: int, *, secondary_arg: int, other_args: str
+) -> Iterator[int]:
+    """Some work is done here.
+
+    Args:
+        primary_arg: The primary argument for the function.
+        secondary_arg: The secondary argument for the function.
+        other_args: Other arguments for the function.
+
+    Returns:
+        An iterator of integers resulting from the function's work.
+
+    Raises:
+        ValueError: If primary_arg is negative.
+    """
+    # Function implementation goes here
+    if primary_arg < 0:
+        raise ValueError("primary_arg must be non-negative")
+    return iter(range(primary_arg + secondary_arg))
 
 
-## Project Dependencies
+class ExampleClass:
+    """An example class demonstrating Google style docstrings."""
+
+    def __init__(self, value: int) -> None:
+        """Initializes the ExampleClass with a value.
+
+        Args:
+            value: An integer value to initialize the class.
+        """
+        self.value = value
+
+    def __enter__(self) -> Self:
+        """Enter the context manager."""
+        raise NotImplementedError("ExampleClass.__enter__ is not implemented")
+
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_value: BaseException | None,
+        traceback: TracebackType | None,
+    ) -> None:
+        """Exit the context manager."""
+        raise NotImplementedError("ExampleClass.__exit__ is not implemented")
+```
+
+- Python code should be documented using Google style docstrings.
+- Docstrings should explain the purpose of a function when it is unclear.
+- Docstrings should be kept current after refactors.
+- Type hints should always be used in python code.
+- Python Functions with multiple args should prefer required key word arguments using `*,`
+- Prefer match case over complicated if then statements.
+- Prefer python language features from the project python version
+- Prefer multiple short functions over one long one, except where this makes the code harder to understand.
+
+## Non Obvious Patterns
+
+## Testing Rules
+
+- Write tests for all new functions using Red/Green methodology
+- Keep tests current through refactors.
+- Mock all external dependencies.
+
+## Boundries
+
+### Allowed without asking
+
+- Read files
+- List directory contents
+- Run tests in this project
+- Lint files in this project
+- Format python files in this project
+
+### Ask First
+
+- install or remove packages
+- delete files
+
+### Never Do This!
 
 
-- pydantic-settings is used to manage application settings.
-- typer is used to provide the cli interface
-- whenever is used to interact with datetimes
-
-## Conventions
-
-- test files are located in `tests/eve_static_data/`, and the test file layout mirrors the src file layout when possible.
+## Key Files
