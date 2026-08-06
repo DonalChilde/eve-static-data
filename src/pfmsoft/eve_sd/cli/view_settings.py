@@ -4,8 +4,8 @@ import typer
 from rich.console import Console
 from rich.text import Text
 
-from pfmsoft.eve_sd import USER_AGENT
 from pfmsoft.eve_sd.cli.helpers import get_esd_settings_from_context
+from pfmsoft.eve_sd.settings import USER_AGENT
 
 app = typer.Typer(no_args_is_help=True)
 

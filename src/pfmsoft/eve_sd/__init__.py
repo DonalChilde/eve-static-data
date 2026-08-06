@@ -1,10 +1,7 @@
 """Eve SD Package."""
 
 from importlib.metadata import version
-from pathlib import Path
 from typing import Any
-
-from typer import get_app_dir
 
 __author__ = "Chad Lowe"
 __author_email__ = "pfmsoft.dev@gmail.com"
@@ -13,19 +10,6 @@ __version__ = version(__app_name__)
 __license__ = "MIT"
 __url__ = "https://github.com/DonalChilde/pfmsoft-eve-sd"
 __description__ = "A CLI and API for Eve Online Static Data downloading and use."
-
-DEFAULT_APP_DIR = Path(get_app_dir(f"{__app_name__}"))
-USER_AGENT = f"{__app_name__}/{__version__} (+{__url__})"
-
-SDE_URL_TEMPLATE: str = "https://developers.eveonline.com/static-data/tranquility/eve-online-static-data-${build_number}-${variant}.zip"
-DATA_CHANGES_URL_TEMPLATE: str = "https://developers.eveonline.com/static-data/tranquility/changes/${build_number}.jsonl"
-SCHEMA_CHANGELOG_URL: str = (
-    "https://developers.eveonline.com/static-data/tranquility/schema-changelog.yaml"
-)
-LATEST_INFO_URL: str = (
-    "https://developers.eveonline.com/static-data/tranquility/latest.jsonl"
-)
-DATA_FILENAME_TEMPLATE: str = "eve-online-static-data-${build_number}-${variant}.zip"
 
 type Record = dict[str | int, Any]
 """Type alias for a record from an EVE SDE dataset."""

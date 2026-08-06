@@ -8,10 +8,10 @@ import typer
 from pfmsoft.eve_snippets.httpx2.http_session_factory import client_manager
 from rich.console import Console
 
-from pfmsoft.eve_sd import USER_AGENT
 from pfmsoft.eve_sd.cli.helpers import get_esd_settings_from_context
 from pfmsoft.eve_sd.helpers.sde_metadata import SdeVariant
 from pfmsoft.eve_sd.helpers.settings_factory import sde_tools_factory
+from pfmsoft.eve_sd.settings import USER_AGENT
 
 app = typer.Typer(no_args_is_help=True)
 
