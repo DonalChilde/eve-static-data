@@ -7,11 +7,11 @@ and string-keyed datasets.
 
 import logging
 import sqlite3
-from collections.abc import Iterable
+from collections.abc import Generator, Iterable
 from contextlib import contextmanager
 from importlib.resources import files as resource_files
 from pathlib import Path
-from typing import Any, Iterator
+from typing import Any
 from uuid import uuid4
 
 from pfmsoft.eve_sd.db import models as db_models
@@ -163,7 +163,7 @@ def create_read_write_connection(db_path: str | Path) -> sqlite3.Connection:
 @contextmanager
 def db_connection_manager(
     db_path: str | Path, read_only: bool = True
-) -> Iterator[sqlite3.Connection]:
+) -> Generator[sqlite3.Connection]:
     """Context manager for SQLite connections.
 
     Args:
