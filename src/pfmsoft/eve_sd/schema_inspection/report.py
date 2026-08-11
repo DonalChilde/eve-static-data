@@ -127,6 +127,11 @@ def _flatten_field_rows(
             container_count=container_count,
             required=required,
             value_type_counts=_sorted_type_counts(dict(field_data.value_type_counts)),
+            list_item_type_counts=_sorted_type_counts(
+                dict(field_data.list_stats.item_type_counts)
+            )
+            if field_data.list_stats is not None
+            else {},
         )
 
         dict_count = field_data.value_type_counts.get("dict", 0)

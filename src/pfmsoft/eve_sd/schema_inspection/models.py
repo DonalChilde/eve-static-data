@@ -15,7 +15,7 @@ INTEGER_KEY = "INTEGER_KEY"
 STRING_KEY = "STRING_KEY"
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class PathInspection:
     """Flattened inspection data for one dotted field path."""
 
@@ -24,6 +24,7 @@ class PathInspection:
     container_count: int
     required: bool
     value_type_counts: dict[str, int]
+    list_item_type_counts: dict[str, int] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         """Return a JSON-serializable mapping for this path."""
@@ -33,10 +34,11 @@ class PathInspection:
             "container_count": self.container_count,
             "required": self.required,
             "value_type_counts": dict(self.value_type_counts),
+            "list_item_type_counts": dict(self.list_item_type_counts),
         }
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class DatasetInspection:
     """Inspection output for one normalized dataset."""
 
@@ -69,7 +71,7 @@ class DatasetInspection:
         }
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class SchemaReport:
     """Top-level schema report for one or more datasets."""
 
@@ -96,7 +98,7 @@ class SchemaReport:
         }
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class ListStats:
     item_count: int = 0
     item_type_counts: Counter[str] = field(default_factory=Counter[str])
@@ -104,7 +106,7 @@ class ListStats:
     item_node: FieldNode = field(default_factory=lambda: FieldNode())
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class FieldNode:
     presence_count: int = 0
     value_type_counts: Counter[str] = field(default_factory=Counter[str])
