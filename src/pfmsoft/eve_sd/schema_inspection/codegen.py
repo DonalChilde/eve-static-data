@@ -1,4 +1,8 @@
-"""Dataclass model code generation from SchemaReport."""
+"""Dataclass model code generation from SchemaReport.
+
+NOTE: This is a work in progress, and does not produce validatable models in all cases.
+To be worked on later.
+"""
 
 import logging
 from dataclasses import dataclass
