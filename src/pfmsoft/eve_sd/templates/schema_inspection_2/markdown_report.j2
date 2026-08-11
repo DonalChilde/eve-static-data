@@ -16,12 +16,18 @@
 - records: {{ dataset.total_records }} (key: {{ dataset.record_key_type }})
 - valid: {{ dataset.valid_record_count }}, skipped: {{ dataset.skipped_record_count }}
 
-| Path | Required | Type | Presence |
-|------|----------|------|----------|
-{% for path, schema in flat_fields(dataset.fields) %}
-| {{ path }} | {{ 'yes' if schema.required else 'no' }} | {{ canonical_type(schema) }} | {{ schema.presence_count }}/{{ schema.container_count }} |
+{% for section in build_sections(dataset.fields) %}
+{% if section.title %}
+### {{ section.title }}{% if section.is_list_items %} item schema{% endif %}
+
+{% endif %}
+| Field | Required | Type | Presence |
+| ----- | -------- | ---- | -------- |
+{% for name, schema in section.fields.items()|sort %}
+| {{ name }} | {{ 'yes' if schema.required else 'no' }} | {{ canonical_type(schema) }} | {{ schema.presence_count }}/{{ schema.container_count }} |
 {% endfor %}
 
+{% endfor %}
 ### Warnings
 
 {% if dataset.warnings %}

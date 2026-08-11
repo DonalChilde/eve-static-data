@@ -4,7 +4,9 @@ from .inspect import DatasetInput, build_schema_report, inspect_dataset_data
 from .models import (
     DatasetSchema,
     FieldSchema,
+    FieldSection,
     SchemaReport2,
+    build_sections,
     canonical_type,
     flat_fields,
 )
@@ -19,8 +21,10 @@ __all__ = [
     "DatasetInput",
     "DatasetSchema",
     "FieldSchema",
+    "FieldSection",
     "SchemaReport2",
     "build_schema_report",
+    "build_sections",
     "canonical_type",
     "flat_fields",
     "generate_markdown_report",

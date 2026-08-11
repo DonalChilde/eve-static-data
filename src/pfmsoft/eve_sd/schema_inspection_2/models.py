@@ -134,3 +134,54 @@ def flat_fields(
         if schema.children and schema.key_type is None:
             result.extend(flat_fields(schema.children, path))
     return result
+
+
+# ── sectioned rendering helpers ───────────────────────────────────────────────
+
+
+@dataclass(slots=True, kw_only=True)
+class FieldSection:
+    """One table section in a schema report, covering direct fields at one tree level."""
+
+    title: str  # empty string = dataset top-level; otherwise a dotted field path
+    is_list_items: bool  # True when these fields are the schema of list items
+    fields: dict[str, FieldSchema]
+
+
+def _collect_sections(
+    title: str,
+    is_list_items: bool,
+    fields: dict[str, FieldSchema],
+    result: list[FieldSection],
+) -> None:
+    result.append(FieldSection(title=title, is_list_items=is_list_items, fields=fields))
+    for name in sorted(fields):
+        schema = fields[name]
+        # recurse into fixed-record children; skip dynamic-key mapping children
+        if schema.children and schema.key_type is None:
+            child_title = f"{title}.{name}" if title else name
+            _collect_sections(
+                child_title,
+                "list" in schema.value_types,
+                schema.children,
+                result,
+            )
+
+
+def build_sections(fields: dict[str, FieldSchema]) -> list[FieldSection]:
+    """Build a flat list of FieldSection for rendering as separate per-level tables.
+
+    The first section has an empty title and contains the dataset top-level fields.
+    Subsequent sections cover nested dict or list-item schemas, with a dotted
+    title indicating which field they belong to.
+    Dynamic-key dict children are not expanded into sections.
+
+    Args:
+        fields: Top-level field name → FieldSchema mapping.
+
+    Returns:
+        Ordered list of FieldSection instances.
+    """
+    result: list[FieldSection] = []
+    _collect_sections("", False, fields, result)
+    return result

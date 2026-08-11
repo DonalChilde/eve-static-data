@@ -5,6 +5,7 @@ from mdformat import text as mdformat_text  # type: ignore
 
 from pfmsoft.eve_sd.schema_inspection_2.models import (
     SchemaReport2,
+    build_sections,
     canonical_type,
     flat_fields,
 )
@@ -14,7 +15,10 @@ def _build_environment() -> Environment:
     env = Environment(
         loader=PackageLoader("pfmsoft.eve_sd", "templates"),
         autoescape=False,
+        trim_blocks=True,  # strip the newline after each block tag
+        lstrip_blocks=True,  # strip leading whitespace before block tags
     )
+    env.globals["build_sections"] = build_sections
     env.globals["canonical_type"] = canonical_type
     env.globals["flat_fields"] = flat_fields
     return env
