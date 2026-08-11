@@ -1,7 +1,8 @@
 """Generate schema inspection reports for normalized SDE datasets.
 
 This module is the data-first canonical implementation for schema reporting.
-It accepts already-normalized dataset mappings and does not perform any file I/O.
+Datasets are expected to be normalized mappings of top-level keys to record dictionaries.
+JSONL datasets are expected to be pre-normalized into such mappings before being passed to this module.
 """
 
 from __future__ import annotations
