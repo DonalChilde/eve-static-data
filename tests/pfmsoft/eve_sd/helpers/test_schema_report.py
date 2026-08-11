@@ -37,9 +37,10 @@ def test_inspect_dataset_data_returns_expected_structure() -> None:
     assert report.total_records == 2
     assert report.valid_record_count == 2
     assert report.skipped_record_count == 0
-    assert report.path_count == 3
-    assert report.paths["skills"].required is True
-    assert report.paths["skills.name"].required is True
+    assert "name" in report.fields
+    assert "skills" in report.fields
+    assert report.fields["skills"].required is True
+    assert report.fields["name"].required is True
 
 
 def test_build_schema_report_aggregates_datasets_and_paths() -> None:
@@ -69,7 +70,6 @@ def test_build_schema_report_aggregates_datasets_and_paths() -> None:
 
     assert report.file_count == 2
     assert report.total_records == 2
-    assert report.total_unique_paths == 1
     assert set(report.datasets) == {"alpha", "beta"}
 
 
@@ -95,7 +95,7 @@ def test_generate_markdown_report_contains_expected_sections() -> None:
 
     markdown = generate_markdown_report(report)
 
-    assert "# Schema Report" in markdown
+    assert "# Schema Report v2" in markdown
     assert "## Summary" in markdown
     assert "## alpha" in markdown
     assert "### Warnings" in markdown

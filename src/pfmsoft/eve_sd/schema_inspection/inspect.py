@@ -10,7 +10,7 @@ from typing import Any, Literal, cast
 from whenever import Instant
 
 from pfmsoft.eve_sd.helpers.sde_metadata import SdeMetadata
-from pfmsoft.eve_sd.schema_inspection_2.models import (
+from pfmsoft.eve_sd.schema_inspection.models import (
     DatasetSchema,
     FieldSchema,
     SchemaReport2,

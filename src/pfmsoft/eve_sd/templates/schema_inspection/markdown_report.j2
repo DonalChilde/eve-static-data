@@ -1,35 +1,33 @@
-# Schema Report
+# Schema Report v2
 
 ## Summary
+
 - source_path: {{ report.source_path }}
 - generated_at_utc: {{ report.generated_at_utc }}
-- sde_metadata: build number: {{ report.sde_metadata.buildNumber }}, release date: {{ report.sde_metadata.releaseDate }}, source format: {{ report.sde_metadata.variant.value }}
-- files_scanned: {{ report.file_count }}
+- sde_metadata: build {{ report.sde_metadata.buildNumber }}, released {{ report.sde_metadata.releaseDate }}, format: {{ report.sde_metadata.variant.value }}
+- datasets: {{ report.file_count }}
 - total_records: {{ report.total_records }}
-- total_unique_paths: {{ report.total_unique_paths }}
 
 {% for dataset_name in report.datasets|sort %}
 {% set dataset = report.datasets[dataset_name] %}
 ## {{ dataset.dataset_name }}
-- dataset_source: {{ dataset.dataset_source }}
-- sde_metadata: build number: {{ dataset.sde_metadata.buildNumber }}, release date: {{ dataset.sde_metadata.releaseDate }}, source format: {{ dataset.sde_metadata.variant.value }}
-- Records: {{ dataset.total_records }}
-- Top-level key types: {{ dataset.top_level_key_type_counts.items()|map('join', ':')|join(', ') if dataset.top_level_key_type_counts else 'unknown' }}
-- Valid dict records: {{ dataset.valid_record_count }}
-- Skipped top-level items: {{ dataset.skipped_record_count }}
-- Paths discovered: {{ dataset.path_count }}
 
-{% if dataset.paths %}
-| Path | Presence | Required | Types |
-|------|----------|----------|-------|
-{% for path_name in dataset.paths|sort %}
-{% set row = dataset.paths[path_name] %}
-| {{ path_name }} | {{ row.presence_count }}/{{ row.container_count }} | {{ 'yes' if row.required else 'no' }} | {{ row.value_type_counts.items()|map('join', ':')|join(', ') }} |
-{% endfor %}
-{% else %}
-No schema paths discovered.
+- source: {{ dataset.dataset_source }}
+- records: {{ dataset.total_records }} (key: {{ dataset.record_key_type }})
+- valid: {{ dataset.valid_record_count }}, skipped: {{ dataset.skipped_record_count }}
+
+{% for section in build_sections(dataset.fields) %}
+{% if section.title %}
+### {{ section.title }}{% if section.is_list_items %} item schema{% endif %}
+
 {% endif %}
+| Field | Required | Type | Presence |
+| ----- | -------- | ---- | -------- |
+{% for name, schema in section.fields.items()|sort %}
+| {{ name }} | {{ 'yes' if schema.required else 'no' }} | {{ canonical_type(schema) }} | {{ schema.presence_count }}/{{ schema.container_count }} |
+{% endfor %}
 
+{% endfor %}
 ### Warnings
 
 {% if dataset.warnings %}
