@@ -152,7 +152,6 @@ def _convert_children(
     parent_path: str,
     child_nodes: dict[str, _FieldNode],
     container_count: int,
-    ancestor_required: bool,
     dataset_warnings: list[str],
 ) -> dict[str, FieldSchema]:
     return {
@@ -161,7 +160,6 @@ def _convert_children(
             name=child_name,
             node=child_node,
             container_count=container_count,
-            ancestor_required=ancestor_required,
             dataset_warnings=dataset_warnings,
         )
         for child_name, child_node in sorted(child_nodes.items())
@@ -173,11 +171,9 @@ def _node_to_field_schema(
     name: str,
     node: _FieldNode,
     container_count: int,
-    ancestor_required: bool,
     dataset_warnings: list[str],
 ) -> FieldSchema:
-    local_required = container_count > 0 and node.presence_count >= container_count
-    required = ancestor_required and local_required
+    required = container_count > 0 and node.presence_count >= container_count
     nullable, value_types = _split_nullable(node.value_type_counts)
     key_type = _derive_key_type(node.child_key_types)
 
@@ -222,7 +218,6 @@ def _node_to_field_schema(
                 path,
                 list_stats.item_node.children,
                 dict_in_list,
-                True,
                 dataset_warnings,
             )
 
@@ -233,7 +228,6 @@ def _node_to_field_schema(
             path,
             node.children,
             dict_count,
-            required,
             dataset_warnings,
         )
 
@@ -314,7 +308,6 @@ def inspect_dataset_data(
             name=field_name,
             node=node,
             container_count=valid_record_count,
-            ancestor_required=True,
             dataset_warnings=dataset_warnings,
         )
         for field_name, node in sorted(root_fields.items())
