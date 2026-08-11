@@ -7,10 +7,8 @@ from typing import Annotated
 import typer
 from pfmsoft.eve_snippets import json_io, save_text_file
 
-from pfmsoft.eve_sd.helpers.schema_report.markdown_report import (
+from pfmsoft.eve_sd.schema_inspection import (
     generate_markdown_report,
-)
-from pfmsoft.eve_sd.helpers.schema_report.report_from_files import (
     get_json_schema_report,
     get_jsonl_schema_report,
     get_yaml_schema_report,
