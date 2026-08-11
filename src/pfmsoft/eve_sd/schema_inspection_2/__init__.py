@@ -11,6 +11,7 @@ from .models import (
     flat_fields,
 )
 from .render import generate_markdown_report
+from .report_from_db import get_schema_report_from_db
 from .report_from_files import (
     get_json_schema_report,
     get_jsonl_schema_report,
@@ -30,6 +31,7 @@ __all__ = [
     "generate_markdown_report",
     "get_json_schema_report",
     "get_jsonl_schema_report",
+    "get_schema_report_from_db",
     "get_yaml_schema_report",
     "inspect_dataset_data",
 ]
