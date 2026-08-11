@@ -1,3 +1,10 @@
+# Publish to pypi
+
+## Steps to setup publishing package
+
+## Github Action to Pulishe on Release
+
+```yaml
 name: Publish to PyPI
 
 on:
@@ -11,7 +18,7 @@ jobs:
 
     environment:
       name: pypi
-      url: https://pypi.org/project/pfmsoft-eve-sd/
+      url: https://pypi.org/project/PROJECT_NAME/ # Update this to the project name on pypi
 
     permissions:
       id-token: write # Required for PyPI Trusted Publishing
@@ -34,3 +41,5 @@ jobs:
 
       - name: Publish package to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+
+```

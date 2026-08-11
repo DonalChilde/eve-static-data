@@ -6,6 +6,7 @@ functions and returns deserialized record payloads.
 
 import sqlite3
 from collections.abc import Iterable
+from typing import cast
 
 from pfmsoft.eve_sd import Dataset, IntKeyedRecord, KeyedRecord, StrKeyedRecord
 from pfmsoft.eve_sd.db import models as db_models
@@ -130,6 +131,34 @@ class DatasetDbQuery:
             key_type=self.dataset_key_types[dataset_name],
         )
 
+    def _confirm_typed_record_keys(
+        self, key_type: str, record_keys: set[str | int] | None
+    ) -> None:
+        """Confirm that the provided record keys match the expected key type.
+
+        Args:
+            key_type: Expected key type ("int" or "str").
+            record_keys: Set of record keys to check.
+
+        Raises:
+            ValueError: If the record keys do not match the expected key type.
+        """
+        if record_keys is not None:
+            if key_type == "int":
+                if not all(isinstance(key, int) for key in record_keys):
+                    raise ValueError(
+                        "All record keys must be integers for an integer-keyed dataset."
+                    )
+            elif key_type == "str":
+                if not all(isinstance(key, str) for key in record_keys):
+                    raise ValueError(
+                        "All record keys must be strings for a string-keyed dataset."
+                    )
+            else:
+                raise ValueError(
+                    f"Unknown key type '{key_type}'. Expected 'int' or 'str'."
+                )
+
     def dataset_record_count(self, dataset_name: str) -> int:
         """Return cached record count for one dataset.
 
@@ -148,6 +177,48 @@ class DatasetDbQuery:
                 "Ensure that the dataset has been loaded into the database."
             )
         return self.dataset_record_counts[dataset_name]
+
+    def get_records(
+        self, dataset_name: str, record_keys: set[str | int] | None = None
+    ) -> Iterable[KeyedRecord]:
+        """Yield deserialized records for a dataset, regardless of key type.
+
+        Args:
+            dataset_name: Dataset name to query.
+            record_keys: Optional key filter. When ``None``, all records
+                for the dataset are yielded.
+
+        Yields:
+            ``(record_key, record)`` tuples for matching records.
+
+        Raises:
+            ValueError: If dataset is unknown.
+        """
+        if dataset_name not in self.dataset_key_types:
+            raise ValueError(
+                f"Dataset '{dataset_name}' not found in the database. "
+                "Ensure that the dataset has been loaded into the database."
+            )
+        key_type = self.dataset_key_types[dataset_name]
+        # Confirm that the provided record keys match the expected key type, or None
+        self._confirm_typed_record_keys(key_type=key_type, record_keys=record_keys)
+        if record_keys is not None:
+            if key_type == "int":
+                record_keys = cast(set[int], record_keys)  # type: ignore
+            elif key_type == "str":
+                record_keys = cast(set[str], record_keys)  # type: ignore
+            else:
+                raise ValueError(
+                    f"Dataset '{dataset_name}' has an unknown key type '{key_type}'."
+                )
+        if key_type == "int":
+            yield from self.get_int_records(dataset_name, record_keys)  # type: ignore
+        elif key_type == "str":
+            yield from self.get_str_records(dataset_name, record_keys)  # type: ignore
+        else:
+            raise ValueError(
+                f"Dataset '{dataset_name}' has an unknown key type '{key_type}'."
+            )
 
     def get_int_records(
         self, dataset_name: str, record_keys: set[int] | None = None

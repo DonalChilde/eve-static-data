@@ -1,8 +1,8 @@
-# AGENTS.md - pfmsoft-eve-sd
+# AGENTS.md - _PROJECT_NAME_
 
 ## Project Overview
 
-A CLI and API for downloading and using the EVE Online SDE.
+Short description of the project.
 
 ## Current State and Goals
 
@@ -144,5 +144,6 @@ class ExampleClass:
 
 ### Never Do This!
 
+- push to git or open PRs
 
 ## Key Files

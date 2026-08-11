@@ -1,20 +1,17 @@
+"""Generate schema v2 reports from an SDE SQLite database."""
+
 import sqlite3
 from collections.abc import Iterable
 
 from pfmsoft.eve_sd.db.query import DatasetDbQuery
-from pfmsoft.eve_sd.helpers.schema_report.schema_report import (
-    DatasetInput,
-    SchemaReport,
-    build_schema_report,
-)
+from pfmsoft.eve_sd.schema_inspection.inspect import DatasetInput, build_schema_report
+from pfmsoft.eve_sd.schema_inspection.models import SchemaReport
 
 
 def get_schema_report_from_db(connection: sqlite3.Connection) -> SchemaReport:
-    """Generate a schema report from all datasets in a sqlite database."""
+    """Generate a v2 schema report from all datasets in a sqlite database."""
     db_query = DatasetDbQuery(connection)
     sde_metadata = db_query.sde_metadata
-    if sde_metadata is None:
-        raise ValueError("SDE metadata not found in the database.")
 
     def dataset_input_generator() -> Iterable[DatasetInput]:
         for dataset_name, key_type in db_query.dataset_key_types.items():

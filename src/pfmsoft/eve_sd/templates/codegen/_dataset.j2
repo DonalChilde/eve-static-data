@@ -1,0 +1,6 @@
+# ── {{ dataset_name }} ────────────────────────────────────────────────────────────────
+
+{% for cls in class_list %}
+{% include "codegen/_dataclass.j2" %}
+
+{% endfor %}
