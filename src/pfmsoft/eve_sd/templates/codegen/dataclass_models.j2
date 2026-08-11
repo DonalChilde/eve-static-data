@@ -1,0 +1,15 @@
+"""Generated dataclass record models from SDE schema report.
+
+source_path: {{ report.source_path }}
+generated_at_utc: {{ report.generated_at_utc }}
+build: {{ report.sde_metadata.buildNumber }}
+"""
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Any
+
+{% for dataset_name in report.datasets|sort %}
+{% set class_list = classes_by_dataset[dataset_name] %}
+{% include "codegen/_dataset.j2" %}
+{% endfor %}
