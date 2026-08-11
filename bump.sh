@@ -7,7 +7,6 @@ set -e
 cd "$(dirname "$0")"
 
 FORCE=false
-RELEASABLE_BRANCH="${RELEASABLE_BRANCH:-dev}"
 
 usage() {
     echo "Usage: $0 [options] VERSION"
@@ -21,8 +20,6 @@ usage() {
     echo "  -f, --force:  skip confirmation prompt"
     echo "  -h, --help:   show this help message"
     echo
-    echo "Environment variables:"
-    echo "  RELEASABLE_BRANCH: required git branch for running bump (default: dev)"
     exit 1
 }
 
@@ -52,14 +49,9 @@ fi
 
 current_branch="$(git rev-parse --abbrev-ref HEAD)"
 if [ "$current_branch" = "HEAD" ]; then
-    echo "Error: detached HEAD is not allowed for bump. Check out '$RELEASABLE_BRANCH'."
+    echo "Error: detached HEAD is not allowed for bump."
     exit 1
 fi
-
-# if [ "$current_branch" != "$RELEASABLE_BRANCH" ]; then
-#     echo "Error: bump must be run on branch '$RELEASABLE_BRANCH' (current: '$current_branch')."
-#     exit 1
-# fi
 
 if ! git diff-index --quiet HEAD -- && [ "$FORCE" = false ]; then
     echo "Error: git is not clean. Please commit all changes first."
