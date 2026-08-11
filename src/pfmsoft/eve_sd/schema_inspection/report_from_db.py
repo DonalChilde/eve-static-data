@@ -1,9 +1,11 @@
-"""Moved to pfmsoft.eve_sd.schema_inspection."""
+"""Generate schema reports from an SDE SQLite database."""
+
+import sqlite3
+from collections.abc import Iterable
 
 from pfmsoft.eve_sd.db.query import DatasetDbQuery
-from pfmsoft.eve_sd.helpers.sde_metadata import SdeMetadata
 from pfmsoft.eve_sd.schema_inspection.models import SchemaReport
-from pfmsoft.eve_sd.schema_inspection.report import build_schema_report
+from pfmsoft.eve_sd.schema_inspection.report import DatasetInput, build_schema_report
 
 
 def get_schema_report_from_db(connection: sqlite3.Connection) -> SchemaReport:

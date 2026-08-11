@@ -1,4 +1,4 @@
-"""Moved to pfmsoft.eve_sd.schema_inspection."""
+"""Markdown rendering for schema inspection reports."""
 
 from jinja2 import Environment, PackageLoader
 from mdformat import text as mdformat_text  # type: ignore
@@ -7,7 +7,6 @@ from pfmsoft.eve_sd.schema_inspection.models import SchemaReport
 
 
 def _build_environment() -> Environment:
-    """Create the Jinja environment for schema inspection templates."""
     return Environment(
         loader=PackageLoader("pfmsoft.eve_sd", "templates"),
         autoescape=False,

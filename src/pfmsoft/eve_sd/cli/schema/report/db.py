@@ -9,10 +9,8 @@ from rich.console import Console
 
 from pfmsoft.eve_sd import db_connection_manager
 from pfmsoft.eve_sd.cli.helpers import ReportChoice
-from pfmsoft.eve_sd.helpers.schema_report.markdown_report import (
+from pfmsoft.eve_sd.schema_inspection import (
     generate_markdown_report,
-)
-from pfmsoft.eve_sd.helpers.schema_report.report_from_db import (
     get_schema_report_from_db,
 )
 
@@ -98,8 +96,8 @@ def report_db(
     if to_directory is None:
         return
 
-    build_number = schema_report["sde_metadata"].buildNumber
-    format_name = schema_report["sde_metadata"].variant
+    build_number = schema_report.sde_metadata.buildNumber
+    format_name = schema_report.sde_metadata.variant.value
     json_file_name = f"schema_report_{format_name}_{build_number}.json"
     markdown_file_name = f"schema_report_{format_name}_{build_number}.md"
     save_text_file(

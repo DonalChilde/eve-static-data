@@ -1,11 +1,12 @@
-"""Moved to pfmsoft.eve_sd.schema_inspection."""
+"""Schema inspection pipeline for normalized SDE datasets."""
 
 from __future__ import annotations
 
 from collections import Counter
 from collections.abc import Iterable
+from dataclasses import dataclass
 from datetime import UTC, datetime
-from typing import Any, Literal, TypedDict, cast
+from typing import Any, Literal, cast
 
 from pfmsoft.eve_sd.helpers.sde_metadata import SdeMetadata
 from pfmsoft.eve_sd.schema_inspection.models import (
@@ -20,8 +21,9 @@ SdeTypeName = Literal["dict", "list", "str", "int", "float", "bool", "null"]
 SdeFormat = Literal["yaml-model", "jsonl-model"]
 
 
-class DatasetInput(TypedDict):
-    """Input tuple for one normalized dataset."""
+@dataclass(slots=True, kw_only=True)
+class DatasetInput:
+    """Input for one normalized dataset."""
 
     dataset_name: str
     dataset_data: dict[int | str, Any]
@@ -269,9 +271,9 @@ def build_schema_report(
     for inspection_args in datasets:
         inspected_datasets.append(
             inspect_dataset_data(
-                dataset_name=inspection_args["dataset_name"],
-                dataset_data=inspection_args["dataset_data"],
-                sde_metadata=inspection_args["sde_metadata"],
+                dataset_name=inspection_args.dataset_name,
+                dataset_data=inspection_args.dataset_data,
+                sde_metadata=inspection_args.sde_metadata,
                 dataset_source=dataset_source,
             )
         )

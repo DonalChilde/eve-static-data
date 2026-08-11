@@ -8,17 +8,15 @@ from pfmsoft.eve_snippets import json_io, save_text_file
 from rich.console import Console
 
 from pfmsoft.eve_sd.cli.helpers import ReportChoice
-from pfmsoft.eve_sd.helpers.schema_report.markdown_report import (
-    generate_markdown_report,
-)
-from pfmsoft.eve_sd.helpers.schema_report.report_from_files import (
-    get_json_schema_report,
-    get_jsonl_schema_report,
-    get_yaml_schema_report,
-)
 from pfmsoft.eve_sd.helpers.sde_metadata import (
     SourceMedia,
     load_sde_metadata,
+)
+from pfmsoft.eve_sd.schema_inspection import (
+    generate_markdown_report,
+    get_json_schema_report,
+    get_jsonl_schema_report,
+    get_yaml_schema_report,
 )
 
 app = typer.Typer(no_args_is_help=True)
