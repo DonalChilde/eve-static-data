@@ -14,6 +14,7 @@ from pfmsoft.eve_sd.helpers.sde_metadata import (
 )
 from pfmsoft.eve_sd.schema_inspection import (
     generate_markdown_report,
+    generate_record_models,
     get_json_schema_report,
     get_jsonl_schema_report,
     get_yaml_schema_report,
@@ -109,6 +110,7 @@ def report_files(
     format_name = sde_metadata.variant.value
     json_file_name = f"schema_report_{format_name}_{build_number}.json"
     markdown_file_name = f"schema_report_{format_name}_{build_number}.md"
+    models_file_name = f"schema_record_models_{format_name}_{build_number}.py"
     save_text_file(
         text=json_io.json_dumps(schema_report, indent=2),
         directory=to_directory,
@@ -121,6 +123,13 @@ def report_files(
         filename=markdown_file_name,
         overwrite=overwrite,
     )
+    save_text_file(
+        text=generate_record_models(schema_report),
+        directory=to_directory,
+        filename=models_file_name,
+        overwrite=overwrite,
+    )
     messenger.print(
-        f"[bold green]Schema report saved to {to_directory} as {json_file_name} and {markdown_file_name}[/bold green]"
+        f"[bold green]Schema report saved to {to_directory} as "
+        f"{json_file_name}, {markdown_file_name}, and {models_file_name}[/bold green]"
     )

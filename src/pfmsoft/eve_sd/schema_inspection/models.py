@@ -3,6 +3,8 @@
 from dataclasses import dataclass, field
 from typing import Literal
 
+from pydantic import RootModel
+
 from pfmsoft.eve_sd.helpers.sde_metadata import SdeMetadata
 
 
@@ -52,6 +54,18 @@ class SchemaReport:
     file_count: int
     total_records: int
     datasets: dict[str, DatasetSchema]
+
+    def serialize(self, indent: int | None = None) -> str:
+        """Return a JSON-serializable dict representation of the report."""
+        return SchemaReportRoot(self).model_dump_json(indent=indent)
+
+    @classmethod
+    def deserialize(cls, json_str: str) -> SchemaReport:
+        """Load a SchemaReport from a JSON string."""
+        return SchemaReportRoot.model_validate_json(json_str).root
+
+
+SchemaReportRoot = RootModel[SchemaReport]
 
 
 # ── type derivation helpers ────────────────────────────────────────────────────

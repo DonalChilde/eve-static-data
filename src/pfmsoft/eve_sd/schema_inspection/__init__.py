@@ -1,5 +1,6 @@
 """Schema inspection v2 — tree-structured output with canonical type derivation."""
 
+from .codegen import generate_record_models
 from .inspect import DatasetInput, build_schema_report, inspect_dataset_data
 from .models import (
     DatasetSchema,
@@ -29,6 +30,7 @@ __all__ = [
     "canonical_type",
     "flat_fields",
     "generate_markdown_report",
+    "generate_record_models",
     "get_json_schema_report",
     "get_jsonl_schema_report",
     "get_schema_report_from_db",
