@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from collections import Counter
 from dataclasses import dataclass, field
-from datetime import UTC, datetime
 from typing import Any, Literal
 
 from pfmsoft.eve_sd.helpers.sde_metadata import SdeMetadata
@@ -98,16 +97,16 @@ class SchemaReport:
 
 
 @dataclass(slots=True)
-class _ListStats:
+class ListStats:
     item_count: int = 0
-    item_type_counts: Counter[str] = field(default_factory=Counter)
+    item_type_counts: Counter[str] = field(default_factory=Counter[str])
     empty_list_count: int = 0
-    item_node: "_FieldNode" = field(default_factory=lambda: _FieldNode())
+    item_node: FieldNode = field(default_factory=lambda: FieldNode())
 
 
 @dataclass(slots=True)
-class _FieldNode:
+class FieldNode:
     presence_count: int = 0
-    value_type_counts: Counter[str] = field(default_factory=Counter)
-    children: dict[str, "_FieldNode"] = field(default_factory=dict)
-    list_stats: _ListStats | None = None
+    value_type_counts: Counter[str] = field(default_factory=Counter[str])
+    children: dict[str, FieldNode] = field(default_factory=dict[str, "FieldNode"])
+    list_stats: ListStats | None = None

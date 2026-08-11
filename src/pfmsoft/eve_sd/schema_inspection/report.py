@@ -5,16 +5,17 @@ from __future__ import annotations
 from collections import Counter
 from collections.abc import Iterable
 from dataclasses import dataclass
-from datetime import UTC, datetime
 from typing import Any, Literal, cast
+
+from whenever import Instant
 
 from pfmsoft.eve_sd.helpers.sde_metadata import SdeMetadata
 from pfmsoft.eve_sd.schema_inspection.models import (
     DatasetInspection,
+    FieldNode,
+    ListStats,
     PathInspection,
     SchemaReport,
-    _FieldNode,
-    _ListStats,
 )
 
 SdeTypeName = Literal["dict", "list", "str", "int", "float", "bool", "null"]
@@ -72,14 +73,14 @@ def _append_warning(warnings: list[str], message: str) -> None:
         warnings.append(message)
 
 
-def _update_node_from_value(node: _FieldNode, value: Any) -> None:
+def _update_node_from_value(node: FieldNode, value: Any) -> None:
     type_name = _sde_type_name(value)
     node.value_type_counts[type_name] += 1
 
     if isinstance(value, dict):
         for child_name, child_value in _mapping_items(value):
             child_key = str(child_name)
-            child_node = node.children.setdefault(child_key, _FieldNode())
+            child_node = node.children.setdefault(child_key, FieldNode())
             child_node.presence_count += 1
             _update_node_from_value(child_node, child_value)
         return
@@ -89,7 +90,7 @@ def _update_node_from_value(node: _FieldNode, value: Any) -> None:
 
     list_stats = node.list_stats
     if list_stats is None:
-        list_stats = _ListStats()
+        list_stats = ListStats()
         node.list_stats = list_stats
 
     if not value:
@@ -106,7 +107,7 @@ def _update_node_from_value(node: _FieldNode, value: Any) -> None:
 
 
 def _flatten_field_rows(
-    fields: dict[str, _FieldNode],
+    fields: dict[str, FieldNode],
     container_count: int,
     prefix: str = "",
     ancestor_required: bool = True,
@@ -157,7 +158,7 @@ def _flatten_field_rows(
     return rows
 
 
-def _collect_node_warnings(path: str, node: _FieldNode, warnings: list[str]) -> None:
+def _collect_node_warnings(path: str, node: FieldNode, warnings: list[str]) -> None:
     container_types = {"dict", "list"}
     scalar_types = set(node.value_type_counts) - container_types
     if container_types & set(node.value_type_counts) and scalar_types:
@@ -213,7 +214,7 @@ def inspect_dataset_data(
 ) -> DatasetInspection:
     """Inspect one normalized dataset mapping."""
     warnings: list[str] = []
-    root_fields: dict[str, _FieldNode] = {}
+    root_fields: dict[str, FieldNode] = {}
     top_level_key_type_counts: Counter[str] = _string_counter()
     dataset_source = dataset_source or dataset_name
 
@@ -236,7 +237,7 @@ def inspect_dataset_data(
 
         valid_record_count += 1
         for field_name, field_value in _mapping_items(record_value):
-            node = root_fields.setdefault(str(field_name), _FieldNode())
+            node = root_fields.setdefault(str(field_name), FieldNode())
             node.presence_count += 1
             _update_node_from_value(node, field_value)
 
@@ -286,7 +287,7 @@ def build_schema_report(
     total_records = sum(dataset.total_records for dataset in sorted_datasets)
     return SchemaReport(
         source_path=dataset_source,
-        generated_at_utc=datetime.now(UTC).isoformat(timespec="seconds"),
+        generated_at_utc=Instant.now().format_iso(),
         sde_metadata=sde_metadata,
         file_count=len(sorted_datasets),
         total_records=total_records,
