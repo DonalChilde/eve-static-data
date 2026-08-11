@@ -4,7 +4,7 @@ from jinja2 import Environment, PackageLoader
 from mdformat import text as mdformat_text  # type: ignore
 
 from pfmsoft.eve_sd.schema_inspection.models import (
-    SchemaReport2,
+    SchemaReport,
     build_sections,
     canonical_type,
     flat_fields,
@@ -24,7 +24,7 @@ def _build_environment() -> Environment:
     return env
 
 
-def generate_markdown_report(report: SchemaReport2) -> str:
+def generate_markdown_report(report: SchemaReport) -> str:
     """Render a human-readable markdown schema report (v2).
 
     Args:

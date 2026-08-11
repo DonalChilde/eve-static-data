@@ -5,10 +5,10 @@ from collections.abc import Iterable
 
 from pfmsoft.eve_sd.db.query import DatasetDbQuery
 from pfmsoft.eve_sd.schema_inspection.inspect import DatasetInput, build_schema_report
-from pfmsoft.eve_sd.schema_inspection.models import SchemaReport2
+from pfmsoft.eve_sd.schema_inspection.models import SchemaReport
 
 
-def get_schema_report_from_db(connection: sqlite3.Connection) -> SchemaReport2:
+def get_schema_report_from_db(connection: sqlite3.Connection) -> SchemaReport:
     """Generate a v2 schema report from all datasets in a sqlite database."""
     db_query = DatasetDbQuery(connection)
     sde_metadata = db_query.sde_metadata

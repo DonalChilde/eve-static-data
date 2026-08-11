@@ -1,9 +1,7 @@
 """Dataclass models for schema inspection v2."""
 
-from __future__ import annotations
-
 from dataclasses import dataclass, field
-from typing import Any, Literal
+from typing import Literal
 
 from pfmsoft.eve_sd.helpers.sde_metadata import SdeMetadata
 
@@ -26,7 +24,7 @@ class FieldSchema:
     children: dict[str, FieldSchema]  # sub-fields (fixed record or list-item schema)
     presence_count: int
     container_count: int
-    warnings: list[str] = field(default_factory=list)
+    warnings: list[str] = field(default_factory=list[str])
 
 
 @dataclass(slots=True, kw_only=True)
@@ -45,7 +43,7 @@ class DatasetSchema:
 
 
 @dataclass(slots=True, kw_only=True)
-class SchemaReport2:
+class SchemaReport:
     """Top-level schema report (v2) for one or more datasets."""
 
     source_path: str

@@ -7,10 +7,10 @@ from pfmsoft.eve_snippets import json_io, yaml_io
 
 from pfmsoft.eve_sd.helpers.sde_metadata import load_sde_metadata
 from pfmsoft.eve_sd.schema_inspection.inspect import DatasetInput, build_schema_report
-from pfmsoft.eve_sd.schema_inspection.models import SchemaReport2
+from pfmsoft.eve_sd.schema_inspection.models import SchemaReport
 
 
-def get_jsonl_schema_report(sde_directory: Path) -> SchemaReport2:
+def get_jsonl_schema_report(sde_directory: Path) -> SchemaReport:
     """Generate a v2 schema report from all JSONL datasets in a directory."""
     sde_metadata = load_sde_metadata(sde_directory)
 
@@ -30,7 +30,7 @@ def get_jsonl_schema_report(sde_directory: Path) -> SchemaReport2:
     )
 
 
-def get_yaml_schema_report(sde_directory: Path) -> SchemaReport2:
+def get_yaml_schema_report(sde_directory: Path) -> SchemaReport:
     """Generate a v2 schema report from all YAML datasets in a directory."""
     sde_metadata = load_sde_metadata(sde_directory)
 
@@ -50,7 +50,7 @@ def get_yaml_schema_report(sde_directory: Path) -> SchemaReport2:
     )
 
 
-def get_json_schema_report(sde_directory: Path) -> SchemaReport2:
+def get_json_schema_report(sde_directory: Path) -> SchemaReport:
     """Generate a v2 schema report from all JSON datasets in a directory.
 
     This is used when the original yaml or jsonl datasets have been converted

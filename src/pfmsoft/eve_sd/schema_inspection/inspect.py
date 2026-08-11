@@ -1,7 +1,5 @@
 """Schema inspection pipeline that produces a FieldSchema tree."""
 
-from __future__ import annotations
-
 from collections import Counter
 from collections.abc import Iterable
 from dataclasses import dataclass, field
@@ -13,7 +11,7 @@ from pfmsoft.eve_sd.helpers.sde_metadata import SdeMetadata
 from pfmsoft.eve_sd.schema_inspection.models import (
     DatasetSchema,
     FieldSchema,
-    SchemaReport2,
+    SchemaReport,
 )
 
 # ── internal traversal nodes ──────────────────────────────────────────────────
@@ -22,7 +20,7 @@ from pfmsoft.eve_sd.schema_inspection.models import (
 @dataclass(slots=True, kw_only=True)
 class _ListStats:
     item_count: int = 0
-    item_type_counts: Counter[str] = field(default_factory=Counter)
+    item_type_counts: Counter[str] = field(default_factory=Counter[str])
     empty_list_count: int = 0
     item_node: _FieldNode = field(default_factory=lambda: _FieldNode())
 
@@ -30,10 +28,10 @@ class _ListStats:
 @dataclass(slots=True, kw_only=True)
 class _FieldNode:
     presence_count: int = 0
-    value_type_counts: Counter[str] = field(default_factory=Counter)
+    value_type_counts: Counter[str] = field(default_factory=Counter[str])
     # tracks key types of this dict's children to detect dynamic-key mappings
-    child_key_types: Counter[str] = field(default_factory=Counter)
-    children: dict[str, _FieldNode] = field(default_factory=dict)
+    child_key_types: Counter[str] = field(default_factory=Counter[str])
+    children: dict[str, _FieldNode] = field(default_factory=dict[str, "_FieldNode"])
     list_stats: _ListStats | None = None
 
 
@@ -331,7 +329,7 @@ def build_schema_report(
     sde_metadata: SdeMetadata,
     *,
     dataset_source: str,
-) -> SchemaReport2:
+) -> SchemaReport:
     """Build a schema report from multiple normalized datasets.
 
     Args:
@@ -354,7 +352,7 @@ def build_schema_report(
         )
 
     sorted_datasets = sorted(inspected, key=lambda d: d.dataset_name)
-    return SchemaReport2(
+    return SchemaReport(
         source_path=dataset_source,
         generated_at_utc=Instant.now().format_iso(),
         sde_metadata=sde_metadata,
