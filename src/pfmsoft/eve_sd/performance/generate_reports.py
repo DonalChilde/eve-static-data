@@ -76,15 +76,16 @@ def generate_files_report(source_dir: Path) -> FileSourceReport:
 
     total_seconds = perf_counter() - start
     sde_metadata = load_sde_metadata(source_dir)
+    ordered_datasets = sorted(dataset_entries, key=lambda item: item.dataset_name)
     return FileSourceReport(
         source_path=str(source_dir),
         generated_at=_now_iso(),
         startup_seconds=total_seconds,
         total_seconds=total_seconds,
-        dataset_count=len(dataset_entries),
+        dataset_count=len(ordered_datasets),
         deserialization_method="jsonl/json/yaml raw loaders",
         sde_metadata=sde_metadata,
-        datasets=dataset_entries,
+        datasets=ordered_datasets,
     )
 
 
@@ -154,16 +155,17 @@ def generate_db_report(source_db: Path) -> DbSourceReport:
 
         total_seconds = perf_counter() - start
         sde_metadata = db_query.sde_metadata
+        ordered_datasets = sorted(dataset_entries, key=lambda item: item.dataset_name)
         return DbSourceReport(
             source_path=str(source_db),
             generated_at=_now_iso(),
             startup_seconds=total_seconds,
             total_seconds=total_seconds,
-            dataset_count=len(dataset_entries),
-            dataset_names=list(db_query.dataset_key_types),
+            dataset_count=len(ordered_datasets),
+            dataset_names=[item.dataset_name for item in ordered_datasets],
             serialization_format=str(db_query.serialization_format),
             sde_metadata=sde_metadata,
-            datasets=dataset_entries,
+            datasets=ordered_datasets,
         )
 
 

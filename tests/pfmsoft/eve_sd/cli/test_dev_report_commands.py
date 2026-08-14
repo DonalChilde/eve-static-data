@@ -224,3 +224,18 @@ class TestDevReportCommands:
         )
         assert "file_size_bytes" in render_files_report_markdown(files_report)
         assert "serialization_format" in render_db_report_markdown(db_report)
+
+    def test_rendered_times_use_decimal_not_scientific_notation(self) -> None:
+        """Tiny time values should render as fixed-point decimals for readability."""
+        report = _make_db_report()
+        report.datasets[0].total_seconds = 0.000000000001
+        report.datasets[0].dataset_load_seconds = 0.000000000001
+        report.datasets[0].all_dataset_keys_seconds = 0.000000000002
+        report.datasets[0].random_record_access_seconds = 0.000000000003
+
+        rendered = render_db_report_markdown(report)
+
+        assert "0.000000000001" in rendered
+        assert "1e-12" not in rendered
+        assert "2e-12" not in rendered
+        assert "3e-12" not in rendered
