@@ -40,37 +40,6 @@ def load_table_definitions() -> str:
     return load_package_resource_text(_table_def_parent, _table_def_sql)
 
 
-@deprecated("Unnecessary wrapper")
-@contextmanager
-def transaction(connection: sqlite3.Connection):
-    """Wrap a block in an explicit transaction.
-
-    Commits on clean exit, rolls back on any exception.
-
-    sqlite3.connect() has autocommit behavior that changed in 3.12 and was
-    further clarified in 3.14. Using an explicit context manager here keeps
-    transaction intent clear regardless of connection defaults.
-
-    Args:
-        connection: Open SQLite connection to manage.
-
-    Yields:
-        The same connection object, scoped to one transaction.
-
-    Raises:
-        Exception: Re-raises any exception from the wrapped block after rolling
-            back.
-    """
-    try:
-        connection.execute("BEGIN")
-        yield connection
-        connection.execute("COMMIT")
-    except Exception as e:
-        logger.error("Transaction failed. %s", e, exc_info=e)
-        connection.execute("ROLLBACK")
-        raise
-
-
 def write_int_records(
     connection: sqlite3.Connection,
     *,
