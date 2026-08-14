@@ -7,10 +7,9 @@ from typing import Annotated, Any
 
 import typer
 from pfmsoft.eve_snippets import yaml_io
-from pfmsoft.eve_snippets.sqlite3.connection_helpers import db_connection_manager
 from rich.console import Console
 
-from pfmsoft.eve_sd.db.query import DatasetDbQuery
+from pfmsoft.eve_sd import EveSdDbQueryManager
 
 app = typer.Typer(no_args_is_help=True, help="Browse records in an SDE database.")
 
@@ -30,7 +29,7 @@ def _page_mapping_from_records(
 
 
 def _fetch_page_records(
-    db_query: DatasetDbQuery,
+    manager: EveSdDbQueryManager,
     *,
     dataset_name: str,
     key_type: str,
@@ -46,13 +45,13 @@ def _fetch_page_records(
         )
         if key_type == "int":
             fetched_records = list(
-                db_query.get_int_records(
+                manager.query.get_int_records(
                     dataset_name, record_keys=set(page_record_keys)
                 )
             )
         else:
             fetched_records = list(
-                db_query.get_str_records(
+                manager.query.get_str_records(
                     dataset_name, record_keys=set(page_record_keys)
                 )
             )
@@ -66,10 +65,12 @@ def _fetch_page_records(
     offset = (page - 1) * page_size
     if key_type == "int":
         return list(
-            db_query.get_int_records_page(dataset_name, limit=page_size, offset=offset)
+            manager.query.get_int_records_page(
+                dataset_name, limit=page_size, offset=offset
+            )
         )
     return list(
-        db_query.get_str_records_page(dataset_name, limit=page_size, offset=offset)
+        manager.query.get_str_records_page(dataset_name, limit=page_size, offset=offset)
     )
 
 
@@ -158,35 +159,35 @@ def browse(
     record_keys = [] if record_key is None else record_key
     interactive_mode = interactive or sys.stdin.isatty()
 
-    with db_connection_manager(str(from_file), read_only=False) as connection:
-        db_query = DatasetDbQuery(connection)
-
+    with EveSdDbQueryManager(from_file) as manager:
         if dataset_name is None:
             dataset_summary: dict[str, dict[str, int | str]] = {}
-            for current_dataset_name in sorted(db_query.dataset_key_types):
+            for current_dataset_name in sorted(manager.query.dataset_key_types):
                 dataset_summary[current_dataset_name] = {
-                    "record_count": db_query.dataset_record_count(current_dataset_name),
-                    "key_type": db_query.dataset_key_types[current_dataset_name],
+                    "record_count": manager.query.dataset_record_count(
+                        current_dataset_name
+                    ),
+                    "key_type": manager.query.dataset_key_types[current_dataset_name],
                 }
             stdout.print(
                 yaml_io.safe_dump_str(dataset_summary, sort_keys=False).rstrip()
             )
             return
 
-        if dataset_name not in db_query.dataset_key_types:
+        if dataset_name not in manager.query.dataset_key_types:
             raise ValueError(
                 f"Dataset '{dataset_name}' not found in the database. "
                 "Ensure that the dataset has been loaded into the database."
             )
 
-        key_type = db_query.dataset_key_types[dataset_name]
-        total_records = db_query.dataset_record_count(dataset_name)
+        key_type = manager.query.dataset_key_types[dataset_name]
+        total_records = manager.query.dataset_record_count(dataset_name)
         page_count = max(1, (total_records + page_size - 1) // page_size)
         current_page = page
 
         if record_keys:
             records = _fetch_page_records(
-                db_query,
+                manager,
                 dataset_name=dataset_name,
                 key_type=key_type,
                 page=current_page,
@@ -202,7 +203,7 @@ def browse(
 
         while True:
             records = _fetch_page_records(
-                db_query,
+                manager,
                 dataset_name=dataset_name,
                 key_type=key_type,
                 page=current_page,

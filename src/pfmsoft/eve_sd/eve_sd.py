@@ -15,11 +15,13 @@ class EveSdDbQueryManager:
     def __init__(self, database_path: Path) -> None:
         self.database_path = database_path
         self._connection: Connection | None = None
+        self._connection_cm = None
         self._query: DatasetDbQueryProtocol | None = None
 
     def __enter__(self) -> Self:
         # Enter the database connection context manager and store the connection.
-        self._connection = db_connection_manager(self.database_path).__enter__()
+        self._connection_cm = db_connection_manager(self.database_path)
+        self._connection = self._connection_cm.__enter__()
         self._query = DatasetDbQuery(self._connection)
         return self
 
@@ -31,9 +33,10 @@ class EveSdDbQueryManager:
     ) -> None:
         # Exit the database connection context manager if it was created.
         self._query = None
-        if self._connection is not None:
-            self._connection.__exit__(exc_type, exc_value, traceback)
-            self._connection = None
+        if self._connection_cm is not None:
+            self._connection_cm.__exit__(exc_type, exc_value, traceback)
+            self._connection_cm = None
+        self._connection = None
 
     @property
     def query(self) -> DatasetDbQueryProtocol:
