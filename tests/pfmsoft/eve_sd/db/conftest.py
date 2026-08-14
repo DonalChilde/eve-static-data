@@ -4,8 +4,9 @@ import sqlite3
 from pathlib import Path
 
 import pytest
+from pfmsoft.eve_snippets.sqlite3.connection_helpers import db_connection_manager
 
-from pfmsoft.eve_sd.db.helpers import create_read_write_connection
+from pfmsoft.eve_sd.db.helpers import load_table_definitions
 from pfmsoft.eve_sd.helpers.sde_metadata import SdeMetadata, SdeVariant, SourceMedia
 
 
@@ -13,9 +14,10 @@ from pfmsoft.eve_sd.helpers.sde_metadata import SdeMetadata, SdeVariant, SourceM
 def rw_connection(tmp_path: Path) -> sqlite3.Connection:
     """Return a fresh read-write SQLite connection with schema bootstrapped."""
     db_path = str(tmp_path / "test.db")
-    conn = create_read_write_connection(db_path)
-    yield conn
-    conn.close()
+    with db_connection_manager(
+        db_path, init_sql=load_table_definitions(), read_only=False
+    ) as conn:
+        yield conn
 
 
 @pytest.fixture

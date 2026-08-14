@@ -5,9 +5,9 @@ from typing import Annotated
 
 import typer
 from pfmsoft.eve_snippets import json_io, save_text_file
+from pfmsoft.eve_snippets.sqlite3.connection_helpers import db_connection_manager
 from rich.console import Console
 
-from pfmsoft.eve_sd import db_connection_manager
 from pfmsoft.eve_sd.cli.helpers import ReportChoice
 from pfmsoft.eve_sd.schema_inspection import (
     generate_markdown_report,
