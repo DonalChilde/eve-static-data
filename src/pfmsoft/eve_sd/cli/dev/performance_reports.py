@@ -12,9 +12,15 @@ from rich.console import Console
 from pfmsoft.eve_sd.performance.generate_reports import (
     generate_db_report,
     generate_files_report,
-    render_report_markdown,
 )
-from pfmsoft.eve_sd.performance.models import SourceReport
+from pfmsoft.eve_sd.performance.models import (
+    DbSourceReport,
+    FileSourceReport,
+)
+from pfmsoft.eve_sd.performance.renderers import (
+    render_db_report_markdown,
+    render_files_report_markdown,
+)
 
 app = typer.Typer(no_args_is_help=True, help="Generate and render performance reports.")
 
@@ -87,7 +93,7 @@ def report_files(
             help="Number of spaces to use for JSON indentation.",
             show_default=True,
         ),
-    ] = None,
+    ] = 2,
 ) -> None:
     """Generate a JSON performance report from filesystem-backed datasets."""
     if quiet:
@@ -168,7 +174,7 @@ def report_db(
             help="Number of spaces to use for JSON indentation.",
             show_default=True,
         ),
-    ] = None,
+    ] = 2,
 ) -> None:
     """Generate a JSON performance report from SQLite-backed datasets."""
     if quiet:
@@ -197,13 +203,13 @@ def report_db(
     )
 
 
-@app.command(name="render-report")
-def render_report(
+@app.command(name="report-files-markdown")
+def report_files_markdown(
     report_json: Annotated[
         Path,
         typer.Option(
             "--from",
-            help="Path to the JSON performance report to render as markdown.",
+            help="Path to a file-backed JSON performance report to render as markdown.",
             exists=True,
             file_okay=True,
             dir_okay=False,
@@ -243,31 +249,94 @@ def render_report(
         ),
     ] = False,
 ) -> None:
-    """Render a JSON performance report as markdown."""
+    """Render a file-backed JSON performance report as markdown."""
     if quiet:
         messenger = Console(stderr=True, quiet=True)
     else:
         messenger = Console(stderr=True)
-    report = SourceReport.deserialize(report_json.read_text(encoding="utf-8"))
-    markdown = render_report_markdown(report)
+    json_string = report_json.read_text(encoding="utf-8")
+    report = FileSourceReport.deserialize(json_string)
     build_number = report.sde_metadata.buildNumber if report.sde_metadata else 0
+    markdown_text = render_files_report_markdown(report)
     if output == Path("-"):
         output_path = output
     else:
-        output = output.expanduser()
-        if output.exists() and not output.is_dir():
-            raise typer.BadParameter(
-                "The --to value must be '-' or a directory path when writing a report."
-            )
-        output.mkdir(parents=True, exist_ok=True)
         if filename is None:
-            # FIXME report type can be determined from upcoming changes to SourceReport, but for now we just use "files" as a placeholder
             filename = _report_markdown_filename(
                 report.source_type, build_number, "files"
             )
         output_path = output / filename
     output_to_stdout_or_file(
-        data_string=markdown,
+        data_string=markdown_text,
+        filepath=output_path,
+        overwrite=overwrite,
+        messenger=messenger,
+    )
+
+
+@app.command(name="report-db-markdown")
+def report_db_markdown(
+    report_json: Annotated[
+        Path,
+        typer.Option(
+            "--from",
+            help="Path to a DB-backed JSON performance report to render as markdown.",
+            exists=True,
+            file_okay=True,
+            dir_okay=False,
+            readable=True,
+        ),
+    ],
+    output: Annotated[
+        Path,
+        typer.Option(
+            "--to",
+            help="Directory to save the markdown report to, or '-' for stdout.",
+            exists=False,
+            file_okay=False,
+            dir_okay=True,
+        ),
+    ] = Path("-"),
+    filename: Annotated[
+        str | None,
+        typer.Option(
+            "--filename",
+            help="Optional filename to use when writing a markdown report to a directory.",
+        ),
+    ] = None,
+    overwrite: Annotated[
+        bool,
+        typer.Option(
+            "--overwrite",
+            help="Overwrite the output report file if it already exists.",
+        ),
+    ] = False,
+    quiet: Annotated[
+        bool,
+        typer.Option(
+            "--quiet",
+            help="Suppress messages.",
+            show_default=True,
+        ),
+    ] = False,
+) -> None:
+    """Render a DB-backed JSON performance report as markdown."""
+    if quiet:
+        messenger = Console(stderr=True, quiet=True)
+    else:
+        messenger = Console(stderr=True)
+    json_string = report_json.read_text(encoding="utf-8")
+    report = DbSourceReport.deserialize(json_string)
+    build_number = report.sde_metadata.buildNumber if report.sde_metadata else 0
+    markdown_text = render_db_report_markdown(report)
+    if output == Path("-"):
+        output_path = output
+    else:
+        if filename is None:
+            filename = _report_markdown_filename(report.source_type, build_number, "db")
+        output_path = output / filename
+    output_to_stdout_or_file(
+        data_string=markdown_text,
         filepath=output_path,
         overwrite=overwrite,
         messenger=messenger,
