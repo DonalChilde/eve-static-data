@@ -7,8 +7,8 @@ functions and returns deserialized record payloads.
 import sqlite3
 from collections.abc import Iterable
 from typing import cast
+from warnings import deprecated
 
-from pfmsoft.eve_sd import Dataset, IntKeyedRecord, KeyedRecord, StrKeyedRecord
 from pfmsoft.eve_sd.db import models as db_models
 from pfmsoft.eve_sd.db.helpers import (
     query_dataset_record_count,
@@ -20,6 +20,12 @@ from pfmsoft.eve_sd.db.helpers import (
     query_str_records_page,
 )
 from pfmsoft.eve_sd.helpers.sde_metadata import SdeMetadata
+from pfmsoft.eve_sd.protocols import (
+    Dataset,
+    IntKeyedRecord,
+    KeyedRecord,
+    StrKeyedRecord,
+)
 
 
 class DatasetDbQuery:
@@ -358,6 +364,7 @@ class DatasetDbQuery:
         ):
             yield record.record_key, record.deserialize_record()
 
+    @deprecated("Looses type information for dataset key.")
     @staticmethod
     def as_dict(keyed_records: Iterable[KeyedRecord]) -> Dataset:
         """Convert an iterable of keyed records into a dataset mapping.

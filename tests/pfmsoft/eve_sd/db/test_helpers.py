@@ -1,20 +1,18 @@
-"""Tests for eve_sd.db.helpers — connections, transactions, writes, and queries."""
+"""Tests for eve_sd.db.helpers — transactions, writes, and queries."""
 
 import sqlite3
 from pathlib import Path
 
 import pytest
+from pfmsoft.eve_snippets.sqlite3.connection_helpers import db_connection_manager
 
 from pfmsoft.eve_sd.db.helpers import (
-    create_read_write_connection,
+    load_table_definitions,
     query_dataset_record_count,
     query_int_keys,
     query_key_types,
     query_sde_metadata,
     query_str_keys,
-    read_only_uri,
-    read_write_uri,
-    transaction,
     write_int_records,
     write_key_type,
     write_key_types,
@@ -27,65 +25,46 @@ from pfmsoft.eve_sd.db.models import (
     DatasetRecordStrJson,
     SerializationFormat,
 )
-from pfmsoft.eve_sd.helpers.sde_metadata import SdeMetadata, SdeVariant, SourceMedia
+from pfmsoft.eve_sd.helpers.sde_metadata import SdeMetadata
 
 # ---------------------------------------------------------------------------
-# URI helpers
-# ---------------------------------------------------------------------------
-
-
-class TestUriHelpers:
-    """Tests for read_only_uri and read_write_uri."""
-
-    def test_read_only_uri_contains_mode_ro(self) -> None:
-        """read_only_uri embeds mode=ro."""
-        uri = read_only_uri("/tmp/test.db")
-        assert "mode=ro" in uri
-
-    def test_read_write_uri_contains_mode_rwc(self) -> None:
-        """read_write_uri embeds mode=rwc."""
-        uri = read_write_uri("/tmp/test.db")
-        assert "mode=rwc" in uri
-
-    def test_uri_includes_path(self) -> None:
-        """Both URI helpers include the original path."""
-        path = "/some/path/to/db.sqlite"
-        assert path in read_only_uri(path)
-        assert path in read_write_uri(path)
-
-
-# ---------------------------------------------------------------------------
-# Connection creation
+# Connection management
 # ---------------------------------------------------------------------------
 
 
-class TestCreateReadWriteConnection:
-    """Tests for create_read_write_connection."""
+class TestDbConnectionManager:
+    """Tests for the shared SQLite connection manager."""
 
     def test_returns_sqlite_connection(self, tmp_path: Path) -> None:
-        """create_read_write_connection returns a sqlite3.Connection."""
-        db_path = str(tmp_path / "test.db")
-        conn = create_read_write_connection(db_path)
-        assert isinstance(conn, sqlite3.Connection)
-        conn.close()
+        """The manager yields a SQLite connection."""
+        db_path = tmp_path / "test.db"
+        with db_connection_manager(
+            db_path, init_sql=load_table_definitions(), read_only=False
+        ) as conn:
+            assert isinstance(conn, sqlite3.Connection)
 
     def test_schema_tables_exist(self, tmp_path: Path) -> None:
         """Core schema tables are present after bootstrapping."""
-        db_path = str(tmp_path / "test.db")
-        conn = create_read_write_connection(db_path)
-        tables = {
-            row[0]
-            for row in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")
-        }
-        assert "DatasetRecordsInt" in tables
-        assert "DatasetRecordsStr" in tables
-        conn.close()
+        db_path = tmp_path / "test.db"
+        with db_connection_manager(
+            db_path, init_sql=load_table_definitions(), read_only=False
+        ) as conn:
+            tables = {
+                row[0]
+                for row in conn.execute(
+                    "SELECT name FROM sqlite_master WHERE type='table'"
+                )
+            }
+            assert "DatasetRecordsInt" in tables
+            assert "DatasetRecordsStr" in tables
 
     def test_creates_db_file_on_disk(self, tmp_path: Path) -> None:
         """The database file is created on disk."""
         db_path = tmp_path / "new.db"
-        conn = create_read_write_connection(str(db_path))
-        conn.close()
+        with db_connection_manager(
+            db_path, init_sql=load_table_definitions(), read_only=False
+        ):
+            pass
         assert db_path.exists()
 
 
@@ -95,11 +74,11 @@ class TestCreateReadWriteConnection:
 
 
 class TestTransaction:
-    """Tests for the transaction context manager."""
+    """Tests for SQLite connection transaction handling."""
 
     def test_commits_on_clean_exit(self, rw_connection: sqlite3.Connection) -> None:
         """Data written inside a transaction block is committed on success."""
-        with transaction(rw_connection):
+        with rw_connection:
             rw_connection.execute(
                 "INSERT INTO DatasetRecordsInt (record_key, dataset_name, record_bytes) VALUES (1, 'ds', ?)",
                 (b"data",),
@@ -112,7 +91,7 @@ class TestTransaction:
     def test_rolls_back_on_exception(self, rw_connection: sqlite3.Connection) -> None:
         """Data written inside a failing transaction block is rolled back."""
         with pytest.raises(RuntimeError):
-            with transaction(rw_connection):
+            with rw_connection:
                 rw_connection.execute(
                     "INSERT INTO DatasetRecordsInt (record_key, dataset_name, record_bytes) VALUES (99, 'rollback_ds', ?)",
                     (b"data",),

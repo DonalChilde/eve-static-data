@@ -6,7 +6,7 @@ from typing import cast
 
 from pfmsoft.eve_snippets import json_io, yaml_io
 
-from pfmsoft.eve_sd import Dataset, KeyedRecord, Record
+from pfmsoft.eve_sd.protocols import Dataset, KeyedRecord, Record
 
 
 def load_jsonl_as_dataset(jsonl_path: Path) -> Dataset:

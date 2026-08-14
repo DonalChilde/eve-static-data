@@ -7,14 +7,14 @@ and string-keyed datasets.
 
 import logging
 import sqlite3
-from collections.abc import Generator, Iterable
+from collections.abc import Iterable
 from contextlib import contextmanager
-from importlib.resources import files as resource_files
-from pathlib import Path
 from typing import Any
 from uuid import uuid4
+from warnings import deprecated
 
 from pfmsoft.eve_sd.db import models as db_models
+from pfmsoft.eve_sd.helpers.package_resource import load_package_resource_text
 from pfmsoft.eve_sd.helpers.sde_metadata import SdeMetadata, SdeVariant, SourceMedia
 
 logger = logging.getLogger(__name__)
@@ -31,6 +31,16 @@ join against it to avoid very large SQL statements.
 """
 
 
+def load_table_definitions() -> str:
+    """Load the packaged SQL script for creating the database schema.
+
+    Returns:
+        The contents of the SQL script as a string.
+    """
+    return load_package_resource_text(_table_def_parent, _table_def_sql)
+
+
+@deprecated("Unnecessary wrapper")
 @contextmanager
 def transaction(connection: sqlite3.Connection):
     """Wrap a block in an explicit transaction.
@@ -85,106 +95,111 @@ def transaction(connection: sqlite3.Connection):
 #     return result
 
 
-def read_only_uri(db_path: str) -> str:
-    """Build a read-only SQLite URI for a database path.
+# @deprecated("Use snippets library.")
+# def read_only_uri(db_path: str) -> str:
+#     """Build a read-only SQLite URI for a database path.
 
-    Args:
-        db_path: Filesystem path to the SQLite database.
+#     Args:
+#         db_path: Filesystem path to the SQLite database.
 
-    Returns:
-        URI string with ``mode=ro``.
-    """
-    return f"file:{db_path}?mode=ro"
-
-
-def read_write_uri(db_path: str) -> str:
-    """Build a read-write/create SQLite URI for a database path.
-
-    Args:
-        db_path: Filesystem path to the SQLite database.
-
-    Returns:
-        URI string with ``mode=rwc``.
-    """
-    return f"file:{db_path}?mode=rwc"
+#     Returns:
+#         URI string with ``mode=ro``.
+#     """
+#     return f"file:{db_path}?mode=ro"
 
 
-def create_read_only_connection(db_path: str | Path) -> sqlite3.Connection:
-    """Create a read-only SQLite connection and ensure table definitions exist.
+# @deprecated("Use snippets library.")
+# def read_write_uri(db_path: str) -> str:
+#     """Build a read-write/create SQLite URI for a database path.
 
-    NOTE: Caller is responsible for closing the connection when done.
+#     Args:
+#         db_path: Filesystem path to the SQLite database.
 
-    Args:
-        db_path: Path to an existing SQLite database file.
-
-    Returns:
-        Open SQLite connection configured with ``sqlite3.Row`` row factory.
-
-    Notes:
-        Read-only connections cannot create temporary tables. Query helpers that
-        rely on temporary tables for large key filters may fail in this mode.
-    """
-    if isinstance(db_path, Path):
-        db_path = str(db_path.resolve())
-    uri = read_only_uri(db_path)
-    connection = sqlite3.connect(uri, uri=True)
-    connection.row_factory = sqlite3.Row
-    table_defs = resource_files(_table_def_parent).joinpath(_table_def_sql).read_text()
-    with transaction(connection) as conn:
-        conn.executescript(table_defs)
-    return connection
+#     Returns:
+#         URI string with ``mode=rwc``.
+#     """
+#     return f"file:{db_path}?mode=rwc"
 
 
-def create_read_write_connection(db_path: str | Path) -> sqlite3.Connection:
-    """Create a read-write SQLite connection and bootstrap schema objects.
+# @deprecated("Use snippets library.")
+# def create_read_only_connection(db_path: str | Path) -> sqlite3.Connection:
+#     """Create a read-only SQLite connection and ensure table definitions exist.
 
-    NOTE: Caller is responsible for closing the connection when done.
+#     NOTE: Caller is responsible for closing the connection when done.
 
-    Args:
-        db_path: Path to the SQLite database file.
+#     Args:
+#         db_path: Path to an existing SQLite database file.
 
-    Returns:
-        Open SQLite connection configured with ``sqlite3.Row`` row factory.
-    """
-    if isinstance(db_path, Path):
-        db_path = str(db_path.resolve())
-    uri = read_write_uri(db_path)
-    # Use the transaction context manager.
-    connection = sqlite3.connect(uri, uri=True, autocommit=True)
-    logger.info(f"Created read-write connection to database at {db_path}")
-    connection.row_factory = sqlite3.Row
-    table_defs = resource_files(_table_def_parent).joinpath(_table_def_sql).read_text()
-    with transaction(connection) as conn:
-        conn.executescript(table_defs)
-        logger.info("Ensured database schema is created.")
-    return connection
+#     Returns:
+#         Open SQLite connection configured with ``sqlite3.Row`` row factory.
+
+#     Notes:
+#         Read-only connections cannot create temporary tables. Query helpers that
+#         rely on temporary tables for large key filters may fail in this mode.
+#     """
+#     if isinstance(db_path, Path):
+#         db_path = str(db_path.resolve())
+#     uri = read_only_uri(db_path)
+#     connection = sqlite3.connect(uri, uri=True)
+#     connection.row_factory = sqlite3.Row
+#     table_defs = resource_files(_table_def_parent).joinpath(_table_def_sql).read_text()
+#     with transaction(connection) as conn:
+#         conn.executescript(table_defs)
+#     return connection
 
 
-@contextmanager
-def db_connection_manager(
-    db_path: str | Path, read_only: bool = True
-) -> Generator[sqlite3.Connection]:
-    """Context manager for SQLite connections.
+# @deprecated("Use snippets library.")
+# def create_read_write_connection(db_path: str | Path) -> sqlite3.Connection:
+#     """Create a read-write SQLite connection and bootstrap schema objects.
 
-    Args:
-        db_path: Path to the SQLite database file.
-        read_only: Whether to open the connection in read-only mode.
+#     NOTE: Caller is responsible for closing the connection when done.
 
-    Yields:
-        Open SQLite connection configured with ``sqlite3.Row`` row factory.
-    """
-    connection: sqlite3.Connection | None = None
-    try:
-        if read_only:
-            logger.info(f"Opening read-only connection to database at {db_path}")
-            connection = create_read_only_connection(db_path)
-        else:
-            logger.info(f"Opening read-write connection to database at {db_path}")
-            connection = create_read_write_connection(db_path)
-        yield connection
-    finally:
-        if connection is not None:
-            connection.close()
+#     Args:
+#         db_path: Path to the SQLite database file.
+
+#     Returns:
+#         Open SQLite connection configured with ``sqlite3.Row`` row factory.
+#     """
+#     if isinstance(db_path, Path):
+#         db_path = str(db_path.resolve())
+#     uri = read_write_uri(db_path)
+#     # Use the transaction context manager.
+#     connection = sqlite3.connect(uri, uri=True, autocommit=True)
+#     logger.info(f"Created read-write connection to database at {db_path}")
+#     connection.row_factory = sqlite3.Row
+#     table_defs = resource_files(_table_def_parent).joinpath(_table_def_sql).read_text()
+#     with transaction(connection) as conn:
+#         conn.executescript(table_defs)
+#         logger.info("Ensured database schema is created.")
+#     return connection
+
+
+# @deprecated("Use snippets library.")
+# @contextmanager
+# def db_connection_manager(
+#     db_path: str | Path, read_only: bool = True
+# ) -> Generator[sqlite3.Connection]:
+#     """Context manager for SQLite connections.
+
+#     Args:
+#         db_path: Path to the SQLite database file.
+#         read_only: Whether to open the connection in read-only mode.
+
+#     Yields:
+#         Open SQLite connection configured with ``sqlite3.Row`` row factory.
+#     """
+#     connection: sqlite3.Connection | None = None
+#     try:
+#         if read_only:
+#             logger.info(f"Opening read-only connection to database at {db_path}")
+#             connection = create_read_only_connection(db_path)
+#         else:
+#             logger.info(f"Opening read-write connection to database at {db_path}")
+#             connection = create_read_write_connection(db_path)
+#         yield connection
+#     finally:
+#         if connection is not None:
+#             connection.close()
 
 
 def write_int_records(
@@ -198,7 +213,7 @@ def write_int_records(
         connection: Open SQLite database connection.
         records: Iterable of integer-keyed database record models.
     """
-    with transaction(connection):
+    with connection:
         connection.executemany(
             """
                 INSERT INTO DatasetRecordsInt (record_key, dataset_name, record_bytes)
@@ -223,7 +238,7 @@ def write_str_records(
         connection: Open SQLite database connection.
         records: Iterable of string-keyed database record models.
     """
-    with transaction(connection):
+    with connection:
         connection.executemany(
             """
                 INSERT INTO DatasetRecordsStr (record_key, dataset_name, record_bytes)
@@ -255,7 +270,7 @@ def write_key_type(
     """
     if key_type not in ("int", "str"):
         raise ValueError("key_type must be either 'int' or 'str'.")
-    with transaction(connection):
+    with connection:
         connection.execute(
             """
                 INSERT INTO DatasetKeyType (dataset_name, key_type)
@@ -277,7 +292,7 @@ def write_key_types(
         connection: Open SQLite database connection.
         dataset_key_types: Mapping of dataset name to key type.
     """
-    with transaction(connection):
+    with connection:
         connection.executemany(
             """
                 INSERT INTO DatasetKeyType (dataset_name, key_type)
@@ -302,7 +317,7 @@ def write_serialization_format(
         connection: Open SQLite database connection.
         serialization_format: Record serialization format used by this database.
     """
-    with transaction(connection):
+    with connection:
         connection.execute(
             """
                 INSERT INTO DatabaseSettings (row_id, serialization_format)
@@ -322,7 +337,7 @@ def query_key_types(connection: sqlite3.Connection) -> dict[str, str]:
     Returns:
         Mapping of dataset name to key type.
     """
-    with transaction(connection):
+    with connection:
         cursor = connection.execute("SELECT dataset_name, key_type FROM DatasetKeyType")
         return {row["dataset_name"]: row["key_type"] for row in cursor}
 
@@ -338,7 +353,7 @@ def query_database_settings(connection: sqlite3.Connection) -> dict[str, Any]:
     Returns:
         Settings mapping, currently containing ``serialization_format`` when set.
     """
-    with transaction(connection):
+    with connection:
         cursor = connection.execute(
             "SELECT serialization_format FROM DatabaseSettings WHERE row_id = 1"
         )
@@ -358,7 +373,7 @@ def query_int_keys(connection: sqlite3.Connection, *, dataset_name: str) -> set[
     Returns:
         Set of integer keys present for the dataset.
     """
-    with transaction(connection):
+    with connection:
         cursor = connection.execute(
             """
                 SELECT record_key
@@ -380,7 +395,7 @@ def query_str_keys(connection: sqlite3.Connection, *, dataset_name: str) -> set[
     Returns:
         Set of string keys present for the dataset.
     """
-    with transaction(connection):
+    with connection:
         cursor = connection.execute(
             """
                 SELECT record_key
@@ -415,7 +430,7 @@ def query_dataset_record_count(
             table_name = "DatasetRecordsStr"
         case _:
             raise ValueError(f"Unsupported key type: {key_type}")
-    with transaction(connection):
+    with connection:
         cursor = connection.execute(
             f"""
                 SELECT COUNT(*) AS record_count
@@ -468,7 +483,7 @@ def query_int_records(
                 f"Unsupported serialization format: {serialization_format}. Must be one of 'yaml', 'json', or 'pickle'."
             )
     if record_keys is None:
-        with transaction(connection):
+        with connection:
             cursor = connection.execute(
                 """
                     SELECT record_key, dataset_name, record_bytes
@@ -484,7 +499,7 @@ def query_int_records(
                     record=row["record_bytes"],
                 )
     elif len(record_keys) < INLINE_FILTER_LIMIT:
-        with transaction(connection):
+        with connection:
             cursor = connection.execute(
                 f"""
                     SELECT record_key, dataset_name, record_bytes
@@ -502,7 +517,7 @@ def query_int_records(
                 )
     else:
         table_name = f"temp_keys_{uuid4().hex}"
-        with transaction(connection) as connection:
+        with connection:
             connection.execute(
                 f"""
                     CREATE TEMPORARY TABLE {table_name} (
@@ -568,7 +583,7 @@ def query_int_records_page(
             raise ValueError(
                 f"Unsupported serialization format: {serialization_format}. Must be one of 'yaml', 'json', or 'pickle'."
             )
-    with transaction(connection):
+    with connection:
         cursor = connection.execute(
             """
                 SELECT record_key, dataset_name, record_bytes
@@ -626,7 +641,7 @@ def query_str_records(
                 f"Unsupported serialization format: {serialization_format}. Must be one of 'yaml', 'json', or 'pickle'."
             )
     if record_keys is None:
-        with transaction(connection):
+        with connection:
             cursor = connection.execute(
                 """
                     SELECT record_key, dataset_name, record_bytes
@@ -642,7 +657,7 @@ def query_str_records(
                     record=row["record_bytes"],
                 )
     elif len(record_keys) < INLINE_FILTER_LIMIT:
-        with transaction(connection):
+        with connection:
             cursor = connection.execute(
                 f"""
                     SELECT record_key, dataset_name, record_bytes
@@ -660,7 +675,7 @@ def query_str_records(
                 )
     else:
         table_name = f"temp_keys_{uuid4().hex}"
-        with transaction(connection) as connection:
+        with connection:
             connection.execute(
                 f"""
                     CREATE TEMPORARY TABLE {table_name} (
@@ -726,7 +741,7 @@ def query_str_records_page(
             raise ValueError(
                 f"Unsupported serialization format: {serialization_format}. Must be one of 'yaml', 'json', or 'pickle'."
             )
-    with transaction(connection):
+    with connection:
         cursor = connection.execute(
             """
                 SELECT record_key, dataset_name, record_bytes
@@ -755,7 +770,7 @@ def write_sde_metadata(
         connection: Open SQLite database connection.
         sde_metadata: Parsed SDE metadata model.
     """
-    with transaction(connection):
+    with connection:
         connection.execute(
             """
                 INSERT INTO SdeMetadata (buildNumber, releaseDate, source_format, source_media)
@@ -780,7 +795,7 @@ def query_sde_metadata(connection: sqlite3.Connection) -> SdeMetadata | None:
     Returns:
         Latest SDE metadata, or ``None`` when metadata has not been written.
     """
-    with transaction(connection):
+    with connection:
         cursor = connection.execute(
             """
                 SELECT buildNumber, releaseDate, source_format, source_media

@@ -11,7 +11,6 @@ from typing import Literal, cast
 
 from more_itertools import peekable
 
-from pfmsoft.eve_sd import IntKeyedRecord, KeyedRecord, StrKeyedRecord
 from pfmsoft.eve_sd.db import models as db_models
 from pfmsoft.eve_sd.db.helpers import (
     write_int_records,
@@ -21,6 +20,7 @@ from pfmsoft.eve_sd.db.helpers import (
     write_str_records,
 )
 from pfmsoft.eve_sd.helpers.sde_metadata import SdeMetadata
+from pfmsoft.eve_sd.protocols import IntKeyedRecord, KeyedRecord, StrKeyedRecord
 
 logger = logging.getLogger(__name__)
 
