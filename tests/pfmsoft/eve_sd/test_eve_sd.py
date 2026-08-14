@@ -32,6 +32,12 @@ class TestEveSdDbQueryManagerInitialization:
         manager = EveSdDbQueryManager(db_path)
         assert manager._query is None
 
+    def test_init_connection_cm_is_none(self, tmp_path: Path) -> None:
+        """Initialization leaves _connection_cm as None."""
+        db_path = tmp_path / "test.db"
+        manager = EveSdDbQueryManager(db_path)
+        assert manager._connection_cm is None
+
 
 class TestEveSdDbQueryManagerContextManager:
     """Tests for EveSdDbQueryManager context manager protocol."""
@@ -70,6 +76,7 @@ class TestEveSdDbQueryManagerContextManager:
 
             mock_cm.assert_called_once_with(db_path)
             assert manager._connection is mock_conn
+            assert manager._connection_cm is mock_cm.return_value
 
     def test_enter_creates_query_object(self, tmp_path: Path) -> None:
         """__enter__ creates a DatasetDbQuery with the connection."""
@@ -108,8 +115,8 @@ class TestEveSdDbQueryManagerContextManager:
 
             assert manager._query is None
 
-    def test_exit_calls_connection_exit(self, tmp_path: Path) -> None:
-        """__exit__ calls __exit__ on the underlying connection."""
+    def test_exit_calls_context_manager_exit(self, tmp_path: Path) -> None:
+        """__exit__ calls __exit__ on the context manager."""
         db_path = tmp_path / "test.db"
         manager = EveSdDbQueryManager(db_path)
 
@@ -124,7 +131,7 @@ class TestEveSdDbQueryManagerContextManager:
             manager.__enter__()
             manager.__exit__(None, None, None)
 
-            mock_conn.__exit__.assert_called_once_with(None, None, None)
+            mock_cm.return_value.__exit__.assert_called_once_with(None, None, None)
 
     def test_exit_clears_connection(self, tmp_path: Path) -> None:
         """__exit__ sets _connection to None after exiting."""
@@ -143,9 +150,10 @@ class TestEveSdDbQueryManagerContextManager:
             manager.__exit__(None, None, None)
 
             assert manager._connection is None
+            assert manager._connection_cm is None
 
     def test_exit_with_exception_info(self, tmp_path: Path) -> None:
-        """__exit__ passes exception info to connection.__exit__."""
+        """__exit__ passes exception info to context manager.__exit__."""
         db_path = tmp_path / "test.db"
         manager = EveSdDbQueryManager(db_path)
         test_exception = ValueError("test error")
@@ -162,7 +170,9 @@ class TestEveSdDbQueryManagerContextManager:
             manager.__enter__()
             manager.__exit__(exc_type, test_exception, None)
 
-            mock_conn.__exit__.assert_called_once_with(exc_type, test_exception, None)
+            mock_cm.return_value.__exit__.assert_called_once_with(
+                exc_type, test_exception, None
+            )
 
     def test_context_manager_with_statement(self, tmp_path: Path) -> None:
         """The manager works correctly in a with statement."""
