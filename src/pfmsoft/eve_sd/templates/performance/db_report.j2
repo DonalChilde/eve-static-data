@@ -3,6 +3,7 @@
 - source type: {{ report.source_type | default('db') }}
 - source path: {{ report.source_path | default('unknown') }}
 - generated at: {{ report.generated_at | default('unknown') }}
+- startup seconds: {{ report.startup_seconds | default('unknown') | decimal }}
 - total seconds: {{ report.total_seconds | default('unknown') | decimal }}
 - serialization_format: {{ report.serialization_format | default('unknown') }}
 

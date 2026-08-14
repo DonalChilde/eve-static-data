@@ -8,10 +8,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from time import perf_counter
 
-from pfmsoft.eve_snippets.sqlite3.connection_helpers import db_connection_manager
-
-from pfmsoft.eve_sd.db.helpers import query_int_keys, query_str_keys
-from pfmsoft.eve_sd.db.query import DatasetDbQuery
+from pfmsoft.eve_sd.eve_sd import EveSdDbQueryManager
 from pfmsoft.eve_sd.helpers.load_raw_datasets import (
     load_json_as_dataset,
     load_jsonl_as_dataset,
@@ -92,16 +89,17 @@ def generate_files_report(source_dir: Path) -> FileSourceReport:
 def generate_db_report(source_db: Path) -> DbSourceReport:
     """Benchmark SDE datasets loaded from SQLite and return a db report."""
     start = perf_counter()
-    with db_connection_manager(source_db) as connection:
-        db_query = DatasetDbQuery(connection)
+    with EveSdDbQueryManager(source_db) as conn:
+        connection_established_seconds = perf_counter() - start
         dataset_entries: list[DbDatasetTiming] = []
 
-        for dataset_name, key_type in db_query.dataset_key_types.items():
+        for dataset_name, key_type in conn.query.dataset_key_types.items():
             dataset_start = perf_counter()
             if key_type == "int":
-                records = list(db_query.get_int_records(dataset_name))
+                records = list(conn.query.get_int_records(dataset_name))
+                dataset_elapsed = perf_counter() - dataset_start
                 key_query_start = perf_counter()
-                keys = query_int_keys(connection, dataset_name=dataset_name)
+                keys = conn.query.get_int_keys(dataset_name)
                 all_dataset_keys_seconds = perf_counter() - key_query_start
                 sample_size = min(max(1, len(keys) // 10), 100)
                 sample_keys = (
@@ -112,15 +110,18 @@ def generate_db_report(source_db: Path) -> DbSourceReport:
                 random_access_start = perf_counter()
                 if sample_keys:
                     _ = list(
-                        db_query.get_int_records(dataset_name, record_keys=sample_keys)
+                        conn.query.get_int_records(
+                            dataset_name, record_keys=sample_keys
+                        )
                     )
                 random_record_access_seconds = (
                     perf_counter() - random_access_start
                 ) / max(len(sample_keys), 1)
             elif key_type == "str":
-                records = list(db_query.get_str_records(dataset_name))
+                records = list(conn.query.get_str_records(dataset_name))
+                dataset_elapsed = perf_counter() - dataset_start
                 key_query_start = perf_counter()
-                keys = query_str_keys(connection, dataset_name=dataset_name)
+                keys = conn.query.get_str_keys(dataset_name)
                 all_dataset_keys_seconds = perf_counter() - key_query_start
                 sample_size = min(max(1, len(keys) // 10), 100)
                 sample_keys = (
@@ -131,19 +132,21 @@ def generate_db_report(source_db: Path) -> DbSourceReport:
                 random_access_start = perf_counter()
                 if sample_keys:
                     _ = list(
-                        db_query.get_str_records(dataset_name, record_keys=sample_keys)
+                        conn.query.get_str_records(
+                            dataset_name, record_keys=sample_keys
+                        )
                     )
                 random_record_access_seconds = (
                     perf_counter() - random_access_start
                 ) / max(len(sample_keys), 1)
             else:
                 raise ValueError(f"Unknown dataset key type: {key_type}")
-            dataset_elapsed = perf_counter() - dataset_start
+            dataset_total_seconds = perf_counter() - dataset_start
             dataset_entries.append(
                 DbDatasetTiming(
                     dataset_name=dataset_name,
                     record_count=len(records),
-                    total_seconds=dataset_elapsed,
+                    total_seconds=dataset_total_seconds,
                     dataset_load_seconds=dataset_elapsed,
                     all_dataset_keys_seconds=all_dataset_keys_seconds,
                     random_record_access_seconds=random_record_access_seconds,
@@ -154,16 +157,16 @@ def generate_db_report(source_db: Path) -> DbSourceReport:
             )
 
         total_seconds = perf_counter() - start
-        sde_metadata = db_query.sde_metadata
+        sde_metadata = conn.query.sde_metadata
         ordered_datasets = sorted(dataset_entries, key=lambda item: item.dataset_name)
         return DbSourceReport(
             source_path=str(source_db),
             generated_at=_now_iso(),
-            startup_seconds=total_seconds,
+            startup_seconds=connection_established_seconds,
             total_seconds=total_seconds,
             dataset_count=len(ordered_datasets),
             dataset_names=[item.dataset_name for item in ordered_datasets],
-            serialization_format=str(db_query.serialization_format),
+            serialization_format=str(conn.query.serialization_format),
             sde_metadata=sde_metadata,
             datasets=ordered_datasets,
         )

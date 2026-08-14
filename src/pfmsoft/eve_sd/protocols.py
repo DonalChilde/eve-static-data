@@ -58,10 +58,18 @@ class DatasetDbQueryProtocol(Protocol):
         """Yield records for an integer-keyed dataset."""
         raise NotImplementedError
 
+    def get_int_keys(self, dataset_name: str) -> set[int]:
+        """Return the set of integer keys for a dataset."""
+        raise NotImplementedError
+
     def get_str_records(
         self, dataset_name: str, record_keys: set[str] | None = None
     ) -> Iterable[StrKeyedRecord]:
         """Yield records for a string-keyed dataset."""
+        raise NotImplementedError
+
+    def get_str_keys(self, dataset_name: str) -> set[str]:
+        """Return the set of string keys for a dataset."""
         raise NotImplementedError
 
     def get_int_records_page(
