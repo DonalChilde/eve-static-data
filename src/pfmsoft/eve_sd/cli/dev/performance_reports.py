@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Literal
 
 import typer
 from pfmsoft.eve_snippets.typer.output import output_to_stdout_or_file
@@ -19,11 +19,20 @@ from pfmsoft.eve_sd.performance.models import SourceReport
 app = typer.Typer(no_args_is_help=True, help="Generate and render performance reports.")
 
 
-def _default_report_filename(
-    source_type: str, build_number: int, extension: str
+def _report_json_filename(
+    source_type: str,
+    build_number: int,
+    report_type: Literal["files", "db"],
 ) -> str:
-    """Return a default filename that includes the build number and source kind."""
-    return f"performance_report_{source_type}_build_{build_number}{extension}"
+    """Return a default filename for a JSON report."""
+    return f"performance_report_{source_type}_build_{build_number}_{report_type}.json"
+
+
+def _report_markdown_filename(
+    source_type: str, build_number: int, report_type: Literal["files", "db"]
+) -> str:
+    """Return a default filename for a markdown report."""
+    return f"performance_report_{source_type}_build_{build_number}_{report_type}.md"
 
 
 @app.command(name="report-files")
@@ -97,7 +106,7 @@ def report_files(
             )
         output.mkdir(parents=True, exist_ok=True)
         if filename is None:
-            filename = _default_report_filename("files", build_number, ".json")
+            filename = _report_json_filename(report.source_type, build_number, "files")
         output_path = output / filename
     output_to_stdout_or_file(
         data_string=report.serialize(indent=indent),
@@ -178,7 +187,7 @@ def report_db(
             )
         output.mkdir(parents=True, exist_ok=True)
         if filename is None:
-            filename = _default_report_filename("db", build_number, ".json")
+            filename = _report_json_filename(report.source_type, build_number, "db")
         output_path = output / filename
     output_to_stdout_or_file(
         data_string=report.serialize(indent=indent),
@@ -252,7 +261,10 @@ def render_report(
             )
         output.mkdir(parents=True, exist_ok=True)
         if filename is None:
-            filename = _default_report_filename(report.source_type, build_number, ".md")
+            # FIXME report type can be determined from upcoming changes to SourceReport, but for now we just use "files" as a placeholder
+            filename = _report_markdown_filename(
+                report.source_type, build_number, "files"
+            )
         output_path = output / filename
     output_to_stdout_or_file(
         data_string=markdown,
