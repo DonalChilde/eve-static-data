@@ -13,10 +13,12 @@
 - Wrap body lines at 72 characters.
 - Required for any non-trivial change. Explain *why* the change was made, not
   just what — the diff already shows what changed.
+- use a blank line between explainations of changes.
 - Optional for trivial changes (typo fixes, formatting-only, small doc tweaks),
   where a subject line alone is enough.
 - Do not include issue numbers in the commit body. Issue references (e.g.
   `Closes #58`) belong on the pull request, not on individual commits.
+- Do not include judgements like "improves maintainability" or "improves user guidance"
 
 ## Style
 
