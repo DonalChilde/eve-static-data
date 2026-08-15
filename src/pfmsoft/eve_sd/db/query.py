@@ -7,19 +7,27 @@ functions and returns deserialized record payloads.
 import sqlite3
 from collections.abc import Iterable
 from typing import cast
+from warnings import deprecated
 
-from pfmsoft.eve_sd import Dataset, IntKeyedRecord, KeyedRecord, StrKeyedRecord
 from pfmsoft.eve_sd.db import models as db_models
 from pfmsoft.eve_sd.db.helpers import (
     query_dataset_record_count,
+    query_int_keys,
     query_int_records,
     query_int_records_page,
     query_key_types,
     query_sde_metadata,
+    query_str_keys,
     query_str_records,
     query_str_records_page,
 )
 from pfmsoft.eve_sd.helpers.sde_metadata import SdeMetadata
+from pfmsoft.eve_sd.protocols import (
+    Dataset,
+    IntKeyedRecord,
+    KeyedRecord,
+    StrKeyedRecord,
+)
 
 
 class DatasetDbQuery:
@@ -254,6 +262,33 @@ class DatasetDbQuery:
         ):
             yield record.record_key, record.deserialize_record()
 
+    def get_int_keys(self, dataset_name: str) -> set[int]:
+        """Return the set of integer keys for a dataset.
+
+        Args:
+            dataset_name: Dataset name to query.
+
+        Returns:
+            Set of integer keys for the dataset.
+
+        Raises:
+            ValueError: If dataset is unknown or not integer-keyed.
+        """
+        if dataset_name not in self.dataset_key_types:
+            raise ValueError(
+                f"Dataset '{dataset_name}' not found in the database. "
+                "Ensure that the dataset has been loaded into the database."
+            )
+        if self.dataset_key_types[dataset_name] != "int":
+            raise ValueError(
+                f"Dataset '{dataset_name}' does not have integer keys. "
+                "Use get_str_keys for datasets with string keys."
+            )
+        return query_int_keys(
+            connection=self.connection,
+            dataset_name=dataset_name,
+        )
+
     def get_str_records(
         self, dataset_name: str, record_keys: set[str] | None = None
     ) -> Iterable[StrKeyedRecord]:
@@ -287,6 +322,32 @@ class DatasetDbQuery:
             record_keys=record_keys,
         ):
             yield record.record_key, record.deserialize_record()
+
+    def get_str_keys(self, dataset_name: str) -> set[str]:
+        """Return the set of string keys for a dataset.
+
+        Args:
+            dataset_name: Dataset name to query.
+        Returns:
+            Set of string keys for the dataset.
+
+        Raises:
+            ValueError: If dataset is unknown or not string-keyed.
+        """
+        if dataset_name not in self.dataset_key_types:
+            raise ValueError(
+                f"Dataset '{dataset_name}' not found in the database. "
+                "Ensure that the dataset has been loaded into the database."
+            )
+        if self.dataset_key_types[dataset_name] != "str":
+            raise ValueError(
+                f"Dataset '{dataset_name}' does not have string keys. "
+                "Use get_int_keys for datasets with integer keys."
+            )
+        return query_str_keys(
+            connection=self.connection,
+            dataset_name=dataset_name,
+        )
 
     def get_int_records_page(
         self, dataset_name: str, *, limit: int, offset: int
@@ -358,6 +419,7 @@ class DatasetDbQuery:
         ):
             yield record.record_key, record.deserialize_record()
 
+    @deprecated("Looses type information for dataset key.")
     @staticmethod
     def as_dict(keyed_records: Iterable[KeyedRecord]) -> Dataset:
         """Convert an iterable of keyed records into a dataset mapping.

@@ -5,9 +5,9 @@ from typing import Annotated, Any, cast
 
 import typer
 from pfmsoft.eve_snippets import json_io, yaml_io
+from pfmsoft.eve_snippets.sqlite3.connection_helpers import db_connection_manager
 from rich.console import Console
 
-from pfmsoft.eve_sd import db_connection_manager
 from pfmsoft.eve_sd.db.query import DatasetDbQuery
 from pfmsoft.eve_sd.helpers.sde_metadata import SdeVariant, load_sde_metadata
 

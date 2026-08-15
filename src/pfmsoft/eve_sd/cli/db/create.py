@@ -10,6 +10,7 @@ from typing import Annotated
 
 import typer
 from pfmsoft.eve_snippets import yaml_io
+from pfmsoft.eve_snippets.sqlite3.connection_helpers import db_connection_manager
 from rich.console import Console
 from rich.progress import (
     FileSizeColumn,
@@ -19,8 +20,7 @@ from rich.progress import (
     TotalFileSizeColumn,
 )
 
-from pfmsoft.eve_sd import KeyedRecord, db_connection_manager
-from pfmsoft.eve_sd.db.helpers import write_key_types
+from pfmsoft.eve_sd.db.helpers import load_table_definitions, write_key_types
 from pfmsoft.eve_sd.db.load_datasets import (
     get_key_type_from_records,
     write_db_metadata,
@@ -29,6 +29,7 @@ from pfmsoft.eve_sd.db.load_datasets import (
 from pfmsoft.eve_sd.db.models import SerializationFormat
 from pfmsoft.eve_sd.helpers.load_raw_datasets import load_jsonl_as_records
 from pfmsoft.eve_sd.helpers.sde_metadata import load_sde_metadata
+from pfmsoft.eve_sd.protocols import KeyedRecord
 
 logger = logging.getLogger(__name__)
 app = typer.Typer(no_args_is_help=True)
@@ -110,7 +111,10 @@ def create(
         )
         raise typer.Exit(code=1)
     db_path.parent.mkdir(parents=True, exist_ok=True)
-    with db_connection_manager(db_path, read_only=False) as connection:
+    table_definitions = load_table_definitions()
+    with db_connection_manager(
+        db_path, init_sql=table_definitions, read_only=False
+    ) as connection:
         start_time_ns = perf_counter_ns()
         match sde_metadata.variant:
             case "jsonl":

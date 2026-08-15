@@ -1,6 +1,6 @@
 [project]
 name = "pfmsoft-eve-sd"
-version = "0.4.4"
+version = "0.4.5"
 description = "A CLI and API for Eve Online Static Data downloading and use."
 readme = "README.md"
 authors = [{ name = "Chad Lowe", email = "pfmsoft.dev@gmail.com" }]
@@ -13,7 +13,7 @@ dependencies = [
     "mdformat>=1.0.0",
     "mdformat-gfm>=1.0.0",
     "more-itertools>=11.1.0",
-    "pfmsoft-eve-snippets>=0.1.4",
+    "pfmsoft-eve-snippets>=0.1.8",
     "pydantic>=2.13.4",
     "pydantic-settings>=2.14.2",
     "pyyaml>=6.0.3",

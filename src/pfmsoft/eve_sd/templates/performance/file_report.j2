@@ -1,0 +1,17 @@
+# SDE performance report
+
+- source type: {{ report.source_type | default('files') }}
+- source path: {{ report.source_path | default('unknown') }}
+- generated at: {{ report.generated_at | default('unknown') }}
+- total seconds: {{ report.total_seconds | default('unknown') | decimal }}
+- deserialization method: {{ report.deserialization_method | default('unknown') }}
+
+## Datasets
+{% for dataset in report.datasets %}
+### {{ dataset.dataset_name | default('unknown') }}
+
+- record_count: {{ dataset.record_count | default('unknown') }}
+- total_seconds: {{ dataset.total_seconds | default('unknown') | decimal }}
+- key_type: {{ dataset.key_type | default('unknown') }}
+- file_size_bytes: {{ dataset.file_size_bytes | default('unknown') }}
+{% endfor %}
