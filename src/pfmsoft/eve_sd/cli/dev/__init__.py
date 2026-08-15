@@ -5,6 +5,9 @@ import typer
 from pfmsoft.eve_sd.cli.dev.compare import app as compare_app
 from pfmsoft.eve_sd.cli.dev.db_perf import app as db_perf_app
 from pfmsoft.eve_sd.cli.dev.generate_test_data import app as generate_test_data_app
+from pfmsoft.eve_sd.cli.dev.performance_reports import (
+    app as performance_reports_app,
+)
 
 app = typer.Typer(
     no_args_is_help=True,
@@ -22,6 +25,10 @@ app.add_typer(
 app.add_typer(
     db_perf_app,
     help="Run ad-hoc database performance checks against an SDE database.",
+)
+app.add_typer(
+    performance_reports_app,
+    help="Generate JSON performance reports for files or a database, then render markdown.",
 )
 app.add_typer(
     compare_app,

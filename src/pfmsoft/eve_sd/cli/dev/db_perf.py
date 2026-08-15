@@ -6,6 +6,7 @@ from typing import Annotated
 
 import typer
 from pfmsoft.eve_snippets.sqlite3.connection_helpers import db_connection_manager
+from pfmsoft.eve_snippets.typer.output import output_to_stdout_or_file
 from rich.console import Console
 
 from pfmsoft.eve_sd.db.query import DatasetDbQuery
