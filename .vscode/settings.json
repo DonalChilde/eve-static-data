@@ -17,6 +17,11 @@
       50
     ]
   },
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "file": "commit-message-instructions.md"
+    }
+  ],
   "[python]": {
     "editor.rulers": [
       88,
