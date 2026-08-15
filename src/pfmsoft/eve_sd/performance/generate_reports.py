@@ -53,8 +53,10 @@ def generate_files_report(source_dir: Path) -> FileSourceReport:
     start = perf_counter()
     source_dir = source_dir.resolve()
     dataset_entries: list[FileDatasetTiming] = []
+    collected_paths = _scan_dataset_files(source_dir)
+    collect_paths_finished = perf_counter() - start
 
-    for dataset_name, dataset_path in _scan_dataset_files(source_dir):
+    for dataset_name, dataset_path in collected_paths:
         dataset_start = perf_counter()
         dataset = _load_file_dataset(dataset_path)
         dataset_elapsed = perf_counter() - dataset_start
@@ -77,7 +79,7 @@ def generate_files_report(source_dir: Path) -> FileSourceReport:
     return FileSourceReport(
         source_path=str(source_dir),
         generated_at=_now_iso(),
-        startup_seconds=total_seconds,
+        startup_seconds=collect_paths_finished,
         total_seconds=total_seconds,
         dataset_count=len(ordered_datasets),
         deserialization_method="jsonl/json/yaml raw loaders",
