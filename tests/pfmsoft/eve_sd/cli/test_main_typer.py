@@ -10,6 +10,7 @@ from typer.testing import CliRunner
 
 from pfmsoft.eve_sd import __app_name__, __url__, __version__
 from pfmsoft.eve_sd.cli import main_typer
+from pfmsoft.eve_sd.settings import SETTINGS_KEY
 
 runner = CliRunner()
 
@@ -49,7 +50,7 @@ class TestMainTyperApp:
 
         main_typer.default_options(ctx)
 
-        assert ctx.obj == {"esd-settings": settings}
+        assert ctx.obj == {SETTINGS_KEY: settings}
         assert configured_log_dirs == [Path(settings.logging_directory)]
         logger_info.assert_called_once_with(f"Starting {__app_name__} v{__version__}")
 

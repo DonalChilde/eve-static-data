@@ -5,14 +5,14 @@ from typing import cast
 
 import typer
 
-from pfmsoft.eve_sd.settings import EveSDSettings
+from pfmsoft.eve_sd.settings import SETTINGS_KEY, EveSDSettings
 
 
 def get_esd_settings_from_context(ctx: typer.Context) -> EveSDSettings:
     """Get the EveStaticDataSettings instance from the Typer context."""
-    if ctx.obj is None or "esd-settings" not in ctx.obj:
+    if ctx.obj is None or SETTINGS_KEY not in ctx.obj:
         raise ValueError("ESD settings not found in context.")
-    return cast(EveSDSettings, ctx.obj["esd-settings"])
+    return cast(EveSDSettings, ctx.obj[SETTINGS_KEY])
 
 
 class ReportChoice(StrEnum):

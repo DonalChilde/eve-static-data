@@ -8,7 +8,7 @@ import typer
 from pfmsoft.eve_sd import __app_name__, __version__
 from pfmsoft.eve_sd.cli import app as main_app
 from pfmsoft.eve_sd.logging_config import setup_logging
-from pfmsoft.eve_sd.settings import get_settings
+from pfmsoft.eve_sd.settings import SETTINGS_KEY, get_settings
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +27,7 @@ def default_options(
     settings = get_settings()
     setup_logging(log_dir=Path(settings.logging_directory))
     logger.info(f"Starting {__app_name__} v{__version__}")
-    ctx.obj = {"esd-settings": settings}
+    ctx.obj = {SETTINGS_KEY: settings}
 
 
 app = typer.Typer(
